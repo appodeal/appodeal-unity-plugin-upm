@@ -1,0 +1,20 @@
+{
+    "name": "AppodealAds.Unity.Editor.PreProcess",
+    "references": [
+        "AppodealAds.Unity.Editor.InternalResources",
+        "AppodealAds.Unity.Editor.Checkers",
+        "AppodealAds.Unity.Editor.Utils",
+        "AppodealAds.Unity.Editor.AppodealManager"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+    <item>
+        <filter>^((?!InternalResources).)*$</filter>
+        <is_confirmation_required>false</is_confirmation_required>
+        <name>Appodeal unity interface</name>
+        <path>Appodeal</path>
+    </item>
+    <item>
+        <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+        <name>Appodeal unity interface</name>
+        <path>Samples/Appodeal</path>
+    </item>
+</items>

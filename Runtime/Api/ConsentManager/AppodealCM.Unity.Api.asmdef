@@ -1,0 +1,20 @@
+{
+    "name": "AppodealCM.Unity.Api",
+    "references": [
+        "AppodealCM.Unity.Common",
+        "AppodealCM.Unity.Platforms"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

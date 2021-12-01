@@ -1,0 +1,22 @@
+{
+  "name": "com.appodeal.appodeal-unity-plugin-upm",
+  "version": "2.14.5",
+  "displayName": "Appodeal",
+  "description": "Monetize more with less hassle. Our one ad mediation SDK includes it all: 70+ ad demand sources, all ad formats, in-app bidding algorithm, full-controls, a/b testing plus much more.",
+  "documentationUrl": "https://wiki.appodeal.com/en/unity/get-started",
+  "changelogUrl": "https://wiki.appodeal.com/en/unity/get-started/advanced/changelog",
+  "unity": "2019.4",
+  "author":
+  {
+      "name": "Appodeal Ads",
+      "email": "hi@appodeal.com",
+      "url": "https://appodeal.com"
+  },
+  "samples": [
+    {
+      "displayName": "Usage Sample",
+      "description": "Appodeal Usage Sample with a Demo Scene and C# Implementation",
+      "path": "Demo~/"
+    }
+  ]
+}

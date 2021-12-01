@@ -1,0 +1,19 @@
+{
+    "name": "AppodealAds.Unity.Editor.Utils",
+    "references": [
+        "AppodealAds.Unity.Editor.AppodealManager",
+        "AppodealAds.Unity.Editor.InternalResources",
+        "marijnz.EditorCoroutines"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

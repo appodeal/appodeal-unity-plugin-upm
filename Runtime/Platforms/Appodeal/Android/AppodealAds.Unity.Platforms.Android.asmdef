@@ -1,0 +1,19 @@
+{
+    "name": "AppodealAds.Unity.Platforms.Android",
+    "references": [
+        "AppodealAds.Unity.Common",
+        "AppodealCM.Unity.Common",
+        "AppodealCM.Unity.Platforms"
+    ],
+    "includePlatforms": [
+        "Android"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

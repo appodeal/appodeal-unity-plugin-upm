@@ -1,0 +1,5 @@
+<dependencies>
+    <iosPods>
+        <iosPod name='APDAmazonAdsAdapter' version='2.10.3.1' minTargetSdk='10.0'/>
+    </iosPods>
+</dependencies>
