@@ -850,11 +850,8 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                         yield break;
                     }
 
-                    Debug.Log(webRequest.downloadHandler.text);
-
                     var networkDependencies = JsonHelper.FromJson<NetworkDependency>(
                         JsonHelper.fixJson(webRequest.downloadHandler.text));
-                    Debug.Log(networkDependencies);
                     if (networkDependencies.Length > 0)
                     {
                         foreach (var networkDependency in networkDependencies)
