@@ -107,10 +107,11 @@ namespace AppodealAds.Unity.Editor.Utils
 
         private static void AddGADApplicationIdentifier(string path)
         {
-            if (!File.Exists(Path.Combine(AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
+            if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
+                AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
             {
                 Debug.Log(
-                    "Can't find Google Admob Config by path - Packages/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml");
+                    "Can't find Google Admob Config by path - Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml");
                 return;
             }
 
@@ -347,7 +348,8 @@ namespace AppodealAds.Unity.Editor.Utils
 
         private static bool CheckiOSAttribute()
         {
-            var adMobConfigPath = Path.Combine(AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml");
+            var adMobConfigPath = Path.Combine(AppodealDependencyUtils.Plugin_path,
+                AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml");
 
             XDocument config;
             try

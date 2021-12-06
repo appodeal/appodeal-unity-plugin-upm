@@ -80,7 +80,7 @@ namespace AppodealAds.Unity.Editor.Utils
         {
             var itemToRemoveList = new List<ItemToRemove>();
             var xDoc = new XmlDocument();
-            xDoc.Load(Path.Combine(AppodealDependencyUtils.Plugin_path, "Editor/InternalResources/remove_list.xml"));
+            xDoc.Load(Path.Combine(AppodealDependencyUtils.Package_path, AppodealDependencyUtils.RemoveHelper));
             var xRoot = xDoc.DocumentElement;
 
             if (xRoot == null) return itemToRemoveList.ToArray();
@@ -152,7 +152,7 @@ namespace AppodealAds.Unity.Editor.Utils
             return itemToRemoveList.ToArray();
         }
 
-        public static void RemovePlugin(bool isCleanBeforeUpdate = false)
+        public static bool RemovePlugin(bool isCleanBeforeUpdate = false)
         {
             if (EditorUtility.DisplayDialog("Remove Appodeal plugin",
                 "Are you sure you want to remove the Appodeal plugin from your project?",
@@ -206,8 +206,9 @@ namespace AppodealAds.Unity.Editor.Utils
                 }
 
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-                
+                return true;
             }
+            else return false;
         }
 
         private static bool isFolderEmpty(string path)

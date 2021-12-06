@@ -39,8 +39,11 @@ namespace AppodealAds.Unity.Editor.Utils
         [MenuItem("Appodeal/Remove plugin")]
         public static void RemoveAppodealPlugin()
         {
-            RemoveHelper.RemovePlugin();
-            Client.Remove("com.appodeal.appodeal-unity-plugin-upm");
+            bool decision = RemoveHelper.RemovePlugin();
+            if (decision)
+            {
+                Client.Remove("com.appodeal.appodeal-unity-plugin-upm");
+            }
         }
     }
 }

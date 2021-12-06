@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using AppodealAds.Unity.Editor.AppodealManager.Data;
+using AppodealAds.Unity.Editor.InternalResources;
+
 // ReSharper disable All
 
 namespace AppodealAds.Unity.Editor.AppodealManager
@@ -23,8 +25,10 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";
         public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2/unity/config/";
         public const string GitRepoAddress = "https://github.com/appodeal/appodeal-unity-plugin-upm.git";
-        public const string Plugin_path = "Packages/com.appodeal.appodeal-unity-plugin-upm/";
-        public const string Network_configs_path = "Packages/com.appodeal.appodeal-unity-plugin-upm/Editor/NetworkConfigs/";
+        public const string Package_path = "Packages/com.appodeal.appodeal-unity-plugin-upm";
+        public const string Plugin_path = "Assets/Appodeal";
+        public const string Network_configs_path = "Editor/NetworkConfigs";
+        public const string RemoveHelper = "Editor/InternalResources/remove_list.xml";
         public const string Replace_dependency_value = "com.appodeal.ads.sdk.networks:";
         public const string Replace_dependency_core = "com.appodeal.ads.sdk:core:";
         public const string PackageName = "Name";
@@ -34,6 +38,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         public const string BoxStyle = "box";
         public const string ActionUpdate = "Update";
         public const string ActionImport = "Import";
+        public const string ActionReimport = "Reimport";
         public const string ActionRemove = "Remove";
         public const string EmptyCurrentVersion = "    -  ";
         public const string AppodealUnityPlugin = "Appodeal Unity Plugin";
@@ -54,17 +59,47 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         #endregion
 
+        public static void ImportConfigsFromPackage() {
+            var info = new DirectoryInfo(Path.Combine(Package_path, Network_configs_path));
+            var fileInfo = info.GetFiles();
+            fileInfo = fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta") && val.Name.Contains("Dependencies")).ToArray();
+
+            if (!Directory.Exists(Path.Combine(Plugin_path, Network_configs_path)))
+            {
+                Directory.CreateDirectory(Path.Combine(Plugin_path, Network_configs_path) ?? string.Empty);
+            }
+            fileInfo.ToList().ForEach(file => FileUtil.ReplaceFile(file.FullName, Path.Combine(Plugin_path, Network_configs_path, file.Name.Replace(".txt", ".xml"))));
+
+            AppodealSettings.Instance.WereConfigsImported = true;
+            AssetDatabase.Refresh();
+        }
+
         public static FileInfo[] GetInternalDependencyPath()
         {
-            if (string.IsNullOrEmpty(Network_configs_path)) {
+            if (string.IsNullOrEmpty(Plugin_path) ||
+                string.IsNullOrEmpty(Network_configs_path))
+            {
+                return null;
+            }
+
+            var path = Path.Combine(Plugin_path, Network_configs_path);
+            if (!Directory.Exists(path))
+            {
                 return null;
             }
             
-            var info = new DirectoryInfo(Network_configs_path);
-            
+            var info = new DirectoryInfo(path);
             var fileInfo = info.GetFiles();
-
             return fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta")).ToArray();
+        }
+
+        public static void ShowSuccessDialog(EditorWindow editorWindow, string message)
+        {
+            EditorUtility.ClearProgressBar();
+            Debug.Log(message);
+            var option = EditorUtility.DisplayDialog("Operation completed",
+                $"{message}.",
+                "Ok");
         }
 
         public static void ShowInternalErrorDialog(EditorWindow editorWindow, string message, string debugLog)
@@ -107,7 +142,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         public static string GetConfigName(string value)
         {
-            var configName = value.Replace(Network_configs_path, string.Empty);
+            var configName = value.Replace($"{Plugin_path}/{Network_configs_path}/", string.Empty);
             return configName.Replace("Dependencies.xml", string.Empty);
         }
 

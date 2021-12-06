@@ -334,8 +334,11 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         private void ImportConfig(string nameDep, string content)
         {
-            var path = AppodealDependencyUtils.Network_configs_path + nameDep + AppodealDependencyUtils.Dependencies +
-                       AppodealDependencyUtils.XmlFileExtension;
+            var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
+                AppodealDependencyUtils.Network_configs_path,
+                $"{nameDep}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
+            Debug.Log(path);
+
             if (File.Exists(path))
             {
                 UpdateDependency(nameDep, AppodealDependencyUtils.SpecCloseDependencies,
@@ -615,7 +618,10 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                         new GUIContent { text = AppodealDependencyUtils.ActionRemove },
                         btnFieldWidth))
                     {
-                        var path = $"{AppodealDependencyUtils.Network_configs_path}{nameDep}Dependencies.xml";
+                        var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
+                            AppodealDependencyUtils.Network_configs_path,
+                            $"{nameDep}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
+                        Debug.Log(path);
 
                         AppodealDependencyUtils.ReplaceInFile(path, internalContent, "");
                         var text = System.IO.File.ReadAllLines(path).Where(s => s.Trim() != string.Empty).ToArray();
@@ -683,8 +689,11 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         private void UpdateDependency(string nameDependency, string previous, string latest)
         {
-            var path = AppodealDependencyUtils.Network_configs_path + nameDependency +
-                       AppodealDependencyUtils.Dependencies + ".xml";
+            var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
+                AppodealDependencyUtils.Network_configs_path,
+                $"{nameDependency}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
+            Debug.Log(path);
+
             if (!File.Exists(path))
             {
                 AppodealDependencyUtils.ShowInternalErrorDialog(this,
@@ -771,22 +780,24 @@ namespace AppodealAds.Unity.Editor.AppodealManager
             {
                 foreach (var fileInfo in AppodealDependencyUtils.GetInternalDependencyPath())
                 {
-                    if (!File.Exists(AppodealDependencyUtils.Network_configs_path + fileInfo.Name))
+                    if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
+                            AppodealDependencyUtils.Network_configs_path, fileInfo.Name)))
                     {
                         AppodealDependencyUtils.ShowInternalErrorDialog(this,
-                            $"File doesn't exist - {AppodealDependencyUtils.Network_configs_path + fileInfo.Name}",
+                            $"File doesn't exist - {Path.Combine(AppodealDependencyUtils.Plugin_path, AppodealDependencyUtils.Network_configs_path, fileInfo.Name)}",
                             string.Empty);
                     }
                     else
                     {
-                        GetInternalDependencies(AppodealDependencyUtils.Network_configs_path + fileInfo.Name);
+                        GetInternalDependencies(Path.Combine(AppodealDependencyUtils.Plugin_path,
+                            AppodealDependencyUtils.Network_configs_path, fileInfo.Name));
                     }
                 }
             }
             else
             {
                 AppodealDependencyUtils.ShowInternalErrorDialog(this,
-                    "Can't find internal dependencies.", string.Empty);
+                    "Can't find internal dependencies. Make sure to import them at 'Appodeal/Appodeal Settings' tab first");
             }
 
             #endregion

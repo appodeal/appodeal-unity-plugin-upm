@@ -12,6 +12,8 @@ namespace AppodealAds.Unity.Editor.InternalResources
         private const string AppodealSettingsExportPath = "Appodeal/Editor/InternalResources/AppodealSettings.asset";
         private static AppodealSettings instance;
 
+        [SerializeField] private bool wereConfigsImported;
+
         [SerializeField] private string adMobAndroidAppId = string.Empty;
         [SerializeField] private string adMobIosAppId = string.Empty;
 
@@ -50,6 +52,12 @@ namespace AppodealAds.Unity.Editor.InternalResources
 
                 return instance;
             }
+        }
+
+        public bool WereConfigsImported
+        {
+            get { return wereConfigsImported; }
+            set { Instance.wereConfigsImported = value; }
         }
 
         public string AdMobAndroidAppId
