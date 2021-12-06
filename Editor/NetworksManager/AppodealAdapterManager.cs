@@ -1,4 +1,3 @@
-#if UNITY_2018_1_OR_NEWER
 using UnityEditor;
 using UnityEngine;
 using System;
@@ -337,7 +336,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
             var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
                 AppodealDependencyUtils.Network_configs_path,
                 $"{nameDep}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
-            Debug.Log(path);
 
             if (File.Exists(path))
             {
@@ -621,7 +619,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                         var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
                             AppodealDependencyUtils.Network_configs_path,
                             $"{nameDep}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
-                        Debug.Log(path);
 
                         AppodealDependencyUtils.ReplaceInFile(path, internalContent, "");
                         var text = System.IO.File.ReadAllLines(path).Where(s => s.Trim() != string.Empty).ToArray();
@@ -692,7 +689,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
             var path = Path.Combine(AppodealDependencyUtils.Plugin_path,
                 AppodealDependencyUtils.Network_configs_path,
                 $"{nameDependency}{AppodealDependencyUtils.Dependencies}{AppodealDependencyUtils.XmlFileExtension}");
-            Debug.Log(path);
 
             if (!File.Exists(path))
             {
@@ -1088,4 +1084,3 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         }
     }
 }
-#endif

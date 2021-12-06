@@ -277,7 +277,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 writer.Close();
             }
         }
-#if UNITY_2018_1_OR_NEWER
+
         public static int CompareVersion(string interal, string latest)
         {
             var xParts = interal.Split('.');
@@ -305,7 +305,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
             return 0;
         }
-#endif
 
         public static void GuiHeaders(GUIStyle headerInfoStyle, GUILayoutOption btnFieldWidth)
         {

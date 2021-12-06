@@ -262,11 +262,7 @@ namespace AppodealAds.Unity.Editor.Utils
 
             project.ReadFromString(File.ReadAllText(projectPath));
 
-#if UNITY_2019_3_OR_NEWER
            var target = project.GetUnityMainTargetGuid();
-#else
-            var target = project.TargetGuidByName("Unity-iPhone");
-#endif
 
             AddProjectFrameworks(frameworkList, project, target, false);
             AddProjectFrameworks(weakFrameworkList, project, target, true);
@@ -286,11 +282,7 @@ namespace AppodealAds.Unity.Editor.Utils
 
             project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(SRCROOT)/Libraries");
             project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)");
-#if UNITY_2019_3_OR_NEWER
             project.AddBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
-#else
-            project.AddBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
-#endif
             project.AddBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
             project.SetBuildProperty(target, "SWIFT_VERSION", "4.0");
 

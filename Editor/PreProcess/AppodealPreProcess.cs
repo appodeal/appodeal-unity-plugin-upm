@@ -14,20 +14,13 @@ using AppodealAds.Unity.Editor.Checkers;
 using AppodealAds.Unity.Editor.InternalResources;
 using AppodealAds.Unity.Editor.Utils;
 using AppodealAds.Unity.Editor.AppodealManager;
-#if UNITY_2018_1_OR_NEWER
 using UnityEditor.Build.Reporting;
 using UnityEngine.Android;
-#endif
 using UnityEngine;
 
 namespace AppodealAds.Unity.Editor.PreProcess
 {
-    public class AppodealPreProcess :
-#if UNITY_2018_1_OR_NEWER
-        IPreprocessBuildWithReport
-#else
-        IPreprocessBuild
-#endif
+    public class AppodealPreProcess : IPreprocessBuildWithReport
     {
         #region Constants
 
@@ -65,12 +58,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         #endregion
 
-#if UNITY_2018_1_OR_NEWER
         public void OnPreprocessBuild(BuildReport report)
-#else
-        public void OnPreprocessBuild(BuildTarget target, string path)
-#endif
-
         {
             var manifestPath = Path.Combine("Assets", androidPluginsPath, manifestTemplateName);
 
@@ -91,55 +79,10 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
         {
-#if UNITY_2019_3_OR_NEWER
             if(CheckContainsMultidex(manifestPath, manifestMutlidexApp))
             {
                 androidManifest.RemoveMultiDexApplication();
             }
-#else
-
-            if (AppodealSettings.Instance.AndroidMultidex)
-            {
-                if (PlayerSettings.Android.minSdkVersion < AndroidSdkVersions.AndroidApiLevel21)
-                {
-                    androidManifest.AddMultiDexApplication();
-
-                    if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android)
-                    {
-                        if (!AppodealUnityUtils.isGradleEnabled())
-                        {
-                            new EnableGradle().fixProblem();
-                        }
-
-                        var customGradeScript = GetCustomGradleScriptPath();
-                        if (string.IsNullOrEmpty(customGradeScript) || !File.Exists(customGradeScript))
-                        {
-                            if (File.Exists(getDefaultGradleTemplate()))
-                            {
-                                new CopyGradleScriptAndEnableMultidex().fixProblem();
-                            }
-                        }
-                        else
-                        {
-                            var settings = new ImportantGradleSettings(customGradeScript);
-                            if (!settings.isMultiDexAddedCompletely())
-                            {
-                                new EnableMultidexInGradle(customGradeScript).fixProblem();
-                            }
-
-                            if (!settings.isJavaVersionIncluded())
-                            {
-                                new EnableJavaVersion(customGradeScript).fixProblem();
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                androidManifest.RemoveMultiDexApplication();
-            }
-#endif
         }
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
