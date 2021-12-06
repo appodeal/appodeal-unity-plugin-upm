@@ -1,6 +1,5 @@
 namespace AppodealAds.Unity.Common {
     public static class AppodealAdType {
-        #region AdTypes
         public const int NONE = 0;
         public const int INTERSTITIAL = 3;
         public const int BANNER = 4;
@@ -21,7 +20,5 @@ namespace AppodealAds.Unity.Common {
         public const int BANNER_HORIZONTAL_CENTER = -2;
         public const int BANNER_HORIZONTAL_RIGHT = -3;
         public const int BANNER_HORIZONTAL_LEFT = -4;
-
-        #endregion
     }
 }
