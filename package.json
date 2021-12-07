@@ -16,7 +16,7 @@
     {
       "displayName": "Usage Sample",
       "description": "Appodeal Usage Sample with a Demo Scene and C# Implementation",
-      "path": "Demo~/"
+      "path": "Samples~/UsageSample"
     }
   ]
 }
