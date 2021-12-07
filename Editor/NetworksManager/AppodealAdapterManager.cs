@@ -750,7 +750,12 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                     if (GUILayout.Button(new GUIContent { text = AppodealDependencyUtils.ActionImport },
                         btnFieldWidth))
                     {
-                        Client.Add($"{AppodealDependencyUtils.GitRepoAddress}#v{plugin.version}");
+                        bool decision = RemoveHelper.RemovePlugin();
+                        if (decision)
+                        {
+                            Client.Add($"{AppodealDependencyUtils.GitRepoAddress}#v{plugin.version}");
+                            this.Close();
+                        }
                     }
                 }
 

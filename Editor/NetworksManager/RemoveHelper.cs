@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml;
-using AppodealAds.Unity.Editor.AppodealManager;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealAds.Unity.Editor.AppodealManager
 {
     [System.Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
