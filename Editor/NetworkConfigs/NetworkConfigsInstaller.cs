@@ -14,6 +14,5 @@ namespace AppodealAds.Unity.Editor.NetworkConfigs
 
             AppodealDependencyUtils.ImportConfigsFromPackage();
         }
-    
     }
 }
