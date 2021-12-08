@@ -24,7 +24,7 @@ namespace AppodealAds.Unity.Editor.Utils
 
         public static void ShowAppodealInternalSettings()
         {
-            GetWindowWithRect(typeof(AppodealInternalSettings), new Rect(0, 0, 650, 340), true, "Appodeal Settings");
+            GetWindowWithRect(typeof(AppodealInternalSettings), new Rect(0, 0, 650, 400), true, "Appodeal Settings");
         }
 
         private void OnEnable()
