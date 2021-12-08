@@ -95,15 +95,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
             return fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta")).ToArray();
         }
 
-        public static void ShowSuccessDialog(EditorWindow editorWindow, string message)
-        {
-            EditorUtility.ClearProgressBar();
-            Debug.Log(message);
-            var option = EditorUtility.DisplayDialog("Operation completed",
-                $"{message}.",
-                "Ok");
-        }
-
         public static void ShowInternalErrorDialog(EditorWindow editorWindow, string message, string debugLog)
         {
             EditorUtility.ClearProgressBar();
