@@ -44,7 +44,7 @@ namespace AppodealAds.Unity.Editor.Utils
             
             if (string.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
-            if (!AppodealSettings.Instance.IOSSkAdNetworkItems && (AppodealSettings.Instance.IOSSkAdNetworkItemsList == null ||
+            if (!AppodealSettings.Instance.IOSSkAdNetworkItems || (AppodealSettings.Instance.IOSSkAdNetworkItemsList == null ||
                                                                   AppodealSettings.Instance.IOSSkAdNetworkItemsList.Count <= 0))  return;
             if (buildTarget != BuildTarget.iOS) return;
 
