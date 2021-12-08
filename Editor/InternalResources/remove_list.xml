@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <items>
     <item>
+        <description>External Dependency Manager is used by many plugins for integrating platform specific libraries and resolving conflicting dependencies. If some of your other plugins use it, removing can lead to issues.</description>
+        <is_confirmation_required>true</is_confirmation_required>
+        <name>External Dependency Manager</name>
+        <path>ExternalDependencyManager</path>
+    </item>
+    <item>
         <check_if_empty>false</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
         <name>Appodeal unity settings</name>
