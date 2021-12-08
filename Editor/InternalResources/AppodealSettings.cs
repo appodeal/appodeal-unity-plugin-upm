@@ -14,7 +14,7 @@ namespace AppodealAds.Unity.Editor.InternalResources
 
         [SerializeField] private bool shouldIgnoreEDMInstallation;
 
-        [SerializeField] private bool wereConfigsImported;
+        [SerializeField] private bool wereNetworkConfigsImported;
 
         [SerializeField] private string adMobAndroidAppId = string.Empty;
         [SerializeField] private string adMobIosAppId = string.Empty;
@@ -62,10 +62,10 @@ namespace AppodealAds.Unity.Editor.InternalResources
             set { Instance.shouldIgnoreEDMInstallation = value; }
         }
 
-        public bool WereConfigsImported
+        public bool WereNetworkConfigsImported
         {
-            get { return wereConfigsImported; }
-            set { Instance.wereConfigsImported = value; }
+            get { return wereNetworkConfigsImported; }
+            set { Instance.wereNetworkConfigsImported = value; }
         }
 
         public string AdMobAndroidAppId

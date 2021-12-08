@@ -9,7 +9,7 @@ namespace AppodealAds.Unity.Editor.NetworkConfigs
         [InitializeOnLoadMethod]
         static void InstallNetworkConfigs()
         {
-            if (AppodealSettings.Instance.WereConfigsImported)
+            if (AppodealSettings.Instance.WereNetworkConfigsImported)
                 return;
 
             AppodealDependencyUtils.ImportConfigsFromPackage();

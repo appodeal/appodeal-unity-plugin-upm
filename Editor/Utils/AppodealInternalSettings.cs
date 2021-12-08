@@ -24,7 +24,7 @@ namespace AppodealAds.Unity.Editor.Utils
 
         public static void ShowAppodealInternalSettings()
         {
-            GetWindowWithRect(typeof(AppodealInternalSettings), new Rect(0, 0, 650, 400), true, "Appodeal Settings");
+            GetWindowWithRect(typeof(AppodealInternalSettings), new Rect(0, 0, 650, 340), true, "Appodeal Settings");
         }
 
         private void OnEnable()
@@ -76,38 +76,6 @@ namespace AppodealAds.Unity.Editor.Utils
 
         private void OnGUI()
         {
-            #region Import Networks' Configs
-
-            GUILayout.BeginHorizontal();
-            using (new EditorGUILayout.VerticalScope("box"))
-            {
-                if (GUILayout.Button("Import Network Configs", new GUIStyle(EditorStyles.label)
-                {
-                    fontSize = 15,
-                    fontStyle = FontStyle.Bold,
-                    fixedHeight = 25
-                }, GUILayout.Width(200)))
-                {
-                    Application.OpenURL(
-                        "https://wiki.appodeal.com/en/unity/get-started");
-                }
-
-                GUILayout.Space(2);
-
-                if (GUILayout.Button(new GUIContent { 
-                    text = AppodealSettings.Instance.WereConfigsImported == false ? 
-                    AppodealDependencyUtils.ActionImport : AppodealDependencyUtils.ActionReimport }, GUILayout.Width(100)))
-                {
-                    AppodealDependencyUtils.ImportConfigsFromPackage();
-                    AppodealDependencyUtils.ShowSuccessDialog(this, "Network configs were imported into project");
-                }
-
-                GUILayout.Space(10);
-            }
-            GUILayout.EndHorizontal();
-
-            #endregion
-
             #region Admob App Id Setting
 
             GUILayout.BeginHorizontal();
