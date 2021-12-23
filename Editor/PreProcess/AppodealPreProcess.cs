@@ -87,30 +87,68 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
+            if (File.Exists(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml"))
+                && CheckContainsAppId(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")))
+            {
+                if (File.Exists(path) && CheckContainsAppId(path))
+                {
+                    androidManifest.RemoveAdmobAppId();
+                    Debug.LogWarning(
+                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
+                        "\nRemoving duplicate from internal Appodeal AndroidManifest.xml file.");
+                    return;
+                }
+                else if (!string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
+                {
+                    Debug.LogWarning(
+                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
+                        "\nThe value you set up via 'Appodeal/Appodeal Settings' tool will be ignored.");
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
                 AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
             {
-                //androidManifest.RemoveAdmobAppId();
+                if (File.Exists(path) && CheckContainsAppId(path))
+                {
+                    androidManifest.RemoveAdmobAppId();
+                }
                 Debug.LogWarning(
-                    "Missing config Admob (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
+                    "Missing Admob config (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
                 return;
+            }
+
+            if (!File.Exists(path))
+            {
+                Debug.LogError(
+                    $"Missing internal AndroidManifest {path}." +
+                    "\nAdmob App ID can't be added. The app may crash on startup!");
+                throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
             if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
             {
-                if (!CheckContainsAppId(path))
+                if (CheckContainsAppId(path))
                 {
-                    Debug.LogError(
-                        "Please enter an AdMob App ID in the 'Appodeal/Appodeal Settings' tool");
-                    throw new BuildFailedException("Admob App ID is not set");
+                    androidManifest.RemoveAdmobAppId();
                 }
+                Debug.LogError(
+                    $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
+                    "\nThe app may crash on startup!");
+                throw new BuildFailedException("Admob App ID is not valid");
             }
             else
             {
                 if (!AppodealSettings.Instance.AdMobAndroidAppId.StartsWith("ca-app-pub-"))
                 {
                     Debug.LogError(
-                        "Please enter a valid AdMob App ID in the 'Appodeal/Appodeal settings' tool.");
+                        "Incorrect value. The app may crash on startup." +
+                        "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                     throw new BuildFailedException("Admob App ID is not valid");
                 }
 
