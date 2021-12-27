@@ -87,30 +87,6 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            if (File.Exists(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml"))
-                && CheckContainsAppId(Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")))
-            {
-                if (File.Exists(path) && CheckContainsAppId(path))
-                {
-                    androidManifest.RemoveAdmobAppId();
-                    Debug.LogWarning(
-                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
-                        "\nRemoving duplicate from internal Appodeal AndroidManifest.xml file.");
-                    return;
-                }
-                else if (!string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
-                {
-                    Debug.LogWarning(
-                        $"AdmobAppId has already been added to {Path.Combine(Application.dataPath, "Plugins/Android/AndroidManifest.xml")}" +
-                        "\nThe value you set up via 'Appodeal/Appodeal Settings' tool will be ignored.");
-                    return;
-                }
-                else
-                {
-                    return;
-                }
-            }
-
             if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
                 AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
             {
@@ -126,7 +102,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
             if (!File.Exists(path))
             {
                 Debug.LogError(
-                    $"Missing internal AndroidManifest {path}." +
+                    $"Missing AndroidManifest {path}." +
                     "\nAdmob App ID can't be added. The app may crash on startup!");
                 throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
