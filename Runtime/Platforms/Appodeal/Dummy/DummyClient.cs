@@ -211,14 +211,14 @@ namespace AppodealAds.Unity.Platforms.Dummy
             {
                 Vector2 calulatedPos = Vector2.zero;
 
-                if (pos.x == AppodealAdType.BANNER_HORIZONTAL_CENTER || pos.x == AppodealAdType.BANNER_HORIZONTAL_SMART) calulatedPos.x = (Screen.width - ad.size.x) / 2;
-                else if (pos.x == AppodealAdType.BANNER_HORIZONTAL_LEFT) calulatedPos.x = 0;
-                else if (pos.x == AppodealAdType.BANNER_HORIZONTAL_RIGHT) calulatedPos.x = Screen.width - ad.size.x;
+                if (pos.x == AppodealViewPosition.HORIZONTAL_CENTER || pos.x == AppodealViewPosition.HORIZONTAL_SMART) calulatedPos.x = (Screen.width - ad.size.x) / 2;
+                else if (pos.x == AppodealViewPosition.HORIZONTAL_LEFT) calulatedPos.x = 0;
+                else if (pos.x == AppodealViewPosition.HORIZONTAL_RIGHT) calulatedPos.x = Screen.width - ad.size.x;
                 else calulatedPos.x = pos.x;
 
-                if (pos.y == AppodealAdType.BANNER_VERTICAL_BOTTOM) calulatedPos.y = ad.size.y - Screen.height;
-                else if (pos.y == AppodealAdType.BANNER_VERTICAL_TOP) calulatedPos.y = 0;
-                else calulatedPos.y = pos.y;
+                if (pos.y == AppodealViewPosition.VERTICAL_BOTTOM) calulatedPos.y = ad.size.y - Screen.height;
+                else if (pos.y == AppodealViewPosition.VERTICAL_TOP) calulatedPos.y = 0;
+                else calulatedPos.y = - pos.y;
 
                 if (calulatedPos.x < 0 || calulatedPos.y > 0 || calulatedPos.x > Screen.width - ad.size.x || calulatedPos.y < ad.size.y - Screen.height) return false;
 

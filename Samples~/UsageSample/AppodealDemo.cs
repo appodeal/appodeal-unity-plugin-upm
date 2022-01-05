@@ -296,8 +296,8 @@ namespace AppodealSample
 
         public void ShowBannerView()
         {
-            Appodeal.showBannerView(AppodealAdType.BANNER_VERTICAL_BOTTOM,
-                AppodealAdType.BANNER_HORIZONTAL_CENTER, "default");
+            Appodeal.showBannerView(AppodealViewPosition.VERTICAL_BOTTOM,
+                AppodealViewPosition.HORIZONTAL_CENTER, "default");
         }
 
         public void HideBannerView()
@@ -307,8 +307,8 @@ namespace AppodealSample
 
         public void ShowMrecView()
         {
-            Appodeal.showMrecView(AppodealAdType.BANNER_VERTICAL_TOP,
-                AppodealAdType.BANNER_HORIZONTAL_CENTER, "default");
+            Appodeal.showMrecView(AppodealViewPosition.VERTICAL_TOP,
+                AppodealViewPosition.HORIZONTAL_CENTER, "default");
         }
 
         public void HideMrecView()
