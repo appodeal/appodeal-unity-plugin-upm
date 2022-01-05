@@ -30,7 +30,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         public const string Network_configs_path = "Editor/NetworkConfigs";
         public const string RemoveHelper = "Editor/InternalResources/remove_list.xml";
         public const string EDMPackagePath = "ExternalDependencyManager/Editor";
-        public const string EDMPackageName = "external-dependency-manager-1.2.167.unitypackage";
+        public const string EDMPackageName = "external-dependency-manager-1.2.168.unitypackage";
         public const string Replace_dependency_value = "com.appodeal.ads.sdk.networks:";
         public const string Replace_dependency_core = "com.appodeal.ads.sdk:core:";
         public const string PackageName = "Name";
