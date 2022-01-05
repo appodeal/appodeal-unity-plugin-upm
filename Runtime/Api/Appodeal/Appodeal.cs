@@ -560,16 +560,6 @@ namespace AppodealAds.Unity.Api
         {
             getInstance().setSegmentFilter(name, value);
         }
-
-        /// <summary>
-        /// Request WRITE_EXTERNAL_STORAGE and ACCESS_COARSE_LOCATION permissions for Android M.
-        /// See <see cref="Appodeal.requestAndroidMPermissions"/> for resulting triggered event.
-        /// <param name="listener">listener implementation of Appodeal/Common/Appodeal/IPermissionGrantedListener</param>
-        /// </summary>  
-        public static void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            getInstance().requestAndroidMPermissions(listener);
-        }
         
         /// <summary>
         /// Check if ad with specific ad type can be shown with placement.

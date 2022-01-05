@@ -7,14 +7,14 @@ using AppodealCM.Unity.Common;
 using AppodealCM.Unity.Platforms;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 namespace AppodealSample
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public class AppodealDemo : MonoBehaviour, IConsentFormListener, IConsentInfoUpdateListener,
-        IBannerAdListener, IMrecAdListener, IRewardedVideoAdListener, IInterstitialAdListener,
-        IPermissionGrantedListener
+        IBannerAdListener, IMrecAdListener, IRewardedVideoAdListener, IInterstitialAdListener
     {
         #region Constants
 
@@ -26,12 +26,13 @@ namespace AppodealSample
 
         #region UI
 
-        [SerializeField] public Toggle tgTesting;
-        [SerializeField] public Toggle tgLogging;
-        [SerializeField] public Button btnShowInterstitial;
-        [SerializeField] public Button btnShowRewardedVideo;
         [SerializeField] public GameObject consentManagerPanel;
         [SerializeField] public GameObject appodealPanel;
+        [SerializeField] public Text pluginVersionText;
+        [SerializeField] public Toggle testingToggle;
+        [SerializeField] public Toggle loggingToggle;
+        [SerializeField] public Button interstitialButton;
+        [SerializeField] public Button rewardedVideoButton;
 
         #endregion
 
@@ -54,20 +55,26 @@ namespace AppodealSample
         private bool isShouldSaveConsentForm;
         private Consent currentConsent;
 
+        private void Awake() {
+            Assert.IsNotNull(consentManagerPanel);
+            Assert.IsNotNull(appodealPanel);
+            Assert.IsNotNull(pluginVersionText);
+            Assert.IsNotNull(testingToggle);
+            Assert.IsNotNull(loggingToggle);
+            Assert.IsNotNull(interstitialButton);
+            Assert.IsNotNull(rewardedVideoButton);
+        }
+
         private void Start()
         {
+            pluginVersionText.text = $"Appodeal Unity Plugin v{AppodealVersions.APPODEAL_PLUGIN_VERSION}";
             consentManagerPanel.gameObject.SetActive(true);
             appodealPanel.gameObject.SetActive(false);
 
-            btnShowInterstitial.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
-            btnShowRewardedVideo.GetComponentInChildren<Text>().text = CACHE_REWARDED_VIDEO;
+            interstitialButton.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
+            rewardedVideoButton.GetComponentInChildren<Text>().text = CACHE_REWARDED_VIDEO;
 
             consentManager = ConsentManager.getInstance();
-        }
-
-        private void Awake()
-        {
-            Appodeal.requestAndroidMPermissions(this);
         }
 
         private void OnDestroy()
@@ -206,8 +213,8 @@ namespace AppodealSample
 
         public void InitWithConsent(bool isConsent)
         {
-            Appodeal.setTesting(tgTesting.isOn);
-            Appodeal.setLogLevel(tgLogging.isOn ? LogLevel.Verbose : LogLevel.None);
+            Appodeal.setTesting(testingToggle.isOn);
+            Appodeal.setLogLevel(loggingToggle.isOn ? LogLevel.Verbose : LogLevel.None);
             Appodeal.setUserId("1");
             Appodeal.setUserAge(1);
             Appodeal.setUserGender(Gender.OTHER);
@@ -224,6 +231,11 @@ namespace AppodealSample
             Appodeal.setAutoCache(AppodealAdType.REWARDED_VIDEO, false);
             Appodeal.setUseSafeArea(true);
 
+            Appodeal.setBannerCallbacks(this);
+            Appodeal.setInterstitialCallbacks(this);
+            Appodeal.setRewardedVideoCallbacks(this);
+            Appodeal.setMrecCallbacks(this);
+
             if (isConsent)
             {
                 Appodeal.initialize(appKey,
@@ -236,11 +248,6 @@ namespace AppodealSample
                     AppodealAdType.INTERSTITIAL | AppodealAdType.BANNER | AppodealAdType.REWARDED_VIDEO | AppodealAdType.MREC,
                     true);
             }
-
-            Appodeal.setBannerCallbacks(this);
-            Appodeal.setInterstitialCallbacks(this);
-            Appodeal.setRewardedVideoCallbacks(this);
-            Appodeal.setMrecCallbacks(this);
 
             Appodeal.setSegmentFilter("newBoolean", true);
             Appodeal.setSegmentFilter("newInt", 1234567890);
@@ -289,7 +296,7 @@ namespace AppodealSample
 
         public void ShowBannerView()
         {
-            Appodeal.showBannerView(Screen.currentResolution.height - Screen.currentResolution.height / 10,
+            Appodeal.showBannerView(AppodealAdType.BANNER_VERTICAL_BOTTOM,
                 AppodealAdType.BANNER_HORIZONTAL_CENTER, "default");
         }
 
@@ -300,7 +307,7 @@ namespace AppodealSample
 
         public void ShowMrecView()
         {
-            Appodeal.showMrecView(Screen.currentResolution.height - Screen.currentResolution.height / 10,
+            Appodeal.showMrecView(AppodealAdType.BANNER_VERTICAL_TOP,
                 AppodealAdType.BANNER_HORIZONTAL_CENTER, "default");
         }
 
@@ -416,7 +423,7 @@ namespace AppodealSample
         {
             if (!isPrecache)
             {
-                btnShowInterstitial.GetComponentInChildren<Text>().text = SHOW_INTERSTITIAL;
+                interstitialButton.GetComponentInChildren<Text>().text = SHOW_INTERSTITIAL;
             }
             else
             {
@@ -443,7 +450,7 @@ namespace AppodealSample
 
         public void onInterstitialClosed()
         {
-            btnShowInterstitial.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
+            interstitialButton.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
             Debug.Log("onInterstitialClosed");
         }
 
@@ -463,7 +470,7 @@ namespace AppodealSample
 
         public void onRewardedVideoLoaded(bool isPrecache)
         {
-            btnShowRewardedVideo.GetComponentInChildren<Text>().text = "SHOW REWARDED VIDEO";
+            rewardedVideoButton.GetComponentInChildren<Text>().text = "SHOW REWARDED VIDEO";
             print("onRewardedVideoLoaded");
         }
 
@@ -484,7 +491,7 @@ namespace AppodealSample
 
         public void onRewardedVideoClosed(bool finished)
         {
-            btnShowRewardedVideo.GetComponentInChildren<Text>().text = "CACHE REWARDED VIDEO";
+            rewardedVideoButton.GetComponentInChildren<Text>().text = "CACHE REWARDED VIDEO";
             print($"onRewardedVideoClosed. Finished - {finished}");
         }
 
@@ -534,32 +541,5 @@ namespace AppodealSample
 
         #endregion
 
-        #region PermissionGrantedListener
-
-        public void writeExternalStorageResponse(int result)
-        {
-            if (result == 0)
-            {
-                Debug.Log("WRITE_EXTERNAL_STORAGE permission granted");
-            }
-            else
-            {
-                Debug.Log("WRITE_EXTERNAL_STORAGE permission grant refused");
-            }
-        }
-
-        public void accessCoarseLocationResponse(int result)
-        {
-            if (result == 0)
-            {
-                Debug.Log("ACCESS_COARSE_LOCATION permission granted");
-            }
-            else
-            {
-                Debug.Log("ACCESS_COARSE_LOCATION permission grant refused");
-            }
-        }
-
-        #endregion PermissionGrantedListener
     }
 }

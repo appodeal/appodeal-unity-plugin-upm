@@ -498,12 +498,6 @@ namespace AppodealAds.Unity.Platforms.Android
         {
             getAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(listener));
         }
-
-        public void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            getAppodealClass().CallStatic("requestAndroidMPermissions", getActivity(),
-                new AppodealPermissionCallbacks(listener));
-        }
         
         public void setSharedAdsInstanceAcrossActivities(bool value)
         {

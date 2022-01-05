@@ -20,5 +20,7 @@ namespace AppodealAds.Unity.Common {
         public const int BANNER_HORIZONTAL_CENTER = -2;
         public const int BANNER_HORIZONTAL_RIGHT = -3;
         public const int BANNER_HORIZONTAL_LEFT = -4;
+        public const int BANNER_VERTICAL_BOTTOM = -5;
+        public const int BANNER_VERTICAL_TOP = -6;
     }
 }
