@@ -416,7 +416,7 @@ namespace AppodealAds.Unity.Api
         }
         
         /// <summary>
-        /// Disabling location permission check only for Android platform.
+        /// Disabling location tracking (for iOS platform only).
         /// See <see cref="Appodeal.disableLocationPermissionCheck"/> for resulting triggered event.
         /// </summary>
         public static void disableLocationPermissionCheck()
@@ -455,7 +455,7 @@ namespace AppodealAds.Unity.Api
         }
         
         /// <summary>
-        /// Disabling write external storage permission check only for Android platform.
+        /// Set test mode.
         /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
         /// </summary>
         public static void setTesting(bool test)
@@ -515,60 +515,6 @@ namespace AppodealAds.Unity.Api
         public static void setCustomFilter(string name, string value)
         {
             getInstance().setCustomFilter(name, value);
-        }
-        
-        /// <summary>
-        /// Set segment filter.
-        /// See <see cref="Appodeal.setSegmentFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setSegmentFilter(string name, bool value)
-        {
-            getInstance().setSegmentFilter(name, value);
-        }
-
-        /// <summary>
-        /// Set segment filter.
-        /// See <see cref="Appodeal.setSegmentFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setSegmentFilter(string name, int value)
-        {
-            getInstance().setSegmentFilter(name, value);
-        }
-
-        /// <summary>
-        /// Set segment filter.
-        /// See <see cref="Appodeal.setSegmentFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setSegmentFilter(string name, double value)
-        {
-            getInstance().setSegmentFilter(name, value);
-        }
-
-        /// <summary>
-        /// Set segment filter.
-        /// See <see cref="Appodeal.setSegmentFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setSegmentFilter(string name, string value)
-        {
-            getInstance().setSegmentFilter(name, value);
-        }
-
-        /// <summary>
-        /// Request WRITE_EXTERNAL_STORAGE and ACCESS_COARSE_LOCATION permissions for Android M.
-        /// See <see cref="Appodeal.requestAndroidMPermissions"/> for resulting triggered event.
-        /// <param name="listener">listener implementation of Appodeal/Common/Appodeal/IPermissionGrantedListener</param>
-        /// </summary>  
-        public static void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            getInstance().requestAndroidMPermissions(listener);
         }
         
         /// <summary>

@@ -41,10 +41,6 @@ namespace AppodealAds.Unity.Common
         string getVersion();
         bool canShow(int adTypes);
         bool canShow(int adTypes, string placement);
-        void setSegmentFilter(string name, bool value);
-        void setSegmentFilter(string name, int value);
-        void setSegmentFilter(string name, double value);
-        void setSegmentFilter(string name, string value);
         void setCustomFilter(string name, bool value);
         void setCustomFilter(string name, int value);
         void setCustomFilter(string name, double value);
@@ -69,7 +65,6 @@ namespace AppodealAds.Unity.Common
         void setRewardedVideoCallbacks(IRewardedVideoAdListener listener);
         void setBannerCallbacks(IBannerAdListener listener);
         void setMrecCallbacks(IMrecAdListener listener);
-        void requestAndroidMPermissions(IPermissionGrantedListener listener);
         void destroy(int adTypes);
         void setSharedAdsInstanceAcrossActivities(bool value);
         void setUseSafeArea(bool value);

@@ -11,6 +11,8 @@
 #define BANNER_X_POSITION_CENTER    -2
 #define BANNER_X_POSITION_RIGHT     -3
 #define BANNER_X_POSITION_LEFT      -4
+#define BANNER_Y_POSITION_BOTTOM     8
+#define BANNER_Y_POSITION_TOP        16
 
 @implementation AppodealUnityBannerView
 
@@ -98,7 +100,12 @@ UIViewController* RootViewControllerUnityBannerView() {
     }
     
     //Calculate Y offset
-    if (YAxis / screenScale > superviewSize.height - bannerHeight) { //User defined offset more than banner width
+    if (YAxis == BANNER_Y_POSITION_TOP) {
+        mask |= UIViewAutoresizingFlexibleBottomMargin;
+    } else if (YAxis == BANNER_Y_POSITION_BOTTOM) {
+        mask |= UIViewAutoresizingFlexibleTopMargin;
+        yOffset = superviewSize.height - bannerHeight;
+    } else if (YAxis / screenScale > superviewSize.height - bannerHeight) { //User defined offset more than banner width
         NSLog(@"[Appodeal Banner view][error] Banner view y offset can'not be more than Screen height - acutual banner height");
         yOffset = superviewSize.height - bannerHeight;
         mask |= UIViewAutoresizingFlexibleTopMargin;

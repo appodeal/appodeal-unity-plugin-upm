@@ -90,27 +90,41 @@ namespace AppodealAds.Unity.Editor.PreProcess
             if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
                 AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
             {
-                //androidManifest.RemoveAdmobAppId();
+                if (File.Exists(path) && CheckContainsAppId(path))
+                {
+                    androidManifest.RemoveAdmobAppId();
+                }
                 Debug.LogWarning(
-                    "Missing config Admob (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
+                    "Missing Admob config (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
                 return;
+            }
+
+            if (!File.Exists(path))
+            {
+                Debug.LogError(
+                    $"Missing AndroidManifest {path}." +
+                    "\nAdmob App ID can't be added. The app may crash on startup!");
+                throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
             if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
             {
-                if (!CheckContainsAppId(path))
+                if (CheckContainsAppId(path))
                 {
-                    Debug.LogError(
-                        "Please enter an AdMob App ID in the 'Appodeal/Appodeal Settings' tool");
-                    throw new BuildFailedException("Admob App ID is not set");
+                    androidManifest.RemoveAdmobAppId();
                 }
+                Debug.LogError(
+                    $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
+                    "\nThe app may crash on startup!");
+                throw new BuildFailedException("Admob App ID is not valid");
             }
             else
             {
                 if (!AppodealSettings.Instance.AdMobAndroidAppId.StartsWith("ca-app-pub-"))
                 {
                     Debug.LogError(
-                        "Please enter a valid AdMob App ID in the 'Appodeal/Appodeal settings' tool.");
+                        "Incorrect value. The app may crash on startup." +
+                        "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                     throw new BuildFailedException("Admob App ID is not valid");
                 }
 

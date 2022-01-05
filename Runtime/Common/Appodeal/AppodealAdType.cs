@@ -15,10 +15,5 @@ namespace AppodealAds.Unity.Common {
 #elif UNITY_IPHONE
 		public const int NON_SKIPPABLE_VIDEO = 256;
 #endif
-
-        public const int BANNER_HORIZONTAL_SMART = -1;
-        public const int BANNER_HORIZONTAL_CENTER = -2;
-        public const int BANNER_HORIZONTAL_RIGHT = -3;
-        public const int BANNER_HORIZONTAL_LEFT = -4;
     }
 }

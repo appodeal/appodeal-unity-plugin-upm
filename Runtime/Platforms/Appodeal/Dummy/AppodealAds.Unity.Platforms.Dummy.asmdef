@@ -2,7 +2,9 @@
     "name": "AppodealAds.Unity.Platforms.Dummy",
     "references": [
         "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms"
+        "AppodealCM.Unity.Platforms",
+        "AppodealCM.Unity.Common",
+        "AppodealAds.Unity.Editor.AppodealManager"
     ],
     "includePlatforms": [
         "Editor"

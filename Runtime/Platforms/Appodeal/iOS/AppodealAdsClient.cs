@@ -35,11 +35,6 @@ namespace AppodealAds.Unity.Platforms.iOS
 
         #endregion
 
-        public void requestAndroidMPermissions(IPermissionGrantedListener listener)
-        {
-            Debug.LogWarning("Not supported on iOS platform");
-        }
-
         private static IInterstitialAdListener interstitialListener;
         private static INonSkippableVideoAdListener nonSkippableVideoListener;
         private static IRewardedVideoAdListener rewardedVideoListener;
@@ -430,7 +425,7 @@ namespace AppodealAds.Unity.Platforms.iOS
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
             AppodealObjCBridge.AppodealInitialize(appKey, nativeAdTypesForType(adTypes), hasConsent,
-                AppodealVersions.getPluginVersion(), AppodealVersions.getUnityVersion());
+                $"{AppodealVersions.getPluginVersion()}-upm", AppodealVersions.getUnityVersion());
         }
 
         public void initialize(string appKey, int adTypes, Consent consent)
@@ -634,26 +629,6 @@ namespace AppodealAds.Unity.Platforms.iOS
         public double getPredictedEcpm(int adType)
         {
             return AppodealObjCBridge.AppodealGetPredictedEcpm(nativeAdTypesForType(adType));
-        }
-
-        public void setSegmentFilter(string name, bool value)
-        {
-            AppodealObjCBridge.AppodealSetSegmentFilterBool(name, value);
-        }
-
-        public void setSegmentFilter(string name, int value)
-        {
-            AppodealObjCBridge.AppodealSetSegmentFilterInt(name, value);
-        }
-
-        public void setSegmentFilter(string name, double value)
-        {
-            AppodealObjCBridge.AppodealSetSegmentFilterDouble(name, value);
-        }
-
-        public void setSegmentFilter(string name, string value)
-        {
-            AppodealObjCBridge.AppodealSetSegmentFilterString(name, value);
         }
 
         public void setCustomFilter(string name, bool value)

@@ -121,6 +121,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         private void OnGUI()
         {
+            this.minSize = new Vector2(700, 900);
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,
                 false,
                 false);
@@ -553,12 +554,15 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                         AppodealDependencyUtils.ReplaceBetaVersion(latestVersion),
                         packageInfoStyle);
                     GUILayout.Space(15);
+                    Color defaultColor = GUI.backgroundColor;
+                    GUI.backgroundColor = Color.green;
                     if (GUILayout.Button(
                         new GUIContent { text = AppodealDependencyUtils.ActionImport },
                         btnFieldWidth))
                     {
                         ImportConfig(nameDep, content);
                     }
+                    GUI.backgroundColor = defaultColor;
 
                     GUILayout.Space(5);
                     GUILayout.Space(5);
@@ -662,6 +666,8 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         {
             if (action == -1)
             {
+                Color defaultColor = GUI.backgroundColor;
+                GUI.backgroundColor = Color.red;
                 if (GUILayout.Button(
                     new GUIContent { text = AppodealDependencyUtils.ActionUpdate },
                     btnFieldWidth))
@@ -669,6 +675,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                     UpdateDependency(nameDependency, previous, latest);
                     UpdateWindow();
                 }
+                GUI.backgroundColor = defaultColor;
             }
             else
             {
@@ -747,7 +754,9 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 }
                 else
                 {
-                    if (GUILayout.Button(new GUIContent { text = AppodealDependencyUtils.ActionImport },
+                    Color defaultColor = GUI.backgroundColor;
+                    GUI.backgroundColor = Color.red;
+                    if (GUILayout.Button(new GUIContent { text = AppodealDependencyUtils.ActionUpdate },
                         btnFieldWidth))
                     {
                         bool decision = RemoveHelper.RemovePlugin();
@@ -757,6 +766,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                             this.Close();
                         }
                     }
+                    GUI.backgroundColor = defaultColor;
                 }
 
                 GUILayout.Space(15);
