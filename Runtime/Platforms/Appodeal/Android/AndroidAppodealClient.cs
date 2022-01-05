@@ -112,7 +112,7 @@ namespace AppodealAds.Unity.Platforms.Android
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
-            getAppodealClass().CallStatic("setFramework", "unity", AppodealVersions.getPluginVersion(),
+            getAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.getPluginVersion()}-upm",
                 AppodealVersions.getUnityVersion());
             getAppodealClass().CallStatic("initialize", getActivity(), appKey, nativeAdTypesForType(adTypes),
                 hasConsent);
