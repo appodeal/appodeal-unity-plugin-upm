@@ -289,7 +289,7 @@ namespace AppodealAds.Unity.Platforms.Android
 
         public void disableLocationPermissionCheck()
         {
-            Debug.Log("Not support on Android platform");
+            Debug.Log("Not supported on Android platform");
         }
 
         public void setTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
@@ -321,26 +321,6 @@ namespace AppodealAds.Unity.Platforms.Android
         public bool canShow(int adTypes, string placement)
         {
             return getAppodealClass().CallStatic<bool>("canShow", nativeAdTypesForType(adTypes), placement);
-        }
-
-        public void setSegmentFilter(string name, bool value)
-        {
-            getAppodealClass().CallStatic("setSegmentFilter", name, value);
-        }
-
-        public void setSegmentFilter(string name, int value)
-        {
-            getAppodealClass().CallStatic("setSegmentFilter", name, value);
-        }
-        
-        public void setSegmentFilter(string name, double value)
-        {
-            getAppodealClass().CallStatic("setSegmentFilter", name, value);
-        }
-
-        public void setSegmentFilter(string name, string value)
-        {
-            getAppodealClass().CallStatic("setSegmentFilter", name, value);
         }
         
         public void setCustomFilter(string name, bool value)

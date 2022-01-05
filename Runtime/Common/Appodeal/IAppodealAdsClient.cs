@@ -41,10 +41,6 @@ namespace AppodealAds.Unity.Common
         string getVersion();
         bool canShow(int adTypes);
         bool canShow(int adTypes, string placement);
-        void setSegmentFilter(string name, bool value);
-        void setSegmentFilter(string name, int value);
-        void setSegmentFilter(string name, double value);
-        void setSegmentFilter(string name, string value);
         void setCustomFilter(string name, bool value);
         void setCustomFilter(string name, int value);
         void setCustomFilter(string name, double value);

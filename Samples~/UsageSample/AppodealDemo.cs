@@ -249,10 +249,10 @@ namespace AppodealSample
                     true);
             }
 
-            Appodeal.setSegmentFilter("newBoolean", true);
-            Appodeal.setSegmentFilter("newInt", 1234567890);
-            Appodeal.setSegmentFilter("newDouble", 123.123456789);
-            Appodeal.setSegmentFilter("newString", "newStringFromSDK");
+            Appodeal.setCustomFilter("newBoolean", true);
+            Appodeal.setCustomFilter("newInt", 1234567890);
+            Appodeal.setCustomFilter("newDouble", 123.123456789);
+            Appodeal.setCustomFilter("newString", "newStringFromSDK");
         }
 
         public void ShowInterstitial()

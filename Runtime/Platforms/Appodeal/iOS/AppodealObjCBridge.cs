@@ -136,15 +136,6 @@ namespace AppodealAds.Unity.Platforms.iOS
         internal static extern double AppodealGetPredictedEcpm(int adType);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetSegmentFilterString(string name, string value);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealSetSegmentFilterDouble(string name, double value);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealSetSegmentFilterInt(string name, int value);
-
-        [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterBool(string name, bool value);
         
         [DllImport("__Internal")]
@@ -155,9 +146,6 @@ namespace AppodealAds.Unity.Platforms.iOS
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterInt(string name, int value);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealSetSegmentFilterBool(string name, bool value);
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetExtraDataBool(string name, bool value);

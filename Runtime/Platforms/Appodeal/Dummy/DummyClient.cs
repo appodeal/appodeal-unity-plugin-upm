@@ -607,11 +607,6 @@ namespace AppodealAds.Unity.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableLocationPermissionCheck method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void disableWriteExternalStoragePermissionCheck()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableWriteExternalStoragePermissionCheck method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void setTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setTriggerOnLoadedOnPrecache method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
@@ -631,26 +626,6 @@ namespace AppodealAds.Unity.Platforms.Dummy
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getVersion method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
             return string.Empty;
-        }
-
-        public void setSegmentFilter(string name, bool value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setSegmentFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void setSegmentFilter(string name, int value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setSegmentFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void setSegmentFilter(string name, double value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setSegmentFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void setSegmentFilter(string name, string value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setSegmentFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void setCustomFilter(string name, bool value)
