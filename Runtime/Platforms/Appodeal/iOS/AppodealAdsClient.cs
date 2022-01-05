@@ -425,7 +425,7 @@ namespace AppodealAds.Unity.Platforms.iOS
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
             AppodealObjCBridge.AppodealInitialize(appKey, nativeAdTypesForType(adTypes), hasConsent,
-                AppodealVersions.getPluginVersion(), AppodealVersions.getUnityVersion());
+                $"{AppodealVersions.getPluginVersion()}-upm", AppodealVersions.getUnityVersion());
         }
 
         public void initialize(string appKey, int adTypes, Consent consent)
