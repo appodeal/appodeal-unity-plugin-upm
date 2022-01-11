@@ -50,7 +50,9 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
         private GUIStyle labelStyle;
         private GUIStyle headerInfoStyle;
+        private GUIStyle subHeaderInfoStyle;
         private GUIStyle packageInfoStyle;
+        private GUIStyle separatorLineStyle;
         private readonly GUILayoutOption btnFieldWidth = GUILayout.Width(60);
 
         #endregion
@@ -69,13 +71,23 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 true, AppodealDependencyUtils.AppodealSdkManager);
         }
 
+        private void HorizontalLine ()
+        {
+            var c = GUI.color;
+            GUI.color = Color.grey;
+            GUILayout.Box( GUIContent.none, separatorLineStyle );
+            GUI.color = c;
+        }
+
         private void Awake()
         {
             labelStyle = new GUIStyle(EditorStyles.label)
             {
-                fontSize = 15,
-                fontStyle = FontStyle.Bold
+                fontSize = 18,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter
             };
+
             packageInfoStyle = new GUIStyle(EditorStyles.label)
             {
                 fontSize = 12,
@@ -88,6 +100,22 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 fontSize = 13,
                 fontStyle = FontStyle.Bold,
                 fixedHeight = 18
+            };
+
+            subHeaderInfoStyle = new GUIStyle(EditorStyles.label)
+            {
+                fontSize = 16,
+                fontStyle = FontStyle.Bold,
+                normal = new GUIStyleState() { textColor = new Color(0.7f,0.6f,0.1f) },
+                alignment = TextAnchor.MiddleCenter
+
+            };
+
+            separatorLineStyle = new GUIStyle()
+            {
+                normal = new GUIStyleState() { background = EditorGUIUtility.whiteTexture },
+                margin = new RectOffset(0, 0, 10, 5),
+                fixedHeight = 2
             };
 
             Reset();
@@ -122,21 +150,25 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         private void OnGUI()
         {
             this.minSize = new Vector2(700, 900);
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition,
-                false,
-                false);
+            this.maxSize = new Vector2(700, 2000);
+
+            if (isPluginInfoReady && internalDependencies.Count > 0 && latestDependencies.Count > 0 && appodealUnityPlugin != null)
+                scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, false, false);
+            else EditorGUILayout.BeginScrollView(scrollPosition, false, false);
+
             GUILayout.BeginVertical();
 
             if (isPluginInfoReady)
             {
                 #region Plugin
 
-                GUILayout.Space(5);
+                GUILayout.Space(10);
                 EditorGUILayout.LabelField(AppodealDependencyUtils.AppodealUnityPlugin, labelStyle,
                     GUILayout.Height(20));
 
                 if (appodealUnityPlugin != null)
                 {
+                    GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle, GUILayout.Height(45)))
                     {
                         AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
@@ -152,6 +184,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                 "Can't find plugin information. - {180}");
                         }
                     }
+                    HorizontalLine();
                 }
                 else
                 {
@@ -165,23 +198,28 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
                 if (internalDependencies.Count > 0 && latestDependencies.Count > 0)
                 {
+                    GUILayout.Space(10);
                     EditorGUILayout.LabelField(AppodealDependencyUtils.AppodealCoreDependencies, labelStyle,
                         GUILayout.Height(20));
-                    EditorGUILayout.LabelField(AppodealDependencyUtils.iOS, labelStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField(AppodealDependencyUtils.iOS, subHeaderInfoStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle, GUILayout.Height(45)))
                     {
                         AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
                         GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(internalDependencies),
                             AppodealDependencyUtils.GetAppodealDependency(latestDependencies), PlatformSdk.iOS);
                     }
-
-                    EditorGUILayout.LabelField(AppodealDependencyUtils.Android, labelStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField(AppodealDependencyUtils.Android, subHeaderInfoStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle, GUILayout.Height(45)))
                     {
                         AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
                         GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(internalDependencies),
                             AppodealDependencyUtils.GetAppodealDependency(latestDependencies), PlatformSdk.Android);
                     }
+                    HorizontalLine();
                 }
 
                 #endregion
@@ -190,21 +228,26 @@ namespace AppodealAds.Unity.Editor.AppodealManager
 
                 if (internalDependencies.Count > 0)
                 {
+                    GUILayout.Space(10);
                     EditorGUILayout.LabelField(AppodealDependencyUtils.AppodealNetworkDependencies, labelStyle,
                         GUILayout.Height(20));
-                    EditorGUILayout.LabelField(AppodealDependencyUtils.iOS, labelStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField(AppodealDependencyUtils.iOS, subHeaderInfoStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle, GUILayout.Height(45)))
                     {
                         AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.iOS);
                     }
-
-                    EditorGUILayout.LabelField(AppodealDependencyUtils.Android, labelStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
+                    EditorGUILayout.LabelField(AppodealDependencyUtils.Android, subHeaderInfoStyle, GUILayout.Height(20));
+                    GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle, GUILayout.Height(45)))
                     {
                         AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.Android);
                     }
+                    HorizontalLine();
                 }
 
                 #endregion
@@ -235,6 +278,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                         && !string.IsNullOrEmpty(internalDependency.android_info.version)
                                         && !string.IsNullOrEmpty(internalDependency.android_info.unity_content))
                                     {
+                                        GUILayout.Space(5);
                                         SetAdapterUpdateInfo(latestDependency.name,
                                             internalDependency.android_info.version,
                                             latestDependency.android_info.version,
@@ -247,6 +291,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                 {
                                     if (latestDependency.android_info.name != null)
                                     {
+                                        GUILayout.Space(5);
                                         SetAdapterInformationForImport(latestDependency, platformSdk);
                                     }
                                 }
@@ -259,6 +304,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                         && !string.IsNullOrEmpty(internalDependency.ios_info.version)
                                         && !string.IsNullOrEmpty(internalDependency.ios_info.unity_content))
                                     {
+                                        GUILayout.Space(5);
                                         SetAdapterUpdateInfo(latestDependency.name,
                                             internalDependency.ios_info.version,
                                             latestDependency.ios_info.version,
@@ -271,6 +317,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                 {
                                     if (latestDependency.ios_info?.name != null)
                                     {
+                                        GUILayout.Space(5);
                                         SetAdapterInformationForImport(latestDependency, platformSdk);
                                     }
                                 }
@@ -288,6 +335,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                             case PlatformSdk.Android:
                                 if (networkDependency.android_info?.name != null)
                                 {
+                                    GUILayout.Space(5);
                                     SetAdapterInformationForImport(networkDependency, PlatformSdk.Android);
                                 }
 
@@ -295,6 +343,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                             case PlatformSdk.iOS:
                                 if (networkDependency.ios_info?.name != null)
                                 {
+                                    GUILayout.Space(5);
                                     SetAdapterInformationForImport(networkDependency, PlatformSdk.iOS);
                                 }
 
@@ -314,6 +363,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 case PlatformSdk.Android:
                     if (latestDependency.android_info != null)
                     {
+                        GUILayout.Space(5);
                         SetAdapterImportInfo(latestDependency.name, AppodealDependencyUtils.EmptyCurrentVersion,
                             latestDependency.android_info.version, latestDependency.android_info.unity_content);
                     }
@@ -322,6 +372,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                 case PlatformSdk.iOS:
                     if (latestDependency.ios_info != null)
                     {
+                        GUILayout.Space(5);
                         SetAdapterImportInfo(latestDependency.name, AppodealDependencyUtils.EmptyCurrentVersion,
                             latestDependency.ios_info.version, latestDependency.ios_info.unity_content);
                     }
@@ -538,6 +589,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         {
             using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle))
             {
+                GUILayout.Space(5);
                 using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
                 {
                     GUILayout.Space(2);
@@ -568,6 +620,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                     GUILayout.Space(5);
                     GUILayout.Space(5);
                 }
+                GUILayout.Space(5);
             }
         }
 
@@ -595,6 +648,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         {
             using (new EditorGUILayout.VerticalScope(AppodealDependencyUtils.BoxStyle))
             {
+                GUILayout.Space(5);
                 using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
                 {
                     GUILayout.Space(2);
@@ -659,6 +713,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                         }
                     }
                 }
+                GUILayout.Space(5);
             }
         }
 
