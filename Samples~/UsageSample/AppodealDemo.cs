@@ -214,7 +214,7 @@ namespace AppodealSample
         public void InitWithConsent(bool isConsent)
         {
             Appodeal.setTesting(testingToggle.isOn);
-            Appodeal.setLogLevel(loggingToggle.isOn ? LogLevel.Verbose : LogLevel.None);
+            Appodeal.setLogLevel(loggingToggle.isOn ? AppodealLogLevel.Verbose : AppodealLogLevel.None);
             Appodeal.setUserId("1");
             Appodeal.setUserAge(1);
             Appodeal.setUserGender(Gender.OTHER);
@@ -257,7 +257,7 @@ namespace AppodealSample
 
         public void ShowInterstitial()
         {
-            if (Appodeal.canShow(AppodealAdType.INTERSTITIAL) && !Appodeal.isPrecache(AppodealAdType.INTERSTITIAL))
+            if (Appodeal.isLoaded(AppodealAdType.INTERSTITIAL) && Appodeal.canShow(AppodealAdType.INTERSTITIAL, "default") && !Appodeal.isPrecache(AppodealAdType.INTERSTITIAL))
             {
                 Appodeal.show(AppodealAdType.INTERSTITIAL);
             }
@@ -269,7 +269,7 @@ namespace AppodealSample
 
         public void ShowRewardedVideo()
         {
-            if (Appodeal.canShow(AppodealAdType.REWARDED_VIDEO))
+            if (Appodeal.isLoaded(AppodealAdType.REWARDED_VIDEO) && Appodeal.canShow(AppodealAdType.REWARDED_VIDEO, "default"))
             {
                 Appodeal.show(AppodealAdType.REWARDED_VIDEO);
             }
