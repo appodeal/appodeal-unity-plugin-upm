@@ -527,21 +527,21 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealObjCBridge.AppodealSetTestingEnabled(test);
         }
 
-        public void setLogLevel(LogLevel level)
+        public void setLogLevel(AppodealLogLevel level)
         {
             switch (level)
             {
-                case LogLevel.None:
+                case AppodealLogLevel.None:
                 {
                     AppodealObjCBridge.AppodealSetLogLevel(1);
                     break;
                 }
-                case LogLevel.Debug:
+                case AppodealLogLevel.Debug:
                 {
                     AppodealObjCBridge.AppodealSetLogLevel(2);
                     break;
                 }
-                case LogLevel.Verbose:
+                case AppodealLogLevel.Verbose:
                 {
                     AppodealObjCBridge.AppodealSetLogLevel(3);
                     break;

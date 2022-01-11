@@ -231,24 +231,24 @@ namespace AppodealAds.Unity.Platforms.Android
             return boolean;
         }
 
-        public void setLogLevel(LogLevel logging)
+        public void setLogLevel(AppodealLogLevel logging)
         {
             var logLevel = new AndroidJavaClass("com.appodeal.ads.utils.Log$LogLevel");
             switch (logging)
             {
-                case LogLevel.None:
+                case AppodealLogLevel.None:
                 {
                     getAppodealClass().CallStatic("setLogLevel",
                         logLevel.CallStatic<AndroidJavaObject>("fromInteger", intToAndroid(0)));
                     break;
                 }
-                case LogLevel.Debug:
+                case AppodealLogLevel.Debug:
                 {
                     getAppodealClass().CallStatic("setLogLevel",
                         logLevel.CallStatic<AndroidJavaObject>("fromInteger", intToAndroid(1)));
                     break;
                 }
-                case LogLevel.Verbose:
+                case AppodealLogLevel.Verbose:
                 {
                     getAppodealClass().CallStatic("setLogLevel",
                         logLevel.CallStatic<AndroidJavaObject>("fromInteger", intToAndroid(2)));

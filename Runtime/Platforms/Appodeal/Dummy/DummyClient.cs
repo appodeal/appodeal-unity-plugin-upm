@@ -518,9 +518,9 @@ namespace AppodealAds.Unity.Platforms.Dummy
             SimDestroyAd(adTypes);
         }
 
-        public void setLogLevel(LogLevel logging)
+        public void setLogLevel(AppodealLogLevel logging)
         {
-            isLoggingEnabled = logging == LogLevel.None ? false : true;
+            isLoggingEnabled = logging == AppodealLogLevel.None ? false : true;
         }
 
         public void setInterstitialCallbacks(IInterstitialAdListener listener)

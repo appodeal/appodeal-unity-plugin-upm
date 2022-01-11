@@ -29,7 +29,7 @@ namespace AppodealAds.Unity.Common
         void setTabletBanners(bool value);
         void setBannerRotation(int leftBannerRotation, int rightBannerRotation);
         void setTesting(bool test);
-        void setLogLevel(LogLevel level);
+        void setLogLevel(AppodealLogLevel level);
         void setChildDirectedTreatment(bool value);
         void updateConsent(bool value);
         void updateConsent(Consent value);

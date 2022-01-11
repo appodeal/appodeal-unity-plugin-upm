@@ -466,9 +466,9 @@ namespace AppodealAds.Unity.Api
         /// <summary>
         /// Set log level. All logs will be written with tag "Appodeal".
         /// See <see cref="Appodeal.setLogLevel"/> for resulting triggered event.
-        /// <param name="log">logLevel log level .</param>
+        /// <param name="log">AppodealLogLevel log level .</param>
         /// </summary>
-        public static void setLogLevel(LogLevel log)
+        public static void setLogLevel(AppodealLogLevel log)
         {
             getInstance().setLogLevel(log);
         }
