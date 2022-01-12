@@ -12,10 +12,6 @@ namespace AppodealAds.Unity.Editor.InternalResources
         private const string AppodealSettingsExportPath = "Appodeal/Editor/InternalResources/AppodealSettings.asset";
         private static AppodealSettings instance;
 
-        [SerializeField] private bool shouldIgnoreEDMInstallation;
-
-        [SerializeField] private bool wereNetworkConfigsImported;
-
         [SerializeField] private string adMobAndroidAppId = string.Empty;
         [SerializeField] private string adMobIosAppId = string.Empty;
 
@@ -54,18 +50,6 @@ namespace AppodealAds.Unity.Editor.InternalResources
 
                 return instance;
             }
-        }
-
-        public bool ShouldIgnoreEDMInstallation
-        {
-            get { return shouldIgnoreEDMInstallation; }
-            set { Instance.shouldIgnoreEDMInstallation = value; }
-        }
-
-        public bool WereNetworkConfigsImported
-        {
-            get { return wereNetworkConfigsImported; }
-            set { Instance.wereNetworkConfigsImported = value; }
         }
 
         public string AdMobAndroidAppId

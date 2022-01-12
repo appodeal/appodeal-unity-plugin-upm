@@ -12,7 +12,7 @@ namespace ExternalDependencyManager.Unity.Editor.Installer
         [InitializeOnLoadMethod]
         static void InstallPluginIfUserAgreed()
         {
-            if (IsPluginInstalled() || AppodealSettings.Instance.ShouldIgnoreEDMInstallation)
+            if (IsPluginInstalled() || AppodealPreferences.Instance.ShouldIgnoreEDMInstallation)
                 return;
 
             if (PluginInstallationRequest())
@@ -48,7 +48,8 @@ namespace ExternalDependencyManager.Unity.Editor.Installer
                 case 1:
                     return false;
                 case 2:
-                    AppodealSettings.Instance.ShouldIgnoreEDMInstallation = true;
+                    AppodealPreferences.Instance.ShouldIgnoreEDMInstallation = true;
+                    AppodealPreferences.Instance.SaveAsync();
                     return false;
                 default:
                     return false;

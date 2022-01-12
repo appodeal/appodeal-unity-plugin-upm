@@ -74,6 +74,10 @@ namespace AppodealAds.Unity.Editor.Utils
             yield return null;
         }
 
+        private void OnDestroy() {
+            AppodealSettings.Instance.SaveAsync();
+        }
+
         private void OnGUI()
         {
             #region Admob App Id Setting
@@ -180,13 +184,8 @@ namespace AppodealAds.Unity.Editor.Utils
                 AppodealSettings.Instance.IOSSkAdNetworkItems =
                     KeyRow("Add SKAdNetworkItems", AppodealSettings.Instance.IOSSkAdNetworkItems);
 
-                if (AppodealSettings.Instance.IOSSkAdNetworkItemsList != null &&
-                    AppodealSettings.Instance.IOSSkAdNetworkItemsList.Count > 0)
-                {
-                    AppodealSettings.Instance.IOSSkAdNetworkItemsList = null;
-                    AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
-                }
-                else
+                if (SKAdNetworkIdentifiers != null && SKAdNetworkIdentifiers.Count > 0
+                    && AppodealSettings.Instance.IOSSkAdNetworkItemsList != SKAdNetworkIdentifiers)
                 {
                     AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
                 }
@@ -198,7 +197,6 @@ namespace AppodealAds.Unity.Editor.Utils
 
             #endregion
 
-            AppodealSettings.Instance.SaveAsync();
         }
 
         private static void LabelField(string label)

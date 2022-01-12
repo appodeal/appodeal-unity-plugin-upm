@@ -72,7 +72,8 @@ namespace AppodealAds.Unity.Editor.AppodealManager
             }
             fileInfo.ToList().ForEach(file => FileUtil.ReplaceFile(file.FullName, Path.Combine(Plugin_path, Network_configs_path, file.Name.Replace(".txt", ".xml"))));
 
-            AppodealSettings.Instance.WereNetworkConfigsImported = true;
+            AppodealPreferences.Instance.WereNetworkConfigsImported = true;
+            AppodealPreferences.Instance.SaveAsync();
             AssetDatabase.Refresh();
         }
 
