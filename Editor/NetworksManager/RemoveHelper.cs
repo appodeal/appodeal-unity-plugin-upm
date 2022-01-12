@@ -204,7 +204,6 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                     FileUtil.DeleteFileOrDirectory(fullItemPath + ".meta");
                 }
 
-                //AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 return true;
             }
             else return false;
