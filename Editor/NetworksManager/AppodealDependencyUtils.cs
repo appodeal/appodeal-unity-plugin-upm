@@ -32,6 +32,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         public const string EDMPackagePath = "ExternalDependencyManager/Editor";
         public const string EDMPackageName = "external-dependency-manager-1.2.168.unitypackage";
         public const string Replace_dependency_value = "com.appodeal.ads.sdk.networks:";
+        public const string Replace_admob_dep_value = "com.appodeal.ads.sdk.networks:admob";
         public const string Replace_dependency_core = "com.appodeal.ads.sdk:core:";
         public const string PackageName = "Name";
         public const string CurrentVersionHeader = "Current Version";
@@ -56,6 +57,7 @@ namespace AppodealAds.Unity.Editor.AppodealManager
         public const string SpecCloseDependencies = "</dependencies>";
         public const string XmlFileExtension = ".xml";
         public const string TwitterMoPub = "TwitterMoPub";
+        public const string GoogleAdMob = "GoogleAdMob";
         public const string APDAppodealAdExchangeAdapter = "APDAppodealAdExchangeAdapter";
         public const string Dependencies = "Dependencies";
 

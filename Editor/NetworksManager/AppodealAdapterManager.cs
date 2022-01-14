@@ -458,9 +458,12 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                 }
                                 else
                                 {
+                                    Color defaultColor = GUI.backgroundColor;
+                                    GUI.backgroundColor = Color.red;
                                     UpdateCoreProccess(internalDependency.name,
                                         internalDependency.ios_info.unity_content,
                                         latestDependency.ios_info.unity_content, PlatformSdk.iOS);
+                                    GUI.backgroundColor = defaultColor;
                                 }
                             }
                         }
@@ -506,10 +509,13 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                                 }
                                 else
                                 {
+                                    Color defaultColor = GUI.backgroundColor;
+                                    GUI.backgroundColor = Color.red;
                                     UpdateCoreProccess(internalDependency.name,
                                         internalDependency.android_info.unity_content,
                                         latestDependency.android_info.unity_content,
                                         PlatformSdk.Android);
+                                    GUI.backgroundColor = defaultColor;
                                 }
                             }
                         }
@@ -1069,67 +1075,41 @@ namespace AppodealAds.Unity.Editor.AppodealManager
                             if (specName == null)
                             {
                                 Debug.Log(
-                                    $"Pod name not specified while reading {dependencyPath}:{reader.LineNumber}\n");
+                                    $"Spec attribute was not found at {dependencyPath}:{reader.LineNumber}\n");
                                 return false;
                             }
 
-                            foreach (var s in new List<string> { "vast", "nast", "mraid", "appodealx", "appodeal" })
+                            if (networkDependency.name == AppodealDependencyUtils.Appodeal && 
+                                !specName.Contains(AppodealDependencyUtils.Replace_dependency_core)) return true;
+                            
+                            if (networkDependency.name == AppodealDependencyUtils.GoogleAdMob && 
+                                !specName.Contains(AppodealDependencyUtils.Replace_admob_dep_value)) return true;
+
+                            if (specName.Contains(AppodealDependencyUtils.Replace_dependency_value))
                             {
-                                if (!specName.Contains(s))
-                                {
-                                    if (specName.Contains(AppodealDependencyUtils.Replace_dependency_value))
-                                    {
-                                        networkDependency.android_info = new NetworkDependency.AndroidDependency(
-                                            AppodealDependencyUtils.GetAndroidDependencyName(specName),
-                                            AppodealDependencyUtils.GetAndroidDependencyVersion(specName),
-                                            AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                    }
-                                    else if (specName.Contains(AppodealDependencyUtils.Replace_dependency_core))
-                                    {
-                                        networkDependency.android_info = new NetworkDependency.AndroidDependency(
-                                            "appodeal",
-                                            AppodealDependencyUtils.GetAndroidDependencyCoreVersion(specName),
-                                            AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                    }
-                                }
-                                else
-                                {
-                                    return false;
-                                }
+                                networkDependency.android_info = new NetworkDependency.AndroidDependency(
+                                    AppodealDependencyUtils.GetAndroidDependencyName(specName),
+                                    AppodealDependencyUtils.GetAndroidDependencyVersion(specName),
+                                    AppodealDependencyUtils.GetAndroidContent(dependencyPath));
+                                
+                                return false;
+                            }
+                            else if (specName.Contains(AppodealDependencyUtils.Replace_dependency_core))
+                            {
+                                networkDependency.android_info = new NetworkDependency.AndroidDependency(
+                                    "appodeal",
+                                    AppodealDependencyUtils.GetAndroidDependencyCoreVersion(specName),
+                                    AppodealDependencyUtils.GetAndroidContent(dependencyPath));
+                                
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
                             }
                         }
-
-                        return true;
                     }
-
-                    if (elementName == "sources" && parentElementName == "androidPackage")
-                        return true;
-                    if (elementName == "sources" && parentElementName == "androidPackages")
-                    {
-                        if (isStart)
-                        {
-                            sources = new List<string>();
-                        }
-                        else
-                        {
-                            using (var enumerator = sources.GetEnumerator())
-                            {
-                                while (enumerator.MoveNext())
-                                {
-                                    var current = enumerator.Current;
-                                    Debug.Log(current);
-                                }
-                            }
-                        }
-
-                        return true;
-                    }
-
-                    if (elementName != "source" || parentElementName != "sources")
-                        return false;
-                    if (isStart && reader.Read() && reader.NodeType == XmlNodeType.Text)
-                        sources.Add(reader.ReadContentAsString());
-                    return true;
+                    return false;
                 });
 
             #endregion
