@@ -1,10 +1,11 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
+    "name": "AppodealAds.Unity.Editor.SDKManager",
     "references": [
+        "AppodealAds.Unity.Editor.SDKManager.Models",
+        "AppodealAds.Unity.Editor.PluginRemover",
+        "AppodealAds.Unity.Editor.Utils",
         "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
-        "AppodealAds.Unity.Editor.Utils"
+        "marijnz.EditorCoroutines"
     ],
     "includePlatforms": [
         "Editor"

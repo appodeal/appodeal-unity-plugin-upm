@@ -31,6 +31,12 @@ namespace AppodealAds.Unity.Editor.InternalResources
         [SerializeField] private bool iOSSKAdNetworkItems;
         [SerializeField] private List<string> iOsskAdNetworkItemsList;
 
+
+        [SerializeField] private string facebookAndroidAppId = string.Empty;
+        [SerializeField] private string facebookIosAppId = string.Empty;
+        [SerializeField] private bool facebookAutoLogAppEvents;
+        [SerializeField] private bool facebookAdvertiserIDCollection;
+
         public static AppodealSettings Instance
         {
             get
@@ -139,6 +145,30 @@ namespace AppodealAds.Unity.Editor.InternalResources
         {
             get { return iOsskAdNetworkItemsList; }
             set { Instance.iOsskAdNetworkItemsList = value; }
+        }
+
+        public string FacebookAndroidAppId
+        {
+            get { return Instance.facebookAndroidAppId; }
+            set { Instance.facebookAndroidAppId = value.Trim(); }
+        }
+
+        public string FacebookIosAppId
+        {
+            get { return Instance.facebookIosAppId; }
+            set { Instance.facebookIosAppId = value.Trim(); }
+        }
+
+        public bool FacebookAutoLogAppEvents
+        {
+            get { return facebookAutoLogAppEvents; }
+            set { Instance.facebookAutoLogAppEvents = value; }
+        }
+
+        public bool FacebookAdvertiserIDCollection
+        {
+            get { return facebookAdvertiserIDCollection; }
+            set { Instance.facebookAdvertiserIDCollection = value; }
         }
 
         public void SaveAsync()

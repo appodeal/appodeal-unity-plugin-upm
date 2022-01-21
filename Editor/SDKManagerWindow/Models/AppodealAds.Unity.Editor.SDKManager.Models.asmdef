@@ -1,11 +1,6 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
-    "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
-        "AppodealAds.Unity.Editor.Utils"
-    ],
+    "name": "AppodealAds.Unity.Editor.SDKManager.Models",
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

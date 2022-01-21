@@ -1,9 +1,7 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
+    "name": "AppodealAds.Unity.Editor.AssetsExtractor",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
+        "AppodealAds.Unity.Editor.InternalResources",
         "AppodealAds.Unity.Editor.Utils"
     ],
     "includePlatforms": [

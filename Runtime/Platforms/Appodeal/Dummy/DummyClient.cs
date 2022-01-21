@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using AppodealAds.Unity.Common;
 using AppodealCM.Unity.Common;
 using AppodealCM.Unity.Platforms;
-using AppodealAds.Unity.Editor.AppodealManager;
+using AppodealAds.Unity.Editor.Utils;
 
 namespace AppodealAds.Unity.Platforms.Dummy
 {
@@ -136,7 +136,7 @@ namespace AppodealAds.Unity.Platforms.Dummy
                 return false;
             }
 
-            var defaultPath = Path.Combine(AppodealDependencyUtils.Package_path, "Editor/EditorAds/", prefabName, ".prefab");
+            var defaultPath = Path.Combine(AppodealEditorConstants.PackagePath, "Editor/EditorAds/", prefabName, ".prefab");
             var assetGuids = AssetDatabase.FindAssets(prefabName);
             var prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
 

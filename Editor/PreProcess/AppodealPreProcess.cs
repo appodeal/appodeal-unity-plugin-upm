@@ -13,7 +13,6 @@ using UnityEditor.Build;
 using AppodealAds.Unity.Editor.Checkers;
 using AppodealAds.Unity.Editor.InternalResources;
 using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.AppodealManager;
 using UnityEditor.Build.Reporting;
 using UnityEngine.Android;
 using UnityEngine;
@@ -75,6 +74,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
             EnableMultidex(manifestPath, androidManifest);
 
             androidManifest.Save();
+            AppodealServicesSetup.SetupManifestForFacebook();
         }
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
@@ -87,15 +87,15 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
-                AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
+            if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
+                AppodealEditorConstants.NetworkDepsPath, "GoogleAdMobDependencies.xml")))
             {
                 if (File.Exists(path) && CheckContainsAppId(path))
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
                 Debug.LogWarning(
-                    "Missing Admob config (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
+                    "Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
                 return;
             }
 

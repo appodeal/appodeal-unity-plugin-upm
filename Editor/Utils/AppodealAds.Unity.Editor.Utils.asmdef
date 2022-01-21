@@ -1,9 +1,7 @@
 {
     "name": "AppodealAds.Unity.Editor.Utils",
     "references": [
-        "AppodealAds.Unity.Editor.AppodealManager",
-        "AppodealAds.Unity.Editor.InternalResources",
-        "marijnz.EditorCoroutines"
+        "AppodealAds.Unity.Editor.Utils.Models"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,10 +1,9 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
+    "name": "AppodealAds.Unity.Editor.TopBarMenu",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
-        "AppodealAds.Unity.Editor.Utils"
+        "AppodealAds.Unity.Editor.SettingsWindow",
+        "AppodealAds.Unity.Editor.PluginRemover",
+        "AppodealAds.Unity.Editor.SDKManager"
     ],
     "includePlatforms": [
         "Editor"

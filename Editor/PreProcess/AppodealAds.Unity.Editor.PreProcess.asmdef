@@ -3,8 +3,7 @@
     "references": [
         "AppodealAds.Unity.Editor.InternalResources",
         "AppodealAds.Unity.Editor.Checkers",
-        "AppodealAds.Unity.Editor.Utils",
-        "AppodealAds.Unity.Editor.AppodealManager"
+        "AppodealAds.Unity.Editor.Utils"
     ],
     "includePlatforms": [
         "Editor"

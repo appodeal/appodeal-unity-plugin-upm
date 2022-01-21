@@ -1,9 +1,8 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
+    "name": "AppodealAds.Unity.Editor.SettingsWindow",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
+        "AppodealAds.Unity.Editor.InternalResources",
+        "marijnz.EditorCoroutines",
         "AppodealAds.Unity.Editor.Utils"
     ],
     "includePlatforms": [
