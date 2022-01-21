@@ -13,7 +13,7 @@ using AppodealAds.Unity.Editor.Utils;
 
 // ReSharper disable All
 
-namespace AppodealAds.Unity.Editor.SDKManager.Models
+namespace AppodealAds.Unity.Editor.SDKManager
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
