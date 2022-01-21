@@ -225,6 +225,7 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealBannerDidLoadCallback bannerDidLoadAd,
             AppodealBannerCallbacks bannerDidFailToLoadAd,
             AppodealBannerCallbacks bannerDidClick,
+            AppodealBannerCallbacks bannerDidShow,
             AppodealBannerCallbacks bannerDidExpired
         );
 
@@ -233,6 +234,7 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealMrecViewDidLoadCallback mrecDidLoadAd,
             AppodealMrecViewCallbacks mrecDidFailToLoadAd,
             AppodealMrecViewCallbacks mrecDidClick,
+            AppodealMrecViewCallbacks mrecDidShow,
             AppodealMrecViewCallbacks mrecDidExpired
         );
     }
