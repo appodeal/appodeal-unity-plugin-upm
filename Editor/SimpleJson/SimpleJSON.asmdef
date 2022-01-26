@@ -1,11 +1,6 @@
 {
-    "name": "AppodealAds.Unity.Editor.PreProcess",
-    "references": [
-        "AppodealAds.Unity.Editor.InternalResources",
-        "AppodealAds.Unity.Editor.Checkers",
-        "AppodealAds.Unity.Editor.Utils",
-        "SimpleJSON"
-    ],
+    "name": "SimpleJSON",
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

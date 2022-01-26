@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Reflection;
 
-namespace AppodealAds.Unity.Common {
-
+namespace AppodealAds.Unity.Common
+{
     public static class AppodealVersions {
         /// <summary>
         /// The version for the Appodeal Unity SDK, which includes specific versions of the Appodeal Android and iOS SDKs.

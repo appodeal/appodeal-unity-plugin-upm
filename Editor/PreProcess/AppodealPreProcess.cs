@@ -33,6 +33,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
         public const string manifestTemplateName = "AndroidManifest.xml";
         public const string appodealTemplatesPath = "Appodeal/InternalResources";
         private const string appodealDexesPath = "Assets/Plugins/Android/appodeal/assets/dex";
+        private const string appodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
 
         //Gradle search lines
         public const string GRADLE_GOOGLE_REPOSITORY = "google()";
@@ -59,12 +60,12 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            var manifestPath = Path.Combine("Assets", androidPluginsPath, manifestTemplateName);
+            var manifestPath = Path.Combine(Application.dataPath, appodealAndroidLibDirPath, manifestTemplateName);
 
             if (!File.Exists(manifestPath))
             {
-                Debug.LogError("Please activate Custom Main Manifest under 'Project Settings/Player/Publishing Settings/' first");
-                throw new BuildFailedException("Custom Main Manifest is not activated");
+                Debug.LogError($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
+                throw new BuildFailedException("Couldn't find Appodeal Android Manifest file");
             }
             
             var androidManifest = new AndroidManifest(manifestPath);
@@ -74,7 +75,9 @@ namespace AppodealAds.Unity.Editor.PreProcess
             EnableMultidex(manifestPath, androidManifest);
 
             androidManifest.Save();
-            AppodealServicesSetup.SetupManifestForFacebook();
+
+            AndroidPreProcessServices.SetupManifestForFacebook();
+            AndroidPreProcessServices.GenerateXMLForFirebase();
         }
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
@@ -87,15 +90,16 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
-                AppodealEditorConstants.NetworkDepsPath, "GoogleAdMobDependencies.xml")))
+            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.NetworkDepsPath, 
+                                                $"{AppodealEditorConstants.GoogleAdMob}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
+            if (!File.Exists(admobDepPath))
             {
                 if (File.Exists(path) && CheckContainsAppId(path))
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
                 Debug.LogWarning(
-                    "Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
+                    $"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
                 return;
             }
 

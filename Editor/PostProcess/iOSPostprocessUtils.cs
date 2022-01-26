@@ -29,14 +29,6 @@ namespace AppodealAds.Unity.Editor.PostProcess
         private const string suffix = ".framework";
         private const string minVersionToEnableBitcode = "10.0";
 
-        private const string CFBundleURLTypes = "CFBundleURLTypes";
-        private const string CFBundleURLSchemes = "CFBundleURLSchemes";
-        private const string CFBundleURLName = "CFBundleURLName";
-        private const string FacebookUrlName = "facebook-unity-sdk";
-        private const string FacebookAppID = "FacebookAppID";
-        private const string FacebookAutoLogAppEventsEnabled = "FacebookAutoLogAppEventsEnabled";
-        private const string FacebookAdvertiserIDCollectionEnabled = "FacebookAdvertiserIDCollectionEnabled";
-
         [PostProcessBuildAttribute(41)]
         public static void updateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
@@ -46,74 +38,7 @@ namespace AppodealAds.Unity.Editor.PostProcess
             AddNSLocationWhenInUseUsageDescription(path);
             AddNSCalendarsUsageDescription(path);
             AddSkAdNetworkIds(buildTarget, buildPath);
-        }
-
-        public static void ConfigureServices(string buildPath)
-        {
-            AddFirebasePlistFile(buildPath);
-
-            var path = Path.Combine(buildPath, "Info.plist");
-            AddFacebookKeys(path);
-        }
-
-        private static void AddFacebookKeys(string plistPath)
-        {
-            string fbKey = AppodealSettings.Instance.FacebookIosAppId;
-            bool areFbEventsEnabled = AppodealSettings.Instance.FacebookAutoLogAppEvents;
-            bool isFbIdsCollectionEnabled = AppodealSettings.Instance.FacebookAdvertiserIDCollection;
-
-            if (string.IsNullOrEmpty(fbKey))
-            {
-                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Setings). This service won't be initialized properly.");
-                return;
-            }
-
-            var plist = new PlistDocument();
-            plist.ReadFromFile(plistPath);
-
-        #region FacebookAppID
-
-            if (plist.root[FacebookAppID] == null) plist.root.SetString(FacebookAppID, fbKey);
-        
-        #endregion
-
-        #region FacebookAutoLogAppEventsEnabled
-
-            if (plist.root[FacebookAutoLogAppEventsEnabled] == null) plist.root.SetBoolean(FacebookAutoLogAppEventsEnabled, areFbEventsEnabled);
-
-        #endregion
-
-        #region FacebookAdvertiserIDCollectionEnabled
-
-            if (plist.root[FacebookAdvertiserIDCollectionEnabled] == null) plist.root.SetBoolean(FacebookAdvertiserIDCollectionEnabled, isFbIdsCollectionEnabled);
-
-        #endregion
-
-        #region CFBundleURLTypes
-
-            var typesArray = plist.root[CFBundleURLTypes]?.AsArray() ?? plist.root.CreateArray(CFBundleURLTypes);
-
-            var schemesDict = typesArray.values.Find(el => el.AsDict()[CFBundleURLSchemes] != null)?.AsDict() ?? typesArray.AddDict();
-
-            if (schemesDict[CFBundleURLName]?.AsString() == null) schemesDict.SetString(CFBundleURLName, FacebookUrlName);
-            
-            var schemesArray = schemesDict[CFBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CFBundleURLSchemes);
-
-            if (schemesArray.values.Find(el => el.AsString() == fbKey) == null) schemesArray.AddString($"fb{fbKey}");
-        
-        #endregion
-
-            File.WriteAllText(plistPath, plist.WriteToString());
-        }
-
-        private static void AddFirebasePlistFile(string buildPath)
-        {
-            const string AssetsDirectory = "Assets";
-            const string FirebasePlistFile = "GoogleService-Info.plist";
-
-            if (File.Exists(Path.Combine(AssetsDirectory, FirebasePlistFile)))
-                FileUtil.CopyFileOrDirectory(Path.Combine(AssetsDirectory, FirebasePlistFile), Path.Combine(buildPath, FirebasePlistFile));
-            else Debug.LogWarning($"Firebase Plist file was not found at {Path.Combine(AssetsDirectory, FirebasePlistFile)}. This service won't be initialized.");
+            iOSPostProcessServices.AddFacebookKeys(path);
         }
 
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
@@ -310,9 +235,6 @@ namespace AppodealAds.Unity.Editor.PostProcess
 
         private static readonly string[] weakFrameworkList =
         {
-            "CoreMotion",
-            "WebKit",
-            "Social",
             "AppTrackingTransparency"
         };
 
@@ -331,6 +253,10 @@ namespace AppodealAds.Unity.Editor.PostProcess
             var project = new PBXProject();
 
             project.ReadFromString(File.ReadAllText(projectPath));
+
+            string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
+            if (iOSPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
+                project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
 
             var target = project.GetUnityMainTargetGuid();
             var unityFrameworkTarget = project.GetUnityFrameworkTargetGuid();

@@ -32,6 +32,8 @@ namespace AppodealAds.Unity.Editor.InternalResources
         [SerializeField] private List<string> iOsskAdNetworkItemsList;
 
 
+        [SerializeField] private bool firebaseAutoConfiguration;
+        [SerializeField] private bool facebookAutoConfiguration;
         [SerializeField] private string facebookAndroidAppId = string.Empty;
         [SerializeField] private string facebookIosAppId = string.Empty;
         [SerializeField] private bool facebookAutoLogAppEvents;
@@ -145,6 +147,18 @@ namespace AppodealAds.Unity.Editor.InternalResources
         {
             get { return iOsskAdNetworkItemsList; }
             set { Instance.iOsskAdNetworkItemsList = value; }
+        }
+
+        public bool FirebaseAutoConfiguration
+        {
+            get { return firebaseAutoConfiguration; }
+            set { Instance.firebaseAutoConfiguration = value; }
+        }
+
+        public bool FacebookAutoConfiguration
+        {
+            get { return facebookAutoConfiguration; }
+            set { Instance.facebookAutoConfiguration = value; }
         }
 
         public string FacebookAndroidAppId

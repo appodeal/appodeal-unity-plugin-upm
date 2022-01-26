@@ -1,4 +1,5 @@
-namespace AppodealAds.Unity.Common {
+namespace AppodealAds.Unity.Common
+{
     public enum AppodealLogLevel {
         None,
         Debug,

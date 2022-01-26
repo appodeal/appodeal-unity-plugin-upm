@@ -43,12 +43,6 @@ namespace AppodealAds.Unity.Editor.TopBarMenu
                 Client.Remove("com.appodeal.appodeal-unity-plugin-upm");
             }
         }
-
-        [MenuItem("Appodeal/Firebase Android")]
-        public static void FirebasAndroid()
-        {
-
-        }
     }
 }
 #endif

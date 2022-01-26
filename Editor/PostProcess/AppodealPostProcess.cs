@@ -13,7 +13,6 @@ namespace AppodealAds.Unity.Editor.PostProcess
             if (target.ToString() == "iOS" || target.ToString() == "iPhone")
             {
                 iOSPostprocessUtils.PrepareProject(path);
-                iOSPostprocessUtils.ConfigureServices(path);
             }
         }
     }

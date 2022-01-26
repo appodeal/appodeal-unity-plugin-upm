@@ -1,4 +1,5 @@
-﻿namespace AppodealAds.Unity.Common {
+﻿namespace AppodealAds.Unity.Common
+{
     public static class AppodealViewPosition
     {
         public const int HORIZONTAL_SMART =     -1;

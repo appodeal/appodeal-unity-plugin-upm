@@ -1,4 +1,5 @@
-namespace AppodealAds.Unity.Common {
+namespace AppodealAds.Unity.Common
+{
     public static class AppodealAdType {
         public const int NONE = 0;
         public const int INTERSTITIAL = 3;

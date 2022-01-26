@@ -24,7 +24,7 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
 
         public static void ShowAppodealSettingsWindow()
         {
-            GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 340), true, "Appodeal Settings");
+            GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 700), true, "Appodeal Settings");
         }
 
         private void OnEnable()
@@ -80,12 +80,15 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
 
         private void OnGUI()
         {
+            LabelHeaderField("Mediation Settings");
+
             #region Admob App Id Setting
 
             GUILayout.BeginHorizontal();
+
             using (new EditorGUILayout.VerticalScope("box"))
             {
-                if (GUILayout.Button("AdMob App Id Setting", new GUIStyle(EditorStyles.label)
+                if (GUILayout.Button("AdMob App Ids", new GUIStyle(EditorStyles.label)
                 {
                     fontSize = 15,
                     fontStyle = FontStyle.Bold,
@@ -98,10 +101,10 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
 
                 GUILayout.Space(2);
 
-
-                AppodealSettings.Instance.AdMobAndroidAppId = AdmobAppIdPlatformRow("App ID (Android)",
+                AppodealSettings.Instance.AdMobAndroidAppId = AppIdPlatformRow("AdMob App ID (Android)",
                     AppodealSettings.Instance.AdMobAndroidAppId, GUILayout.Width(200));
-                AppodealSettings.Instance.AdMobIosAppId = AdmobAppIdPlatformRow("App ID (iOS)",
+                GUILayout.Space(5);
+                AppodealSettings.Instance.AdMobIosAppId = AppIdPlatformRow("AdMob App ID (iOS)",
                     AppodealSettings.Instance.AdMobIosAppId, GUILayout.Width(200));
                 GUILayout.Space(10);
             }
@@ -109,6 +112,8 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
             GUILayout.EndHorizontal();
 
             #endregion
+
+            GUILayout.Space(5);
 
             #region Android Settings
 
@@ -129,8 +134,8 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
                     AppodealSettings.Instance.WriteExternalStoragePermission);
                 AppodealSettings.Instance.AccessWifiStatePermission = KeyRow("ACCESS_WIFI_STATE",
                     AppodealSettings.Instance.AccessWifiStatePermission);
-                AppodealSettings.Instance.VibratePermission =
-                    KeyRow("VIBRATE", AppodealSettings.Instance.VibratePermission);
+                AppodealSettings.Instance.VibratePermission = KeyRow("VIBRATE",
+                    AppodealSettings.Instance.VibratePermission);
 
                 GUILayout.Space(10);
                 if (GUILayout.Button("Multidex", new GUIStyle(EditorStyles.label)
@@ -150,6 +155,8 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
 
             #endregion
 
+            GUILayout.Space(3);
+
             #region iOS Settings
 
             using (new EditorGUILayout.VerticalScope("box", GUILayout.Width(200), GUILayout.Height(200)))
@@ -157,19 +164,17 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
                 LabelField("iOS Settings");
                 HeaderField("Add keys to info.plist",
                     "https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-2.2iOSconfiguration");
-                GUILayout.Space(10);
 
                 AppodealSettings.Instance.NSUserTrackingUsageDescription = KeyRow("NSUserTrackingUsageDescription",
                     AppodealSettings.Instance.NSUserTrackingUsageDescription);
-                AppodealSettings.Instance.NSLocationWhenInUseUsageDescription = KeyRow(
-                    "NSLocationWhenInUseUsageDescription",
+                AppodealSettings.Instance.NSLocationWhenInUseUsageDescription = KeyRow("NSLocationWhenInUseUsageDescription",
                     AppodealSettings.Instance.NSLocationWhenInUseUsageDescription);
                 AppodealSettings.Instance.NSCalendarsUsageDescription = KeyRow("NSCalendarsUsageDescription",
                     AppodealSettings.Instance.NSCalendarsUsageDescription);
                 AppodealSettings.Instance.NSAppTransportSecurity = KeyRow("NSAppTransportSecurity",
                     AppodealSettings.Instance.NSAppTransportSecurity);
 
-                GUILayout.Space(25);
+                GUILayout.Space(35);
                 if (GUILayout.Button("SKAdNetwork", new GUIStyle(EditorStyles.label)
                 {
                     fontSize = 12,
@@ -181,8 +186,8 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
                 }
 
 
-                AppodealSettings.Instance.IOSSkAdNetworkItems =
-                    KeyRow("Add SKAdNetworkItems", AppodealSettings.Instance.IOSSkAdNetworkItems);
+                AppodealSettings.Instance.IOSSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
+                    AppodealSettings.Instance.IOSSkAdNetworkItems);
 
                 if (SKAdNetworkIdentifiers != null && SKAdNetworkIdentifiers.Count > 0
                     && AppodealSettings.Instance.IOSSkAdNetworkItemsList != SKAdNetworkIdentifiers)
@@ -190,7 +195,64 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
                     AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
                 }
 
+                GUILayout.Space(12);
+            }
+
+            GUILayout.EndHorizontal();
+
+            #endregion
+
+            GUILayout.Space(10);
+            LabelHeaderField("Attribution Settings");
+
+            #region Attribution Services
+
+            GUILayout.BeginHorizontal();
+
+            using (new EditorGUILayout.VerticalScope("box"))
+            {
+                LabelField("Facebook Settings");
+
+                AppodealSettings.Instance.FacebookAutoConfiguration = KeyRow("Enable auto configuration",
+                    AppodealSettings.Instance.FacebookAutoConfiguration);
+                
                 GUILayout.Space(10);
+
+                AppodealSettings.Instance.FacebookAndroidAppId = AppIdPlatformRow("Facebook App ID (Android)",
+                    AppodealSettings.Instance.FacebookAndroidAppId, GUILayout.Width(200));
+                
+                GUILayout.Space(5);
+
+                AppodealSettings.Instance.FacebookIosAppId = AppIdPlatformRow("Facebook App ID (iOS)",
+                    AppodealSettings.Instance.FacebookIosAppId, GUILayout.Width(200));
+
+                GUILayout.Space(10);
+
+                HeaderField("Optional Settings",
+                    "https://wiki.appodeal.com/en/unity/get-started");
+
+                AppodealSettings.Instance.FacebookAutoLogAppEvents = KeyRow("Enable FacebookAutoLogAppEvents",
+                    AppodealSettings.Instance.FacebookAutoLogAppEvents);
+                AppodealSettings.Instance.FacebookAdvertiserIDCollection = KeyRow("Enable FacebookAdvertiserIDCollection",
+                    AppodealSettings.Instance.FacebookAdvertiserIDCollection);
+                
+                GUILayout.Space(5);
+            }
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(5);
+
+            GUILayout.BeginHorizontal();
+
+            using (new EditorGUILayout.VerticalScope("box"))
+            {
+                LabelField("Firebase Settings");
+
+                AppodealSettings.Instance.FirebaseAutoConfiguration = KeyRow("Enable auto configuration",
+                    AppodealSettings.Instance.FirebaseAutoConfiguration);
+                
+                GUILayout.Space(5);
             }
 
             GUILayout.EndHorizontal();
@@ -225,7 +287,7 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
             GUILayout.Space(2);
         }
 
-        private static string AdmobAppIdPlatformRow(string fieldTitle, string text, GUILayoutOption labelWidth,
+        private static string AppIdPlatformRow(string fieldTitle, string text, GUILayoutOption labelWidth,
             GUILayoutOption textFieldWidthOption = null)
         {
             GUILayout.BeginHorizontal();
@@ -245,6 +307,35 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
             value = EditorGUILayout.Toggle(fieldTitle, value);
             EditorGUIUtility.labelWidth = originalValue;
             return value;
+        }
+
+        private static void HorizontalLine()
+        {
+            GUIStyle separatorLineStyle = new GUIStyle()
+            {
+                normal = new GUIStyleState() { background = EditorGUIUtility.whiteTexture },
+                margin = new RectOffset(0, 0, 10, 5),
+                fixedHeight = 2
+            };
+
+            var c = GUI.color;
+            GUI.color = Color.grey;
+            GUILayout.Box( GUIContent.none, separatorLineStyle );
+            GUI.color = c;
+        }
+
+        private static void LabelHeaderField(string header)
+        {
+            EditorGUILayout.LabelField(header, new GUIStyle(EditorStyles.label)
+            {
+                fontSize = 16,
+                fontStyle = FontStyle.Bold,
+                normal = new GUIStyleState() { textColor = new Color(0.7f,0.6f,0.1f) },
+                alignment = TextAnchor.MiddleCenter
+
+            }, GUILayout.Height(20));
+            
+            HorizontalLine();
         }
 
         [Serializable]

@@ -3,7 +3,7 @@ using UnityEditor;
 using AppodealAds.Unity.Editor.Utils;
 using AppodealAds.Unity.Editor.InternalResources;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealAds.Unity.Editor.AssetsExtractor
 {
     static class AndroidLibraryInstaller
     {

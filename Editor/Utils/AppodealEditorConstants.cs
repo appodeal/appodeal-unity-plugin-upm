@@ -11,7 +11,7 @@ namespace AppodealAds.Unity.Editor.Utils
         public const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
         public const string PluginPath = "Assets/Appodeal";
         public const string NetworkDepsPath = "Editor/Dependencies/AdNetworkDependencies";
-        public const string EDMPackagePath = "Editor/Dependencies/ExternalDependencyManager/";
+        public const string EDMPackagePath = "Editor/Dependencies/ExternalDependencyManager";
         public const string EDMPackageName = "external-dependency-manager-1.2.168.unitypackage";
         public const string ReplaceDepValue = "com.appodeal.ads.sdk.networks:";
         public const string ReplaceAdmobDepValue = "com.appodeal.ads.sdk.networks:admob";
@@ -42,5 +42,15 @@ namespace AppodealAds.Unity.Editor.Utils
         public const string GoogleAdMob = "GoogleAdMob";
         public const string APDAppodealAdExchangeAdapter = "APDAppodealAdExchangeAdapter";
         public const string Dependencies = "Dependencies";
+
+        public const string FacebookApplicationId = "com.facebook.sdk.ApplicationId";
+        public const string FacebookAutoLogAppEventsEnabled = "com.facebook.sdk.AutoLogAppEventsEnabled";
+        public const string FacebookAdvertiserIDCollectionEnabled = "com.facebook.sdk.AdvertiserIDCollectionEnabled";
+
+        public const string AppodealAndroidLibPath = "Plugins/Android/appodeal.androidlib";
+        public const string AndroidManifestFile = "AndroidManifest.xml";
+        public const string FirebaseAndroidConfigPath = "res/values";
+        public const string FirebaseAndroidConfigFile = "google-services.xml";
+        public const string FirebaseAndroidJsonFile = "google-services.json";
     }
 }
