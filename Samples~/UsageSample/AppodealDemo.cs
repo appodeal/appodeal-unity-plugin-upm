@@ -217,16 +217,14 @@ namespace AppodealSample
             Appodeal.setLogLevel(loggingToggle.isOn ? AppodealLogLevel.Verbose : AppodealLogLevel.None);
             Appodeal.setUserId("1");
             Appodeal.setUserAge(1);
-            Appodeal.setUserGender(Gender.OTHER);
-            Appodeal.disableLocationPermissionCheck();
+            Appodeal.setUserGender(AppodealUserGender.OTHER);
+            Appodeal.setLocationTracking(false);
             Appodeal.setTriggerOnLoadedOnPrecache(AppodealAdType.INTERSTITIAL, true);
             Appodeal.setSmartBanners(true);
             Appodeal.setBannerAnimation(false);
             Appodeal.setTabletBanners(false);
-            Appodeal.setBannerBackground(false);
             Appodeal.setChildDirectedTreatment(false);
             Appodeal.muteVideosIfCallsMuted(true);
-            Appodeal.setSharedAdsInstanceAcrossActivities(true);
             Appodeal.setAutoCache(AppodealAdType.INTERSTITIAL, false);
             Appodeal.setAutoCache(AppodealAdType.REWARDED_VIDEO, false);
             Appodeal.setUseSafeArea(true);
@@ -388,11 +386,11 @@ namespace AppodealSample
 
         #region Banner callback handlers
 
-        public void onBannerLoaded(int height, bool precache)
+        public void onBannerLoaded(int height, bool isPrecache)
         {
             Debug.Log("onBannerLoaded");
             Debug.Log($"Banner height - {height}");
-            Debug.Log($"Banner precache - {precache}");
+            Debug.Log($"Banner precache - {isPrecache}");
         }
 
         public void onBannerFailedToLoad()
@@ -514,9 +512,9 @@ namespace AppodealSample
 
         #region Mrec callback handlers
 
-        public void onMrecLoaded(bool precache)
+        public void onMrecLoaded(bool isPrecache)
         {
-            print($"onMrecLoaded. Precache - {precache}");
+            print($"onMrecLoaded. Precache - {isPrecache}");
         }
 
         public void onMrecFailedToLoad()
