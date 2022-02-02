@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using AppodealAds.Unity.Common;
 using AppodealCM.Unity.Platforms;
 using AppodealCM.Unity.Common;
@@ -197,11 +198,6 @@ namespace AppodealAds.Unity.Platforms.Android
             getAppodealClass().CallStatic("setBannerAnimation", value);
         }
 
-        public void setBannerBackground(bool value)
-        {
-            Debug.LogWarning("Not Supported by Android SDK");
-        }
-
         public void setTabletBanners(bool value)
         {
             getAppodealClass().CallStatic("set728x90Banners", value);
@@ -287,6 +283,11 @@ namespace AppodealAds.Unity.Platforms.Android
             getAppodealClass().CallStatic("disableNetwork", getActivity(), network, nativeAdTypesForType(adTypes));
         }
 
+        public void setLocationTracking(bool value)
+        {
+            Debug.Log("Not supported on Android platform");
+        }
+
         public void disableLocationPermissionCheck()
         {
             Debug.Log("Not supported on Android platform");
@@ -368,32 +369,18 @@ namespace AppodealAds.Unity.Platforms.Android
             getAppodealClass().CallStatic("trackInAppPurchase", getActivity(), amount, currency);
         }
 
-        public string getRewardCurrency(string placement)
+        public KeyValuePair<string, double> getRewardParameters()
         {
-            var reward =
-                getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement);
-            return reward.Get<string>("second");
+            string currency = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters").Get<string>("second");
+            double amount = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters").Get<AndroidJavaObject>("first").Call<double>("doubleValue");
+            return new KeyValuePair<string, double>(currency, amount);
         }
 
-        public double getRewardAmount(string placement)
+        public KeyValuePair<string, double> getRewardParameters(string placement)
         {
-            var reward =
-                getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement);
-            var doubleValue = reward.Get<AndroidJavaObject>("first");
-            return doubleValue.Call<double>("doubleValue");
-        }
-
-        public string getRewardCurrency()
-        {
-            var reward = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters");
-            return reward.Get<string>("second");
-        }
-
-        public double getRewardAmount()
-        {
-            var reward = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters");
-            var doubleValue = reward.Get<AndroidJavaObject>("first");
-            return doubleValue.Call<double>("doubleValue");
+            string currency = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement).Get<string>("second");
+            double amount = getAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement).Get<AndroidJavaObject>("first").Call<double>("doubleValue");
+            return new KeyValuePair<string, double>(currency, amount);
         }
 
         public double getPredictedEcpm(int adType)
@@ -423,25 +410,25 @@ namespace AppodealAds.Unity.Platforms.Android
             getAppodealClass().CallStatic("setUserAge", age);
         }
 
-        public void setUserGender(Gender gender)
+        public void setUserGender(AppodealUserGender gender)
         {
             switch (gender)
             {
-                case Gender.OTHER:
+                case AppodealUserGender.OTHER:
                 {
                     getAppodealClass().CallStatic("setUserGender",
                         new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(
                             "OTHER"));
                     break;
                 }
-                case Gender.MALE:
+                case AppodealUserGender.MALE:
                 {
                     getAppodealClass().CallStatic("setUserGender",
                         new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(
                             "MALE"));
                     break;
                 }
-                case Gender.FEMALE:
+                case AppodealUserGender.FEMALE:
                 {
                     getAppodealClass().CallStatic("setUserGender",
                         new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(

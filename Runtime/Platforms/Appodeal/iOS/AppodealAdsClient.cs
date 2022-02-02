@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using AOT;
 using AppodealAds.Unity.Common;
 using AppodealCM.Unity.Platforms;
@@ -521,11 +522,6 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealObjCBridge.AppodealSetBannerAnimation(value);
         }
 
-        public void setBannerBackground(bool value)
-        {
-            AppodealObjCBridge.AppodealSetBannerBackground(value);
-        }
-
         public void setTabletBanners(bool value)
         {
             AppodealObjCBridge.AppodealSetTabletBanners(value);
@@ -590,6 +586,11 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealObjCBridge.AppodealDisableNetworkForAdTypes(network, adTypes);
         }
 
+        public void setLocationTracking(bool value)
+        {
+            AppodealObjCBridge.AppodealSetLocationTracking(value);
+        }
+
         public void disableLocationPermissionCheck()
         {
             AppodealObjCBridge.AppodealDisableLocationPermissionCheck();
@@ -620,24 +621,18 @@ namespace AppodealAds.Unity.Platforms.iOS
             return AppodealObjCBridge.AppodealCanShow(nativeAdTypesForType(adTypes));
         }
 
-        public string getRewardCurrency(string placement)
+        public KeyValuePair<string, double> getRewardParameters()
         {
-            return AppodealObjCBridge.AppodealGetRewardCurrency(placement);
+            string currency = AppodealObjCBridge.AppodealGetRewardCurrency("default");
+            double amount = AppodealObjCBridge.AppodealGetRewardAmount("default");
+            return new KeyValuePair<string, double>(currency, amount);
         }
 
-        public double getRewardAmount(string placement)
+        public KeyValuePair<string, double> getRewardParameters(string placement)
         {
-            return AppodealObjCBridge.AppodealGetRewardAmount(placement);
-        }
-
-        public string getRewardCurrency()
-        {
-            return AppodealObjCBridge.AppodealGetRewardCurrency("default");
-        }
-
-        public double getRewardAmount()
-        {
-            return AppodealObjCBridge.AppodealGetRewardAmount("default");
+            string currency = AppodealObjCBridge.AppodealGetRewardCurrency(placement);
+            double amount = AppodealObjCBridge.AppodealGetRewardAmount(placement);
+            return new KeyValuePair<string, double>(currency, amount);
         }
 
         public double getPredictedEcpm(int adType)
@@ -727,21 +722,21 @@ namespace AppodealAds.Unity.Platforms.iOS
             AppodealObjCBridge.AppodealSetUserAge(age);
         }
 
-        public void setUserGender(Gender gender)
+        public void setUserGender(AppodealUserGender gender)
         {
             switch (gender)
             {
-                case Gender.OTHER:
+                case AppodealUserGender.OTHER:
                 {
                     AppodealObjCBridge.AppodealSetUserGender(0);
                     break;
                 }
-                case Gender.MALE:
+                case AppodealUserGender.MALE:
                 {
                     AppodealObjCBridge.AppodealSetUserGender(1);
                     break;
                 }
-                case Gender.FEMALE:
+                case AppodealUserGender.FEMALE:
                 {
                     AppodealObjCBridge.AppodealSetUserGender(2);
                     break;

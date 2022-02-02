@@ -103,10 +103,6 @@ void AppodealSetTabletBanners(bool value) {
     [bannerUnity setTabletBanner:value];
 }
 
-void AppodealSetBannerBackground(BOOL value) {
-    [Appodeal setBannerBackgroundVisible:value];
-}
-
 void AppodealSetBannerAnimation(BOOL value) {
     [Appodeal setBannerAnimationEnabled:value];
 }
@@ -153,6 +149,10 @@ void AppodealDisableNetwork(const char *networkName) {
 
 void AppodealDisableNetworkForAdTypes(const char *networkName, int type) {
     [Appodeal disableNetworkForAdType:type name:[NSString stringWithUTF8String:networkName]];
+}
+
+void AppodealSetLocationTracking(BOOL value) {
+    [Appodeal setLocationTracking:value];
 }
 
 void AppodealDisableLocationPermissionCheck() {

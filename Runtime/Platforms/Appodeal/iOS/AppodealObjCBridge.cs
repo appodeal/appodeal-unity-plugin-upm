@@ -82,9 +82,6 @@ namespace AppodealAds.Unity.Platforms.iOS
         internal static extern void AppodealSetTabletBanners(bool value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetBannerBackground(bool value);
-
-        [DllImport("__Internal")]
         internal static extern void AppodealSetBannerAnimation(bool value);
         
         [DllImport("__Internal")]
@@ -113,6 +110,9 @@ namespace AppodealAds.Unity.Platforms.iOS
 
         [DllImport("__Internal")]
         internal static extern void AppodealDisableNetworkForAdTypes(string name, int type);
+
+        [DllImport("__Internal")]
+        internal static extern void AppodealSetLocationTracking(bool value);
 
         [DllImport("__Internal")]
         internal static extern void AppodealDisableLocationPermissionCheck();

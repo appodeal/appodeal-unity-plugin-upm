@@ -557,11 +557,6 @@ namespace AppodealAds.Unity.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setBannerAnimation method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void setBannerBackground(bool value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setBannerBackground method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void setTabletBanners(bool value)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setTabletBanners method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
@@ -600,6 +595,11 @@ namespace AppodealAds.Unity.Platforms.Dummy
         public void disableNetwork(string network, int adTypes)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableNetwork method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+        }
+
+        public void setLocationTracking(bool value)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableLocationPermissionCheck method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void disableLocationPermissionCheck()
@@ -653,28 +653,16 @@ namespace AppodealAds.Unity.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.trackInAppPurchase method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public string getRewardCurrency(string placement)
+        public KeyValuePair<string, double> getRewardParameters()
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardCurrency method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return "USD";
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return new KeyValuePair<string, double>("USD", 0);
         }
 
-        public double getRewardAmount(string placement)
+        public KeyValuePair<string, double> getRewardParameters(string placement)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardAmount method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return 0;
-        }
-
-        public string getRewardCurrency()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardCurrency method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return "USD";
-        }
-
-        public double getRewardAmount()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardAmount method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return 0;
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.getRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return new KeyValuePair<string, double>("USD", 0);
         }
 
         public double getPredictedEcpm(int adType)
@@ -728,7 +716,7 @@ namespace AppodealAds.Unity.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setUserAge method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void setUserGender(Gender gender)
+        public void setUserGender(AppodealUserGender gender)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setGender method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
