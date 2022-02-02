@@ -3,25 +3,28 @@ using System.Reflection;
 
 namespace AppodealAds.Unity.Common
 {
+    /// <summary>
+    /// Static class containing information about Appodeal Plugin and Unity Editor versions.
+    /// </summary>
     public static class AppodealVersions {
         /// <summary>
-        /// The version for the Appodeal Unity SDK, which includes specific versions of the Appodeal Android and iOS SDKs.
+        /// Current version of the Appodeal Unity Plugin.
         /// </summary>
         public const string APPODEAL_PLUGIN_VERSION = "2.15.0";
 
         /// <summary>
-        /// Get Unity plugin version
-        /// See <see cref="Appodeal.getPluginVersion"/> for resulting triggered event.
+        /// Gets the value of APPODEAL_PLUGIN_VERSION variable.
         /// </summary> 
+        /// <returns>current version of Appodeal Unity Plugin.</returns>
         public static string getPluginVersion()
         {
             return APPODEAL_PLUGIN_VERSION;
         }
 
         /// <summary>
-        /// Get Unity version
-        /// See <see cref="Appodeal.getUnityVersion"/> for resulting triggered event.
-        /// </summary> 
+        /// Gets Unity Editor version.
+        /// </summary>
+        /// <returns>current version of Unity Editor.</returns>
         public static string getUnityVersion()
         {
             var unityVersion = Application.unityVersion;
