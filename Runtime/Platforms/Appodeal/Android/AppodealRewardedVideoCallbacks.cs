@@ -17,9 +17,9 @@ namespace AppodealAds.Unity.Platforms.Android
             this.listener = listener;
         }
 
-        private void onRewardedVideoLoaded(bool precache)
+        private void onRewardedVideoLoaded(bool isPrecache)
         {
-            listener.onRewardedVideoLoaded(precache);
+            listener.onRewardedVideoLoaded(isPrecache);
         }
 
         private void onRewardedVideoFailedToLoad()
