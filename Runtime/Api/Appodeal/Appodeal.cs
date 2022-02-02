@@ -1,46 +1,20 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Platforms;
 using AppodealAds.Unity.Common;
+using AppodealAds.Unity.Platforms;
 using AppodealCM.Unity.Api;
 using AppodealCM.Unity.Platforms;
 
 namespace AppodealAds.Unity.Api
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class AppodealNetworks
-    {
-        public const string VUNGLE = "vungle";
-        public const string SMAATO = "smaato";
-        public const string INMOBI = "inmobi";
-        public const string FYBER = "fyber";
-        public const string STARTAPP = "startapp";
-        public const string TAPJOY = "tapjoy";
-        public const string APPLOVIN = "applovin";
-        public const string ADCOLONY = "adcolony";
-        public const string MY_TARGET = "my_target";
-        public const string BIDMACHINE = "bidmachine";
-        public const string FLURRY = "flurry";
-        public const string AMAZON_ADS = "amazon_ads";
-        public const string ADMOB = "admob";
-        public const string UNITY_ADS = "unity_ads";
-        public const string FACEBOOK = "facebook";
-        public const string YANDEX = "yandex";
-        public const string APPODEAL = "appodeal";
-        public const string IRONSOURCE = "ironsource";
-        public const string A4G = "a4g";
-        public const string MOPUB = "mopub";
-        public const string CHARTBOOST = "chartboost";
-        public const string MRAID = "mraid";
-        public const string MINTEGRAL = "mintegral";
-        public const string NAST = "nast";
-        public const string OGURY = "ogury";
-        public const string VAST = "vast";
-    }
-
+    /// <summary>
+    /// <para>
+    /// Appodeal Unity API for developers, including documentation.
+    /// </para>
+    /// See <see href="https://wiki.appodeal.com/en/unity/get-started"/> for more details.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -55,10 +29,631 @@ namespace AppodealAds.Unity.Api
         }
 
         /// <summary>
+        /// <para>
+        /// Initializes the relevant (Android or iOS) Appodeal SDK.
+        /// See <see cref="onAppodealInitialized()"/> for resulting triggered event.
+        /// </para>
+        /// <example>To initialize only interstitials use:<code>Appodeal.initialize(appKey, AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To initialize only banners use:<code>Appodeal.initialize(appKey, AppodealAdType.BANNER);</code></example>
+        /// <example>To initialize only rewarded video use:<code>Appodeal.initialize(appKey, AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To initialize only non-skippable video use:<code>Appodeal.initialize(appKey, AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To initialize only 300*250 banners use:<code>Appodeal.initialize(appKey, AppodealAdType.MREC);</code></example> 
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-Step3Step3.InitializeSDK"/> for more details.</remarks>
+        /// <param name="appKey">Appodeal app key you received when you created an app.</param>
+        /// <param name="adTypes">Type of advertisement you want to initialize.</param>
+        /// <param name="listener">Appodeal Initialization callback.</param>
+        public static void initialize(string appKey, int adTypes, IAppodealInitializeListener listener = null)
+        {
+            
+        }
+        
+        /// <summary>
+        /// <para>Checks whether or not ad type is initialized.</para>
+        /// <example>To check interstitials use:<code>Appodeal.isInitialized(AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To check banners use:<code>Appodeal.isInitialized(AppodealAdType.BANNER);</code></example>
+        /// <example>To check rewarded video use:<code>Appodeal.isInitialized(AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To check non-skippable video use:<code>Appodeal.isInitialized(AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To check 300*250 banners use:<code>Appodeal.isInitialized(AppodealAdType.MREC);</code></example> 
+        /// </summary>
+        /// <param name="adType">type of advertisement.</param>
+        /// <returns>true if ad type is initialized, otherwise - false.</returns>
+        public static bool isInitialized(int adType)
+        {
+            return getInstance().isInitialized(adType);
+        }
+
+        /// <summary>
+        /// <para>Checks whether or not auto cache is enabled for the specified ad type.</para>
+        /// <example>To check interstitials use:<code>Appodeal.isAutoCacheEnabled(AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To check banners use:<code>Appodeal.isAutoCacheEnabled(AppodealAdType.BANNER);</code></example>
+        /// <example>To check rewarded video use:<code>Appodeal.isAutoCacheEnabled(AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To check non-skippable video use:<code>Appodeal.isAutoCacheEnabled(AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To check 300*250 banners use:<code>Appodeal.isAutoCacheEnabled(AppodealAdType.MREC);</code></example> 
+        /// </summary>
+        /// <param name="adType">type of advertisement.</param>
+        /// <returns>true if auto cache is enabled, otherwise - false.</returns>
+        public static bool isAutoCacheEnabled(int adType)
+        {
+            return getInstance().isAutoCacheEnabled(adType);
+        }
+        
+        /// <summary>Sets Interstitial ad type callbacks.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealAds.Unity.Common.IInterstitialAdListener interface.</param>
+        public static void setInterstitialCallbacks(IInterstitialAdListener listener)
+        {
+            getInstance().setInterstitialCallbacks(listener);
+        }
+
+        /// <summary>Sets Rewarded Video ad type callbacks.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/rewarded-video#id-[Development]UnitySDK.Rewardedvideo-RewardedVideoCallbacks"/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealAds.Unity.Common.IRewardedVideoAdListener interface.</param>
+        public static void setRewardedVideoCallbacks(IRewardedVideoAdListener listener)
+        {
+            getInstance().setRewardedVideoCallbacks(listener);
+        }
+        
+        /// <summary>Sets Non-Skippable Video ad type callbacks.</summary>
+        /// <param name="listener">class which implements AppodealAds.Unity.Common.INonSkippableVideoAdListener interface.</param>
+        public static void setNonSkippableVideoCallbacks(INonSkippableVideoAdListener listener)
+        {
+            getInstance().setNonSkippableVideoCallbacks(listener);
+        }
+
+        /// <summary>Sets Banner ad type callbacks.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealAds.Unity.Common.IBannerAdListener interface.</param>
+        public static void setBannerCallbacks(IBannerAdListener listener)
+        {
+            getInstance().setBannerCallbacks(listener);
+        }
+
+        /// <summary>Sets Mrec ad type callbacks.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealAds.Unity.Common.IMrecAdListener interface.</param>
+        public static void setMrecCallbacks(IMrecAdListener listener)
+        {
+            getInstance().setMrecCallbacks(listener);
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Caches ads in a manual mode.
+        /// Use it only if <see cref="Appodeal.isAutoCacheEnabled"/> is set to false.
+        /// </para>
+        /// <example>To cache interstitials use:<code>Appodeal.cache(AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To cache banners use:<code>Appodeal.cache(AppodealAdType.BANNER);</code></example>
+        /// <example>To cache rewarded video use:<code>Appodeal.cache(AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To cache non-skippable video use:<code>Appodeal.cache(AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To cache 300*250 banners use:<code>Appodeal.cache(AppodealAdType.MREC);</code></example> 
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/2658522-sdk-caching"/> for more details.</remarks>
+        /// <param name="adTypes">type of advertisement.</param>
+        public static void cache(int adTypes)
+        {
+            getInstance().cache(adTypes);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Shows an advertisement.
+        /// You can use <see cref="Appodeal.isLoaded"/> method first, to check if an ad is currently available.
+        /// </para>
+        /// <example>To show interstitials use:<code>Appodeal.show(AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To show horizontal banner at top use:<code>Appodeal.show(AppodealAdType.BANNER_TOP);</code></example>
+        /// <example>To show horizontal banner at bottom use:<code>Appodeal.show(AppodealAdType.BANNER_BOTTOM);</code></example>
+        /// <example>To show vertical banner at left use:<code>Appodeal.show(AppodealAdType.BANNER_LEFT);</code></example>
+        /// <example>To show vertical banner at right use:<code>Appodeal.show(AppodealAdType.BANNER_RIGHT);</code></example>
+        /// <example>To show rewarded video use:<code>Appodeal.show(AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To show non-skippable video use:<code>Appodeal.show(AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To show 300*250 banners use:<code>Appodeal.show(AppodealAdType.MREC);</code></example> 
+        /// </summary>
+        /// <param name="adTypes">type of advertisement.</param>
+        /// <returns>true if an ad was shown, otherwise - false</returns>
+        public static bool show(int adTypes)
+        {
+            return getInstance().show(adTypes);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Shows an advertisement in a specified placement.
+        /// See <see href="https://faq.appodeal.com/en/articles/1154394-placements"/> for more details.
+        /// </para>
+        /// <example>To show interstitials use:<code>Appodeal.show(AppodealAdType.INTERSTITIAL, placementName);</code></example>
+        /// <example>To show horizontal banner at top use:<code>Appodeal.show(AppodealAdType.BANNER_TOP, placementName);</code></example>
+        /// <example>To show horizontal banner at bottom use:<code>Appodeal.show(AppodealAdType.BANNER_BOTTOM, placementName);</code></example>
+        /// <example>To show vertical banner at left use:<code>Appodeal.show(AppodealAdType.BANNER_LEFT, placementName);</code></example>
+        /// <example>To show vertical banner at right use:<code>Appodeal.show(AppodealAdType.BANNER_RIGHT, placementName);</code></example>
+        /// <example>To show rewarded video use:<code>Appodeal.show(AppodealAdType.REWARDED_VIDEO, placementName);</code></example>
+        /// <example>To show non-skippable video use:<code>Appodeal.show(AppodealAdType.NON_SKIPPABLE_VIDEO, placementName);</code></example>
+        /// <example>To show 300*250 banners use:<code>Appodeal.show(AppodealAdType.MREC, placementName);</code></example> 
+        /// </summary>
+        /// <param name="adTypes">type of advertisement.</param>
+        /// <param name="placement">name of placement.</param>
+        /// <returns>true if an ad was shown, otherwise - false</returns>
+        public static bool show(int adTypes, string placement)
+        {
+            return getInstance().show(adTypes, placement);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Shows banner at a specified position on the screen.
+        /// You can either use predefined <see cref="AppodealViewPosition"/> constants or set any desired offset.
+        /// </para>
+        /// <example>To show banner at top left use:<code>Appodeal.showBannerView(AppodealViewPosition.VERTICAL_TOP, AppodealViewPosition.HORIZONTAL_LEFT placementName);</code></example>
+        /// <example>To show banner at bottom center use:<code>Appodeal.showBannerView(AppodealViewPosition.VERTICAL_BOTTOM, AppodealViewPosition.HORIZONTAL_CENTER, placementName);</code></example>
+        /// </summary>
+        /// <remarks>If banner view is out of screen because of the offset you specified, advertisement will not be shown.</remarks>
+        /// <param name="YAxis">y axis offset for banner view.</param>
+        /// <param name="XGravity">x axis offset for banner view.</param>
+        /// <param name="placement">name of placement.</param>
+        /// <returns>true if an ad was shown, otherwise - false</returns>
+        public static bool showBannerView(int YAxis, int XGravity, string placement)
+        {
+            return getInstance().showBannerView(YAxis, XGravity, placement);
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Shows mrec at a specified position on the screen.
+        /// You can either use predefined <see cref="AppodealViewPosition"/> constants or set any desired offset.
+        /// </para>
+        /// <example>To show mrec at top left use:<code>Appodeal.showMrecView(AppodealViewPosition.VERTICAL_TOP, AppodealViewPosition.HORIZONTAL_LEFT placementName);</code></example>
+        /// <example>To show mrec at bottom center use:<code>Appodeal.showMrecView(AppodealViewPosition.VERTICAL_BOTTOM, AppodealViewPosition.HORIZONTAL_CENTER, placementName);</code></example>
+        /// </summary>
+        /// <remarks>If mrec view is out of screen because of the offset you specified, advertisement will not be shown.</remarks>
+        /// <param name="YAxis">y axis offset for mrec view.</param>
+        /// <param name="XGravity">x axis offset for mrec view.</param>
+        /// <param name="placement">name of placement.</param>
+        /// <returns>true if an ad was shown, otherwise - false</returns>
+        public static bool showMrecView(int YAxis, int XGravity, string placement)
+        {
+            return getInstance().showMrecView(YAxis, XGravity, placement);
+        }
+        
+        /// <summary>Hides active banner or mrec from screen.</summary>
+        /// <remarks>It can only be applied to ads shown via <see cref="Appodeal.show"/> method.</remarks>
+        /// <param name="adTypes">type of advertisement. Use AppodealAdType.BANNER for banners, and AppodealAdType.BANNER for mrec.</param>
+        public static void hide(int adTypes)
+        {
+            getInstance().hide(adTypes);
+        }
+
+        /// <summary>Hides active banner view from screen.</summary>
+        /// <remarks>It can only be applied to banners shown via <see cref="Appodeal.showBannerView"/> method.</remarks>
+        public static void hideBannerView()
+        {
+            getInstance().hideBannerView();
+        }
+
+        /// <summary>Hides active mrec view from screen</summary>
+        /// <remarks>It can only be applied to banners shown via <see cref="Appodeal.showMrecView"/> method.</remarks>
+        public static void hideMrecView()
+        {
+            getInstance().hideMrecView();
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Defines whether or not auto cache is enabled for specified ad types (It is <see langword="true"/> for all ad types by default).
+        /// </para>
+        /// <para>
+        /// Call before the SDK initialization.
+        /// </para>
+        /// You can also use <see cref="Appodeal.isAutoCacheEnabled"/> to check if auto cache is enabled for specified ad type.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/2658522-sdk-caching"/> for more details.</remarks>
+        /// <param name="adTypes">types of advertisement.</param>
+        /// <param name="autoCache">true to enable auto cache, false to disable.</param>
+        public static void setAutoCache(int adTypes, bool autoCache)
+        {
+            getInstance().setAutoCache(adTypes, autoCache);
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Defines whether or not <see langword="on[AdType]Loaded"/> callback should be fired if precache is loaded.
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/94830-ad-loading-time-and-precache"/> for more details.</remarks>
+        /// <param name="adTypes">type of advertisement. Currently supported for interstitial, rewarded video, banner and MREC ad types.</param>
+        /// <param name="onLoadedTriggerBoth">true - onLoaded will be triggered when precache or regular ad are loaded. false - onLoaded will trigger only when regular ad is loaded (default).</param>
+        public static void setTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
+        {
+            getInstance().setTriggerOnLoadedOnPrecache(adTypes, onLoadedTriggerBoth);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Checks whether or not an ad of a specified ad type is loaded.
+        /// </para>
+        /// <example>To check if interstitial is loaded use:<code>Appodeal.isLoaded(AppodealAdType.INTERSTITIAL);</code></example>
+        /// <example>To check if rewarded video is loaded use:<code>Appodeal.isLoaded(AppodealAdType.REWARDED_VIDEO);</code></example>
+        /// <example>To check if non-skippable video is loaded use:<code>Appodeal.isLoaded(AppodealAdType.NON_SKIPPABLE_VIDEO);</code></example>
+        /// <example>To check if banner is loaded use:<code>Appodeal.isLoaded(AppodealAdType.BANNER);</code></example>
+        /// <example>To check if 300*250 banner is loaded use:<code>Appodeal.isLoaded(AppodealAdType.MREC);</code></example>
+        /// </summary>
+        /// <param name="adTypes">type of advertisement.</param>
+        /// <returns>true if advertisement is loaded, otherwise - false.</returns>
+        public static bool isLoaded(int adTypes)
+        {
+            return getInstance().isLoaded(adTypes);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Checks whether or not currently loaded ad is precache.
+        /// </para>
+        /// <example>To check if interstitial is precache use:<code>Appodeal.isPrecache(AppodealAdType.INTERSTITIAL);</code></example>
+        /// </summary>
+        /// <param name="adTypes">type of advertisement. Currently supported only for AppodealAdType.INTERSTITIAL.</param>
+        /// <returns>true if advertisement is loaded and is precache, otherwise - false.</returns>
+        public static bool isPrecache(int adTypes)
+        {
+            return getInstance().isPrecache(adTypes);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Defines whether or not smart banners should be used (It is <see langword="true"/> by default).
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/2684869-banner-sizes"/> for more details.</remarks>
+        /// <param name="enabled">true to enable smart banners, false to disable.</param>
+        public static void setSmartBanners(bool enabled)
+        {
+            getInstance().setSmartBanners(enabled);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Defines whether or not 728*90 banners should be used (It is <see langword="false"/> by default).
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/2684869-banner-sizes"/> for more details.</remarks>
+        /// <param name="enabled">true to enable tablet banners, false to disable.</param>
+        public static void setTabletBanners(bool enabled)
+        {
+            getInstance().setTabletBanners(enabled);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Defines whether or not banner animation should be used (It is <see langword="true"/> by default).
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <param name="enabled">true to enable banner animation, false to disable.</param>
+        public static void setBannerAnimation(bool enabled)
+        {
+            getInstance().setBannerAnimation(enabled);
+        }
+
+        /// <summary>
+        /// Sets rotation for AppodealAdType.BANNER_LEFT and AppodealAdType.BANNER_RIGHT types (by default: left = -90, right = 90).
+        /// </summary>
+        /// <param name="leftBannerRotation">rotation for AppodealAdType.BANNER_LEFT.</param>
+        /// <param name="rightBannerRotation">rotation for AppodealAdType.BANNER_RIGHT.</param>
+        public static void setBannerRotation(int leftBannerRotation, int rightBannerRotation)
+        {
+            getInstance().setBannerRotation(leftBannerRotation, rightBannerRotation);
+        }
+        
+        /// <summary>
+        /// Defines whether or not safe area of the screen can be used (Supported only for <see langword="Android"/>).
+        /// </summary> 
+        /// <param name="value">true to enable usage of safe area, false to disable.</param>
+        public static void setUseSafeArea(bool value)
+        {
+            getInstance().setUseSafeArea(value);
+        }
+
+        /// <summary>
+        /// Tracks in-app purchase information and sends info to our servers.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Trackin-apppurchases"/> for more details.</remarks>
+        /// <param name="amount">amount of purchase.</param>
+        /// <param name="currency">currency of purchase.</param>
+        public static void trackInAppPurchase(double amount, string currency)
+        {
+            getInstance().trackInAppPurchase(amount, currency);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Disables specified ad network for all ad types.
+        /// </para>
+        /// <example>To disable Facebook use:<code>Appodeal.disableNetwork(AppodealNetworks.FACEBOOK);</code></example>
+        /// </summary>
+        /// <remarks>We recommend using <see langword="AppodealNetworks"/> class to access networks' names.</remarks>
+        /// <param name="network">network name.</param>
+        public static void disableNetwork(string network)
+        {
+            getInstance().disableNetwork(network);
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Disables specified ad network for specified ad types.
+        /// </para>
+        /// <example>To disable Facebook for banners only use:<code>Appodeal.disableNetwork(AppodealNetworks.FACEBOOK, AppodealAdType.BANNER);</code></example>
+        /// </summary>
+        /// <remarks>We recommend using <see langword="AppodealNetworks"/> class to access networks' names.</remarks>
+        /// <param name="network">network name.</param>
+        /// <param name="adType">types of advertisement.</param>
+        public static void disableNetwork(string network, int adType)
+        {
+            getInstance().disableNetwork(network, adType);
+        }
+
+        /// <summary>
+        /// Defines whether or not location tracking is allowed (Supported only for <see langword="iOS"/>).
+        /// </summary>
+        /// <remarks>On android location tracking is always enabled if the corresponding permission was given.</remarks>
+        /// <param name="value">true to enable location tracking, false to disable.</param>
+        public static void setLocationTracking(bool value)
+        {
+            getInstance().setLocationTracking(value);
+        }
+
+        /// <summary>Sets user id.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.</remarks>
+        /// <param name="id">user id.</param>
+        public static void setUserId(string id)
+        {
+            getInstance().setUserId(id);
+        }
+
+        /// <summary>Sets user gender.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.</remarks>
+        /// <param name="gender">user gender.</param>
+        public static void setUserGender(AppodealUserGender gender)
+        {
+            getInstance().setUserGender(gender);
+        }
+
+        /// <summary>Sets user age.</summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.</remarks>
+        /// <param name="age">user age.</param>
+        public static void setUserAge(int age)
+        {
+            getInstance().setUserAge(age);
+        }
+
+        /// <summary>Gets native SDK version.</summary> 
+        /// <returns>Appodeal (Android or iOS) SDK version string.</returns>
+        public static string getNativeSDKVersion()
+        {
+            return getInstance().getVersion();
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Defines whether or not test mode should be enabled.
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/testing#id-[Development]UnitySDK.Testing-Step2:TestYourSDKintegration"/> for more details.</remarks>
+        /// <param name="test">true if test mode is enabled, otherwise - false.</param>
+        public static void setTesting(bool test)
+        {
+            getInstance().setTesting(test);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Defines the log level of Appodeal SDK.
+        /// </para>
+        /// Use <see langword="AppodealLogLevel"/> enum to access possible values.
+        /// </summary>
+        /// <remarks>All logs will be written with tag "Appodeal".</remarks>
+        /// <param name="log">log-level state of AppodealLogLevel type .</param>
+        public static void setLogLevel(AppodealLogLevel log)
+        {
+            getInstance().setLogLevel(log);
+        }
+        
+        /// <summary>
+        /// Sets custom segment filter.
+        /// </summary>
+        /// <param name="name">name of the filter.</param>
+        /// <param name="value">filter value.</param>
+        public static void setCustomFilter(string name, bool value)
+        {
+            getInstance().setCustomFilter(name, value);
+        }
+        
+        /// <summary>
+        /// Sets custom segment filter.
+        /// </summary>
+        /// <param name="name">name of the filter.</param>
+        /// <param name="value">filter value.</param>
+        public static void setCustomFilter(string name, int value)
+        {
+            getInstance().setCustomFilter(name, value);
+        }
+
+        /// <summary>
+        /// Sets custom segment filter.
+        /// </summary>
+        /// <param name="name">name of the filter.</param>
+        /// <param name="value">filter value.</param>
+        public static void setCustomFilter(string name, double value)
+        {
+            getInstance().setCustomFilter(name, value);
+        }
+
+        /// <summary>
+        /// Sets custom segment filter.
+        /// </summary>
+        /// <param name="name">name of the filter.</param>
+        /// <param name="value">filter value.</param>
+        public static void setCustomFilter(string name, string value)
+        {
+            getInstance().setCustomFilter(name, value);
+        }
+        
+        /// <summary>
+        /// Checks whether or not advertisement can be shown within <see langword="default"/> placement.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/collections/107523-placements"/> for more details.</remarks>
+        /// <param name="adTypes">type of advertisement.</param>
+        /// <returns>true if an ad can be shown within default placement, otherwise - false.</returns>
+        public static bool canShow(int adTypes)
+        {
+            return getInstance().canShow(adTypes);
+        }
+
+        /// <summary>
+        /// Checks whether or not advertisement can be shown within <see langword="specified"/> placement.
+        /// </summary> 
+        /// <remarks>See <see href="https://faq.appodeal.com/en/collections/107523-placements"/> for more details.</remarks>
+        /// <param name="adTypes">type of advertisement.</param>
+        /// <param name="placement">placement name.</param>
+        /// <returns>true if an ad can be shown within specified placement, otherwise - false.</returns>
+        public static bool canShow(int adTypes, string placement)
+        {
+            return getInstance().canShow(adTypes, placement);
+        }
+        
+        /// <summary>
+        /// Gets reward parameters for <see langword="default"/> placement.
+        /// </summary> 
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
+        /// <returns>reward currency as key; reward amount as value.</returns>
+        public static KeyValuePair<string, double> getRewardParameters()
+        {
+            return getInstance().getRewardParameters();
+        }
+
+        /// <summary>
+        /// Gets reward parameters for <see langword="specified"/> placement.
+        /// </summary>
+        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
+        /// <param name="placement">placement name.</param>
+        /// <returns>reward currency as key; reward amount as value.</returns>
+        public static KeyValuePair<string, double> getRewardParameters(string placement)
+        {
+            return getInstance().getRewardParameters(placement);
+        }
+        
+        /// <summary>
+        /// Defines whether or not videos should be muted if call volume is set to 0 (Supported only for <see langword="Android"/>).
+        /// </summary>
+        /// <remarks>It is <see langword="false"/> by default.</remarks>
+        /// <param name="value">true - mute videos if calls are muted, false - do not mute videos.</param>
+        public static void muteVideosIfCallsMuted(bool value)
+        {
+            getInstance().muteVideosIfCallsMuted(value);
+        }
+        
+        /// <summary>
+        /// Displays test screen (Supported only for <see langword="Android"/>).
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/testing#id-[Development]UnitySDK.Testing-UsefulSDKmethods"/> for more details.</remarks>
+        public static void showTestScreen()
+        {
+            getInstance().showTestScreen();
+        }
+        
+        /// <summary>
+        /// <para>
+        /// Disables data collection for children's apps (It is <see langword="false"/> by default, unless you marked the app with COPPA flag on the website).
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/coppa"/> for more details.</remarks>
+        /// <param name="value">true to disable data collection for kids apps.</param>
+        public static void setChildDirectedTreatment(bool value)
+        {
+            getInstance().setChildDirectedTreatment(value);
+        }
+        
+        /// <summary>
+        /// Destroys the cached ad (Supported only for <see langword="Android"/>).
+        /// </summary> 
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-DestroyHiddenBanner"/> for more details.</remarks>
+        /// <param name="adTypes">type of advertisement. Currently supported only for AppodealAdType.BANNER and AppodealAdType.MREC</param>
+        public static void destroy(int adTypes)
+        {
+            getInstance().destroy(adTypes);
+        }
+        
+        /// <summary>
+        /// Sets extra data to Appodeal.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <param name="key">associated with value.</param>
+        /// <param name="value">value which will be saved in extra data by key.</param>
+        public static void setExtraData(string key, bool value)
+        {
+            getInstance().setExtraData(key, value);
+        }
+
+        /// <summary>
+        /// Sets extra data to Appodeal.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <param name="key">associated with value.</param>
+        /// <param name="value">value which will be saved in extra data by key.</param>
+        public static void setExtraData(string key, int value)
+        {
+            getInstance().setExtraData(key, value);
+        }
+
+        /// <summary>
+        /// Sets extra data to Appodeal.
+        /// </summary>
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <param name="key">associated with value.</param>
+        /// <param name="value">value which will be saved in extra data by key.</param>
+        public static void setExtraData(string key, double value)
+        {
+            getInstance().setExtraData(key, value);
+        }
+
+        /// <summary>
+        /// Sets extra data to Appodeal.
+        /// </summary> 
+        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <param name="key">associated with value.</param>
+        /// <param name="value">value which will be saved in extra data by key.</param>
+        public static void setExtraData(string key, string value)
+        {
+            getInstance().setExtraData(key, value);
+        }
+        
+        /// <summary>
+        /// Gets predicted ecpm for certain ad type.
+        /// </summary> 
+        /// <param name="adType">type of advertisement.</param>
+        public static double getPredictedEcpm(int adType)
+        {
+            return getInstance().getPredictedEcpm(adType);
+        }
+
+        /// <summary>
+        /// Validates In-App purchase.
+        /// </summary> 
+        /// <param name="purchase"></param>
+        public static void validateInAppPurchase()
+        {
+
+        }
+
+    #region Deprecated methods
+
+        /// <summary>
         /// Initializes the relevant (Android or iOS) Appodeal SDK.
         /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
         /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-        /// <param name="adTypes">Type of advertising you want to initialize.</param>
+        /// <param name="adTypes">Type of advertisement you want to initialize.</param>
         /// 
         ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL);"/> 
         ///  To initialize only banners use <see cref="Appodeal.initialize(appKey, Appodeal.BANNER);"/> 
@@ -66,6 +661,7 @@ namespace AppodealAds.Unity.Api
         ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO);"/> 
         ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC);"/> 
         /// </summary>
+        // [Obsolete("This method is obsolete. Check the documentation for the new signature.", true)]
         public static void initialize(string appKey, int adTypes)
         {
             getInstance().initialize(appKey, adTypes);
@@ -75,7 +671,7 @@ namespace AppodealAds.Unity.Api
         /// Initializes the relevant (Android or iOS) Appodeal SDK.
         /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
         /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-        /// <param name="adTypes">Type of advertising you want to initialize.</param>
+        /// <param name="adTypes">Type of advertisement you want to initialize.</param>
         /// <param name="hasConsent">User has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
         /// 
         ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, hasConsent);"/> 
@@ -84,6 +680,7 @@ namespace AppodealAds.Unity.Api
         ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, hasConsent);"/> 
         ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, hasConsent);"/> 
         /// </summary>
+        // [Obsolete("This method is obsolete. Check the documentation for the new signature.", true)]
         public static void initialize(string appKey, int adTypes, bool hasConsent)
         {
             getInstance().initialize(appKey, adTypes, hasConsent);
@@ -93,7 +690,7 @@ namespace AppodealAds.Unity.Api
         /// Initializes the relevant (Android or iOS) Appodeal SDK.
         /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
         /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-        /// <param name="adTypes">Type of advertising you want to initialize.</param>
+        /// <param name="adTypes">Type of advertisement you want to initialize.</param>
         /// <param name="consent">Consent info object from Stack ConsentManager SDK.</param>
         /// 
         ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, consent);"/> 
@@ -102,26 +699,18 @@ namespace AppodealAds.Unity.Api
         ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, consent);"/> 
         ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, consent);"/> 
         /// </summary>
+        // [Obsolete("This method is obsolete. Check the documentation for the new signature.", true)]
         public static void initialize(string appKey, int adTypes, Consent consent)
         {
             getInstance().initialize(appKey, adTypes, consent);
-        }
-        
-        /// <summary>
-        /// Check if ad type is initialized
-        /// See <see cref="Appodeal.isInitialized"/> for resulting triggered event.
-        /// <param name="adType">adType type of advertising.</param>
-        /// </summary>
-        public static bool isInitialized(int adType)
-        {
-            return getInstance().isInitialized(adType);
         }
 
         /// <summary>
         /// Update consent value for ad networks in Appodeal SDK
         /// See <see cref="Appodeal.updateConsent"/> for resulting triggered event.
-        /// <param name="hasConsent"> this param user has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
         /// </summary>
+        /// <param name="hasConsent">user's consent on processing of their personal data. https://www.eugdpr.org.</param>
+        [Obsolete("This method is obsolete. Check the documentation for the new one.", true)]
         public static void updateConsent(bool hasConsent)
         {
             getInstance().updateConsent(hasConsent);
@@ -130,544 +719,41 @@ namespace AppodealAds.Unity.Api
         /// <summary>
         /// Update consent value for ad networks in Appodeal SDK
         /// See <see cref="Appodeal.updateConsent"/> for resulting triggered event.
-        /// <param name="consent"> Consent user has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
         /// </summary>
+        /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org.</param>
+        [Obsolete("This method is obsolete. Check the documentation for the new one.", true)]
         public static void updateConsent(Consent consent)
         {
             getInstance().updateConsent(consent);
         }
 
         /// <summary>
-        /// Check if auto cache enabled for  this ad type
-        /// See <see cref="Appodeal.isAutoCacheEnabled"/> for resulting triggered event.
-        /// <param name="adType">adType type of advertising.</param>
-        /// </summary>
-        public static bool isAutoCacheEnabled(int adType)
-        {
-            return getInstance().isAutoCacheEnabled(adType);
-        }
-        
-        /// <summary>
-        /// Set Interstitial ads callbacks
-        /// See <see cref="Appodeal.setInterstitialCallbacks"/> for resulting triggered event.
-        /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IInterstitialAdListener.</param>
-        /// </summary>
-        public static void setInterstitialCallbacks(IInterstitialAdListener listener)
-        {
-            getInstance().setInterstitialCallbacks(listener);
-        }
-        
-        /// <summary>
-        /// Set Interstitial ads callbacks
-        /// See <see cref="Appodeal.setNonSkippableVideoCallbacks"/> for resulting triggered event.
-        /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/INonSkippableVideoAdListener.</param>
-        /// </summary>
-        public static void setNonSkippableVideoCallbacks(INonSkippableVideoAdListener listener)
-        {
-            getInstance().setNonSkippableVideoCallbacks(listener);
-        }
-
-        /// <summary>
-        /// Set Interstitial ads callbacks
-        /// See <see cref="Appodeal.setRewardedVideoCallbacks"/> for resulting triggered event.
-        /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IRewardedVideoAdListener.</param>
-        /// </summary>
-        public static void setRewardedVideoCallbacks(IRewardedVideoAdListener listener)
-        {
-            getInstance().setRewardedVideoCallbacks(listener);
-        }
-
-        /// <summary>
-        /// Set Interstitial ads callbacks
-        /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
-        /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IBannerAdListener.</param>
-        /// </summary>
-        public static void setBannerCallbacks(IBannerAdListener listener)
-        {
-            getInstance().setBannerCallbacks(listener);
-        }
-
-        /// <summary>
-        /// Set Interstitial ads callbacks
-        /// See <see cref="Appodeal.setMrecCallbacks"/> for resulting triggered event.
-        /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IMrecAdListener.</param>
-        /// </summary>
-        public static void setMrecCallbacks(IMrecAdListener listener)
-        {
-            getInstance().setMrecCallbacks(listener);
-        }
-        
-        /// <summary>
-        /// Start caching ads.
-        /// See <see cref="Appodeal.cache"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising.</param>
-        /// </summary>
-        public static void cache(int adTypes)
-        {
-            getInstance().cache(adTypes);
-        }
-
-        /// <summary>
-        /// Show advertising.
-        /// See <see cref="Appodeal.show"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising.</param>
-        /// </summary>
-        public static bool show(int adTypes)
-        {
-            return getInstance().show(adTypes);
-        }
-
-        /// <summary>
-        /// Show advertising.
-        /// See <see cref="Appodeal.show"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising.</param>
-        /// <param name="placement">type of advertising you want to show.</param>
-        /// </summary>
-        public static bool show(int adTypes, string placement)
-        {
-            return getInstance().show(adTypes, placement);
-        }
-
-        /// <summary>
-        /// Show banner view.
-        /// See <see cref="Appodeal.showBannerView"/> for resulting triggered event.
-        /// <param name="YAxis">y position for banner view.</param>
-        /// <param name="XGravity">x position for banner view.</param>
-        /// <param name="placement">type of advertising you want to show.</param>
-        /// </summary>
-        public static bool showBannerView(int YAxis, int XGravity, string placement)
-        {
-            return getInstance().showBannerView(YAxis, XGravity, placement);
-        }
-        
-        /// <summary>
-        /// Show mrec view.
-        /// See <see cref="Appodeal.showMrecView"/> for resulting triggered event.
-        /// <param name="YAxis">y position for mrec view.</param>
-        /// <param name="XGravity">x position for mrec view.</param>
-        /// <param name="placement">type of advertising you want to show.</param>
-        /// </summary>
-        public static bool showMrecView(int YAxis, int XGravity, string placement)
-        {
-            return getInstance().showMrecView(YAxis, XGravity, placement);
-        }
-        
-        /// <summary>
-        /// Hide advertising.
-        /// See <see cref="Appodeal.hide"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising  Appodeal.BANNER</param>
-        /// </summary>
-        public static void hide(int adTypes)
-        {
-            getInstance().hide(adTypes);
-        }
-
-        /// <summary>
-        /// Hide Banner View.
-        /// See <see cref="Appodeal.hideBannerView"/> for resulting triggered event.
-        /// </summary>
-        public static void hideBannerView()
-        {
-            getInstance().hideBannerView();
-        }
-
-        /// <summary>
-        /// Hide Mrec view.
-        /// See <see cref="Appodeal.hideMrecView"/> for resulting triggered event.
-        /// </summary>
-        public static void hideMrecView()
-        {
-            getInstance().hideMrecView();
-        }
-        
-        /// <summary>
-        /// Start or stop auto caching new ads when current ads was shown..
-        /// See <see cref="Appodeal.setAutoCache"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising </param>
-        /// <param name="autoCache">true to use auto cache, false to not.</param>
-        /// </summary>
-        public static void setAutoCache(int adTypes, bool autoCache)
-        {
-            getInstance().setAutoCache(adTypes, autoCache);
-        }
-        
-        /// <summary>
-        /// Triggering onLoaded callback when precache loaded.
-        /// See <see cref="Appodeal.setTriggerOnLoadedOnPrecache"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising </param>
-        /// <param name="onLoadedTriggerBoth">true - onLoaded will trigger when precache or normal ad were loaded.
-        ///                         false - onLoaded will trigger only when normal ad was loaded (default).</param>
-        /// </summary>
-        public static void setTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
-        {
-            getInstance().setTriggerOnLoadedOnPrecache(adTypes, onLoadedTriggerBoth);
-        }
-        
-        /// <summary>
         /// Enabling shared ads instance across activities (disabled by default).
         /// See <see cref="Appodeal.setSharedAdsInstanceAcrossActivities"/> for resulting triggered event.
         /// <param name="sharedAdsInstanceAcrossActivities">enabling or disabling shared ads instance across activities.</param>
         /// </summary>
+        [Obsolete("This method is obsolete.", true)]
         public static void setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities)
         {
             getInstance().setSharedAdsInstanceAcrossActivities(sharedAdsInstanceAcrossActivities);
         }
 
         /// <summary>
-        /// Checking if ad is loaded. Return true if ads currently loaded and can be shown.
-        /// See <see cref="Appodeal.isLoaded"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising </param>
-        /// </summary>
-        public static bool isLoaded(int adTypes)
-        {
-            return getInstance().isLoaded(adTypes);
-        }
-
-        /// <summary>
-        /// Checking if loaded ad is precache. Return true if currently loaded ads is precache.
-        /// See <see cref="Appodeal.isPrecache"/> for resulting triggered event.
-        /// <param name="adTypes">adType type of advertising. Currently supported only for interstitials. </param>
-        /// </summary>
-        public static bool isPrecache(int adTypes)
-        {
-            return getInstance().isPrecache(adTypes);
-        }
-
-        /// <summary>
-        /// Enabling or disabling smart banners (Enabled by default).
-        /// See <see cref="Appodeal.setSmartBanners"/> for resulting triggered event.
-        /// <param name="enabled">enabled enabling or disabling loading smart banners.</param>
-        /// </summary>
-        public static void setSmartBanners(bool enabled)
-        {
-            getInstance().setSmartBanners(enabled);
-        }
-
-        /// <summary>
-        /// Enabling or disabling banners background (Enabled by default).
-        /// See <see cref="Appodeal.setBannerBackground"/> for resulting triggered event.
-        /// <param name="enabled">enabled enabling or disabling banners background (only for iOS platform)</param>
-        /// </summary>
-        public static void setBannerBackground(bool enabled)
-        {
-            getInstance().setBannerBackground(enabled);
-        }
-        
-        /// <summary>
-        /// Enabling or disabling 728*90 banners (Disabled by default).
-        /// See <see cref="Appodeal.setTabletBanners"/> for resulting triggered event.
-        /// <param name="enabled">enabled enabling or disabling loading 728*90 banners.</param>
-        /// </summary>
-        public static void setTabletBanners(bool enabled)
-        {
-            getInstance().setTabletBanners(enabled);
-        }
-
-        /// <summary>
-        /// Enabling animation of banners (Enabled by default).
-        /// See <see cref="Appodeal.setBannerAnimation"/> for resulting triggered event.
-        /// <param name="enabled">animate enabling or disabling animations.</param>
-        /// </summary>
-        public static void setBannerAnimation(bool enabled)
-        {
-            getInstance().setBannerAnimation(enabled);
-        }
-
-        /// <summary>
-        /// Setting banners inverse rotation (by default: left = -90, right = 90).
-        /// See <see cref="Appodeal.setBannerRotation"/> for resulting triggered event.
-        /// <param name="leftBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_LEFT.</param>
-        /// <param name="rightBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_RIGHT.</param>
-        /// </summary>
-        public static void setBannerRotation(int leftBannerRotation, int rightBannerRotation)
-        {
-            getInstance().setBannerRotation(leftBannerRotation, rightBannerRotation);
-        }
-        
-        /// <summary>
-        /// Tracks in-app purchase information and sends info to our servers for analytics.
-        /// See <see cref="Appodeal.trackInAppPurchase"/> for resulting triggered event.
-        /// <param name="amount">amount of purchase.</param>
-        /// <param name="currency">currency of purchase.</param>
-        /// </summary>
-        public static void trackInAppPurchase(double amount, string currency)
-        {
-            getInstance().trackInAppPurchase(amount, currency);
-        }
-
-        /// <summary>
-        /// Disabling specified network for all ad types.
-        /// See <see cref="Appodeal.disableNetwork"/> for resulting triggered event.
-        /// <param name="network">network name.</param>
-        /// </summary>
-        public static void disableNetwork(string network)
-        {
-            getInstance().disableNetwork(network);
-        }
-        
-        /// <summary>
-        /// Disabling specified network for specified ad types.
-        /// See <see cref="Appodeal.disableNetwork"/> for resulting triggered event.
-        /// <param name="network">network name.</param>
-        /// </summary>
-        public static void disableNetwork(string network, int adType)
-        {
-            getInstance().disableNetwork(network, adType);
-        }
-        
-        /// <summary>
         /// Disabling location tracking (for iOS platform only).
         /// See <see cref="Appodeal.disableLocationPermissionCheck"/> for resulting triggered event.
         /// </summary>
+        [Obsolete("This method is obsolete. Use setLocationTracking() instead.", true)]
         public static void disableLocationPermissionCheck()
         {
             getInstance().disableLocationPermissionCheck();
         }
 
-        /// <summary>
-        /// Set user id.
-        /// See <see cref="Appodeal.setUserId"/> for resulting triggered event.
-        /// <param name="id">user id.</param>
-        /// </summary>
-        public static void setUserId(string id)
-        {
-            getInstance().setUserId(id);
-        }
 
-        /// <summary>
-        /// Set user age.
-        /// See <see cref="Appodeal.setUserAge"/> for resulting triggered event.
-        /// <param name="age">user gender.</param>
-        /// </summary>
-        public static void setUserAge(int age)
-        {
-            getInstance().setUserAge(age);
-        }
+        [Obsolete("This method is obsolete. It will be removed in the next release.", true)]
+        public static void setBannerBackground(bool enabled) {}
 
-        /// <summary>
-        /// Set user gender.
-        /// See <see cref="Appodeal.setUserGender"/> for resulting triggered event.
-        /// <param name="gender">user gender.</param>
-        /// </summary>
-        public static void setUserGender(Gender gender)
-        {
-            getInstance().setUserGender(gender);
-        }
-        
-        /// <summary>
-        /// Set test mode.
-        /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
-        /// </summary>
-        public static void setTesting(bool test)
-        {
-            getInstance().setTesting(test);
-        }
+    #endregion
 
-        /// <summary>
-        /// Set log level. All logs will be written with tag "Appodeal".
-        /// See <see cref="Appodeal.setLogLevel"/> for resulting triggered event.
-        /// <param name="log">AppodealLogLevel log level .</param>
-        /// </summary>
-        public static void setLogLevel(AppodealLogLevel log)
-        {
-            getInstance().setLogLevel(log);
-        }
-        
-        /// <summary>
-        /// Set custom segment filter.
-        /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setCustomFilter(string name, bool value)
-        {
-            getInstance().setCustomFilter(name, value);
-        }
-        
-        /// <summary>
-        /// Set custom segment filter.
-        /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setCustomFilter(string name, int value)
-        {
-            getInstance().setCustomFilter(name, value);
-        }
-
-        /// <summary>
-        /// Set custom segment filter.
-        /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setCustomFilter(string name, double value)
-        {
-            getInstance().setCustomFilter(name, value);
-        }
-
-        /// <summary>
-        /// Set custom segment filter.
-        /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-        /// <param name="name">name  name of the filter.</param>
-        /// <param name="value">value filter value.</param>
-        /// </summary>
-        public static void setCustomFilter(string name, string value)
-        {
-            getInstance().setCustomFilter(name, value);
-        }
-        
-        /// <summary>
-        /// Check if ad with specific ad type can be shown with placement.
-        /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
-        /// <param name="adTypes">type of advertising.</param>
-        /// </summary> 
-        public static bool canShow(int adTypes)
-        {
-            return getInstance().canShow(adTypes);
-        }
-
-        /// <summary>
-        /// Check if ad with specific ad type can be shown with placement.
-        /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
-        /// <param name="adTypes">type of advertising.</param>
-        /// <param name="placement">placement name.</param>
-        /// </summary> 
-        public static bool canShow(int adTypes, string placement)
-        {
-            return getInstance().canShow(adTypes, placement);
-        }
-        
-        /// <summary>
-        /// Get reward parameters.
-        /// See <see cref="Appodeal.getRewardParameters"/> for resulting triggered event.
-        /// </summary> 
-        public static KeyValuePair<string, double> getRewardParameters()
-        {
-            return new KeyValuePair<string, double>(getInstance().getRewardCurrency(), getInstance().getRewardAmount());
-        }
-
-        /// <summary>
-        /// Get reward parameters for placement.
-        /// See <see cref="Appodeal.getRewardParameters"/> for resulting triggered event.
-        /// <param name="placement">placement name.</param>
-        /// </summary> 
-        public static KeyValuePair<string, double> getRewardParameters(string placement)
-        {
-            return new KeyValuePair<string, double>(getInstance().getRewardCurrency(placement),
-                getInstance().getRewardAmount(placement));
-        }
-        
-        /// <summary>
-        /// Mute video if calls muted on device (supports only for Android platform).
-        /// See <see cref="Appodeal.muteVideosIfCallsMuted"/> for resulting triggered event.
-        /// <param name="value">true - mute videos if call volume is 0.</param>
-        /// </summary> 
-        public static void muteVideosIfCallsMuted(bool value)
-        {
-            getInstance().muteVideosIfCallsMuted(value);
-        }
-        
-        /// <summary>
-        /// Start test screen to test integration.
-        /// See <see cref="Appodeal.showTestScreen"/> for resulting triggered event.
-        /// </summary> 
-        public static void showTestScreen()
-        {
-            getInstance().showTestScreen();
-        }
-        
-        /// <summary>
-        /// Disables data collection for kids apps.
-        /// See <see cref="Appodeal.setChildDirectedTreatment"/> for resulting triggered event.
-        /// <param name="value">value true to disable data collection for kids apps.</param>
-        /// </summary> 
-        public static void setChildDirectedTreatment(bool value)
-        {
-            getInstance().setChildDirectedTreatment(value);
-        }
-        
-        /// <summary>
-        /// Destroy cached ad.
-        /// See <see cref="Appodeal.destroy"/> for resulting triggered event.
-        /// <param name="adTypes">adTypes ad types you want to destroy.</param>
-        /// </summary> 
-        public static void destroy(int adTypes)
-        {
-            getInstance().destroy(adTypes);
-        }
-        
-        /// <summary>
-        /// Add extra data to Appodeal.
-        /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-        /// <param name="key">associated with value.</param>
-        /// <param name="value">value which will be saved in extra data by key.</param>
-        /// </summary> 
-        public static void setExtraData(string key, bool value)
-        {
-            getInstance().setExtraData(key, value);
-        }
-
-        /// <summary>
-        /// Add extra data to Appodeal.
-        /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-        /// <param name="key">associated with value.</param>
-        /// <param name="value">value which will be saved in extra data by key.</param>
-        /// </summary> 
-        public static void setExtraData(string key, int value)
-        {
-            getInstance().setExtraData(key, value);
-        }
-
-        /// <summary>
-        /// Add extra data to Appodeal.
-        /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-        /// <param name="key">associated with value.</param>
-        /// <param name="value">value which will be saved in extra data by key.</param>
-        /// </summary> 
-        public static void setExtraData(string key, double value)
-        {
-            getInstance().setExtraData(key, value);
-        }
-
-        /// <summary>
-        /// Add extra data to Appodeal.
-        /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-        /// <param name="key">associated with value.</param>
-        /// <param name="value">value which will be saved in extra data by key.</param>
-        /// </summary> 
-        public static void setExtraData(string key, string value)
-        {
-            getInstance().setExtraData(key, value);
-        }
-        
-        /// <summary>
-        /// Get native SDK version
-        /// See <see cref="Appodeal.getNativeSDKVersion"/> for resulting triggered event.
-        /// </summary> 
-        public static string getNativeSDKVersion()
-        {
-            return getInstance().getVersion();
-        }
-        
-        /// <summary>
-        /// Get predicted ecpm for certain ad type.
-        /// See <see cref="Appodeal.getPredictedEcpm"/> for resulting triggered event.
-        /// <param name="adType">adType type of advertising.</param>
-        /// </summary> 
-        public static double getPredictedEcpm(int adType)
-        {
-            return getInstance().getPredictedEcpm(adType);
-        }
-        
-        /// <summary>
-        /// Set use safe area.
-        /// See <see cref="Appodeal.setUseSafeArea"/> for resulting triggered event.
-        /// </summary> 
-        public static void setUseSafeArea(bool value)
-        {
-            getInstance().setUseSafeArea(value);
-        }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -687,6 +773,7 @@ namespace AppodealAds.Unity.Api
             return client ?? (client = AppodealAdsClientFactory.GetAppodealAdsClient());
         }
         
+        [Obsolete("This constructor is obsolete.", true)]
         public UserSettings()
         {
             getInstance().getUserSettings();
