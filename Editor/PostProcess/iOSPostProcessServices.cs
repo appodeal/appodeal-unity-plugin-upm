@@ -28,7 +28,7 @@ namespace AppodealAds.Unity.Editor.PostProcess
 
             if (string.IsNullOrEmpty(fbKey))
             {
-                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Setings). This service won't be initialized properly.");
+                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
                 return;
             }
 
