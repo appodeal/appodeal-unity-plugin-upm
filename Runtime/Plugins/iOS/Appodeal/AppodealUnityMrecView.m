@@ -11,8 +11,8 @@
 #define BANNER_X_POSITION_CENTER    -2
 #define BANNER_X_POSITION_RIGHT     -3
 #define BANNER_X_POSITION_LEFT      -4
-#define BANNER_Y_POSITION_BOTTOM     8
-#define BANNER_Y_POSITION_TOP        16
+#define BANNER_Y_POSITION_BOTTOM    -1
+#define BANNER_Y_POSITION_TOP       -2
 
 @implementation AppodealUnityMrecView
 
@@ -80,7 +80,7 @@ UIViewController* RootViewControllerUnityMrec() {
         NSLog(@"[Appodeal Banner view][error] Banner view x offset can'not be more than Screen width - acutual banner width");
         xOffset = superviewSize.width - mrecWidth;
         mask |= UIViewAutoresizingFlexibleLeftMargin;
-    } else if (XAxis < -5) {
+    } else if (XAxis < -4) {
         NSLog(@"[Appodeal Banner view][error] Banner view x offset can'not be less than 0");
         xOffset = 0;
     } else {
@@ -98,7 +98,7 @@ UIViewController* RootViewControllerUnityMrec() {
         NSLog(@"[Appodeal Banner view][error] Banner view y offset can'not be more than Screen height - acutual banner height");
         yOffset = superviewSize.height - mrecHeight;
         mask |= UIViewAutoresizingFlexibleTopMargin;
-    } else if (YAxis < 0) {
+    } else if (YAxis < -2) {
         NSLog(@"[Appodeal Banner view][error] Banner view y offset can'not be less than 0");
         yOffset = 0;
     } else if (YAxis == .0f) { // All good
