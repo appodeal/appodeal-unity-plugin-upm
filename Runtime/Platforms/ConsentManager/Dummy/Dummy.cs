@@ -4,6 +4,7 @@ using AppodealCM.Unity.Common;
 
 namespace AppodealCM.Unity.Platforms
 {
+#if UNITY_EDITOR
     public class Dummy : IConsentManager, IConsentForm, IVendor, IVendorBuilder, IConsentFormBuilder,
         IConsentManagerException, IConsent
     {
@@ -206,4 +207,5 @@ namespace AppodealCM.Unity.Platforms
 
         #endregion
     }
+#endif
 }
