@@ -2,7 +2,7 @@ namespace AppodealAds.Unity.Common
 {
     /// <summary>
     /// <para>
-    /// Enumuration containing all possible states of Appodeal Log Level.
+    /// Enumeration containing all possible states of Appodeal Log Level.
     /// </para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/logging"/> for more details.
     /// </summary>
