@@ -152,7 +152,7 @@ namespace AppodealAds.Unity.Editor.PostProcess
             {
                 AddKeyToPlist(path, "NSUserTrackingUsageDescription",
                     "$(PRODUCT_NAME)" + " " +
-                    "needs your advertising identifier to provide personalised advertising experience tailored to you.");
+                    "needs your advertising identifier to provide personalized advertising experience tailored to you.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace AppodealAds.Unity.Editor.PostProcess
             {
                 AddKeyToPlist(path, "NSCalendarsUsageDescription",
                     "$(PRODUCT_NAME)" + " " +
-                    "needs your calendar to provide personalised advertising experience tailored to you.");
+                    "needs your calendar to provide personalized advertising experience tailored to you.");
             }
         }
 
