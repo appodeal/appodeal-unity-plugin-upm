@@ -154,7 +154,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
             string appId = AppodealSettings.Instance.FacebookAndroidAppId;
 
             if (string.IsNullOrEmpty(appId)) {
-                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Setings). This service won't be initialized properly!");
+                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
                 return;
             }
 
