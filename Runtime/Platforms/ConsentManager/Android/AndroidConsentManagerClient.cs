@@ -6,6 +6,7 @@ using AppodealCM.Unity.Common;
 
 namespace AppodealCM.Unity.Platforms
 {
+#if UNITY_ANDROID
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class AndroidConsentManager : IConsentManager
     {
@@ -551,4 +552,5 @@ namespace AppodealCM.Unity.Platforms
             return value ?? null;
         }
     }
+#endif
 }
