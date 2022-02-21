@@ -1613,16 +1613,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 344991553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9584a4ebfb276456da3b57ff323677ac, type: 3}
+  m_Script: {fileID: 11500000, guid: bef73e167f84a4358a7cc129df2f772c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   consentManagerPanel: {fileID: 1634643287}
   appodealPanel: {fileID: 1851359258}
-  pluginVersionText: {fileID: 1544026355}
   testingToggle: {fileID: 2038355073}
   loggingToggle: {fileID: 1426276316}
-  interstitialButton: {fileID: 607698341}
-  rewardedVideoButton: {fileID: 580416344}
+  pluginVersion: {fileID: 1544026355}
+  interstitialButton: {fileID: 1235426103}
+  rewardedVideoButton: {fileID: 1106575447}
 --- !u!4 &344991555
 Transform:
   m_ObjectHideFlags: 0
