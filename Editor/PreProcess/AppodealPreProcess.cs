@@ -2,17 +2,13 @@
 #if UNITY_ANDROID
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEditor.Build.Reporting;
 using UnityEditor;
 using UnityEditor.Build;
-using UnityEditor.Android;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.Checkers;
 using AppodealStack.UnityEditor.InternalResources;

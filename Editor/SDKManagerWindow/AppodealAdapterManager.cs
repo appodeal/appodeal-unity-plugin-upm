@@ -6,8 +6,6 @@ using File = UnityEngine.Windows.File;
 using System;
 using System.IO;
 using System.Xml;
-using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;

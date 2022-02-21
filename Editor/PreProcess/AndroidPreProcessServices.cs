@@ -1,7 +1,6 @@
 #if UNITY_ANDROID
 using UnityEditor;
 using UnityEngine;
-using System;
 using System.IO;
 using System.Xml;
 using System.Linq;

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.InternalResources;
 
 namespace AppodealStack.UnityEditor.PostProcess

@@ -1,7 +1,6 @@
 ﻿#if UNITY_IPHONE
 using System;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
