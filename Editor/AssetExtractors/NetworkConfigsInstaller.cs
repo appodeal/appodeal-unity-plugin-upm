@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Linq;
 using UnityEditor;
-using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.InternalResources;
 
-namespace AppodealAds.Unity.Editor.AssetsExtractor
+namespace AppodealStack.UnityEditor.AssetExtractors
 {
     static class NetworkConfigsInstaller
     {

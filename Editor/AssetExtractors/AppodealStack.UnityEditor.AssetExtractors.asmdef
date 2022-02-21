@@ -1,7 +1,8 @@
 {
-    "name": "AppodealAds.Unity.Editor.Checkers",
+    "name": "AppodealStack.UnityEditor.AssetExtractors",
     "references": [
-        "AppodealAds.Unity.Editor.Utils"
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.UnityEditor.InternalResources"
     ],
     "includePlatforms": [
         "Editor"
