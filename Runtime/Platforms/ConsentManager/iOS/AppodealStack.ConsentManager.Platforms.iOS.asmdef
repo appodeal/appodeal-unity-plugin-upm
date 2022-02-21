@@ -1,11 +1,9 @@
 {
-    "name": "AppodealAds.Unity.Common",
+    "name": "AppodealStack.ConsentManager.Platforms.iOS",
     "references": [
-        "AppodealCM.Unity.Platforms"
+        "AppodealStack.ConsentManager.Common"
     ],
     "includePlatforms": [
-        "Android",
-        "Editor",
         "iOS"
     ],
     "excludePlatforms": [],

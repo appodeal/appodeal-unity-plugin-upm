@@ -1,13 +1,14 @@
-﻿using AppodealAds.Unity.Common;
+﻿using AppodealStack.Mediation.Common;
+
 #if UNITY_ANDROID && !UNITY_EDITOR
-using AppodealAds.Unity.Platforms.Android;
+using AppodealStack.Mediation.Platforms.Android;
 #elif UNITY_IPHONE && !UNITY_EDITOR
-using AppodealAds.Unity.Platforms.iOS;
+using AppodealStack.Mediation.Platforms.iOS;
 #else
-using AppodealAds.Unity.Platforms.Dummy;
+using AppodealStack.Mediation.Platforms.Dummy;
 #endif
 
-namespace AppodealAds.Unity.Platforms
+namespace AppodealStack.Mediation.Platforms
 {
     public static class AppodealAdsClientFactory
     {

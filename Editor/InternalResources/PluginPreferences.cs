@@ -3,7 +3,7 @@ using UnityEditor;
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.InternalResources
+namespace AppodealStack.UnityEditor.InternalResources
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class PluginPreferences : ScriptableObject

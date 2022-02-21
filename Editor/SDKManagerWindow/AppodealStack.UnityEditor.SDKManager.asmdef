@@ -1,12 +1,14 @@
 {
-    "name": "AppodealCM.Unity.Platforms",
+    "name": "AppodealStack.UnityEditor.SDKManager",
     "references": [
-        "AppodealCM.Unity.Common"
+        "marijnz.EditorCoroutines",
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.UnityEditor.PluginRemover",
+        "AppodealStack.UnityEditor.SDKManager.Models"
     ],
     "includePlatforms": [
-        "Android",
-        "Editor",
-        "iOS"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

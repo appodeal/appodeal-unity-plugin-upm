@@ -1,21 +1,21 @@
 ﻿#if UNITY_IPHONE
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
-using UnityEngine;
-using AppodealAds.Unity.Editor.InternalResources;
-using AppodealAds.Unity.Editor.Utils;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.InternalResources;
 
 #pragma warning disable 618
 
-namespace AppodealAds.Unity.Editor.PostProcess
+namespace AppodealStack.UnityEditor.PostProcess
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]

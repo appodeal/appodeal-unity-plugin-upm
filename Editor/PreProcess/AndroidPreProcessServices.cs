@@ -6,11 +6,11 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using System.Collections.Generic;
-using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.InternalResources;
 using SimpleJSON;
 
-namespace AppodealAds.Unity.Editor.PreProcess
+namespace AppodealStack.UnityEditor.PreProcess
 {
     public class AndroidPreProcessServices
     {

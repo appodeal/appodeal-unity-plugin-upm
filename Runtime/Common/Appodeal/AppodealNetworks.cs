@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Common
+namespace AppodealStack.Mediation.Common
 {
     /// <summary>
     /// <para>

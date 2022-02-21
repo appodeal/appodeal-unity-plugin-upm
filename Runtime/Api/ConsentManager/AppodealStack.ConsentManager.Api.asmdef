@@ -1,12 +1,13 @@
 {
-    "name": "AppodealAds.Unity.Editor.SettingsWindow",
+    "name": "AppodealStack.ConsentManager.Api",
     "references": [
-        "AppodealAds.Unity.Editor.InternalResources",
-        "marijnz.EditorCoroutines",
-        "AppodealAds.Unity.Editor.Utils"
+        "AppodealStack.ConsentManager.Common",
+        "AppodealStack.ConsentManager.Platforms"
     ],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

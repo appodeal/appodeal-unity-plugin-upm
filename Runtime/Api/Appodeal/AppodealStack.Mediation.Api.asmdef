@@ -1,8 +1,14 @@
 {
-    "name": "AppodealAds.Unity.Editor.SDKManager.Models",
-    "references": [],
+    "name": "AppodealStack.Mediation.Api",
+    "references": [
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.Mediation.Platforms",
+        "AppodealStack.ConsentManager.Api"
+    ],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

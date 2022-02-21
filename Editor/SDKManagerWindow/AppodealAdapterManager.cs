@@ -1,29 +1,29 @@
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Networking;
+using File = UnityEngine.Windows.File;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
+using System.Xml;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
-using File = UnityEngine.Windows.File;
-using UnityEngine.Networking;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using marijnz.EditorCoroutines;
-using AppodealAds.Unity.Common;
-using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.PluginRemover;
-using UnityEditor.PackageManager;
-using AppodealAds.Unity.Editor.SDKManager.Models;
+using AppodealStack.Mediation.Common;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.PluginRemover;
+using AppodealStack.UnityEditor.SDKManager.Models;
 
 #pragma warning disable 618
 
 #pragma warning disable 612
 
-namespace AppodealAds.Unity.Editor.SDKManager
+namespace AppodealStack.UnityEditor.SDKManager
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum PlatformSdk

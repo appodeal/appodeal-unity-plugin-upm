@@ -1,12 +1,11 @@
-#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.PackageManager;
-using AppodealAds.Unity.Editor.SDKManager;
-using AppodealAds.Unity.Editor.SettingsWindow;
-using AppodealAds.Unity.Editor.PluginRemover;
+using AppodealStack.UnityEditor.SDKManager;
+using AppodealStack.UnityEditor.PluginRemover;
+using AppodealStack.UnityEditor.SettingsWindow;
 
-namespace AppodealAds.Unity.Editor.TopBarMenu
+namespace AppodealStack.UnityEditor.TopBarMenu
 {
     public class AppodealMenu : ScriptableObject
     {
@@ -45,4 +44,3 @@ namespace AppodealAds.Unity.Editor.TopBarMenu
         }
     }
 }
-#endif

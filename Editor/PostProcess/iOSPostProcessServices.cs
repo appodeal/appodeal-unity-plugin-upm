@@ -1,12 +1,12 @@
 ﻿#if UNITY_IPHONE
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
-using AppodealAds.Unity.Editor.InternalResources;
+using System.IO;
+using System.Diagnostics.CodeAnalysis;
+using AppodealStack.UnityEditor.InternalResources;
 
-namespace AppodealAds.Unity.Editor.PostProcess
+namespace AppodealStack.UnityEditor.PostProcess
 {
     public class iOSPostProcessServices
     {

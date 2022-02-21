@@ -1,19 +1,19 @@
 using UnityEditor;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.IO;
+using System.Xml;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Xml;
-using AppodealAds.Unity.Editor.SDKManager.Models;
-using AppodealAds.Unity.Editor.Utils;
+using System.Diagnostics.CodeAnalysis;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.SDKManager.Models;
 
 // ReSharper disable All
 
-namespace AppodealAds.Unity.Editor.SDKManager
+namespace AppodealStack.UnityEditor.SDKManager
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]

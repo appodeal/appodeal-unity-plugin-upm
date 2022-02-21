@@ -1,11 +1,11 @@
 {
-    "name": "AppodealAds.Unity.Platforms.iOS",
+    "name": "AppodealStack.UnityEditor.PostProcess",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms"
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.UnityEditor.InternalResources"
     ],
     "includePlatforms": [
-        "iOS"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

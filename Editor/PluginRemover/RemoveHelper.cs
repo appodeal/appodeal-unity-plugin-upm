@@ -1,15 +1,14 @@
-#if UNITY_EDITOR
 #pragma warning disable 0649
-using System.IO;
 using UnityEditor;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.IO;
 using System.Xml;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.PluginRemover
+namespace AppodealStack.UnityEditor.PluginRemover
 {
     [System.Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -228,4 +227,3 @@ namespace AppodealAds.Unity.Editor.PluginRemover
         }
     }
 }
-#endif

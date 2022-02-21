@@ -1,11 +1,10 @@
 {
-    "name": "AppodealAds.Unity.Editor.PostProcess",
-    "references": [
-        "AppodealAds.Unity.Editor.InternalResources",
-        "AppodealAds.Unity.Editor.Utils"
-    ],
+    "name": "AppodealStack.ConsentManager.Common",
+    "references": [],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

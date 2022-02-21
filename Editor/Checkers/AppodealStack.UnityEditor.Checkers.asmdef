@@ -1,12 +1,10 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Android",
+    "name": "AppodealStack.UnityEditor.Checkers",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Common",
-        "AppodealCM.Unity.Platforms"
+        "AppodealStack.UnityEditor.Utils"
     ],
     "includePlatforms": [
-        "Android"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

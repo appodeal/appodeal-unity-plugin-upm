@@ -1,15 +1,13 @@
 {
-    "name": "AppodealAds.Unity.Platforms",
+    "name": "AppodealStack.Mediation.Platforms.Android",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealAds.Unity.Platforms.Android",
-        "AppodealAds.Unity.Platforms.iOS",
-        "AppodealAds.Unity.Platforms.Dummy"
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.ConsentManager.Api",
+        "AppodealStack.ConsentManager.Common",
+        "AppodealStack.ConsentManager.Platforms.Android"
     ],
     "includePlatforms": [
-        "Android",
-        "Editor",
-        "iOS"
+        "Android"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

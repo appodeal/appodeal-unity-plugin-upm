@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.SDKManager.Models
+namespace AppodealStack.UnityEditor.SDKManager.Models
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]

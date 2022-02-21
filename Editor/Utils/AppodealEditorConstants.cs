@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealStack.UnityEditor.Utils
 {
     public class AppodealEditorConstants
     {

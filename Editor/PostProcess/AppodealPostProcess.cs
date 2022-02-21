@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace AppodealAds.Unity.Editor.PostProcess
+namespace AppodealStack.UnityEditor.PostProcess
 {
     public class AppodealPostProcess : MonoBehaviour
     {

@@ -7,17 +7,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
-using UnityEditor;
-using UnityEditor.Android;
-using UnityEditor.Build;
-using AppodealAds.Unity.Editor.Checkers;
-using AppodealAds.Unity.Editor.InternalResources;
-using AppodealAds.Unity.Editor.Utils;
-using UnityEditor.Build.Reporting;
-using UnityEngine.Android;
 using UnityEngine;
+using UnityEngine.Android;
+using UnityEditor.Build.Reporting;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Android;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.Checkers;
+using AppodealStack.UnityEditor.InternalResources;
 
-namespace AppodealAds.Unity.Editor.PreProcess
+namespace AppodealStack.UnityEditor.PreProcess
 {
     public class AppodealPreProcess : IPreprocessBuildWithReport
     {

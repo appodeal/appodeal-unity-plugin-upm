@@ -1,6 +1,8 @@
 {
-    "name": "AppodealAds.Unity.Editor.PluginRemover",
-    "references": [],
+    "name": "AppodealStack.ConsentManager.Platforms.Dummy",
+    "references": [
+        "AppodealStack.ConsentManager.Common"
+    ],
     "includePlatforms": [
         "Editor"
     ],

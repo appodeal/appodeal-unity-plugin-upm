@@ -1,10 +1,7 @@
 {
-    "name": "AppodealAds.Unity.Api",
+    "name": "AppodealStack.Mediation.Common",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealAds.Unity.Platforms",
-        "AppodealCM.Unity.Api",
-        "AppodealCM.Unity.Platforms"
+        "AppodealStack.ConsentManager.Api"
     ],
     "includePlatforms": [
         "Android",

@@ -1,0 +1,20 @@
+{
+    "name": "AppodealStack.UnityEditor.PreProcess",
+    "references": [
+        "SimpleJSON",
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.UnityEditor.Checkers",
+        "AppodealStack.UnityEditor.InternalResources"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

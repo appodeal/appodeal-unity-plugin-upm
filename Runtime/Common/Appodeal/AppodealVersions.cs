@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Reflection;
 
-namespace AppodealAds.Unity.Common
+namespace AppodealStack.Mediation.Common
 {
     /// <summary>
     /// Static class containing information about Appodeal Plugin and Unity Editor versions.
@@ -10,7 +10,7 @@ namespace AppodealAds.Unity.Common
         /// <summary>
         /// Current version of the Appodeal Unity Plugin.
         /// </summary>
-        public const string APPODEAL_PLUGIN_VERSION = "2.15.0";
+        public const string APPODEAL_PLUGIN_VERSION = "2.15.2";
 
         /// <summary>
         /// Gets the value of APPODEAL_PLUGIN_VERSION variable.

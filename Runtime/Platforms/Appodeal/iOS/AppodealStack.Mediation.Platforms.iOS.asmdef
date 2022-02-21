@@ -1,13 +1,11 @@
 {
-    "name": "AppodealAds.Unity.Platforms.Dummy",
+    "name": "AppodealStack.Mediation.Platforms.iOS",
     "references": [
-        "AppodealAds.Unity.Common",
-        "AppodealCM.Unity.Platforms",
-        "AppodealCM.Unity.Common",
-        "AppodealAds.Unity.Editor.Utils"
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.ConsentManager.Api"
     ],
     "includePlatforms": [
-        "Editor"
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

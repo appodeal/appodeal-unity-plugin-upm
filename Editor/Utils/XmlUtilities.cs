@@ -1,11 +1,11 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "MemberInitializerValueIgnored")]
     [SuppressMessage("ReSharper", "UnusedVariable")]

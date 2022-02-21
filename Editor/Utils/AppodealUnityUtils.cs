@@ -1,17 +1,16 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using System.Reflection;
 using System;
-using System.Collections.Generic;
-using System.Xml;
-using System.Text.RegularExpressions;
 using System.IO;
+using System.Xml;
+using System.Linq;
+using System.Reflection;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ShiftExpressionRealShiftCountIsZero")]
@@ -277,4 +276,3 @@ namespace AppodealAds.Unity.Editor.Utils
         }
     }
 }
-#endif

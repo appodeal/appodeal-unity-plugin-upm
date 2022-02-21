@@ -1,13 +1,8 @@
 {
-    "name": "AppodealCM.Unity.Api",
-    "references": [
-        "AppodealCM.Unity.Common",
-        "AppodealCM.Unity.Platforms"
-    ],
+    "name": "AppodealStack.UnityEditor.SDKManager.Models",
+    "references": [],
     "includePlatforms": [
-        "Android",
-        "Editor",
-        "iOS"
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,10 +1,6 @@
 {
-    "name": "AppodealAds.Unity.Editor.TopBarMenu",
-    "references": [
-        "AppodealAds.Unity.Editor.SettingsWindow",
-        "AppodealAds.Unity.Editor.PluginRemover",
-        "AppodealAds.Unity.Editor.SDKManager"
-    ],
+    "name": "AppodealStack.UnityEditor.InternalResources",
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

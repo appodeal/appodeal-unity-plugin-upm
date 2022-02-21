@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.InternalResources
+namespace AppodealStack.UnityEditor.InternalResources
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class AppodealSettings : ScriptableObject

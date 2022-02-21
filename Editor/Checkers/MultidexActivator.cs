@@ -3,14 +3,14 @@ using UnityEditor;
 using System;
 using System.IO;
 using System.Xml;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
 using Debug = System.Diagnostics.Debug;
-using AppodealAds.Unity.Editor.Utils;
+using AppodealStack.UnityEditor.Utils;
 
 
-namespace AppodealAds.Unity.Editor.Checkers
+namespace AppodealStack.UnityEditor.Checkers
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class MultidexActivator : CheckingStep

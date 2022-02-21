@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.Checkers
+namespace AppodealStack.UnityEditor.Checkers
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class FixProblemInstruction

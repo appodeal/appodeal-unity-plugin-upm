@@ -1,6 +1,11 @@
 {
-    "name": "AppodealCM.Unity.Common",
-    "references": [],
+    "name": "AppodealStack.ConsentManager.Platforms",
+    "references": [
+        "AppodealStack.ConsentManager.Common",
+        "AppodealStack.ConsentManager.Platforms.iOS",
+        "AppodealStack.ConsentManager.Platforms.Dummy",
+        "AppodealStack.ConsentManager.Platforms.Android"
+    ],
     "includePlatforms": [
         "Android",
         "Editor",

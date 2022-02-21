@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-#pragma warning disable 612
+﻿#pragma warning disable 612
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,12 +7,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using marijnz.EditorCoroutines;
-using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.InternalResources;
 
 #pragma warning disable 618
 
-namespace AppodealAds.Unity.Editor.SettingsWindow
+namespace AppodealStack.UnityEditor.SettingsWindow
 {
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -348,4 +347,3 @@ namespace AppodealAds.Unity.Editor.SettingsWindow
         }
     }
 }
-#endif

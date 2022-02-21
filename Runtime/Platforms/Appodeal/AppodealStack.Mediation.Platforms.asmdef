@@ -1,14 +1,15 @@
 {
-    "name": "AppodealAds.Unity.Editor.SDKManager",
+    "name": "AppodealStack.Mediation.Platforms",
     "references": [
-        "AppodealAds.Unity.Editor.SDKManager.Models",
-        "AppodealAds.Unity.Editor.PluginRemover",
-        "AppodealAds.Unity.Editor.Utils",
-        "AppodealAds.Unity.Common",
-        "marijnz.EditorCoroutines"
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.Mediation.Platforms.iOS",
+        "AppodealStack.Mediation.Platforms.Dummy",
+        "AppodealStack.Mediation.Platforms.Android"
     ],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

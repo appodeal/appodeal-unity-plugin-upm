@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealCM.Unity.Platforms
+namespace AppodealStack.ConsentManager.Platforms.iOS
 {
-#if UNITY_IPHONE
     internal delegate void ConsentInfoUpdatedCallback(IntPtr consent);
     internal delegate void ConsentInfoUpdatedFailedCallback(IntPtr error);
 
@@ -459,5 +458,4 @@ namespace AppodealCM.Unity.Platforms
         [DllImport("__Internal")]
         private static extern int GetCode();
     }
-#endif
 }

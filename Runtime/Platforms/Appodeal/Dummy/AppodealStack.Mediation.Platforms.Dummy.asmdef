@@ -1,7 +1,10 @@
 {
-    "name": "AppodealAds.Unity.Editor.Utils",
+    "name": "AppodealStack.Mediation.Platforms.Dummy",
     "references": [
-        "AppodealAds.Unity.Editor.Utils.Models"
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.Mediation.Common",
+        "AppodealStack.ConsentManager.Api",
+        "AppodealStack.ConsentManager.Common"
     ],
     "includePlatforms": [
         "Editor"

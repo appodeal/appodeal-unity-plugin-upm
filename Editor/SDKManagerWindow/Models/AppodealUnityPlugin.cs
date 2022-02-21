@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Editor.SDKManager.Models
+namespace AppodealStack.UnityEditor.SDKManager.Models
 {
     [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]

@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-namespace AppodealAds.Unity.Editor.Utils
+namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class JsonHelper

@@ -1,4 +1,4 @@
-namespace AppodealCM.Unity.Common
+namespace AppodealStack.ConsentManager.Common
 {
     public enum ConsentManagerStorage
     {
