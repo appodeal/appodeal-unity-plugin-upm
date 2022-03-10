@@ -1,11 +1,13 @@
-﻿using System.IO;
+﻿using UnityEditor;
+using System.IO;
 using System.Linq;
-using UnityEditor;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     static class NetworkConfigsInstaller
     {
         [InitializeOnLoadMethod]

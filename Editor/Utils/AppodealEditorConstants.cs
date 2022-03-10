@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AppodealStack.UnityEditor.Utils
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AppodealEditorConstants
     {
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";

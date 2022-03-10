@@ -1,12 +1,14 @@
-using System;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
+using System;
+using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     static class ExternalDependencyManagerInstaller
     {
         [InitializeOnLoadMethod]
