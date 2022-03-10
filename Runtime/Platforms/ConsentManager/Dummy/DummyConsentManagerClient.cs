@@ -1,28 +1,30 @@
 using UnityEngine;
 using System.Collections.Generic;
-using AppodealCM.Unity.Common;
+using AppodealStack.ConsentManager.Common;
 
-namespace AppodealCM.Unity.Platforms
+namespace AppodealStack.ConsentManager.Platforms.Dummy
 {
-#if UNITY_EDITOR
-    public class Dummy : IConsentManager, IConsentForm, IVendor, IVendorBuilder, IConsentFormBuilder,
+    /// <summary>
+    /// Unity Editor implementation of <see langword="IConsentManager, IConsentForm, IVendor, IVendorBuilder, IConsentFormBuilder, IConsentManagerException, IConsent"/> interfaces.
+    /// </summary>
+    public class DummyConsentManagerClient : IConsentManager, IConsentForm, IVendor, IVendorBuilder, IConsentFormBuilder,
         IConsentManagerException, IConsent
     {
-        #region Dummy
-
         private const string DummyMessage = "Not supported on this platform";
+
+        public object nativeVendorObject { get; }
 
         public void requestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
         {
             Debug.Log(DummyMessage);
         }
 
-        public void setCustomVendor(Vendor customVendor)
+        public void setCustomVendor(IVendor customVendor)
         {
             Debug.Log(DummyMessage);
         }
 
-        public Vendor getCustomVendor(string bundle)
+        public IVendor getCustomVendor(string bundle)
         {
             Debug.Log(DummyMessage);
             return null;
@@ -57,7 +59,7 @@ namespace AppodealCM.Unity.Platforms
             return ConsentStatus.UNKNOWN;
         }
 
-        public Consent getConsent()
+        public IConsent getConsent()
         {
             Debug.Log(DummyMessage);
             return null;
@@ -204,8 +206,5 @@ namespace AppodealCM.Unity.Platforms
             Debug.Log(DummyMessage);
             return DummyMessage;
         }
-
-        #endregion
     }
-#endif
 }

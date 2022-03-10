@@ -4,7 +4,7 @@ namespace AppodealStack.ConsentManager.Common
 {
     /// <summary>
     /// <para>
-    /// Interface containing method signatures of the <see langword="ConsentForm"/> class.
+    /// Interface containing signatures of ConsentInfoUpdate callback methods.
     /// </para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
@@ -12,12 +12,10 @@ namespace AppodealStack.ConsentManager.Common
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "InvalidXmlDocComment")]
     [SuppressMessage("ReSharper", "UnusedParameter.Global")]
-    public interface IConsentForm
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+    public interface IConsentInfoUpdateListener
     {
-        void load();
-        void showAsActivity();
-        void showAsDialog();
-        bool isLoaded();
-        bool isShowing();
+        void onConsentInfoUpdated(IConsent consent);
+        void onFailedToUpdateConsentInfo(IConsentManagerException error);
     }
 }
