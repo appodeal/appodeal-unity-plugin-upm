@@ -1,8 +1,7 @@
-﻿#if UNITY_IPHONE
+﻿using System.IO;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
-using System.IO;
 using AppodealStack.UnityEditor.InternalResources;
 
 namespace AppodealStack.UnityEditor.PostProcess
@@ -88,4 +87,3 @@ namespace AppodealStack.UnityEditor.PostProcess
         }
     }
 }
-#endif

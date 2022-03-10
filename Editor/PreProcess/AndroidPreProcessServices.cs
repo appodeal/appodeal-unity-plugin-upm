@@ -1,4 +1,3 @@
-#if UNITY_ANDROID
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -246,4 +245,3 @@ namespace AppodealStack.UnityEditor.PreProcess
 
     }
 }
-#endif

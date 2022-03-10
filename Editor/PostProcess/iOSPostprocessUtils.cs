@@ -1,5 +1,4 @@
-﻿#if UNITY_IPHONE
-using System;
+﻿using System;
 using System.IO;
 using System.Xml.Linq;
 using System.Collections.Generic;
@@ -31,7 +30,10 @@ namespace AppodealStack.UnityEditor.PostProcess
         [PostProcessBuildAttribute(41)]
         public static void updateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
+            if (buildTarget.ToString() != "iOS") return;
+
             var path = Path.Combine(buildPath, "Info.plist");
+
             AddGADApplicationIdentifier(path);
             AddNSUserTrackingUsageDescription(path);
             AddNSLocationWhenInUseUsageDescription(path);
@@ -419,4 +421,3 @@ namespace AppodealStack.UnityEditor.PostProcess
         }
     }
 }
-#endif

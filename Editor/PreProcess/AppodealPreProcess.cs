@@ -1,5 +1,5 @@
 // ReSharper disable All
-#if UNITY_ANDROID
+
 using System;
 using System.IO;
 using System.Text;
@@ -56,6 +56,8 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         public void OnPreprocessBuild(BuildReport report)
         {
+            if (report.summary.platform.ToString() != "Android") return;
+
             var manifestPath = Path.Combine(Application.dataPath, appodealAndroidLibDirPath, manifestTemplateName);
 
             if (!File.Exists(manifestPath))
@@ -583,4 +585,3 @@ namespace AppodealStack.UnityEditor.PreProcess
         }
     }
 }
-#endif
