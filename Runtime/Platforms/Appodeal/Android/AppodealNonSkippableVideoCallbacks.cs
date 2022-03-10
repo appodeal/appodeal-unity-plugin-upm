@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Common;
+using AppodealStack.Mediation.Common;
 
-namespace AppodealAds.Unity.Platforms.Android
+namespace AppodealStack.Mediation.Platforms.Android
 {
+    /// <summary>
+    /// Android implementation of <see langword="INonSkippableVideoAdListener"/> interface.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealNonSkippableVideoCallbacks
-#if UNITY_ANDROID
-        : UnityEngine.AndroidJavaProxy
+    public class AppodealNonSkippableVideoCallbacks: UnityEngine.AndroidJavaProxy
     {
         private readonly INonSkippableVideoAdListener listener;
 
@@ -52,11 +53,4 @@ namespace AppodealAds.Unity.Platforms.Android
             listener.onNonSkippableVideoExpired();
         }
     }
-#else
-    {
-        public AppodealNonSkippableVideoCallbacks(INonSkippableVideoAdListener listener)
-        {
-        }
-    }
-#endif
 }

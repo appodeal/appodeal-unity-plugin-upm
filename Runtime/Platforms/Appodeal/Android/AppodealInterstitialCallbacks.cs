@@ -1,13 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Common;
+using AppodealStack.Mediation.Common;
 
-namespace AppodealAds.Unity.Platforms.Android
+namespace AppodealStack.Mediation.Platforms.Android
 {
+    /// <summary>
+    /// Android implementation of <see langword="IInterstitialAdListener"/> interface.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealInterstitialCallbacks
-#if UNITY_ANDROID
-        : UnityEngine.AndroidJavaProxy
+    public class AppodealInterstitialCallbacks: UnityEngine.AndroidJavaProxy
     {
         private readonly IInterstitialAdListener listener;
 
@@ -52,11 +53,4 @@ namespace AppodealAds.Unity.Platforms.Android
             listener.onInterstitialExpired();
         }
     }
-#else
-    {
-        public AppodealInterstitialCallbacks(IInterstitialAdListener listener)
-        {
-        }
-    }
-#endif
 }

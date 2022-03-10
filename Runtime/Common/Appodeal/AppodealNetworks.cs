@@ -8,9 +8,10 @@ namespace AppodealStack.Mediation.Common
     /// </para>
     /// Its variables can be used as arguments for <see langword="Appodeal.disableNetwork()"/> methods.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "InvalidXmlDocComment")]
     public static class AppodealNetworks
     {
         public const string VUNGLE = "vungle";

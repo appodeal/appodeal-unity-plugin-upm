@@ -1,13 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Common;
+using AppodealStack.Mediation.Common;
 
-namespace AppodealAds.Unity.Platforms.Android
+namespace AppodealStack.Mediation.Platforms.Android
 {
+    /// <summary>
+    /// Android implementation of <see langword="IMrecAdListener"/> interface.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealMrecCallbacks
-#if UNITY_ANDROID
-        : UnityEngine.AndroidJavaProxy
+    public class AppodealMrecCallbacks: UnityEngine.AndroidJavaProxy
     {
         private readonly IMrecAdListener listener;
 
@@ -41,11 +42,4 @@ namespace AppodealAds.Unity.Platforms.Android
             listener.onMrecExpired();
         }
     }
-#else
-    {
-        public AppodealMrecCallbacks(IMrecAdListener listener)
-        {
-        }
-    }
-#endif
 }

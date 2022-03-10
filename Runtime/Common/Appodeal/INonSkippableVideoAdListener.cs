@@ -1,14 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Common
+namespace AppodealStack.Mediation.Common
 {
     /// <summary>
     /// Interface containing signatures of Appodeal Non-Skippable video callback methods.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InvalidXmlDocComment")]
     [SuppressMessage("ReSharper", "UnusedParameter.Global")]
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public interface INonSkippableVideoAdListener
     {
         /// <summary>

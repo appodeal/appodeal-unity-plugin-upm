@@ -1,13 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Common;
+using AppodealStack.Mediation.Common;
 
-namespace AppodealAds.Unity.Platforms.Android
+namespace AppodealStack.Mediation.Platforms.Android
 {
+    /// <summary>
+    /// Android implementation of <see langword="IBannerAdListener"/> interface.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealBannerCallbacks
-#if UNITY_ANDROID
-        : UnityEngine.AndroidJavaProxy
+    public class AppodealBannerCallbacks: UnityEngine.AndroidJavaProxy
     {
         private readonly IBannerAdListener listener;
 
@@ -18,7 +19,7 @@ namespace AppodealAds.Unity.Platforms.Android
 
         private void onBannerLoaded(int height, bool isPrecache)
         {
-            listener.onBannerLoaded(height,isPrecache);
+            listener.onBannerLoaded(height, isPrecache);
         }
 
         private void onBannerFailedToLoad()
@@ -41,11 +42,4 @@ namespace AppodealAds.Unity.Platforms.Android
             listener.onBannerExpired();
         }
     }
-#else
-    {
-        public AppodealBannerCallbacks(IBannerAdListener listener)
-        {
-        }
-    }
-#endif
 }

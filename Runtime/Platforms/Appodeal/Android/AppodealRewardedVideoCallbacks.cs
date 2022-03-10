@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Common;
+using AppodealStack.Mediation.Common;
 
-namespace AppodealAds.Unity.Platforms.Android
+namespace AppodealStack.Mediation.Platforms.Android
 {
+    /// <summary>
+    /// Android implementation of <see langword="IRewardedVideoAdListener"/> interface.
+    /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealRewardedVideoCallbacks
-#if UNITY_ANDROID
-        : UnityEngine.AndroidJavaProxy
+    public class AppodealRewardedVideoCallbacks: UnityEngine.AndroidJavaProxy
     {
         private readonly IRewardedVideoAdListener listener;
 
@@ -62,11 +63,4 @@ namespace AppodealAds.Unity.Platforms.Android
             listener.onRewardedVideoClicked();
         }
     }
-#else
-    {
-        public AppodealRewardedVideoCallbacks(IRewardedVideoAdListener listener)
-        {
-        }
-    }
-#endif
 }

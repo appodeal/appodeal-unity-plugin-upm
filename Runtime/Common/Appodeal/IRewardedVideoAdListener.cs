@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AppodealAds.Unity.Common
+namespace AppodealStack.Mediation.Common
 {
     /// <summary>
     /// <para>
@@ -9,9 +9,10 @@ namespace AppodealAds.Unity.Common
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/rewarded-video#id-[Development]UnitySDK.Rewardedvideo-RewardedVideoCallbacks"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InvalidXmlDocComment")]
     [SuppressMessage("ReSharper", "UnusedParameter.Global")]
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
     public interface IRewardedVideoAdListener
     {
         /// <summary>
