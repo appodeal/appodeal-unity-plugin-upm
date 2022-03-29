@@ -4,13 +4,18 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 using SimpleJSON;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PreProcess
 {
-    public class AndroidPreProcessServices
+    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+    [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    public static class AndroidPreProcessServices
     {
     
     #region Firebase
@@ -53,8 +58,8 @@ namespace AppodealStack.UnityEditor.PreProcess
             StreamReader reader = new StreamReader(path); 
             string jsonString = reader.ReadToEnd();
 
-            JSONNode parsedJSON = JSON.Parse(jsonString);
-            var clientJsonArray = parsedJSON["client"];
+            JSONNode parsedJson = JSON.Parse(jsonString);
+            var clientJsonArray = parsedJson["client"];
 
             if (clientJsonArray == null) return null;
 
@@ -64,7 +69,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 var andrClientInfoJsonObject = clientInfoJsonObject["android_client_info"].AsObject;
 
                 if (andrClientInfoJsonObject["package_name"].Value == Application.identifier ) {
-                    var projectInfoJsonObject = parsedJSON["project_info"].AsObject;
+                    var projectInfoJsonObject = parsedJson["project_info"].AsObject;
                     var outputDict = new Dictionary<string, string>();
                     outputDict.Add("firebase_database_url", projectInfoJsonObject["firebase_url"].Value);
                     outputDict.Add("gcm_defaultSenderId", projectInfoJsonObject["project_number"].Value);
@@ -159,12 +164,12 @@ namespace AppodealStack.UnityEditor.PreProcess
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(fullPath);
             if (xmlDocument == null) {
-                Debug.LogError((object)("Couldn't load " + fullPath));
+                Debug.LogError(("Couldn't load " + fullPath));
                 return;
             }
             XmlNode xmlNode = FindChildNode(FindChildNode(xmlDocument, "manifest"), "application");
             if (xmlNode == null) {
-                Debug.LogError((object)("Error parsing " + fullPath));
+                Debug.LogError("Error parsing " + fullPath);
                 return;
             }
             string namespaceOfPrefix = xmlNode.GetNamespaceOfPrefix("android");

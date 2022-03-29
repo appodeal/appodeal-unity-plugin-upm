@@ -4,13 +4,14 @@ using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using AppodealStack.UnityEditor.InternalResources;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PostProcess
 {
-    public class iOSPostProcessServices
+    public static class IosPostProcessServices
     {
-        private const string CFBundleURLTypes = "CFBundleURLTypes";
-        private const string CFBundleURLSchemes = "CFBundleURLSchemes";
-        private const string CFBundleURLName = "CFBundleURLName";
+        private const string CfBundleURLTypes = "CFBundleURLTypes";
+        private const string CfBundleURLSchemes = "CFBundleURLSchemes";
+        private const string CfBundleURLName = "CFBundleURLName";
         private const string FacebookUrlName = "facebook-unity-sdk";
         private const string FacebookAppID = "FacebookAppID";
         private const string FacebookAutoLogAppEventsEnabled = "FacebookAutoLogAppEventsEnabled";
@@ -53,13 +54,13 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         #region CFBundleURLTypes
 
-            var typesArray = plist.root[CFBundleURLTypes]?.AsArray() ?? plist.root.CreateArray(CFBundleURLTypes);
+            var typesArray = plist.root[CfBundleURLTypes]?.AsArray() ?? plist.root.CreateArray(CfBundleURLTypes);
 
-            var schemesDict = typesArray.values.Find(el => el.AsDict()[CFBundleURLSchemes] != null)?.AsDict() ?? typesArray.AddDict();
+            var schemesDict = typesArray.values.Find(el => el.AsDict()[CfBundleURLSchemes] != null)?.AsDict() ?? typesArray.AddDict();
 
-            if (schemesDict[CFBundleURLName]?.AsString() == null) schemesDict.SetString(CFBundleURLName, FacebookUrlName);
+            if (schemesDict[CfBundleURLName]?.AsString() == null) schemesDict.SetString(CfBundleURLName, FacebookUrlName);
             
-            var schemesArray = schemesDict[CFBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CFBundleURLSchemes);
+            var schemesArray = schemesDict[CfBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CfBundleURLSchemes);
 
             if (schemesArray.values.Find(el => el.AsString() == fbKey) == null) schemesArray.AddString($"fb{fbKey}");
         

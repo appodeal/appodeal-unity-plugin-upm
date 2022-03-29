@@ -88,7 +88,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.NetworkDepsPath, 
+            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, 
                                                 $"{AppodealEditorConstants.GoogleAdMob}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
             if (!File.Exists(admobDepPath))
             {
@@ -446,7 +446,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 
             while ((line = gradleScript.ReadLine()) != null)
             {
-                if (line.Contains(MultidexActivator.GRAFLE_DEFAULT_CONFIG))
+                if (line.Contains(MultidexActivator.GRADLE_DEFAULT_CONFIG))
                 {
                     if (!settings.compileOptions)
                     {
@@ -464,7 +464,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                     if (!settings.targetCapability)
                     {
                         modifiedGradle += leadingWhitespaces + leadingWhitespaces +
-                                          MultidexActivator.GRADLE_TARGET_CAPATILITY
+                                          MultidexActivator.GRADLE_TARGET_CAPABILITY
                                           + MultidexActivator.GRADLE_JAVA_VERSION_1_8 + Environment.NewLine;
                     }
 

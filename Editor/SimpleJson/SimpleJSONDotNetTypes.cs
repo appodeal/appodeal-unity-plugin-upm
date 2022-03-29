@@ -38,6 +38,8 @@
 
 #endregion License and information
 
+// ReSharper Disable All
+
 namespace SimpleJSON
 {
     using System.Globalization;

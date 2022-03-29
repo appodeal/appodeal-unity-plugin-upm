@@ -5,12 +5,14 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "MemberInitializerValueIgnored")]
     [SuppressMessage("ReSharper", "UnusedVariable")]
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
     [SuppressMessage("ReSharper", "RedundantToStringCall")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class XmlUtilities
     {
         public static int Num;
@@ -68,16 +70,16 @@ namespace AppodealStack.UnityEditor.Utils
 
         private class Reader
         {
-            private int lineNumber = -1;
-            private int linePosition = -1;
-            private readonly XmlTextReader reader;
+            private int _lineNumber = -1;
+            private int _linePosition = -1;
+            private readonly XmlTextReader _reader;
 
             public Reader(XmlTextReader xmlReader)
             {
-                reader = xmlReader;
-                Reading = reader.Read();
-                lineNumber = reader.LineNumber;
-                linePosition = reader.LinePosition;
+                _reader = xmlReader;
+                Reading = _reader.Read();
+                _lineNumber = _reader.LineNumber;
+                _linePosition = _reader.LinePosition;
             }
 
             public bool Reading { private set; get; }
@@ -86,8 +88,8 @@ namespace AppodealStack.UnityEditor.Utils
             {
                 get
                 {
-                    if (lineNumber == reader.LineNumber)
-                        return linePosition != reader.LinePosition;
+                    if (_lineNumber == _reader.LineNumber)
+                        return _linePosition != _reader.LinePosition;
                     return true;
                 }
             }
@@ -97,12 +99,12 @@ namespace AppodealStack.UnityEditor.Utils
                 var flag = false;
                 if (Reading && !XmlReaderIsAhead)
                 {
-                    Reading = reader.Read();
+                    Reading = _reader.Read();
                     flag = true;
                 }
 
-                lineNumber = reader.LineNumber;
-                linePosition = reader.LinePosition;
+                _lineNumber = _reader.LineNumber;
+                _linePosition = _reader.LinePosition;
                 return flag;
             }
         }

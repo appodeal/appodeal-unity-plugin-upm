@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PostProcess
 {
     public class AppodealPostProcess : MonoBehaviour
@@ -11,7 +12,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         {
             if (target.ToString() != "iOS") return;
             
-            iOSPostprocessUtils.PrepareProject(path);
+            IosPostprocessUtils.PrepareProject(path);
         }
     }
 }

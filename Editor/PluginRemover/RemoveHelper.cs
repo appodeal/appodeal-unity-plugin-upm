@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PluginRemover
 {
     [System.Serializable]
@@ -84,10 +85,10 @@ namespace AppodealStack.UnityEditor.PluginRemover
             var xRoot = xDoc.DocumentElement;
 
             if (xRoot == null) return itemToRemoveList.ToArray();
-            foreach (XmlNode xnode in xRoot)
+            foreach (XmlNode xNode in xRoot)
             {
                 var itemToRemove = new ItemToRemove();
-                foreach (XmlNode childNode in xnode.ChildNodes)
+                foreach (XmlNode childNode in xNode.ChildNodes)
                 {
                     if (childNode.Name.Equals("name"))
                     {

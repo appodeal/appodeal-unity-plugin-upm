@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.InternalResources
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -28,8 +29,8 @@ namespace AppodealStack.UnityEditor.InternalResources
         [SerializeField] private bool nSCalendarsUsageDescription;
         [SerializeField] private bool nSAppTransportSecurity;
 
-        [SerializeField] private bool iOSSKAdNetworkItems;
-        [SerializeField] private List<string> iOsskAdNetworkItemsList;
+        [SerializeField] private bool iosSKAdNetworkItems;
+        [SerializeField] private List<string> iosSkAdNetworkItemsList;
 
 
         [SerializeField] private bool firebaseAutoConfiguration;
@@ -137,16 +138,16 @@ namespace AppodealStack.UnityEditor.InternalResources
             }
         }
 
-        public bool IOSSkAdNetworkItems
+        public bool IosSkAdNetworkItems
         {
-            get { return iOSSKAdNetworkItems; }
-            set { Instance.iOSSKAdNetworkItems = value; }
+            get { return iosSKAdNetworkItems; }
+            set { Instance.iosSKAdNetworkItems = value; }
         }
 
-        public List<string> IOSSkAdNetworkItemsList
+        public List<string> IosSkAdNetworkItemsList
         {
-            get { return iOsskAdNetworkItemsList; }
-            set { Instance.iOsskAdNetworkItemsList = value; }
+            get { return iosSkAdNetworkItemsList; }
+            set { Instance.iosSkAdNetworkItemsList = value; }
         }
 
         public bool FirebaseAutoConfiguration

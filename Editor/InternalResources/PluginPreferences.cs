@@ -3,6 +3,7 @@ using UnityEditor;
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.InternalResources
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]

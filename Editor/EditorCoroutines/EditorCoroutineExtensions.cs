@@ -25,6 +25,7 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using UnityEditor;
 
+// ReSharper Disable CheckNamespace
 namespace marijnz.EditorCoroutines
 {
 	[Obsolete]

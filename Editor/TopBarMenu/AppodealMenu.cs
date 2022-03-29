@@ -5,6 +5,7 @@ using AppodealStack.UnityEditor.SDKManager;
 using AppodealStack.UnityEditor.PluginRemover;
 using AppodealStack.UnityEditor.SettingsWindow;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.TopBarMenu
 {
     public class AppodealMenu : ScriptableObject

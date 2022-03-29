@@ -13,6 +13,7 @@ using AppodealStack.UnityEditor.InternalResources;
 
 #pragma warning disable 618
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PostProcess
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -22,7 +23,7 @@ namespace AppodealStack.UnityEditor.PostProcess
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     [SuppressMessage("ReSharper", "Unity.IncorrectMethodSignature")]
-    public class iOSPostprocessUtils : MonoBehaviour
+    public class IosPostprocessUtils : MonoBehaviour
     {
         private const string suffix = ".framework";
         private const string minVersionToEnableBitcode = "10.0";
@@ -39,7 +40,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             AddNSLocationWhenInUseUsageDescription(path);
             AddNSCalendarsUsageDescription(path);
             AddSkAdNetworkIds(buildTarget, buildPath);
-            iOSPostProcessServices.AddFacebookKeys(path);
+            IosPostProcessServices.AddFacebookKeys(path);
         }
 
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
@@ -47,7 +48,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             
             if (string.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
-            if (!AppodealSettings.Instance.IOSSkAdNetworkItems || (AppodealSettings.Instance.IOSSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;
+            if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;
 
             if (buildTarget != BuildTarget.iOS) return;
 
@@ -77,7 +78,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
             if (array != null)
             {
-                foreach (var id in AppodealSettings.Instance.IOSSkAdNetworkItemsList)
+                foreach (var id in AppodealSettings.Instance.IosSkAdNetworkItemsList)
                 {
                     if (ContainsSkAdNetworkIdentifier(array, id)) continue;
                     var added = array.AddDict();
@@ -111,14 +112,14 @@ namespace AppodealStack.UnityEditor.PostProcess
         private static void AddGADApplicationIdentifier(string path)
         {
             if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
-                AppodealEditorConstants.NetworkDepsPath, "GoogleAdMobDependencies.xml")))
+                AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml")))
             {
                 Debug.LogWarning(
                     "Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml).\nAdmob App Id won't be added.");
                 return;
             }
 
-            if (!CheckiOSAttribute())
+            if (!CheckIosAttribute())
             {
                 Debug.LogError(
                     "Google Admob Config is invalid. Ensure that Appodeal Unity plugin is imported correctly.");
@@ -256,7 +257,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             project.ReadFromString(File.ReadAllText(projectPath));
 
             string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
-            if (iOSPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
+            if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
                 project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
 
             var target = project.GetUnityMainTargetGuid();
@@ -337,10 +338,10 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static bool CheckiOSAttribute()
+        private static bool CheckIosAttribute()
         {
             var adMobConfigPath = Path.Combine(AppodealEditorConstants.PluginPath,
-                AppodealEditorConstants.NetworkDepsPath, "GoogleAdMobDependencies.xml");
+                AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml");
 
             XDocument config;
             try
@@ -364,36 +365,36 @@ namespace AppodealStack.UnityEditor.PostProcess
                 return false;
             }
 
-            var elementiOSPods = elementConfigDependencies.Element("iosPods");
-            if (elementiOSPods == null)
+            var elementIosPods = elementConfigDependencies.Element("iosPods");
+            if (elementIosPods == null)
             {
                 return false;
             }
 
-            if (!elementiOSPods.HasElements)
+            if (!elementIosPods.HasElements)
             {
                 return false;
             }
 
-            var elementiOSPod = elementiOSPods.Element("iosPod");
-            if (elementiOSPod == null)
+            var elementIosPod = elementIosPods.Element("iosPod");
+            if (elementIosPod == null)
             {
                 return false;
             }
 
-            if (!elementiOSPod.HasAttributes)
+            if (!elementIosPod.HasAttributes)
             {
                 return false;
             }
 
-            var attributeElementiOSPod = elementiOSPod.Attribute("name");
+            var attributeElementIosPod = elementIosPod.Attribute("name");
 
-            if (attributeElementiOSPod == null)
+            if (attributeElementIosPod == null)
             {
                 return false;
             }
 
-            return attributeElementiOSPod.Value.Equals("APDGoogleAdMobAdapter");
+            return attributeElementIosPod.Value.Equals("APDGoogleAdMobAdapter");
         }
 
         private static bool ContainsSkAdNetworkIdentifier(PlistElementArray skAdNetworkItemsArray, string id)

@@ -12,6 +12,7 @@ using AppodealStack.UnityEditor.InternalResources;
 
 #pragma warning disable 618
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SettingsWindow
 {
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
@@ -185,13 +186,13 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 }
 
 
-                AppodealSettings.Instance.IOSSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
-                    AppodealSettings.Instance.IOSSkAdNetworkItems);
+                AppodealSettings.Instance.IosSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
+                    AppodealSettings.Instance.IosSkAdNetworkItems);
 
                 if (SKAdNetworkIdentifiers != null && SKAdNetworkIdentifiers.Count > 0
-                    && AppodealSettings.Instance.IOSSkAdNetworkItemsList != SKAdNetworkIdentifiers)
+                    && AppodealSettings.Instance.IosSkAdNetworkItemsList != SKAdNetworkIdentifiers)
                 {
-                    AppodealSettings.Instance.IOSSkAdNetworkItemsList = SKAdNetworkIdentifiers;
+                    AppodealSettings.Instance.IosSkAdNetworkItemsList = SKAdNetworkIdentifiers;
                 }
 
                 GUILayout.Space(12);

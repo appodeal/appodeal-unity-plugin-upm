@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Checkers
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -17,17 +18,17 @@ namespace AppodealStack.UnityEditor.Checkers
             } 
             set
             {
-                if (isAutoresolvePossible) _checkedForResolve = value;
+                if (isAutoResolvePossible) _checkedForResolve = value;
             }
         }
 
         private readonly string desc;
-        private readonly bool isAutoresolvePossible;
+        private readonly bool isAutoResolvePossible;
 
-        public FixProblemInstruction(string description, bool autoresolve)
+        public FixProblemInstruction(string description, bool autoResolve)
         {
             desc = description;
-            isAutoresolvePossible = autoresolve;
+            isAutoResolvePossible = autoResolve;
         }
 
         public string getDescription()
@@ -37,7 +38,7 @@ namespace AppodealStack.UnityEditor.Checkers
 
         public bool canBeResolvedAutomatically()
         {
-            return isAutoresolvePossible;
+            return isAutoResolvePossible;
         }
 
         public virtual void fixProblem()
