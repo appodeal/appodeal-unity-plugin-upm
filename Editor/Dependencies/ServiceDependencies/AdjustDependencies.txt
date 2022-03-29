@@ -1,0 +1,15 @@
+<dependencies>
+    <iosPods>
+        <iosPod name='APDAdjustAdapter' version='3.0.0.1' minTargetSdk='10.0'/>
+    </iosPods>
+    <androidPackages>
+        <androidPackage spec='com.adjust.sdk:adjust-android:4.28.8'/>
+        <androidPackage spec='com.explorestack.adjust:sdk-purchase:1.1.2'/>
+        <androidPackage spec='com.android.installreferrer:installreferrer:2.2'/>
+        <androidPackage spec='com.google.android.gms:play-services-ads-identifier:17.0.0'/>
+        <androidPackage spec='com.appodeal.ads.sdk.services:adjust:3.0.0.1@aar'/>
+        <repositories>
+            <repository>https://artifactory.appodeal.com/artifactory/appodeal</repository>
+        </repositories>
+    </androidPackages>
+</dependencies>
