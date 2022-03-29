@@ -23,12 +23,12 @@ namespace AppodealStack.UnityEditor.SDKManager
         public static FileInfo[] GetInternalDependencyPath()
         {
             if (string.IsNullOrEmpty(AppodealEditorConstants.PluginPath) ||
-                string.IsNullOrEmpty(AppodealEditorConstants.NetworkDepsPath))
+                string.IsNullOrEmpty(AppodealEditorConstants.DependenciesPath))
             {
                 return null;
             }
 
-            var path = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.NetworkDepsPath);
+            var path = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath);
             if (!Directory.Exists(path))
             {
                 return null;
@@ -79,13 +79,13 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetConfigName(string value)
         {
-            var configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.NetworkDepsPath}/", string.Empty);
+            var configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}/", string.Empty);
             return configName.Replace("Dependencies.xml", string.Empty);
         }
 
-        public static string GetiOSContent(string path)
+        public static string GetIosContent(string path)
         {
-            var iOSContent = string.Empty;
+            var iosContent = string.Empty;
             var lines = File.ReadAllLines(path);
             foreach (var line in lines)
             {
@@ -93,26 +93,26 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                 if (line.Contains("<iosPods>"))
                 {
-                    iOSContent += line + "\n";
+                    iosContent += line + "\n";
                 }
 
                 if (line.Contains("<iosPod name="))
                 {
-                    iOSContent += line + "\n";
+                    iosContent += line + "\n";
                 }
 
                 if (line.Contains("</iosPods>"))
                 {
-                    iOSContent += line;
+                    iosContent += line;
                 }
             }
 
-            return iOSContent;
+            return iosContent;
         }
 
         public static string GetAndroidContent(string path)
         {
-            var iOSContent = string.Empty;
+            var androidContent = string.Empty;
             var lines = File.ReadAllLines(path);
             foreach (var line in lines)
             {
@@ -120,36 +120,36 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                 if (line.Contains("<androidPackages>"))
                 {
-                    iOSContent += line + "\n";
+                    androidContent += line + "\n";
                 }
 
                 if (line.Contains("<androidPackage spec="))
                 {
-                    iOSContent += line + "\n";
+                    androidContent += line + "\n";
                 }
 
                 if (line.Contains("<repositories>"))
                 {
-                    iOSContent += line + "\n";
+                    androidContent += line + "\n";
                 }
 
                 if (line.Contains("<repository>"))
                 {
-                    iOSContent += line + "\n";
+                    androidContent += line + "\n";
                 }
 
                 if (line.Contains("</repositories>"))
                 {
-                    iOSContent += line + "\n";
+                    androidContent += line + "\n";
                 }
 
                 if (line.Contains("</androidPackages>"))
                 {
-                    iOSContent += line;
+                    androidContent += line;
                 }
             }
 
-            return iOSContent;
+            return androidContent;
         }
 
         public static string GetAndroidDependencyName(string value)
@@ -175,7 +175,8 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetMajorVersion(string value)
         {
-            return value.Substring(0, 6).Remove(0, 5).Insert(0, string.Empty);
+            //return value.Substring(0, 6).Remove(0, 5).Insert(0, string.Empty);
+            return value[0].ToString();
         }
 
         public static string GetAndroidDependencyCoreVersion(string value)
@@ -257,19 +258,9 @@ namespace AppodealStack.UnityEditor.SDKManager
             }
         }
 
-        public static NetworkDependency GetAppodealDependency(
-            SortedDictionary<string, NetworkDependency> networkDependencies)
+        public static AppodealDependency GetAppodealDependency(SortedDictionary<string, AppodealDependency> dependencies)
         {
-            NetworkDependency networkDependency = null;
-            foreach (var dependency
-                in networkDependencies.Where(dependency
-                        => dependency.Key.Contains(AppodealEditorConstants.Appodeal))
-                    .Where(dependency => dependency.Value != null))
-            {
-                networkDependency = dependency.Value;
-            }
-
-            return networkDependency;
+            return dependencies.Where(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).First().Value;
         }
     }
 }
