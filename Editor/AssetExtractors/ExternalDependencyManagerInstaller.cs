@@ -2,20 +2,18 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     static class ExternalDependencyManagerInstaller
     {
         [InitializeOnLoadMethod]
-        static void InstallPluginIfUserAgreed()
+        static void InstallPluginIfUserAgrees()
         {
-            if (IsPluginInstalled() || PluginPreferences.Instance.ShouldIgnoreEDMInstallation)
-                return;
+            if (IsPluginInstalled() || PluginPreferences.Instance.ShouldIgnoreEDMInstallation) return;
 
             if (PluginInstallationRequest())
             {
@@ -38,9 +36,8 @@ namespace AppodealStack.UnityEditor.AssetExtractors
 
         private static bool PluginInstallationRequest()
         {
-            var decision = EditorUtility.DisplayDialogComplex("External Dependency Manager required",
-                "Appodeal requires External Dependency Manager to resolve dependencies.\n" +
-                " Would you like to import the package?",
+            var decision = EditorUtility.DisplayDialogComplex("External Dependency Manager Required",
+                "Appodeal uses External Dependency Manager to resolve dependencies.\n\nWould you like to import the package?",
                 "Import", "Cancel", "Ignore - Do not ask anymore");
 
             switch (decision)
@@ -60,10 +57,14 @@ namespace AppodealStack.UnityEditor.AssetExtractors
 
         static void InstallPlugin()
         {
-            var path = Path.Combine(AppodealEditorConstants.PackagePath,
-                AppodealEditorConstants.EDMPackagePath, AppodealEditorConstants.EDMPackageName);
-            var fullPath = Path.GetFullPath(path);
-            AssetDatabase.ImportPackage(fullPath, false);
+            string path = Path.Combine(AppodealEditorConstants.PackagePath, AppodealEditorConstants.EDMPackagePath);
+
+            var fileInfo = new DirectoryInfo(path).GetFiles("*.unitypackage");
+            
+            if (fileInfo.Length > 0)
+            {
+                AssetDatabase.ImportPackage(fileInfo[0].FullName, false);
+            }
         }
     }
 }
