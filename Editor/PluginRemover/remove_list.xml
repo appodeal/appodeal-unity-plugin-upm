@@ -26,8 +26,8 @@
         <check_if_empty>false</check_if_empty>
     </item>
     <item>
-        <name>Ad Network Dependencies Directory</name>
-        <path>Appodeal/Editor/Dependencies/AdNetworkDependencies</path>
+        <name>Appodeal Dependencies Directory</name>
+        <path>Appodeal/Editor/Dependencies</path>
         <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>false</check_if_empty>
     </item>
