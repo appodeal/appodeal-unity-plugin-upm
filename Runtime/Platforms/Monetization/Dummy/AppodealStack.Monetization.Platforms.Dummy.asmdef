@@ -1,11 +1,10 @@
 {
-    "name": "AppodealStack.UnityEditor.SDKManager",
+    "name": "AppodealStack.Monetization.Platforms.Dummy",
     "references": [
-        "marijnz.EditorCoroutines",
         "AppodealStack.UnityEditor.Utils",
         "AppodealStack.Monetization.Common",
-        "AppodealStack.UnityEditor.PluginRemover",
-        "AppodealStack.UnityEditor.SDKManager.Models"
+        "AppodealStack.ConsentManagement.Api",
+        "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
         "Editor"

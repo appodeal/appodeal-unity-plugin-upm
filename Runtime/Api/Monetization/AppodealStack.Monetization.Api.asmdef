@@ -1,14 +1,15 @@
 {
-    "name": "AppodealStack.UnityEditor.SDKManager",
+    "name": "AppodealStack.Monetization.Api",
     "references": [
-        "marijnz.EditorCoroutines",
-        "AppodealStack.UnityEditor.Utils",
         "AppodealStack.Monetization.Common",
-        "AppodealStack.UnityEditor.PluginRemover",
-        "AppodealStack.UnityEditor.SDKManager.Models"
+        "AppodealStack.Monetization.Platforms",
+        "AppodealStack.ConsentManagement.Api",
+        "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
