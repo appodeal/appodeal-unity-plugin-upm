@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -9,13 +8,12 @@ namespace AppodealStack.UnityEditor.Utils
     public class AppodealEditorConstants
     {
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";
-        public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2/unity/config/";
+        public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2.1/unity/config/";
         public const string GitRepoAddress = "https://github.com/appodeal/appodeal-unity-plugin-upm.git";
         public const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
         public const string PluginPath = "Assets/Appodeal";
-        public const string NetworkDepsPath = "Editor/Dependencies/AdNetworkDependencies";
+        public const string DependenciesPath = "Editor/Dependencies";
         public const string EDMPackagePath = "Editor/Dependencies/ExternalDependencyManager";
-        public const string EDMPackageName = "external-dependency-manager-1.2.168.unitypackage";
         public const string ReplaceDepValue = "com.appodeal.ads.sdk.networks:";
         public const string ReplaceAdmobDepValue = "com.appodeal.ads.sdk.networks:admob";
         public const string ReplaceDepCore = "com.appodeal.ads.sdk:core:";
@@ -35,9 +33,10 @@ namespace AppodealStack.UnityEditor.Utils
         public const string Loading = "Loading...";
         public const string ProgressBarCancelled = "Progress bar canceled by the user";
         public const string AppodealCoreDependencies = "Appodeal Core Dependencies";
-        public const string IOS = "iOS";
+        public const string Ios = "iOS";
         public const string Android = "Android";
         public const string AppodealNetworkDependencies = "Appodeal Network Dependencies";
+        public const string AppodealServiceDependencies = "Appodeal Service Dependencies";
         public const string SpecOpenDependencies = "<dependencies>\n";
         public const string SpecCloseDependencies = "</dependencies>";
         public const string XmlFileExtension = ".xml";
