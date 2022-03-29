@@ -258,8 +258,8 @@ void AppodealDisableLocationPermissionCheck() {
     [Appodeal setLocationTracking:NO];
 }
 
-void AppodealSetTriggerPrecacheCallbacks(bool value) {
-    [Appodeal setTriggerPrecacheCallbacks:value];
+void AppodealSetTriggerPrecacheCallbacks(int types, bool value) {
+    [Appodeal setTriggerPrecacheCallbacks:value types:types];
 }
 
 char *AppodealGetVersion() {

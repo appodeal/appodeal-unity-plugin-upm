@@ -773,7 +773,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
-            AppodealObjCBridge.AppodealSetTriggerPrecacheCallbacks(onLoadedTriggerBoth);
+            AppodealObjCBridge.AppodealSetTriggerPrecacheCallbacks(NativeAdTypesForType(adTypes), onLoadedTriggerBoth);
         }
 
         public bool IsAutoCacheEnabled(int adType)

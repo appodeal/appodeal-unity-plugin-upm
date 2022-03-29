@@ -122,7 +122,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealDisableNetwork(string name);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetTriggerPrecacheCallbacks(bool value);
+        internal static extern void AppodealSetTriggerPrecacheCallbacks(int types, bool value);
 
         [DllImport("__Internal")]
         internal static extern void AppodealDisableNetworkForAdTypes(string name, int type);
