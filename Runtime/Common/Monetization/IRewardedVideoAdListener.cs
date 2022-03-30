@@ -50,8 +50,8 @@ namespace AppodealStack.Monetization.Common
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/rewarded-video#id-[Development]UnitySDK.Rewardedvideo-RewardedVideoCallbacks"/> for more details.
         /// </summary>
         /// <param name="amount">amount of reward.</param>
-        /// <param name="name">reward currency.</param>
-        void OnRewardedVideoFinished(double amount, string name);
+        /// <param name="currency">reward currency.</param>
+        void OnRewardedVideoFinished(double amount, string currency);
 
         /// <summary>
         /// <para>

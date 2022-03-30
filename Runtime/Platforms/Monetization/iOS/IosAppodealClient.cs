@@ -142,9 +142,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoDidFinishCallback))]
-        private static void RewardedVideoDidFinish(double amount, string name)
+        private static void RewardedVideoDidFinish(double amount, string currency)
         {
-            _rewardedVideoListener?.OnRewardedVideoFinished(amount, name);
+            _rewardedVideoListener?.OnRewardedVideoFinished(amount, currency);
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
