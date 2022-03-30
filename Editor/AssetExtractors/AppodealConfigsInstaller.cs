@@ -25,7 +25,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
             {
                 Directory.CreateDirectory(Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath));
             }
-            fileInfo?.ToList().ForEach(file => FileUtil.ReplaceFile(file.FullName, Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, file.Name.Replace(".txt", ".xml"))));
+            fileInfo.ToList().ForEach(file => FileUtil.ReplaceFile(file.FullName, Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, file.Name.Replace(".txt", ".xml"))));
 
             PluginPreferences.Instance.AreNetworkConfigsImported = true;
             PluginPreferences.Instance.SaveAsync();
