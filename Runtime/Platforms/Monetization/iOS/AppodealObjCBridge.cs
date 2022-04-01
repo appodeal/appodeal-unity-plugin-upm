@@ -167,7 +167,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetCustomFilterInt(string name, int value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetCustomFilter(string filters);
+        internal static extern void AppodealResetCustomFilter(string name);
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetExtraDataBool(string name, bool value);
@@ -182,7 +182,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetExtraDataString(string name, string value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetExtraData(string extraData);
+        internal static extern void AppodealResetExtraData(string name);
 
         [DllImport("__Internal")]
         internal static extern void AppodealTrackInAppPurchase(double amount, string currency);

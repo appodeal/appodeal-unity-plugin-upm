@@ -321,8 +321,8 @@ void AppodealSetCustomFilterString(const char *name, const char *value) {
     [Appodeal setCustomStateValue:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
-void AppodealSetCustomFilter(const char *filters) {
-    [Appodeal setCustomState:NSDictionaryFromUTF8String(filters)];
+void AppodealResetCustomFilter(const char *name) {
+    [Appodeal setCustomStateValue:nil forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetExtraDataBool(const char *name, BOOL value) {
@@ -341,8 +341,8 @@ void AppodealSetExtraDataString(const char *name, const char *value) {
     [Appodeal setExtrasValue:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
-void AppodealSetExtraData(const char *extraData) {
-    [Appodeal setExtras:NSDictionaryFromUTF8String(eventParams)];
+void AppodealResetExtraData(const char *name) {
+    [Appodeal setExtrasValue:nil forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealTrackInAppPurchase(int amount, const char *currency) {

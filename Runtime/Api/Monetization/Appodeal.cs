@@ -573,16 +573,15 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Completely <see langword="REWRITES"/> your Custom Segment Filters by setting a new dictionary of key-value pairs.
+        /// Resets custom filter value by the provided key.
         /// </para>
         /// See <see href="https://faq.appodeal.com/en/articles/1133533-segment-filters"/> for more details.
         /// </summary>
-        /// <remarks>Supported types for values are <see langword="string"/>, <see langword="double"/>, <see langword="int"/>, and <see langword="bool"/>.
-        /// Key-value pairs with other value types will be ignored.</remarks>
-        /// <param name="filters">set of key-value pairs.</param>
-        public static void SetCustomFilter(Dictionary<string, object> filters)
+        /// <remarks>Use it to remove a filter, that was previously set via one of the <see langword="SetCustomFilter()"/> methods.</remarks>
+        /// <param name="name">name of the filter.</param>
+        public static void ResetCustomFilter(string name)
         {
-            GetInstance().SetCustomFilter(filters);
+            GetInstance().ResetCustomFilter(name);
         }
 
         /// <summary>
@@ -717,16 +716,15 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Completely <see langword="REWRITES"/> Appodeal Extra Data by setting a new dictionary of key-value pairs.
+        /// Resets extra data value by the provided key.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.
         /// </summary>
-        /// <remarks>Supported types for values are <see langword="string"/>, <see langword="double"/>, <see langword="int"/>, and <see langword="bool"/>.
-        /// Key-value pairs with other value types will be ignored.</remarks>
-        /// <param name="extraData">set of key-value pairs.</param>
-        public static void SetExtraData(Dictionary<string, object> extraData)
+        /// <remarks>Use it to remove an extra data, that was previously set via one of the <see langword="SetExtraData()"/> methods.</remarks>
+        /// <param name="key">unique identifier.</param>
+        public static void ResetExtraData(string key)
         {
-            GetInstance().SetExtraData(extraData);
+            GetInstance().ResetExtraData(key);
         }
 
         /// <summary>

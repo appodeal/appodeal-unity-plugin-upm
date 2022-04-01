@@ -54,7 +54,7 @@ namespace AppodealStack.Monetization.Common
         void SetCustomFilter(string name, int value);
         void SetCustomFilter(string name, double value);
         void SetCustomFilter(string name, string value);
-        void SetCustomFilter(Dictionary<string, object> filters);
+        void ResetCustomFilter(string name);
         bool CanShow(int adType);
         bool CanShow(int adType, string placement);
         KeyValuePair<string, double> GetRewardParameters();
@@ -67,7 +67,7 @@ namespace AppodealStack.Monetization.Common
         void SetExtraData(string key, int value);
         void SetExtraData(string key, double value);
         void SetExtraData(string key, string value);
-        void SetExtraData(Dictionary<string, object> extraData);
+        void ResetExtraData(string key);
         double GetPredictedEcpm(int adType);
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
         void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener);

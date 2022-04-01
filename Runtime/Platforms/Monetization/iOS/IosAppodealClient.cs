@@ -731,14 +731,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetCustomFilterString(name, value);
         }
 
-        public void SetCustomFilter(Dictionary<string, object> filters)
+        public void ResetCustomFilter(string name)
         {
-            var data = new Dictionary<string, object>();
-
-            filters.Keys.Where(key => filters[key] is System.Int32 || filters[key] is System.Boolean || filters[key] is System.String || filters[key] is System.Double)
-                .ToList().ForEach(key => data.Add(key, filters[key]));
-
-            AppodealObjCBridge.AppodealSetCustomFilter(DictionaryToString(data));
+            AppodealObjCBridge.AppodealResetCustomFilter(name);
         }
 
         public void SetExtraData(string key, bool value)
@@ -761,14 +756,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetExtraDataString(key, value);
         }
 
-        public void SetExtraData(Dictionary<string, object> extraData)
+        public void ResetExtraData(string key)
         {
-            var data = new Dictionary<string, object>();
-
-            extraData.Keys.Where(key => extraData[key] is System.Int32 || extraData[key] is System.Boolean || extraData[key] is System.String || extraData[key] is System.Double)
-                .ToList().ForEach(key => data.Add(key, extraData[key]));
-
-            AppodealObjCBridge.AppodealSetExtraData(DictionaryToString(data));
+            AppodealObjCBridge.AppodealResetExtraData(key);
         }
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)

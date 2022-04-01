@@ -424,21 +424,9 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("setCustomFilter", name, value);
         }
 
-        public void SetCustomFilter(Dictionary<string, object> filters)
+        public void ResetCustomFilter(string name)
         {
-            var dictFiltered = new Dictionary<string, object>();
-
-            filters.Keys.Where(key => filters[key] is System.Int32 || filters[key] is System.Boolean || filters[key] is System.String || filters[key] is System.Double)
-                .ToList().ForEach(key => dictFiltered.Add(key, filters[key]));
-
-            var map = new AndroidJavaObject("java.util.HashMap");
-            
-            foreach (var entry in dictFiltered)
-            {
-                map.Call<AndroidJavaObject>("put", entry.Key, Helper.GetJavaObject(entry.Value));
-            }
-
-            GetAppodealClass().CallStatic("setCustomFilter", map);
+            GetAppodealClass().CallStatic("setCustomFilter", name, null);
         }
 
         public void SetExtraData(string key, bool value)
@@ -461,21 +449,9 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("setExtraData", key, value);
         }
 
-        public void SetExtraData(Dictionary<string, object> extraData)
+        public void ResetExtraData(string key)
         {
-            var data = new Dictionary<string, object>();
-
-            extraData.Keys.Where(key => extraData[key] is System.Int32 || extraData[key] is System.Boolean || extraData[key] is System.String || extraData[key] is System.Double)
-                .ToList().ForEach(key => data.Add(key, extraData[key]));
-
-            var map = new AndroidJavaObject("java.util.HashMap");
-
-            foreach (var entry in data)
-            {
-                map.Call<AndroidJavaObject>("put", entry.Key, Helper.GetJavaObject(entry.Value));
-            }
-
-            GetAppodealClass().CallStatic("setExtraData", map);
+            GetAppodealClass().CallStatic("setExtraData", key, null);
         }
 
         public void TrackInAppPurchase(double amount, string currency)

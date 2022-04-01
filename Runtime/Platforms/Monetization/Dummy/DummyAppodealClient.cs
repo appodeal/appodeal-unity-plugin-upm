@@ -758,9 +758,9 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetCustomFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void SetCustomFilter(Dictionary<string, object> filters)
+        public void ResetCustomFilter(string name)
         {
-             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetCustomFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ResetCustomFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void TrackInAppPurchase(double amount, string currency)
@@ -812,9 +812,9 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetExtraData method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void SetExtraData(Dictionary<string, object> extraData)
+        public void ResetExtraData(string key)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetExtraData method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ResetExtraData method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void setSharedAdsInstanceAcrossActivities(bool value)
