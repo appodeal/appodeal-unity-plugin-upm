@@ -4,17 +4,12 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
-using SimpleJSON;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PreProcess
 {
-    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
-    [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public static class AndroidPreProcessServices
     {
     
@@ -23,9 +18,9 @@ namespace AppodealStack.UnityEditor.PreProcess
         public static void GenerateXMLForFirebase()
         {
             string xmlFilePath = Path.Combine(Application.dataPath,
-                                        AppodealEditorConstants.AppodealAndroidLibPath,
-                                        AppodealEditorConstants.FirebaseAndroidConfigPath,
-                                        AppodealEditorConstants.FirebaseAndroidConfigFile);
+                                              AppodealEditorConstants.AppodealAndroidLibPath,
+                                              AppodealEditorConstants.FirebaseAndroidConfigPath,
+                                              AppodealEditorConstants.FirebaseAndroidConfigFile);
 
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration)
             {
@@ -50,52 +45,49 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
 
             CreateOrReplaceFirebaseXml(xmlFilePath, firebaseStrings);
-
         }
 
         private static Dictionary<string,string> ParseFirebaseJson(string path)
         {
-            StreamReader reader = new StreamReader(path); 
-            string jsonString = reader.ReadToEnd();
+            string jsonString = new StreamReader(path).ReadToEnd();
+            var model = JsonUtility.FromJson<FirebaseJsonModel>(jsonString);
 
-            JSONNode parsedJson = JSON.Parse(jsonString);
-            var clientJsonArray = parsedJson["client"];
+            if ((model?.client?.Count ?? 0) <= 0) return null;
 
-            if (clientJsonArray == null) return null;
-
-            foreach (JSONNode node in clientJsonArray)
+            foreach (var client in model.client)
             {
-                var clientInfoJsonObject = node["client_info"].AsObject;
-                var andrClientInfoJsonObject = clientInfoJsonObject["android_client_info"].AsObject;
+                var clientInfo = client.client_info;
+                var androidClientInfo = clientInfo.android_client_info;
 
-                if (andrClientInfoJsonObject["package_name"].Value == Application.identifier ) {
-                    var projectInfoJsonObject = parsedJson["project_info"].AsObject;
-                    var outputDict = new Dictionary<string, string>();
-                    outputDict.Add("firebase_database_url", projectInfoJsonObject["firebase_url"].Value);
-                    outputDict.Add("gcm_defaultSenderId", projectInfoJsonObject["project_number"].Value);
-                    outputDict.Add("google_storage_bucket", projectInfoJsonObject["storage_bucket"].Value);
-                    outputDict.Add("project_id", projectInfoJsonObject["project_id"].Value);
-                    outputDict.Add("google_api_key", node["api_key"][0].AsObject["current_key"].Value);
-                    outputDict.Add("google_crash_reporting_api_key", node["api_key"][0].AsObject["current_key"].Value);
-                    outputDict.Add("google_app_id", clientInfoJsonObject["mobilesdk_app_id"].Value);
-                    outputDict.Add("default_web_client_id", node["oauth_client"][0].AsObject["client_id"].Value);
-                    return outputDict;
-                }
+                if (androidClientInfo?.package_name != Application.identifier) continue;
+                
+                var projectInfo = model.project_info;
+                return new Dictionary<string, string>
+                {
+                    {"firebase_database_url", projectInfo?.firebase_url},
+                    {"gcm_defaultSenderId", projectInfo?.project_number},
+                    {"google_storage_bucket", projectInfo?.storage_bucket},
+                    {"project_id", projectInfo?.project_id},
+                    {"google_api_key", client.api_key?[0].current_key},
+                    {"google_crash_reporting_api_key", client.api_key?[0].current_key},
+                    {"google_app_id", clientInfo.mobilesdk_app_id},
+                    {"default_web_client_id", client.oauth_client?[0].client_id}
+                };
             }
             return null;
         }
 
         private static void CreateOrReplaceFirebaseXml(string path, Dictionary<string,string> firebaseStrings)
         {
-            XmlDocument xmlDocument = new XmlDocument();
-            XmlElement root = xmlDocument.DocumentElement;
+            var xmlDocument = new XmlDocument();
+            var root = xmlDocument.DocumentElement;
 
-            XmlDeclaration xmlDeclaration = xmlDocument.CreateXmlDeclaration("1.0", "utf-8", null);
+            var xmlDeclaration = xmlDocument.CreateXmlDeclaration("1.0", "utf-8", null);
             xmlDocument.InsertBefore(xmlDeclaration, root);
 
-            XmlElement resourcesElement = xmlDocument.CreateElement("resources");
+            var resourcesElement = xmlDocument.CreateElement("resources");
 
-            XmlAttribute attribute = xmlDocument.CreateAttribute("tools", "keep", "http://schemas.android.com/tools");
+            var attribute = xmlDocument.CreateAttribute("tools", "keep", "http://schemas.android.com/tools");
             string toolsKeep = "@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id";
             attribute.Value = toolsKeep;
             resourcesElement.Attributes.Append(attribute);
@@ -109,10 +101,10 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private static XmlElement CreateFirebaseStringElement(string elName, string elValue, XmlDocument xmlDocument)
         {
-            XmlElement xmlElement = xmlDocument.CreateElement("string");
+            var xmlElement = xmlDocument.CreateElement("string");
             xmlElement.SetAttribute("name", elName);
             xmlElement.SetAttribute("translatable", "false");
-            XmlText xmlText = xmlDocument.CreateTextNode(elValue);
+            var xmlText = xmlDocument.CreateTextNode(elValue);
             xmlElement.AppendChild(xmlText);
             
             return xmlElement;
@@ -120,11 +112,10 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private static void RemoveFirebaseXml(string path)
         {
-            if (File.Exists(path))
-            {
-                FileUtil.DeleteFileOrDirectory(path);
-                FileUtil.DeleteFileOrDirectory($"{path}.meta");
-            }
+            if (!File.Exists(path)) return;
+            
+            FileUtil.DeleteFileOrDirectory(path);
+            FileUtil.DeleteFileOrDirectory($"{path}.meta");
         }
     
     #endregion
@@ -133,8 +124,8 @@ namespace AppodealStack.UnityEditor.PreProcess
         public static void SetupManifestForFacebook()
         {
             string path = Path.Combine(Application.dataPath,
-                                        AppodealEditorConstants.AppodealAndroidLibPath,
-                                        AppodealEditorConstants.AndroidManifestFile);
+                                       AppodealEditorConstants.AppodealAndroidLibPath,
+                                       AppodealEditorConstants.AndroidManifestFile);
 
             if (!File.Exists(path))
             {
@@ -156,55 +147,60 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             string appId = AppodealSettings.Instance.FacebookAndroidAppId;
 
-            if (string.IsNullOrEmpty(appId)) {
+            if (string.IsNullOrEmpty(appId))
+            {
                 Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
                 return;
             }
 
-            XmlDocument xmlDocument = new XmlDocument();
+            var xmlDocument = new XmlDocument();
             xmlDocument.Load(fullPath);
-            if (xmlDocument == null) {
-                Debug.LogError(("Couldn't load " + fullPath));
-                return;
-            }
-            XmlNode xmlNode = FindChildNode(FindChildNode(xmlDocument, "manifest"), "application");
-            if (xmlNode == null) {
+
+            var xmlNode = FindChildNode(FindChildNode(xmlDocument, "manifest"), "application");
+            if (xmlNode == null)
+            {
                 Debug.LogError("Error parsing " + fullPath);
                 return;
             }
+            
             string namespaceOfPrefix = xmlNode.GetNamespaceOfPrefix("android");
-            XmlElement xmlElement = xmlDocument.CreateElement("meta-data");
+            var xmlElement = xmlDocument.CreateElement("meta-data");
             xmlElement.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookApplicationId);
             xmlElement.SetAttribute("value", namespaceOfPrefix, "fb" + appId);
             SetOrReplaceXmlElement(xmlNode, xmlElement);
 
             string value = AppodealSettings.Instance.FacebookAutoLogAppEvents.ToString().ToLower();
-            XmlElement xmlElement2 = xmlDocument.CreateElement("meta-data");
+            var xmlElement2 = xmlDocument.CreateElement("meta-data");
             xmlElement2.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAutoLogAppEventsEnabled);
             xmlElement2.SetAttribute("value", namespaceOfPrefix, value);
             SetOrReplaceXmlElement(xmlNode, xmlElement2);
 
             string value2 = AppodealSettings.Instance.FacebookAdvertiserIDCollection.ToString().ToLower();
-            XmlElement xmlElement3 = xmlDocument.CreateElement("meta-data");
+            var xmlElement3 = xmlDocument.CreateElement("meta-data");
             xmlElement3.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAdvertiserIDCollectionEnabled);
             xmlElement3.SetAttribute("value", namespaceOfPrefix, value2);
             SetOrReplaceXmlElement(xmlNode, xmlElement3);
 
-            XmlWriterSettings settings = new XmlWriterSettings {
+            var settings = new XmlWriterSettings
+            {
                 Indent = true,
                 IndentChars = "  ",
                 NewLineChars = "\r\n",
                 NewLineHandling = NewLineHandling.Replace
             };
-            using(XmlWriter w = XmlWriter.Create(fullPath, settings)) {
+            
+            using(var w = XmlWriter.Create(fullPath, settings))
+            {
                 xmlDocument.Save(w);
             }
         }
 
         private static XmlNode FindChildNode(XmlNode parent, string name)
         {
-            for (XmlNode xmlNode = parent.FirstChild; xmlNode != null; xmlNode = xmlNode.NextSibling) {
-                if (xmlNode.Name.Equals(name)) {
+            for (var xmlNode = parent.FirstChild; xmlNode != null; xmlNode = xmlNode.NextSibling)
+            {
+                if (xmlNode.Name.Equals(name))
+                {
                     return xmlNode;
                 }
             }
@@ -215,9 +211,12 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             string attribute = newElement.GetAttribute("name");
             string name = newElement.Name;
-            if (TryFindElementWithAndroidName(parent, attribute, out XmlElement element, name)) {
+            if (TryFindElementWithAndroidName(parent, attribute, out XmlElement element, name))
+            {
                 parent.ReplaceChild(newElement, element);
-            } else {
+            }
+            else
+            {
                 parent.AppendChild(newElement);
             }
         }
@@ -225,25 +224,17 @@ namespace AppodealStack.UnityEditor.PreProcess
         private static bool TryFindElementWithAndroidName(XmlNode parent, string attrNameValue, out XmlElement element, string elementType = "activity")
         {
             string namespaceOfPrefix = parent.GetNamespaceOfPrefix("android");
-            for (XmlNode xmlNode = parent.FirstChild; xmlNode != null; xmlNode = xmlNode.NextSibling) {
-                XmlElement xmlElement = xmlNode as XmlElement;
-                if (xmlElement != null && xmlElement.Name == elementType && xmlElement.GetAttribute("name", namespaceOfPrefix) == attrNameValue) {
+            for (var xmlNode = parent.FirstChild; xmlNode != null; xmlNode = xmlNode.NextSibling)
+            {
+                var xmlElement = xmlNode as XmlElement;
+                if (xmlElement != null && xmlElement.Name == elementType && xmlElement.GetAttribute("name", namespaceOfPrefix) == attrNameValue)
+                {
                     element = xmlElement;
                     return true;
                 }
             }
             element = null;
             return false;
-        }
-
-        private static XmlElement CreateActivityElement(XmlDocument doc, string ns, string activityName, bool exported = false)
-        {
-            XmlElement xmlElement = doc.CreateElement("activity");
-            xmlElement.SetAttribute("name", ns, activityName);
-            if (exported) {
-                xmlElement.SetAttribute("exported", ns, "true");
-            }
-            return xmlElement;
         }
 
     #endregion

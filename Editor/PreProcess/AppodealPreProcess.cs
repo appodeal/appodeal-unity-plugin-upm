@@ -20,37 +20,37 @@ namespace AppodealStack.UnityEditor.PreProcess
         #region Constants
 
         //Templates in Unity Editor Data folder
-        private const string gradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
-        public const string manifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
+        private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
+        public const string ManifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
 
         //Paths without leading Assets folder
-        public const string androidPluginsPath = "Plugins/Android";
-        public const string gradleTemplateName = "mainTemplate.gradle";
-        public const string manifestTemplateName = "AndroidManifest.xml";
-        public const string appodealTemplatesPath = "Appodeal/InternalResources";
-        private const string appodealDexesPath = "Assets/Plugins/Android/appodeal/assets/dex";
-        private const string appodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
+        public const string AndroidPluginsPath = "Plugins/Android";
+        public const string GradleTemplateName = "mainTemplate.gradle";
+        public const string ManifestTemplateName = "AndroidManifest.xml";
+        public const string AppodealTemplatesPath = "Appodeal/InternalResources";
+        private const string AppodealDexesPath = "Assets/Plugins/Android/appodeal/assets/dex";
+        private const string AppodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
 
         //Gradle search lines
-        public const string GRADLE_GOOGLE_REPOSITORY = "google()";
-        public const string GRADLE_GOOGLE_REPOSITORY_COMPAT = "maven { url \"https://maven.google.com\" }";
-        public const string GRADLE_DEPENDENCIES = "**DEPS**";
-        public const string GRADLE_APP_ID = "**APPLICATIONID**";
-        public const string GRADLE_USE_PROGUARD = "useProguard";
-        public const string GRADLE_MULTIDEX_DEPENDENCY_WO_VERSION = "androidx.multidex:multidex:";
-        public const string GRAFLE_DEFAULT_CONFIG = "defaultConfig";
-        public const string COMPILE_OPTIONS = "compileOptions {";
-        public const string GRADLE_JAVA_VERSION_1_8 = "JavaVersion.VERSION_1_8";
-        public const string GRADLE_SOURCE_CAPABILITY = "sourceCompatibility ";
-        public const string GRADLE_TARGET_CAPATILITY = "targetCompatibility ";
+        public const string GradleGoogleRepository = "google()";
+        public const string GradleGoogleRepositoryCompat = "maven { url \"https://maven.google.com\" }";
+        public const string GradleDependencies = "**DEPS**";
+        public const string GradleAppID = "**APPLICATIONID**";
+        public const string GradleUseProguard = "useProguard";
+        public const string GradleMultidexDependencyWoVersion = "androidx.multidex:multidex:";
+        public const string GradleDefaultConfig = "defaultConfig";
+        public const string CompileOptions = "compileOptions {";
+        public const string GradleJavaVersion18 = "JavaVersion.VERSION_1_8";
+        public const string GradleSourceCapability = "sourceCompatibility ";
+        public const string GradleTargetCapability = "targetCompatibility ";
 
         //Gradle add lines
-        public const string GRADLE_IMPLEMENTATION = "implementation ";
-        public const string GRADLE_MULTIDEX_DEPENDENCY = "'androidx.multidex:multidex:2.0.1'";
-        public const string GRADLE_MULTIDEX_ENABLE = "multiDexEnabled true";
+        public const string GradleImplementation = "implementation ";
+        public const string GradleMultidexDependency = "'androidx.multidex:multidex:2.0.1'";
+        public const string GradleMultidexEnable = "multiDexEnabled true";
 
         //Manifest add lines
-        public const string manifestMutlidexApp = "androidx.multidex.MultiDexApplication";
+        public const string ManifestMultidexApp = "androidx.multidex.MultiDexApplication";
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             if (report.summary.platform.ToString() != "Android") return;
 
-            var manifestPath = Path.Combine(Application.dataPath, appodealAndroidLibDirPath, manifestTemplateName);
+            var manifestPath = Path.Combine(Application.dataPath, AppodealAndroidLibDirPath, ManifestTemplateName);
 
             if (!File.Exists(manifestPath))
             {
@@ -80,7 +80,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
         {
-            if(CheckContainsMultidex(manifestPath, manifestMutlidexApp))
+            if(CheckContainsMultidex(manifestPath, ManifestMultidexApp))
             {
                 androidManifest.RemoveMultiDexApplication();
             }
@@ -237,35 +237,35 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private bool CheckContainsMultidexDependency()
         {
-            return GetContentString(getDefaultGradleTemplate())
-                .Contains(GRADLE_IMPLEMENTATION + GRADLE_MULTIDEX_DEPENDENCY);
+            return GetContentString(GetDefaultGradleTemplate())
+                .Contains(GradleImplementation + GradleMultidexDependency);
         }
 
         private void RemoveMultidexDependency(string path)
         {
-            var contentString = GetContentString(getDefaultGradleTemplate());
-            contentString = Regex.Replace(contentString, GRADLE_IMPLEMENTATION + GRADLE_MULTIDEX_DEPENDENCY,
+            var contentString = GetContentString(GetDefaultGradleTemplate());
+            contentString = Regex.Replace(contentString, GradleImplementation + GradleMultidexDependency,
                 string.Empty);
 
-            using (var writer = new StreamWriter(getDefaultGradleTemplate()))
+            using (var writer = new StreamWriter(GetDefaultGradleTemplate()))
             {
                 writer.Write(contentString);
                 writer.Close();
             }
         }
 
-        public static string getDefaultGradleTemplate()
+        public static string GetDefaultGradleTemplate()
         {
             var defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(
                 EditorApplication.applicationContentsPath,
-                gradleDefaultTemplatePath,
-                gradleTemplateName);
+                GradleDefaultTemplatePath,
+                GradleTemplateName);
             if (File.Exists(defaultGradleTemplateFullName)) return defaultGradleTemplateFullName;
             var unixAppContentsPath =
                 Path.GetDirectoryName(Path.GetDirectoryName(EditorApplication.applicationContentsPath));
             defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(unixAppContentsPath,
-                gradleDefaultTemplatePath,
-                gradleTemplateName);
+                GradleDefaultTemplatePath,
+                GradleTemplateName);
 
             return defaultGradleTemplateFullName;
         }
@@ -284,10 +284,10 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private static string GetCustomGradleScriptPath()
         {
-            var androidDirectory = new DirectoryInfo(Path.Combine("Assets", androidPluginsPath));
+            var androidDirectory = new DirectoryInfo(Path.Combine("Assets", AndroidPluginsPath));
             var filePaths = androidDirectory.GetFiles("*.gradle");
             return filePaths.Length > 0
-                ? Path.Combine(Path.Combine(Application.dataPath, androidPluginsPath), filePaths[0].Name)
+                ? Path.Combine(Path.Combine(Application.dataPath, AndroidPluginsPath), filePaths[0].Name)
                 : null;
         }
 
@@ -296,26 +296,25 @@ namespace AppodealStack.UnityEditor.PreProcess
 
     internal class AndroidXmlDocument : XmlDocument
     {
-        private readonly string mPath;
-        private readonly XmlNamespaceManager nsMgr;
-        protected readonly string AndroidXmlNamespace = "http://schemas.android.com/apk/res/android";
+        private readonly string _mPath;
+        protected const string AndroidXmlNamespace = "http://schemas.android.com/apk/res/android";
 
         protected AndroidXmlDocument(string path)
         {
-            mPath = path;
-            using (var reader = new XmlTextReader(mPath))
+            _mPath = path;
+            using (var reader = new XmlTextReader(_mPath))
             {
                 reader.Read();
                 Load(reader);
             }
 
-            nsMgr = new XmlNamespaceManager(NameTable);
+            var nsMgr = new XmlNamespaceManager(NameTable);
             nsMgr.AddNamespace("android", AndroidXmlNamespace);
         }
 
         public void Save()
         {
-            SaveAs(mPath);
+            SaveAs(_mPath);
         }
 
         public void SaveAs(string path)
@@ -330,11 +329,11 @@ namespace AppodealStack.UnityEditor.PreProcess
 
     internal class AndroidManifest : AndroidXmlDocument
     {
-        public readonly XmlElement applicationElement;
+        public readonly XmlElement ApplicationElement;
 
         public AndroidManifest(string path) : base(path)
         {
-            applicationElement = SelectSingleNode("/manifest/application") as XmlElement;
+            ApplicationElement = SelectSingleNode("/manifest/application") as XmlElement;
         }
 
         private XmlAttribute CreateAndroidAttribute(string key, string value)
@@ -426,23 +425,23 @@ namespace AppodealStack.UnityEditor.PreProcess
 
     internal class EnableJavaVersion : FixProblemInstruction
     {
-        private readonly string path;
+        private readonly string _path;
 
         public EnableJavaVersion(string gradleScriptPath) : base("Java version isn't included to mainTemplate.gradle",
             true)
         {
-            path = gradleScriptPath;
+            _path = gradleScriptPath;
         }
 
         public override void fixProblem()
         {
-            var settings = new ImportantGradleSettings(path);
+            var settings = new ImportantGradleSettings(_path);
             var leadingWhitespaces = "    ";
             const string additionalWhiteSpaces = "";
             string line;
             var modifiedGradle = "";
 
-            var gradleScript = new StreamReader(path);
+            var gradleScript = new StreamReader(_path);
 
             while ((line = gradleScript.ReadLine()) != null)
             {
@@ -484,8 +483,8 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
 
             gradleScript.Close();
-            File.WriteAllText(path, modifiedGradle);
-            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(path), ImportAssetOptions.ForceUpdate);
+            File.WriteAllText(_path, modifiedGradle);
+            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(_path), ImportAssetOptions.ForceUpdate);
         }
     }
 
@@ -524,23 +523,23 @@ namespace AppodealStack.UnityEditor.PreProcess
 
     internal class EnableMultidexInGradle : FixProblemInstruction
     {
-        private readonly string path;
+        private readonly string _path;
 
         public EnableMultidexInGradle(string gradleScriptPath) : base(
             "Multidex isn't enabled. mainTemplate.gradle should be edited " +
             "according to the official documentation:\nhttps://developer.android.com/studio/build/multidex", true)
         {
-            path = gradleScriptPath;
+            _path = gradleScriptPath;
         }
 
         public override void fixProblem()
         {
-            var settings = new ImportantGradleSettings(path);
+            var settings = new ImportantGradleSettings(_path);
             var leadingWhitespaces = "";
             string line;
             var prevLine = "";
             var modifiedGradle = "";
-            var gradleScript = new StreamReader(path);
+            var gradleScript = new StreamReader(_path);
             string multidexDependency;
 
 
@@ -580,8 +579,8 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
 
             gradleScript.Close();
-            File.WriteAllText(path, modifiedGradle);
-            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(path), ImportAssetOptions.ForceUpdate);
+            File.WriteAllText(_path, modifiedGradle);
+            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(_path), ImportAssetOptions.ForceUpdate);
         }
     }
 }
