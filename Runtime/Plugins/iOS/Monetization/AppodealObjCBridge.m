@@ -358,12 +358,9 @@ void AppodealSetUserId(const char *userid) {
 }
 
 char *AppodealGetUserId() {
-    // const char *cString = [[Appodeal getUserId] UTF8String];
-    // char *cStringCopy = calloc([[Appodeal getUserId] length]+1, 1);
-    // return strncpy(cStringCopy, cString, [[Appodeal getUserId] length]);
-    char *cpy = calloc(strlen("not yet ready on iOS SDK side")+1, 1);
-    strncpy(cpy, "not yet ready on iOS SDK side", strlen("not yet ready on iOS SDK side"));
-    return cpy;
+    const char *cString = [[Appodeal userId] UTF8String];
+    char *cStringCopy = calloc([[Appodeal userId] length]+1, 1);
+    return strncpy(cStringCopy, cString, [[Appodeal userId] length]);
 }
 
 void AppodealSetUserGender(int gender) {
