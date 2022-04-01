@@ -16,29 +16,23 @@ using AppodealStack.UnityEditor.InternalResources;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PostProcess
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-    [SuppressMessage("ReSharper", "UnusedVariable")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    [SuppressMessage("ReSharper", "Unity.IncorrectMethodSignature")]
     public class IosPostprocessUtils : MonoBehaviour
     {
-        private const string suffix = ".framework";
-        private const string minVersionToEnableBitcode = "10.0";
+        private const string Suffix = ".framework";
+        private const string MinVersionToEnableBitcode = "10.0";
 
         [PostProcessBuildAttribute(41)]
-        public static void updateInfoPlist(BuildTarget buildTarget, string buildPath)
+        public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
             if (buildTarget.ToString() != "iOS") return;
 
             var path = Path.Combine(buildPath, "Info.plist");
 
-            AddGADApplicationIdentifier(path);
-            AddNSUserTrackingUsageDescription(path);
-            AddNSLocationWhenInUseUsageDescription(path);
-            AddNSCalendarsUsageDescription(path);
+            AddAdMobApplicationIdentifier(path);
+            AddNsUserTrackingUsageDescription(path);
+            AddNsLocationWhenInUseUsageDescription(path);
+            AddNsCalendarsUsageDescription(path);
             AddSkAdNetworkIds(buildTarget, buildPath);
             IosPostProcessServices.AddFacebookKeys(path);
         }
@@ -109,7 +103,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             return contentString.Contains(key);
         }
 
-        private static void AddGADApplicationIdentifier(string path)
+        private static void AddAdMobApplicationIdentifier(string path)
         {
             if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
                 AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml")))
@@ -147,7 +141,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static void AddNSUserTrackingUsageDescription(string path)
+        private static void AddNsUserTrackingUsageDescription(string path)
         {
             if (!AppodealSettings.Instance.NSUserTrackingUsageDescription) return;
             if (!CheckContainsKey(path, "NSUserTrackingUsageDescription"))
@@ -158,7 +152,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static void AddNSLocationWhenInUseUsageDescription(string path)
+        private static void AddNsLocationWhenInUseUsageDescription(string path)
         {
             if (!AppodealSettings.Instance.NSLocationWhenInUseUsageDescription) return;
             if (!CheckContainsKey(path, "NSLocationWhenInUseUsageDescription"))
@@ -169,7 +163,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static void AddNSCalendarsUsageDescription(string path)
+        private static void AddNsCalendarsUsageDescription(string path)
         {
             if (!AppodealSettings.Instance.NSCalendarsUsageDescription) return;
             if (!CheckContainsKey(path, "NSCalendarsUsageDescription"))
@@ -180,8 +174,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static void ReplaceInFile(
-            string filePath, string searchText, string replaceText)
+        private static void ReplaceInFile(string filePath, string searchText, string replaceText)
         {
             string contentString;
             using (var reader = new StreamReader(filePath))
@@ -199,7 +192,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             }
         }
 
-        private static readonly string[] frameworkList =
+        private static readonly string[] FrameworkList =
         {
             "AdSupport",
             "AudioToolbox",
@@ -235,12 +228,12 @@ namespace AppodealStack.UnityEditor.PostProcess
             
         };
 
-        private static readonly string[] weakFrameworkList =
+        private static readonly string[] WeakFrameworkList =
         {
             "AppTrackingTransparency"
         };
 
-        private static readonly string[] platformLibs =
+        private static readonly string[] PlatformLibs =
         {
             "libc++.dylib",
             "libz.dylib",
@@ -263,14 +256,14 @@ namespace AppodealStack.UnityEditor.PostProcess
             var target = project.GetUnityMainTargetGuid();
             var unityFrameworkTarget = project.GetUnityFrameworkTargetGuid();
 
-            AddProjectFrameworks(frameworkList, project, target, false);
-            AddProjectFrameworks(weakFrameworkList, project, target, true);
-            AddProjectLibs(platformLibs, project, target);
+            AddProjectFrameworks(FrameworkList, project, target, false);
+            AddProjectFrameworks(WeakFrameworkList, project, target, true);
+            AddProjectLibs(PlatformLibs, project, target);
             project.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
             var xcodeVersion = AppodealUnityUtils.getXcodeVersion();
             if (xcodeVersion == null ||
-                AppodealUnityUtils.compareVersions(xcodeVersion, minVersionToEnableBitcode) >= 0)
+                AppodealUnityUtils.compareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
             {
                 project.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
             }
@@ -296,7 +289,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             {
                 if (!project.ContainsFramework(target, framework))
                 {
-                    project.AddFrameworkToProject(target, framework + suffix, weak);
+                    project.AddFrameworkToProject(target, framework + Suffix, weak);
                 }
             }
         }
@@ -305,8 +298,8 @@ namespace AppodealStack.UnityEditor.PostProcess
         {
             foreach (var lib in libs)
             {
-                var libGUID = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
-                project.AddFileToBuild(target, libGUID);
+                var libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
+                project.AddFileToBuild(target, libGuid);
             }
         }
 
