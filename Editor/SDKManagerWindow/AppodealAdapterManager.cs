@@ -324,7 +324,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     }
                                     else
                                     {
-                                        if (latestDependency.android_info.name != null)
+                                        if (latestDependency.android_info?.name != null)
                                         {
                                             GUILayout.Space(5);
                                             SetAdapterInformationForImport(latestDependency, platformSdk);
@@ -497,7 +497,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 {
                                     Color defaultColor = GUI.backgroundColor;
                                     GUI.backgroundColor = Color.red;
-                                    UpdateCoreProccess(internalDependency.name,
+                                    UpdateCoreProcess(internalDependency.name,
                                         internalDependency.ios_info.unity_content,
                                         latestDependency.ios_info.unity_content, PlatformSdk.Ios);
                                     GUI.backgroundColor = defaultColor;
@@ -548,7 +548,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 {
                                     Color defaultColor = GUI.backgroundColor;
                                     GUI.backgroundColor = Color.red;
-                                    UpdateCoreProccess(internalDependency.name,
+                                    UpdateCoreProcess(internalDependency.name,
                                         internalDependency.android_info.unity_content,
                                         latestDependency.android_info.unity_content,
                                         PlatformSdk.Android);
@@ -565,7 +565,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             }
         }
 
-        private void UpdateCoreProccess(string internalDependencyName, string internalDependencyUnityContent,
+        private void UpdateCoreProcess(string internalDependencyName, string internalDependencyUnityContent,
             string latestDependencyUnityContent, PlatformSdk platformSdk)
         {
             if (GUILayout.Button(
