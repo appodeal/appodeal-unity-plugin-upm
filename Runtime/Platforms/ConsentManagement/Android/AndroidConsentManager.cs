@@ -37,7 +37,8 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public IVendor GetCustomVendor(string bundle)
         {
-            return new AndroidVendor(GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("get", Helper.GetJavaObject(bundle)));
+            var vendor = GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("get", Helper.GetJavaObject(bundle));
+            return vendor == null ? null : new AndroidVendor(vendor);
         }
 
         public ConsentManagerStorage GetStorage()

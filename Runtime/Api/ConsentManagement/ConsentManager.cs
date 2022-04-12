@@ -73,10 +73,11 @@ namespace AppodealStack.ConsentManagement.Api
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <param name="bundle">2nd parameter of your custom vendor constructor.</param>
-        /// <returns>Object of type <see langword="Vendor"/>.</returns>
+        /// <returns>Object of type <see langword="Vendor"/> if exists, otherwise null.</returns>
         public Vendor GetCustomVendor(string bundle)
         {
-            return new Vendor(GetNativeConsentManager().GetCustomVendor(bundle));
+            var vendor = GetNativeConsentManager().GetCustomVendor(bundle);
+            return vendor == null ? null : new Vendor(vendor);
         }
 
         /// <summary>
