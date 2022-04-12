@@ -101,14 +101,14 @@ namespace AppodealStack.Monetization.Platforms.Android
     
     public class AndroidInAppPurchase : IInAppPurchase
     {
-        public object NativeInAppPurchaseObject { get; }
+        public IInAppPurchase NativeInAppPurchase { get; }
 
         private readonly AndroidJavaObject _inAppPurchase;
 
         public AndroidInAppPurchase(AndroidJavaObject inAppPurchase)
         {
             _inAppPurchase = inAppPurchase;
-            NativeInAppPurchaseObject = this;
+            NativeInAppPurchase = this;
         }
 
         public AndroidJavaObject GetInAppPurchase()

@@ -11,14 +11,10 @@ namespace AppodealStack.Monetization.Api
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class InAppPurchase : IInAppPurchase
     {
-        public object NativeInAppPurchaseObject { get; }
-
-        private readonly IInAppPurchase _inAppPurchase;
-
-        private IInAppPurchase GetInstance()
-        {
-            return _inAppPurchase;
-        }
+        /// <summary>
+        /// Provides access to a native InAppPurchase object.
+        /// </summary>
+        public IInAppPurchase NativeInAppPurchase { get; }
 
         /// <summary>
         /// Public constructor of the <see langword="InAppPurchase"/> class.
@@ -26,8 +22,7 @@ namespace AppodealStack.Monetization.Api
         /// <param name="purchase">class which implements AppodealStack.Monetization.Common.IInAppPurchase interface.</param>
         public InAppPurchase(IInAppPurchase purchase)
         {
-            _inAppPurchase = purchase;
-            NativeInAppPurchaseObject = purchase.NativeInAppPurchaseObject;
+            NativeInAppPurchase = purchase.NativeInAppPurchase;
         }
 
         /// <summary>
@@ -37,7 +32,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Type of the purchase as AndroidPurchaseType object.</returns>
         public AndroidPurchaseType GetPurchaseType()
         {
-            return GetInstance().GetPurchaseType();
+            return NativeInAppPurchase.GetPurchaseType();
         }
 
         /// <summary>
@@ -47,7 +42,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Public key as string.</returns>
         public string GetPublicKey()
         {
-            return GetInstance().GetPublicKey();
+            return NativeInAppPurchase.GetPublicKey();
         }
 
         /// <summary>
@@ -57,7 +52,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Signature as string.</returns>
         public string GetSignature()
         {
-            return GetInstance().GetSignature();
+            return NativeInAppPurchase.GetSignature();
         }
 
         /// <summary>
@@ -67,7 +62,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Purchase data as string.</returns>
         public string GetPurchaseData()
         {
-            return GetInstance().GetPurchaseData();
+            return NativeInAppPurchase.GetPurchaseData();
         }
 
         /// <summary>
@@ -77,7 +72,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Price as string.</returns>
         public string GetPrice()
         {
-            return GetInstance().GetPrice();
+            return NativeInAppPurchase.GetPrice();
         }
 
         /// <summary>
@@ -87,7 +82,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Currency as string.</returns>
         public string GetCurrency()
         {
-            return GetInstance().GetCurrency();
+            return NativeInAppPurchase.GetCurrency();
         }
 
         /// <summary>
@@ -97,7 +92,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Additional parameters as string.</returns>
         public string GetAdditionalParameters()
         {
-            return GetInstance().GetAdditionalParameters();
+            return NativeInAppPurchase.GetAdditionalParameters();
         }
 
         /// <summary>
@@ -107,7 +102,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>SKU as string.</returns>
         public string GetSku()
         {
-            return GetInstance().GetSku();
+            return NativeInAppPurchase.GetSku();
         }
 
         /// <summary>
@@ -117,7 +112,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Order id as string.</returns>
         public string GetOrderId()
         {
-            return GetInstance().GetOrderId();
+            return NativeInAppPurchase.GetOrderId();
         }
 
         /// <summary>
@@ -127,7 +122,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Purchase token as string.</returns>
         public string GetPurchaseToken()
         {
-            return GetInstance().GetPurchaseToken();
+            return NativeInAppPurchase.GetPurchaseToken();
         }
 
         /// <summary>
@@ -137,7 +132,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Purchase timestamp as string.</returns>
         public long GetPurchaseTimestamp()
         {
-            return GetInstance().GetPurchaseTimestamp();
+            return NativeInAppPurchase.GetPurchaseTimestamp();
         }
 
         /// <summary>
@@ -147,7 +142,7 @@ namespace AppodealStack.Monetization.Api
         /// <returns>Developer payload as string.</returns>
         public string GetDeveloperPayload()
         {
-            return GetInstance().GetDeveloperPayload();
+            return NativeInAppPurchase.GetDeveloperPayload();
         }
 
         #region Deprecated methods
@@ -155,73 +150,73 @@ namespace AppodealStack.Monetization.Api
         [Obsolete("It will be removed in the next release. Use the GetPurchaseType() method instead.", false)]
         public AndroidPurchaseType getType()
         {
-            return GetInstance().GetPurchaseType();
+            return NativeInAppPurchase.GetPurchaseType();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPublicKey) of this method instead.", false)]
         public string getPublicKey()
         {
-            return GetInstance().GetPublicKey();
+            return NativeInAppPurchase.GetPublicKey();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetSignature) of this method instead.", false)]
         public string getSignature()
         {
-            return GetInstance().GetSignature();
+            return NativeInAppPurchase.GetSignature();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseData) of this method instead.", false)]
         public string getPurchaseData()
         {
-            return GetInstance().GetPurchaseData();
+            return NativeInAppPurchase.GetPurchaseData();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPrice) of this method instead.", false)]
         public string getPrice()
         {
-            return GetInstance().GetPrice();
+            return NativeInAppPurchase.GetPrice();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetCurrency) of this method instead.", false)]
         public string getCurrency()
         {
-            return GetInstance().GetCurrency();
+            return NativeInAppPurchase.GetCurrency();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetAdditionalParameters) of this method instead.", false)]
         public string getAdditionalParameters()
         {
-            return GetInstance().GetAdditionalParameters();
+            return NativeInAppPurchase.GetAdditionalParameters();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetSku) of this method instead.", false)]
         public string getSku()
         {
-            return GetInstance().GetSku();
+            return NativeInAppPurchase.GetSku();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetOrderId) of this method instead.", false)]
         public string getOrderId()
         {
-            return GetInstance().GetOrderId();
+            return NativeInAppPurchase.GetOrderId();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseToken) of this method instead.", false)]
         public string getPurchaseToken()
         {
-            return GetInstance().GetPurchaseToken();
+            return NativeInAppPurchase.GetPurchaseToken();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseTimestamp) of this method instead.", false)]
         public long getPurchaseTimestamp()
         {
-            return GetInstance().GetPurchaseTimestamp();
+            return NativeInAppPurchase.GetPurchaseTimestamp();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetDeveloperPayload) of this method instead.", false)]
         public string getDeveloperPayload()
         {
-            return GetInstance().GetDeveloperPayload();
+            return NativeInAppPurchase.GetDeveloperPayload();
         }
 
         #endregion

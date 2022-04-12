@@ -23,7 +23,7 @@ namespace AppodealStack.Monetization.Common
         long GetPurchaseTimestamp();
         string GetAdditionalParameters();
         string GetDeveloperPayload();
-        object NativeInAppPurchaseObject { get; }
+        IInAppPurchase NativeInAppPurchase { get; }
     }
 
     /// <summary>
