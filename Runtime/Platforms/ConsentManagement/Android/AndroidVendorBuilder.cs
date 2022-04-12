@@ -11,6 +11,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     public class AndroidVendorBuilder : IVendorBuilder
     {
         private readonly AndroidJavaObject _vendorBuilder;
+
         private AndroidJavaObject _vendor;
 
         private AndroidJavaObject GetVendorBuilderJavaObject()
@@ -20,7 +21,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public AndroidVendorBuilder(string name, string bundle, string policyUrl)
         {
-            _vendorBuilder = new AndroidJavaObject("com.explorestack.consent.Vendor$Builder", name, bundle, policyUrl);
+            _vendorBuilder = new AndroidJavaObject("com.appodeal.consent.Vendor$Builder", name, bundle, policyUrl);
         }
 
         public IVendor Build()
@@ -31,17 +32,17 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public void SetPurposeIds(IEnumerable<int> purposeIds)
         {
-            SetNativeList(purposeIds, "setPurposeIds");
+            SetNativeList(purposeIds, "purposeIds");
         }
 
         public void SetFeatureIds(IEnumerable<int> featureIds)
         {
-            SetNativeList(featureIds, "setFeatureIds");
+            SetNativeList(featureIds, "featureIds");
         }
 
         public void SetLegitimateInterestPurposeIds(IEnumerable<int> legitimateInterestPurposeIds)
         {
-            SetNativeList(legitimateInterestPurposeIds, "setLegitimateInterestPurposeIds");
+            SetNativeList(legitimateInterestPurposeIds, "legitimateInterestPurposeIds");
         }
 
         private void SetNativeList(IEnumerable<int> list, string methodName)

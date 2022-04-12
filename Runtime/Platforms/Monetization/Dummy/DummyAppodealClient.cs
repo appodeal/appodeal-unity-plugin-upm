@@ -508,7 +508,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             hasConsentGiven = hasConsent;
         }
 
-        public void initialize(string appKey, int adTypes, Consent consent)
+        public void initialize(string appKey, int adTypes, IConsent consent)
         {
             initialize(appKey, adTypes);
             hasConsentGiven = consent?.GetAuthorizationStatus() == ConsentAuthorizationStatus.Authorized;
@@ -676,7 +676,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.updateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void UpdateConsent(Consent consent)
+        public void UpdateConsent(IConsent consent)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }

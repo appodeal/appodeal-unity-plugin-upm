@@ -12,12 +12,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     {
         private readonly VendorObjCBridge _bridge;
 
-        public object NativeVendorObject { get; }
+        public IVendor NativeVendor { get; }
 
         public IosVendor(IntPtr vendor)
         {
             _bridge = new VendorObjCBridge(vendor);
-            NativeVendorObject = this;
+            NativeVendor = this;
         }
 
         public IntPtr GetIntPtr()

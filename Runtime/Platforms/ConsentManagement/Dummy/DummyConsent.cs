@@ -39,6 +39,6 @@ namespace AppodealStack.ConsentManagement.Platforms.Dummy
             return Utils.GetDummyMessage();
         }
 
-        public object NativeConsentObject { get; } = null;
+        public IConsent NativeConsent { get; } = null;
     }
 }

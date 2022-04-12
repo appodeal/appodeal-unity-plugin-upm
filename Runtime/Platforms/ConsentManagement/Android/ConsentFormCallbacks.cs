@@ -14,7 +14,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     {
         private readonly IConsentFormListener _listener;
 
-        internal ConsentFormCallbacks(IConsentFormListener listener) : base("com.explorestack.consent.ConsentFormListener")
+        internal ConsentFormCallbacks(IConsentFormListener listener) : base("com.appodeal.consent.IConsentFormListener")
         {
             _listener = listener;
         }

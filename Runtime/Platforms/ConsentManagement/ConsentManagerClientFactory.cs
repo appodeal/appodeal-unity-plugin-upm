@@ -35,25 +35,16 @@ namespace AppodealStack.ConsentManagement.Platforms
 #endif
         }
 
-        public static IConsentFormBuilder GetConsentFormBuilder()
+        public static IConsentForm GetConsentForm(IConsentFormListener listener)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-		    return new AndroidConsentFormBuilder();
+		    return new AndroidConsentForm(listener);
 #elif UNITY_IPHONE && !UNITY_EDITOR
-            return new IosConsentFormBuilder();
+            var builder = new IosConsentFormBuilder();
+            builder.WithListener(listener);
+            return builder.Build();
 #else
-            return new DummyConsentFormBuilder();
-#endif
-        }
-
-        public static IConsentManagerException GetConsentManagerException()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-		    return new AndroidConsentManagerException();
-#elif UNITY_IPHONE && !UNITY_EDITOR
-		    return new IosConsentManagerException();
-#else
-            return new DummyConsentManagerException();
+            return new DummyConsentForm();
 #endif
         }
     }

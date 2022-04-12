@@ -14,17 +14,10 @@ namespace AppodealStack.ConsentManagement.Api
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Vendor : IVendor
     {
-        private readonly IVendor _vendor;
-
-        private IVendor GetNativeVendor()
-        {
-            return _vendor;
-        }
-
         /// <summary>
         /// Provides access to a native Vendor object.
         /// </summary>
-        public object NativeVendorObject { get; }
+        public IVendor NativeVendor { get; }
 
         /// <summary>
         /// Public constructor of the <see langword="Vendor"/> class.
@@ -32,8 +25,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <param name="builder">class which implements AppodealStack.ConsentManager.Common.IVendor interface.</param>
         public Vendor(IVendor builder)
         {
-            _vendor = builder;
-            NativeVendorObject = builder.NativeVendorObject;
+            NativeVendor = builder.NativeVendor;
         }
 
         /// <summary>
@@ -43,7 +35,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>Name of the vendor as string.</returns>
         public string GetName()
         {
-            return GetNativeVendor().GetName();
+            return NativeVendor.GetName();
         }
 
         /// <summary>
@@ -53,7 +45,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>Bundle id as string.</returns>
         public string GetBundle()
         {
-            return GetNativeVendor().GetBundle();
+            return NativeVendor.GetBundle();
         }
 
         /// <summary>
@@ -63,7 +55,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>Policy URL as string.</returns>
         public string GetPolicyUrl()
         {
-            return GetNativeVendor().GetPolicyUrl();
+            return NativeVendor.GetPolicyUrl();
         }
 
         /// <summary>
@@ -73,7 +65,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>IAB purpose ids as a list of integers.</returns>
         public List<int> GetPurposeIds()
         {
-            return GetNativeVendor().GetPurposeIds();
+            return NativeVendor.GetPurposeIds();
         }
 
         /// <summary>
@@ -83,7 +75,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>IAB feature ids as a list of integers.</returns>
         public List<int> GetFeatureIds()
         {
-            return GetNativeVendor().GetFeatureIds();
+            return NativeVendor.GetFeatureIds();
         }
 
         /// <summary>
@@ -93,7 +85,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <returns>IAB legitimate interest purpose ids as a list of integers.</returns>
         public List<int> GetLegitimateInterestPurposeIds()
         {
-            return GetNativeVendor().GetLegitimateInterestPurposeIds();
+            return NativeVendor.GetLegitimateInterestPurposeIds();
         }
 
         #region Deprecated Methods
@@ -101,37 +93,37 @@ namespace AppodealStack.ConsentManagement.Api
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetName) of this method instead.", false)]
         public string getName()
         {
-            return GetNativeVendor().GetName();
+            return NativeVendor.GetName();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetBundle) of this method instead.", false)]
         public string getBundle()
         {
-            return GetNativeVendor().GetBundle();
+            return NativeVendor.GetBundle();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPolicyUrl) of this method instead.", false)]
         public string getPolicyUrl()
         {
-            return GetNativeVendor().GetPolicyUrl();
+            return NativeVendor.GetPolicyUrl();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurposeIds) of this method instead.", false)]
         public List<int> getPurposeIds()
         {
-            return GetNativeVendor().GetPurposeIds();
+            return NativeVendor.GetPurposeIds();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetFeatureIds) of this method instead.", false)]
         public List<int> getFeatureIds()
         {
-            return GetNativeVendor().GetFeatureIds();
+            return NativeVendor.GetFeatureIds();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetLegitimateInterestPurposeIds) of this method instead.", false)]
         public List<int> getLegitimateInterestPurposeIds()
         {
-            return GetNativeVendor().GetLegitimateInterestPurposeIds();
+            return NativeVendor.GetLegitimateInterestPurposeIds();
         }
 
         #endregion

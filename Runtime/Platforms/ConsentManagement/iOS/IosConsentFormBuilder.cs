@@ -7,10 +7,10 @@ using AppodealStack.ConsentManagement.Common;
 namespace AppodealStack.ConsentManagement.Platforms.Ios
 {
     /// <summary>
-    /// iOS implementation of <see langword="IConsentFormBuilder"/> interface.
+    /// Builder for the <see langword="IosConsentForm"/> class.
     /// </summary>
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class IosConsentFormBuilder : IConsentFormBuilder
+    public class IosConsentFormBuilder
     {
         private readonly ConsentFormBuilderObjCBridge _bridge;
         private static IConsentFormListener _consentFormListener;

@@ -18,12 +18,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             return _consent;
         }
 
-        public object NativeConsentObject { get; }
+        public IConsent NativeConsent { get; }
 
         public AndroidConsent(AndroidJavaObject joConsent)
         {
             _consent = joConsent;
-            NativeConsentObject = this;
+            NativeConsent = this;
         }
 
         public ConsentZone GetZone()
@@ -74,7 +74,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public ConsentAuthorizationStatus GetAuthorizationStatus()
         {
-            Debug.Log("Not supported on this platform");
+            Debug.Log("[APDUnity] [Consent] GetAuthorizationStatus() not supported on Android platform");
             return ConsentAuthorizationStatus.NotDetermined;
         }
 
@@ -82,15 +82,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
         {
             var hasConsent = HasConsent.Unknown;
 
-            switch (GetConsentJavaObject().Call<AndroidJavaObject>("hasConsentForVendor", Helper.GetJavaObject(bundle)).Call<string>("name"))
+            switch (GetConsentJavaObject().Call<bool>("hasConsentForVendor", Helper.GetJavaObject(bundle)))
             {
-                case "UNKNOWN":
-                    hasConsent = HasConsent.Unknown;
-                    break;
-                case "TRUE":
+                case true:
                     hasConsent = HasConsent.True;
                     break;
-                case "FALSE":
+                case false:
                     hasConsent = HasConsent.False;
                     break;
             }
@@ -120,7 +117,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public string GetIabConsentString()
         {
-            return GetConsentJavaObject().Call<string>("getIabConsentString");
+            return GetConsentJavaObject().Call<string>("getIABConsentString");
         }
     }
 }

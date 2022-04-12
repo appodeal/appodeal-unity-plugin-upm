@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
-using AppodealStack.ConsentManagement.Api;
+using AppodealStack.ConsentManagement.Common;
 
 // ReSharper disable CheckNamespace
 namespace AppodealStack.Monetization.Api
@@ -64,7 +64,7 @@ namespace AppodealStack.Monetization.Api
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
-        public static void UpdateConsent(Consent consent)
+        public static void UpdateConsent(IConsent consent)
         {
             GetInstance().UpdateConsent(consent);
         }
@@ -802,7 +802,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         [Obsolete("It will be removed in the next release. Check documentation for the new signature.", false)]
-        public static void initialize(string appKey, int adTypes, Consent consent)
+        public static void initialize(string appKey, int adTypes, IConsent consent)
         {
             GetInstance().initialize(appKey, adTypes, consent);
         }
@@ -844,7 +844,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (UpdateConsent) of this method instead.", false)]
-        public static void updateConsent(Consent consent)
+        public static void updateConsent(IConsent consent)
         {
             GetInstance().UpdateConsent(consent);
         }

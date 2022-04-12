@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.ConsentManagement.Api;
+using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms.Android;
 
 // ReSharper Disable CheckNamespace
@@ -145,11 +146,11 @@ namespace AppodealStack.Monetization.Platforms.Android
                 hasConsent);
         }
 
-        public void initialize(string appKey, int adTypes, Consent consent)
+        public void initialize(string appKey, int adTypes, IConsent consent)
         {
             GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm",
                 AppodealVersions.GetUnityVersion());
-            var androidConsent = consent.NativeConsentObject as AndroidConsent;
+            var androidConsent = consent.NativeConsent as AndroidConsent;
             GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes),
                 androidConsent?.GetConsentJavaObject());
         }
@@ -282,9 +283,9 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("updateConsent", Helper.GetJavaObject(value));
         }
 
-        public void UpdateConsent(Consent consent)
+        public void UpdateConsent(IConsent consent)
         {
-            var androidConsent = consent.NativeConsentObject as AndroidConsent;
+            var androidConsent = consent.NativeConsent as AndroidConsent;
             GetAppodealClass().CallStatic("updateConsent", androidConsent?.GetConsentJavaObject());
         }
 
@@ -603,7 +604,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
-            var androidPurchase = purchase.NativeInAppPurchaseObject as AndroidInAppPurchase;
+            var androidPurchase = purchase.NativeInAppPurchase as AndroidInAppPurchase;
             GetAppodealClass().CallStatic("validateInAppPurchase", androidPurchase?.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
         }
 

@@ -135,14 +135,14 @@ namespace AppodealStack.ConsentManagement.Api
         }
 
         /// <summary>
-        /// <para>Gets the Consent object that can be further used in <see langword="Appodeal.UpdateConsent"/> method to let Appodeal SDK know whether or not collection of personal data is allowed.</para>
+        /// <para>Gets the IConsent object that can be further used in <see langword="Appodeal.UpdateConsent"/> method to let Appodeal SDK know whether or not collection of personal data is allowed.</para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>It can only be used after the <see langword="OnConsentInfoUpdated"/> callback method was called.</remarks>
-        /// <returns>Object of type <see langword="Consent"/>.</returns>
-        public Consent GetConsent()
+        /// <returns>Object of type <see langword="IConsent"/>.</returns>
+        public IConsent GetConsent()
         {
-            return new Consent(GetNativeConsentManager().GetConsent());
+            return GetNativeConsentManager().GetConsent();
         }
 
         #region Deprecated Methods
@@ -208,9 +208,9 @@ namespace AppodealStack.ConsentManagement.Api
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetConsent) of this method instead.", false)]
-        public Consent getConsent()
+        public IConsent getConsent()
         {
-            return new Consent(GetNativeConsentManager().GetConsent());
+            return GetNativeConsentManager().GetConsent();
         }
 
         #endregion

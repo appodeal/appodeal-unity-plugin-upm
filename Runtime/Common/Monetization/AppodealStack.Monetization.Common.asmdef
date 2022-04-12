@@ -1,7 +1,7 @@
 {
     "name": "AppodealStack.Monetization.Common",
     "references": [
-        "AppodealStack.ConsentManagement.Api"
+        "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
         "Android",

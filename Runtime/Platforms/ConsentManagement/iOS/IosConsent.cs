@@ -11,12 +11,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     {
         private readonly ConsentObjCBridge _bridge;
 
-        public object NativeConsentObject { get; }
+        public IConsent NativeConsent { get; }
 
         public IosConsent(IntPtr intPtr)
         {
             _bridge = new ConsentObjCBridge(intPtr);
-            NativeConsentObject = this;
+            NativeConsent = this;
         }
 
         public IntPtr GetIntPtr()

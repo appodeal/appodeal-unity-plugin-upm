@@ -45,7 +45,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public void SetCustomVendor(IVendor customVendor)
         {
-            var vendor = customVendor.NativeVendorObject as IosVendor;
+            var vendor = customVendor.NativeVendor as IosVendor;
             GetConsentManagerObjCBridge().SetCustomVendor(vendor?.GetIntPtr() ?? IntPtr.Zero);
         }
 

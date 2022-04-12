@@ -20,9 +20,20 @@ namespace AppodealStack.ConsentManagement.Api
             return _consentForm;
         }
 
-        private ConsentForm(IConsentForm builder)
+        private ConsentForm(IConsentFormListener listener)
         {
-            _consentForm = builder;
+            _consentForm = ConsentManagerClientFactory.GetConsentForm(listener);
+        }
+
+        /// <summary>
+        /// <para>Gets an instance of <see langword="ConsentForm"/> class.</para>
+        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// </summary>
+        /// <param name="listener">class which implements AppodealStack.ConsentManager.Common.IConsentFormListener interface.</param>
+        /// <returns>Object of type <see langword="ConsentForm"/>.</returns>
+        public static ConsentForm GetInstance(IConsentFormListener listener)
+        {
+            return new ConsentForm(listener);
         }
 
         /// <summary>
@@ -108,63 +119,5 @@ namespace AppodealStack.ConsentManagement.Api
 
         #endregion
 
-        /// <summary>
-        /// Builder class is responsible for creating an object of the <see langword="ConsentForm"/> class.
-        /// </summary>
-        public class Builder
-        {
-            private readonly IConsentFormBuilder _consentFormBuilder;
-
-            private IConsentFormBuilder GetNativeConsentFormBuilder()
-            {
-                return _consentFormBuilder;
-            }
-
-            /// <summary>
-            /// Public constructor of the <see langword="Builder"/> class.
-            /// </summary>
-            public Builder()
-            {
-                _consentFormBuilder = ConsentManagerClientFactory.GetConsentFormBuilder();
-            }
-
-            /// <summary>
-            /// Builds the ConsentForm object using all data you have set via the other Builder's methods.
-            /// </summary>
-            /// <returns>Object of type <see langword="ConsentForm"/>.</returns>
-            public ConsentForm Build()
-            {
-                return new ConsentForm(GetNativeConsentFormBuilder().Build());
-            }
-
-            /// <summary>
-            /// Sets ConsentForm callbacks listener.
-            /// </summary>
-            /// <param name="consentFormListener">class which implements AppodealStack.ConsentManager.Common.IConsentFormListener interface.</param>
-            /// <returns>An instance of the builder class.</returns>
-            public Builder WithListener(IConsentFormListener consentFormListener)
-            {
-                GetNativeConsentFormBuilder().WithListener(consentFormListener);
-                return this;
-            }
-
-            #region Deprecated Methods
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (Build) of this method instead.", false)]
-            public ConsentForm build()
-            {
-                return new ConsentForm(GetNativeConsentFormBuilder().Build());
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithListener) of this method instead.", false)]
-            public Builder withListener(IConsentFormListener consentFormListener)
-            {
-                GetNativeConsentFormBuilder().WithListener(consentFormListener);
-                return this;
-            }
-
-            #endregion
-
-        }
     }
 }

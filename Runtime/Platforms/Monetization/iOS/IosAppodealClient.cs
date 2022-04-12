@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
-using AppodealStack.ConsentManagement.Api;
+using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
@@ -458,7 +458,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
-        public void initialize(string appKey, int adTypes, Consent consent)
+        public void initialize(string appKey, int adTypes, IConsent consent)
         {
             AppodealObjCBridge.AppodealInitializeWithConsent(appKey, NativeAdTypesForType(adTypes),
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
@@ -591,7 +591,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealUpdateConsent(value);
         }
 
-        public void UpdateConsent(Consent consent)
+        public void UpdateConsent(IConsent consent)
         {
             AppodealObjCBridge.AppodealUpdateConsentReport();
         }

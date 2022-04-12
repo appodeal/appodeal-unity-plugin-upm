@@ -46,6 +46,6 @@ namespace AppodealStack.ConsentManagement.Platforms.Dummy
             return new List<int>();
         }
 
-        public object NativeVendorObject { get; } = null;
+        public IVendor NativeVendor { get; } = null;
     }
 }

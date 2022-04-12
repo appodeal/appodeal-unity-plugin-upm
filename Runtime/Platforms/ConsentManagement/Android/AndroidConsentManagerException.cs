@@ -21,19 +21,15 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             _consentManagerException = androidJavaObject;
         }
 
-        public AndroidConsentManagerException()
-        {
-            _consentManagerException = new AndroidJavaObject("com.explorestack.consent.exception.ConsentManagerException");
-        }
-
         public string GetReason()
         {
-            return GetConsentManagerExceptionJavaObject().Call<string>("getReason");
+            return GetConsentManagerExceptionJavaObject().Call<string>("getMessage");
         }
 
         public int GetCode()
         {
-            return GetConsentManagerExceptionJavaObject().Call<int>("getCode");
+            string reason = GetConsentManagerExceptionJavaObject().Call<string>("getEvent");
+            return reason == "LoadingError" ? 2 : 1;
         }
     }
 }

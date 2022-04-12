@@ -15,43 +15,36 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         private AndroidJavaObject GetConsentManagerJavaObject()
         {
-            if (_consentManager != null) return _consentManager;
-            var consentManagerClass = new AndroidJavaClass("com.explorestack.consent.ConsentManager");
-            _consentManager = consentManagerClass.CallStatic<AndroidJavaObject>("getInstance", GetActivity());
-
-            return _consentManager;
+            return _consentManager ?? (_consentManager = new AndroidJavaObject("com.appodeal.consent.ConsentManager"));
         }
 
         private AndroidJavaObject GetActivity()
         {
-            if (_activity != null) return _activity;
-            var playerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            _activity = playerClass.GetStatic<AndroidJavaObject>("currentActivity");
-
-            return _activity;
+            return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
         }
 
         public void RequestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
         {
-            GetConsentManagerJavaObject().Call("requestConsentInfoUpdate", appodealAppKey, new ConsentInfoUpdateCallbacks(listener));
+            GetConsentManagerJavaObject().CallStatic("requestConsentInfoUpdate", GetActivity(), appodealAppKey, new ConsentInfoUpdateCallbacks(listener));
         }
 
         public void SetCustomVendor(IVendor customVendor)
         {
-            var androidVendor = customVendor.NativeVendorObject as AndroidVendor;
-            GetConsentManagerJavaObject().Call("setCustomVendor", androidVendor?.GetVendorJavaObject());
+            var androidVendor = customVendor.NativeVendor as AndroidVendor;
+
+            GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("put", androidVendor?.GetBundle(), androidVendor?.GetVendorJavaObject());
         }
 
         public IVendor GetCustomVendor(string bundle)
         {
-            return new AndroidVendor(GetConsentManagerJavaObject().Call<AndroidJavaObject>("getCustomVendor", Helper.GetJavaObject(bundle)));
+            return new AndroidVendor(GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("get", Helper.GetJavaObject(bundle)));
         }
 
         public ConsentManagerStorage GetStorage()
         {
             var storage = ConsentManagerStorage.None;
 
-            switch (GetConsentManagerJavaObject().Call<AndroidJavaObject>("getStorage").Call<string>("name"))
+            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getStorage").Call<string>("name"))
             {
                 case "NONE":
                     storage = ConsentManagerStorage.None;
@@ -69,13 +62,13 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             switch (iabStorage)
             {
                 case ConsentManagerStorage.None:
-                    GetConsentManagerJavaObject().Call("setStorage",
-                        new AndroidJavaClass("com.explorestack.consent.ConsentManager$Storage")
+                    GetConsentManagerJavaObject().CallStatic("setStorage",
+                        new AndroidJavaClass("com.appodeal.consent.ConsentManager$Storage")
                             .GetStatic<AndroidJavaObject>("NONE"));
                     break;
                 case ConsentManagerStorage.SharedPreference:
-                    GetConsentManagerJavaObject().Call("setStorage",
-                        new AndroidJavaClass("com.explorestack.consent.ConsentManager$Storage")
+                    GetConsentManagerJavaObject().CallStatic("setStorage",
+                        new AndroidJavaClass("com.appodeal.consent.ConsentManager$Storage")
                             .GetStatic<AndroidJavaObject>("SHARED_PREFERENCE"));
                     break;
                 default:
@@ -87,15 +80,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
         {
             var shouldShow = ConsentShouldShow.Unknown;
 
-            switch (GetConsentManagerJavaObject().Call<AndroidJavaObject>("shouldShowConsentDialog").Call<string>("name"))
+            switch (GetConsentManagerJavaObject().CallStatic<bool>("getShouldShow"))
             {
-                case "UNKNOWN":
-                    shouldShow = ConsentShouldShow.Unknown;
-                    break;
-                case "TRUE":
+                case true:
                     shouldShow = ConsentShouldShow.True;
                     break;
-                case "FALSE":
+                case false:
                     shouldShow = ConsentShouldShow.False;
                     break;
             }
@@ -107,7 +97,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
         {
             var zone = ConsentZone.Unknown;
 
-            switch (GetConsentManagerJavaObject().Call<AndroidJavaObject>("getConsentZone").Call<string>("name"))
+            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentZone").Call<string>("name"))
             {
                 case "UNKNOWN":
                     zone = ConsentZone.Unknown;
@@ -130,7 +120,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
         {
             var status = ConsentStatus.Unknown;
 
-            switch (GetConsentManagerJavaObject().Call<AndroidJavaObject>("getConsentStatus").Call<string>("name"))
+            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentStatus").Call<string>("name"))
             {
                 case "UNKNOWN":
                     status = ConsentStatus.Unknown;
@@ -151,7 +141,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public IConsent GetConsent()
         {
-            return new AndroidConsent(GetConsentManagerJavaObject().Call<AndroidJavaObject>("getConsent"));
+            return new AndroidConsent(GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsent"));
         }
 
         public void DisableAppTrackingTransparencyRequest()

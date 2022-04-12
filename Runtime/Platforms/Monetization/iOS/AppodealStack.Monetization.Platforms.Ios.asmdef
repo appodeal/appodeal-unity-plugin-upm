@@ -2,7 +2,7 @@
     "name": "AppodealStack.Monetization.Platforms.Ios",
     "references": [
         "AppodealStack.Monetization.Common",
-        "AppodealStack.ConsentManagement.Api"
+        "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
         "Editor",

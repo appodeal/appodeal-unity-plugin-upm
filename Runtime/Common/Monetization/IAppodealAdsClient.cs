@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using AppodealStack.ConsentManagement.Api;
+using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
@@ -13,7 +13,7 @@ namespace AppodealStack.Monetization.Common
     {
         void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener);
         bool IsInitialized(int adType);
-        void UpdateConsent(Consent value);
+        void UpdateConsent(IConsent consent);
         void UpdateConsentGdpr(GdprUserConsent consent);
         void UpdateConsentCcpa(CcpaUserConsent consent);
         bool IsAutoCacheEnabled(int adType);
@@ -77,7 +77,7 @@ namespace AppodealStack.Monetization.Common
 
         void initialize(string appKey, int adTypes);
         void initialize(string appKey, int adTypes, bool hasConsent);
-        void initialize(string appKey, int adTypes, Consent consent);
+        void initialize(string appKey, int adTypes, IConsent consent);
         void updateConsent(bool value);
         void setSharedAdsInstanceAcrossActivities(bool value);
         void disableLocationPermissionCheck();

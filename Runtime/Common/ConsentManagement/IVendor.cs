@@ -17,6 +17,6 @@ namespace AppodealStack.ConsentManagement.Common
         List<int> GetPurposeIds();
         List<int> GetFeatureIds();
         List<int> GetLegitimateInterestPurposeIds();
-        object NativeVendorObject { get; }
+        IVendor NativeVendor { get; }
     }
 }

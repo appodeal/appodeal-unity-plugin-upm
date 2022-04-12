@@ -3,7 +3,6 @@
     "references": [
         "AppodealStack.Monetization.Common",
         "AppodealStack.Monetization.Platforms",
-        "AppodealStack.ConsentManagement.Api",
         "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [

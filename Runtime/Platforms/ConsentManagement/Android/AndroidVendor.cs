@@ -13,12 +13,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     {
         private readonly AndroidJavaObject _vendor;
 
-        public object NativeVendorObject { get; }
+        public IVendor NativeVendor { get; }
 
         public AndroidVendor(AndroidJavaObject vendor)
         {
             _vendor = vendor;
-            NativeVendorObject = this;
+            NativeVendor = this;
         }
 
         public AndroidJavaObject GetVendorJavaObject()
