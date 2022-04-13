@@ -15,12 +15,9 @@ using AppodealStack.UnityEditor.InternalResources;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SettingsWindow
 {
-    [SuppressMessage("ReSharper", "NotAccessedField.Local")]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "CollectionNeverQueried.Global")]
     public class AppodealSettingsWindow : EditorWindow
     {
-        private static List<string> SKAdNetworkIdentifiers;
+        private static List<string> _skAdNetworkIdentifiers;
 
         public static void ShowAppodealSettingsWindow()
         {
@@ -29,12 +26,12 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
         private void OnEnable()
         {
-            this.StartCoroutine(GetSkaNetworkIds());
+            this.StartCoroutine(GetSkAdNetworkIds());
         }
 
-        private static IEnumerator GetSkaNetworkIds()
+        private static IEnumerator GetSkAdNetworkIds()
         {
-            SKAdNetworkIdentifiers = new List<string>();
+            _skAdNetworkIdentifiers = new List<string>();
             var requestSkaNetworkIds = UnityWebRequest.Get("https://mw-backend.appodeal.com/v1/skadnetwork/");
             yield return requestSkaNetworkIds.SendWebRequest();
             if (requestSkaNetworkIds.isError)
@@ -43,9 +40,9 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             }
             else
             {
-                if (string.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text))
+                if (String.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text))
                 {
-                    Debug.LogError("string.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text)");
+                    Debug.LogError("String.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text)");
                 }
 
                 if (requestSkaNetworkIds.downloadHandler.text.Contains("error"))
@@ -56,15 +53,15 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 }
 
                 var skaItems =
-                    JsonHelper.FromJson<SkaNetworkItem>(JsonHelper.fixJson(requestSkaNetworkIds.downloadHandler.text));
+                    JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.fixJson(requestSkaNetworkIds.downloadHandler.text));
 
                 foreach (var skaItem in skaItems)
                 {
                     foreach (var itemID in skaItem.ids)
                     {
-                        if (!string.IsNullOrEmpty(itemID))
+                        if (!String.IsNullOrEmpty(itemID))
                         {
-                            SKAdNetworkIdentifiers.Add(itemID);
+                            _skAdNetworkIdentifiers.Add(itemID);
                         }
                     }
                 }
@@ -176,10 +173,10 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 AppodealSettings.Instance.IosSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
                     AppodealSettings.Instance.IosSkAdNetworkItems);
 
-                if (SKAdNetworkIdentifiers != null && SKAdNetworkIdentifiers.Count > 0
-                    && AppodealSettings.Instance.IosSkAdNetworkItemsList != SKAdNetworkIdentifiers)
+                if (_skAdNetworkIdentifiers != null && _skAdNetworkIdentifiers.Count > 0
+                    && AppodealSettings.Instance.IosSkAdNetworkItemsList != _skAdNetworkIdentifiers)
                 {
-                    AppodealSettings.Instance.IosSkAdNetworkItemsList = SKAdNetworkIdentifiers;
+                    AppodealSettings.Instance.IosSkAdNetworkItemsList = _skAdNetworkIdentifiers;
                 }
 
                 GUILayout.Space(12);
@@ -326,7 +323,8 @@ namespace AppodealStack.UnityEditor.SettingsWindow
         }
 
         [Serializable]
-        public class SkaNetworkItem
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public class SkAdNetworkItem
         {
             public string name;
             public long id;
