@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using marijnz.EditorCoroutines;
 using AppodealStack.Monetization.Common;
 using AppodealStack.UnityEditor.Utils;
@@ -24,51 +23,44 @@ using AppodealStack.UnityEditor.SDKManager.Models;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SDKManager
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum PlatformSdk
     {
         Android,
         Ios
     }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "NotAccessedVariable")]
-    [SuppressMessage("ReSharper", "CollectionNeverQueried.Local")]
+    
     public class AppodealAdapterManager : EditorWindow
     {
         #region Dictionaries
 
-        private SortedDictionary<string, AppodealDependency> internalDependencies =
-            new SortedDictionary<string, AppodealDependency>();
-
-        private SortedDictionary<string, AppodealDependency> latestDependencies =
-            new SortedDictionary<string, AppodealDependency>();
+        private SortedDictionary<string, AppodealDependency> _internalDependencies = new SortedDictionary<string, AppodealDependency>();
+        private SortedDictionary<string, AppodealDependency> _latestDependencies = new SortedDictionary<string, AppodealDependency>();
 
         #endregion
 
         #region GUIStyles
 
-        private GUIStyle labelStyle;
-        private GUIStyle headerInfoStyle;
-        private GUIStyle subHeaderInfoStyle;
-        private GUIStyle packageInfoStyle;
-        private GUIStyle separatorLineStyle;
-        private readonly GUILayoutOption btnFieldWidth = GUILayout.Width(60);
+        private GUIStyle _labelStyle;
+        private GUIStyle _headerInfoStyle;
+        private GUIStyle _subHeaderInfoStyle;
+        private GUIStyle _packageInfoStyle;
+        private GUIStyle _separatorLineStyle;
+        private readonly GUILayoutOption _btnFieldWidth = GUILayout.Width(60);
 
         #endregion
 
         #region Coroutines
 
-        private static EditorCoroutines.EditorCoroutine coroutine;
-        private float progress;
-        private float loading;
-        private bool isPluginInfoReady;
+        private static EditorCoroutines.EditorCoroutine _coroutine;
+        private float _loading;
+        private float _progress;
+        private bool _isPluginInfoReady;
 
         #endregion
 
-        private Vector2 scrollPosition;
+        private Vector2 _scrollPosition;
         
-        private AppodealUnityPlugin appodealUnityPlugin;
+        private AppodealUnityPlugin _appodealUnityPlugin;
         
         public static void ShowSdkManager()
         {
@@ -80,34 +72,34 @@ namespace AppodealStack.UnityEditor.SDKManager
         {
             var temp = GUI.color;
             GUI.color = Color.grey;
-            GUILayout.Box(GUIContent.none, separatorLineStyle);
+            GUILayout.Box(GUIContent.none, _separatorLineStyle);
             GUI.color = temp;
         }
 
         private void Awake()
         {
-            labelStyle = new GUIStyle(EditorStyles.label)
+            _labelStyle = new GUIStyle(EditorStyles.label)
             {
                 fontSize = 18,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter
             };
 
-            packageInfoStyle = new GUIStyle(EditorStyles.label)
+            _packageInfoStyle = new GUIStyle(EditorStyles.label)
             {
                 fontSize = 12,
                 fontStyle = FontStyle.Normal,
                 fixedHeight = 18
             };
 
-            headerInfoStyle = new GUIStyle(EditorStyles.label)
+            _headerInfoStyle = new GUIStyle(EditorStyles.label)
             {
                 fontSize = 13,
                 fontStyle = FontStyle.Bold,
                 fixedHeight = 18
             };
 
-            subHeaderInfoStyle = new GUIStyle(EditorStyles.label)
+            _subHeaderInfoStyle = new GUIStyle(EditorStyles.label)
             {
                 fontSize = 16,
                 fontStyle = FontStyle.Bold,
@@ -116,7 +108,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
             };
 
-            separatorLineStyle = new GUIStyle()
+            _separatorLineStyle = new GUIStyle()
             {
                 normal = new GUIStyleState() { background = EditorGUIUtility.whiteTexture },
                 margin = new RectOffset(0, 0, 10, 5),
@@ -128,28 +120,26 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public void Reset()
         {
-            internalDependencies =
-                new SortedDictionary<string, AppodealDependency>();
-            latestDependencies =
-                new SortedDictionary<string, AppodealDependency>();
+            _internalDependencies = new SortedDictionary<string, AppodealDependency>();
+            _latestDependencies = new SortedDictionary<string, AppodealDependency>();
 
-            if (coroutine != null)
-                this.StopCoroutine(coroutine.routine);
-            if (progress > 0)
+            if (_coroutine != null)
+                this.StopCoroutine(_coroutine.routine);
+            if (_progress > 0)
                 EditorUtility.ClearProgressBar();
-            if (loading > 0)
+            if (_loading > 0)
                 EditorUtility.ClearProgressBar();
 
-            coroutine = null;
+            _coroutine = null;
 
-            loading = 0f;
-            progress = 0f;
+            _loading = 0f;
+            _progress = 0f;
         }
 
         private void OnEnable()
         {
-            loading = 0f;
-            coroutine = this.StartCoroutine(GetAppodealSDKData());
+            _loading = 0f;
+            _coroutine = this.StartCoroutine(GetAppodealSDKData());
         }
 
         private void OnGUI()
@@ -157,31 +147,31 @@ namespace AppodealStack.UnityEditor.SDKManager
             this.minSize = new Vector2(650, 650);
             this.maxSize = new Vector2(2000, 2000);
 
-            if (isPluginInfoReady && internalDependencies.Count > 0 && latestDependencies.Count > 0 && appodealUnityPlugin != null)
-                scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, false, false);
-            else EditorGUILayout.BeginScrollView(scrollPosition, false, false);
+            if (_isPluginInfoReady && _internalDependencies.Count > 0 && _latestDependencies.Count > 0 && _appodealUnityPlugin != null)
+                _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, false, false);
+            else EditorGUILayout.BeginScrollView(_scrollPosition, false, false);
 
             GUILayout.BeginVertical();
 
-            if (isPluginInfoReady)
+            if (_isPluginInfoReady)
             {
                 #region Plugin
 
                 GUILayout.Space(10);
-                EditorGUILayout.LabelField(AppodealEditorConstants.AppodealUnityPlugin, labelStyle,
+                EditorGUILayout.LabelField(AppodealEditorConstants.AppodealUnityPlugin, _labelStyle,
                     GUILayout.Height(20));
 
-                if (appodealUnityPlugin != null)
+                if (_appodealUnityPlugin != null)
                 {
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
-                        if (!string.IsNullOrEmpty(AppodealVersions.GetPluginVersion()) &&
-                            !string.IsNullOrEmpty(appodealUnityPlugin.version) &&
-                            !string.IsNullOrEmpty(appodealUnityPlugin.source))
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
+                        if (!String.IsNullOrEmpty(AppodealVersions.GetPluginVersion()) &&
+                            !String.IsNullOrEmpty(_appodealUnityPlugin.version) &&
+                            !String.IsNullOrEmpty(_appodealUnityPlugin.source))
                         {
-                            GuiPluginRow(appodealUnityPlugin);
+                            GuiPluginRow(_appodealUnityPlugin);
                         }
                         else
                         {
@@ -201,28 +191,28 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                 #region CoreInfo
 
-                if (internalDependencies.Count > 0 && latestDependencies.Count > 0)
+                if (_internalDependencies.Count > 0 && _latestDependencies.Count > 0)
                 {
                     GUILayout.Space(10);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealCoreDependencies, labelStyle,
+                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealCoreDependencies, _labelStyle,
                         GUILayout.Height(20));
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
-                        GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(internalDependencies),
-                            AppodealDependencyUtils.GetAppodealDependency(latestDependencies), PlatformSdk.Ios);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
+                        GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(_internalDependencies),
+                            AppodealDependencyUtils.GetAppodealDependency(_latestDependencies), PlatformSdk.Ios);
                     }
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
-                        GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(internalDependencies),
-                            AppodealDependencyUtils.GetAppodealDependency(latestDependencies), PlatformSdk.Android);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
+                        GuiCoreRow(AppodealDependencyUtils.GetAppodealDependency(_internalDependencies),
+                            AppodealDependencyUtils.GetAppodealDependency(_latestDependencies), PlatformSdk.Android);
                     }
                     HorizontalLine();
                 }
@@ -231,25 +221,25 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                 #region NetworksAdaptersInfo
 
-                if (internalDependencies.Count > 0)
+                if (_internalDependencies.Count > 0)
                 {
                     GUILayout.Space(10);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealNetworkDependencies, labelStyle,
+                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealNetworkDependencies, _labelStyle,
                         GUILayout.Height(20));
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.Ios, DependencyType.AdNetwork);
                     }
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.Android, DependencyType.AdNetwork);
                     }
                     HorizontalLine();
@@ -259,24 +249,24 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                 #region ServicesAdaptersInfo
 
-                if (internalDependencies.Count > 0)
+                if (_internalDependencies.Count > 0)
                 {
                     GUILayout.Space(10);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealServiceDependencies, labelStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.AppodealServiceDependencies, _labelStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Ios, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.Ios, DependencyType.Service);
                     }
                     GUILayout.Space(5);
-                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, subHeaderInfoStyle, GUILayout.Height(20));
+                    EditorGUILayout.LabelField(AppodealEditorConstants.Android, _subHeaderInfoStyle, GUILayout.Height(20));
                     GUILayout.Space(5);
                     using (new EditorGUILayout.VerticalScope(AppodealEditorConstants.BoxStyle, GUILayout.Height(45)))
                     {
-                        AppodealDependencyUtils.GuiHeaders(headerInfoStyle, btnFieldWidth);
+                        AppodealDependencyUtils.GuiHeaders(_headerInfoStyle, _btnFieldWidth);
                         GuiAdaptersRows(PlatformSdk.Android, DependencyType.Service);
                     }
                     HorizontalLine();
@@ -293,14 +283,14 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         private void GuiAdaptersRows(PlatformSdk platformSdk, DependencyType type)
         {
-            foreach (var key in latestDependencies.Keys)
+            foreach (var key in _latestDependencies.Keys)
             {
-                if (internalDependencies.ContainsKey(key))
+                if (_internalDependencies.ContainsKey(key))
                 {
                     if (key.Equals(AppodealEditorConstants.Appodeal)) continue;
 
-                    if (latestDependencies.TryGetValue(key, out var latestDependency) &&
-                        internalDependencies.TryGetValue(key, out var internalDependency))
+                    if (_latestDependencies.TryGetValue(key, out var latestDependency) &&
+                        _internalDependencies.TryGetValue(key, out var internalDependency))
                     {
                         switch (platformSdk)
                         {
@@ -309,9 +299,9 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 {
                                     if (internalDependency.android_info != null && latestDependency.android_info != null)
                                     {
-                                        if (!string.IsNullOrEmpty(internalDependency.android_info.name)
-                                            && !string.IsNullOrEmpty(internalDependency.android_info.version)
-                                            && !string.IsNullOrEmpty(internalDependency.android_info.unity_content))
+                                        if (!String.IsNullOrEmpty(internalDependency.android_info.name)
+                                            && !String.IsNullOrEmpty(internalDependency.android_info.version)
+                                            && !String.IsNullOrEmpty(internalDependency.android_info.unity_content))
                                         {
                                             GUILayout.Space(5);
                                             SetAdapterUpdateInfo(latestDependency.name,
@@ -337,9 +327,9 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 {
                                     if (internalDependency.ios_info != null && latestDependency.ios_info != null)
                                     {
-                                        if (!string.IsNullOrEmpty(internalDependency.ios_info.name)
-                                            && !string.IsNullOrEmpty(internalDependency.ios_info.version)
-                                            && !string.IsNullOrEmpty(internalDependency.ios_info.unity_content))
+                                        if (!String.IsNullOrEmpty(internalDependency.ios_info.name)
+                                            && !String.IsNullOrEmpty(internalDependency.ios_info.version)
+                                            && !String.IsNullOrEmpty(internalDependency.ios_info.unity_content))
                                         {
                                             GUILayout.Space(5);
                                             SetAdapterUpdateInfo(latestDependency.name,
@@ -365,7 +355,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 }
                 else
                 {
-                    if (latestDependencies.TryGetValue(key, out var dependency))
+                    if (_latestDependencies.TryGetValue(key, out var dependency))
                     {
                         switch (platformSdk)
                         {
@@ -453,26 +443,26 @@ namespace AppodealStack.UnityEditor.SDKManager
             if (internalDependency == null || latestDependency == null) return;
             using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
             {
-                if (!string.IsNullOrEmpty(internalDependency.name))
+                if (!String.IsNullOrEmpty(internalDependency.name))
                 {
                     GUILayout.Space(2);
-                    GUILayout.Button(internalDependency.name, packageInfoStyle, GUILayout.Width(150));
+                    GUILayout.Button(internalDependency.name, _packageInfoStyle, GUILayout.Width(150));
                     if (platform == PlatformSdk.Ios)
                     {
                         if (internalDependency.ios_info != null
-                            && !string.IsNullOrEmpty(internalDependency.ios_info.version))
+                            && !String.IsNullOrEmpty(internalDependency.ios_info.version))
                         {
                             GUILayout.Space(56);
                             GUILayout.Button(
                                 AppodealDependencyUtils.ReplaceBetaVersion(internalDependency.ios_info.version),
-                                packageInfoStyle, GUILayout.Width(110));
+                                _packageInfoStyle, GUILayout.Width(110));
                             if (latestDependency.ios_info != null &&
-                                !string.IsNullOrEmpty(latestDependency.ios_info.version))
+                                !String.IsNullOrEmpty(latestDependency.ios_info.version))
                             {
                                 GUILayout.Space(85);
                                 GUILayout.Button(
                                     AppodealDependencyUtils.ReplaceBetaVersion(latestDependency.ios_info.version),
-                                    packageInfoStyle);
+                                    _packageInfoStyle);
                                 GUILayout.Space(15);
 
                                 if (AppodealDependencyUtils.CompareVersion(internalDependency.ios_info.version,
@@ -481,7 +471,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     GUI.enabled = false;
                                     GUILayout.Button(
                                         new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                                        btnFieldWidth);
+                                        _btnFieldWidth);
                                     GUI.enabled = true;
                                 }
                                 else if (AppodealDependencyUtils.CompareVersion(internalDependency.ios_info.version,
@@ -490,7 +480,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     GUI.enabled = false;
                                     GUILayout.Button(
                                         new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                                        btnFieldWidth);
+                                        _btnFieldWidth);
                                     GUI.enabled = true;
                                 }
                                 else
@@ -508,20 +498,20 @@ namespace AppodealStack.UnityEditor.SDKManager
                     else
                     {
                         if (internalDependency.android_info != null
-                            && !string.IsNullOrEmpty(internalDependency.android_info.version))
+                            && !String.IsNullOrEmpty(internalDependency.android_info.version))
                         {
                             GUILayout.Space(56);
                             GUILayout.Button(
                                 AppodealDependencyUtils.ReplaceBetaVersion(internalDependency.android_info.version),
-                                packageInfoStyle, GUILayout.Width(110));
+                                _packageInfoStyle, GUILayout.Width(110));
                             if (latestDependency.android_info != null &&
-                                !string.IsNullOrEmpty(latestDependency.android_info.version))
+                                !String.IsNullOrEmpty(latestDependency.android_info.version))
                             {
                                 GUILayout.Space(85);
                                 GUILayout.Button(
                                     AppodealDependencyUtils.ReplaceBetaVersion(
                                         latestDependency.android_info.version),
-                                    packageInfoStyle);
+                                    _packageInfoStyle);
                                 GUILayout.Space(15);
 
                                 if (AppodealDependencyUtils.CompareVersion(
@@ -531,7 +521,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     GUI.enabled = false;
                                     GUILayout.Button(
                                         new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                                        btnFieldWidth);
+                                        _btnFieldWidth);
                                     GUI.enabled = true;
                                 }
                                 else if (AppodealDependencyUtils.CompareVersion(
@@ -541,7 +531,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     GUI.enabled = false;
                                     GUILayout.Button(
                                         new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                                        btnFieldWidth);
+                                        _btnFieldWidth);
                                     GUI.enabled = true;
                                 }
                                 else
@@ -570,7 +560,7 @@ namespace AppodealStack.UnityEditor.SDKManager
         {
             if (GUILayout.Button(
                 new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                btnFieldWidth))
+                _btnFieldWidth))
             {
                 var option = EditorUtility.DisplayDialog("Update dependencies",
                     "If you will update core, all adapters this platform will be updated automatically. " +
@@ -581,12 +571,12 @@ namespace AppodealStack.UnityEditor.SDKManager
                 switch (platformSdk)
                 {
                     case PlatformSdk.Ios:
-                        if (internalDependencies.Count <= 0 || latestDependencies.Count <= 0) return;
-                        foreach (var key in internalDependencies.Keys.Where(key =>
-                            latestDependencies.ContainsKey(key)))
+                        if (_internalDependencies.Count <= 0 || _latestDependencies.Count <= 0) return;
+                        foreach (var key in _internalDependencies.Keys.Where(key =>
+                            _latestDependencies.ContainsKey(key)))
                         {
-                            if (internalDependencies.TryGetValue(key, out var internalDep) &&
-                                latestDependencies.TryGetValue(key, out var latestDep))
+                            if (_internalDependencies.TryGetValue(key, out var internalDep) &&
+                                _latestDependencies.TryGetValue(key, out var latestDep))
                             {
                                 if (internalDep.ios_info != null)
                                 {
@@ -599,12 +589,12 @@ namespace AppodealStack.UnityEditor.SDKManager
 
                         break;
                     case PlatformSdk.Android:
-                        if (internalDependencies.Count <= 0 || latestDependencies.Count <= 0) return;
-                        foreach (var key in internalDependencies.Keys.Where(key =>
-                            latestDependencies.ContainsKey(key)))
+                        if (_internalDependencies.Count <= 0 || _latestDependencies.Count <= 0) return;
+                        foreach (var key in _internalDependencies.Keys.Where(key =>
+                            _latestDependencies.ContainsKey(key)))
                         {
-                            if (internalDependencies.TryGetValue(key, out var internalDep) &&
-                                latestDependencies.TryGetValue(key, out var latestDep))
+                            if (_internalDependencies.TryGetValue(key, out var internalDep) &&
+                                _latestDependencies.TryGetValue(key, out var latestDep))
                             {
                                 if (internalDep.android_info != null)
                                 {
@@ -636,24 +626,24 @@ namespace AppodealStack.UnityEditor.SDKManager
                 using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
                 {
                     GUILayout.Space(2);
-                    if (string.IsNullOrEmpty(nameDep) || string.IsNullOrEmpty(currentVersion) ||
-                        string.IsNullOrEmpty(latestVersion)) return;
-                    GUILayout.Button(nameDep, packageInfoStyle,
+                    if (String.IsNullOrEmpty(nameDep) || String.IsNullOrEmpty(currentVersion) ||
+                        String.IsNullOrEmpty(latestVersion)) return;
+                    GUILayout.Button(nameDep, _packageInfoStyle,
                         GUILayout.Width(145));
                     GUILayout.Space(56);
                     GUILayout.Button(currentVersion,
-                        packageInfoStyle,
+                        _packageInfoStyle,
                         GUILayout.Width(110));
                     GUILayout.Space(85);
                     GUILayout.Button(
                         AppodealDependencyUtils.ReplaceBetaVersion(latestVersion),
-                        packageInfoStyle);
+                        _packageInfoStyle);
                     GUILayout.Space(15);
                     Color defaultColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.green;
                     if (GUILayout.Button(
                         new GUIContent { text = AppodealEditorConstants.ActionImport },
-                        btnFieldWidth))
+                        _btnFieldWidth))
                     {
                         ImportConfig(nameDep, content);
                     }
@@ -683,7 +673,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 }
             }
 
-            return string.IsNullOrEmpty(content) ? " " : content;
+            return String.IsNullOrEmpty(content) ? " " : content;
         }
 
         private void SetAdapterUpdateInfo(string nameDep, string currentVersion, string latestVersion,
@@ -695,27 +685,27 @@ namespace AppodealStack.UnityEditor.SDKManager
                 using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
                 {
                     GUILayout.Space(2);
-                    if (string.IsNullOrEmpty(nameDep) || string.IsNullOrEmpty(currentVersion) ||
-                        string.IsNullOrEmpty(latestVersion)) return;
+                    if (String.IsNullOrEmpty(nameDep) || String.IsNullOrEmpty(currentVersion) ||
+                        String.IsNullOrEmpty(latestVersion)) return;
                     EditorGUILayout.LabelField(new GUIContent
                     {
                         text = nameDep,
-                        tooltip = string.IsNullOrEmpty(sdkInfoDependencies) ? "-" : sdkInfoDependencies
-                    }, packageInfoStyle, GUILayout.Width(145));
+                        tooltip = String.IsNullOrEmpty(sdkInfoDependencies) ? "-" : sdkInfoDependencies
+                    }, _packageInfoStyle, GUILayout.Width(145));
                     GUILayout.Space(56);
                     GUILayout.Button(
                         AppodealDependencyUtils.ReplaceBetaVersion(currentVersion),
-                        packageInfoStyle,
+                        _packageInfoStyle,
                         GUILayout.Width(110));
                     GUILayout.Space(85);
                     GUILayout.Button(
                         AppodealDependencyUtils.ReplaceBetaVersion(latestVersion),
-                        packageInfoStyle);
+                        _packageInfoStyle);
                     GUILayout.Space(15);
 
                     if (GUILayout.Button(
                         new GUIContent { text = AppodealEditorConstants.ActionRemove },
-                        btnFieldWidth))
+                        _btnFieldWidth))
                     {
                         var path = Path.Combine(AppodealEditorConstants.PluginPath,
                             AppodealEditorConstants.DependenciesPath,
@@ -768,7 +758,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 GUI.backgroundColor = Color.red;
                 if (GUILayout.Button(
                     new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                    btnFieldWidth))
+                    _btnFieldWidth))
                 {
                     UpdateDependency(nameDependency, previous, latest);
                     UpdateWindow();
@@ -780,7 +770,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 GUI.enabled = false;
                 GUILayout.Button(
                     new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                    btnFieldWidth);
+                    _btnFieldWidth);
                 GUI.enabled = true;
             }
 
@@ -824,12 +814,12 @@ namespace AppodealStack.UnityEditor.SDKManager
             using (new EditorGUILayout.HorizontalScope(GUILayout.Height(20)))
             {
                 GUILayout.Space(2);
-                GUILayout.Button(AppodealEditorConstants.AppodealUnityPlugin, packageInfoStyle,
+                GUILayout.Button(AppodealEditorConstants.AppodealUnityPlugin, _packageInfoStyle,
                     GUILayout.Width(150));
                 GUILayout.Space(56);
-                GUILayout.Button(AppodealDependencyUtils.ReplaceBetaVersion(AppodealVersions.GetPluginVersion()), packageInfoStyle, GUILayout.Width(110));
+                GUILayout.Button(AppodealDependencyUtils.ReplaceBetaVersion(AppodealVersions.GetPluginVersion()), _packageInfoStyle, GUILayout.Width(110));
                 GUILayout.Space(85);
-                GUILayout.Button(AppodealDependencyUtils.ReplaceBetaVersion(plugin.version), packageInfoStyle);
+                GUILayout.Button(AppodealDependencyUtils.ReplaceBetaVersion(plugin.version), _packageInfoStyle);
                 GUILayout.Space(15);
 
                 if (AppodealDependencyUtils.CompareVersion(
@@ -838,7 +828,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 {
                     GUI.enabled = false;
                     GUILayout.Button(new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                        btnFieldWidth);
+                        _btnFieldWidth);
                     GUI.enabled = true;
                 }
                 else if (AppodealDependencyUtils.CompareVersion(
@@ -847,7 +837,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 {
                     GUI.enabled = false;
                     GUILayout.Button(new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                        btnFieldWidth);
+                        _btnFieldWidth);
                     GUI.enabled = true;
                 }
                 else
@@ -855,7 +845,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                     Color defaultColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
                     if (GUILayout.Button(new GUIContent { text = AppodealEditorConstants.ActionUpdate },
-                        btnFieldWidth))
+                        _btnFieldWidth))
                     {
                         bool decision = RemoveHelper.RemovePlugin();
                         if (decision)
@@ -925,7 +915,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(webRequest.downloadHandler.text))
+                    if (String.IsNullOrEmpty(webRequest.downloadHandler.text))
                     {
                         AppodealDependencyUtils.ShowInternalErrorDialog(this, "Can't find appodeal plugin information",
                             string.Empty);
@@ -933,9 +923,9 @@ namespace AppodealStack.UnityEditor.SDKManager
                     }
 
                     var root = JsonUtility.FromJson<Root>(webRequest.downloadHandler.text);
-                    appodealUnityPlugin = root.items.ToList().FirstOrDefault(x => x.build_type.Equals("stable"));
+                    _appodealUnityPlugin = root.items.ToList().FirstOrDefault(x => x.build_type.Equals("stable"));
 
-                    if (appodealUnityPlugin == null)
+                    if (_appodealUnityPlugin == null)
                     {
                         AppodealDependencyUtils.ShowInternalErrorDialog(this, "Can't find appodeal plugin information",
                             string.Empty);
@@ -962,7 +952,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(webRequest.downloadHandler.text))
+                    if (String.IsNullOrEmpty(webRequest.downloadHandler.text))
                     {
                         AppodealDependencyUtils.ShowInternalErrorDialog(this,
                             "Can't find appodeal adapters information",
@@ -980,17 +970,16 @@ namespace AppodealStack.UnityEditor.SDKManager
                     serverConfig.ad_networks.ForEach(network => network.type = DependencyType.AdNetwork);
                     serverConfig.services.ForEach(service => service.type = DependencyType.Service);
 
-                    var tempDeps = new List<AppodealDependency>();
-                    tempDeps.Add(serverConfig.core);
+                    var tempDeps = new List<AppodealDependency> {serverConfig.core};
                     serverConfig.ad_networks.ForEach(dep => tempDeps.Add(dep));
                     serverConfig.services.ForEach(dep => tempDeps.Add(dep));
 
                     tempDeps.Where(dep => !String.IsNullOrEmpty(dep.name) && !dep.name.Equals(AppodealEditorConstants.TwitterMoPub))
-                               .ToList().ForEach(dep => latestDependencies.Add(dep.name, dep));
+                               .ToList().ForEach(dep => _latestDependencies.Add(dep.name, dep));
 
-                    if (latestDependencies.Count > 0)
+                    if (_latestDependencies.Count > 0)
                     {   
-                        var missingAdapters = internalDependencies.Keys.Where(key => !latestDependencies.ContainsKey(key)).ToList();
+                        var missingAdapters = _internalDependencies.Keys.Where(key => !_latestDependencies.ContainsKey(key)).ToList();
                         if (missingAdapters.Count > 0) {
                             AppodealDependencyUtils.ShowInternalErrorDialog(this,
                                 $"Out-of-use appodeal adapters were found: {string.Join(", ", missingAdapters)}",
@@ -1002,9 +991,9 @@ namespace AppodealStack.UnityEditor.SDKManager
 
             #endregion
 
-            coroutine = null;
+            _coroutine = null;
 
-            isPluginInfoReady = true;
+            _isPluginInfoReady = true;
 
             EditorUtility.ClearProgressBar();
         }
@@ -1096,8 +1085,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             #endregion
 
             #region AndroidInternalDependencies
-
-            var sources = new List<string>();
+            
             string specName;
 
             XmlUtilities.ParseXmlTextFileElements(dependencyPath,
@@ -1115,7 +1103,6 @@ namespace AppodealStack.UnityEditor.SDKManager
                         if (isStart)
                         {
                             specName = reader.GetAttribute("spec");
-                            sources = new List<string>();
                             if (specName == null)
                             {
                                 Debug.Log(
@@ -1158,16 +1145,16 @@ namespace AppodealStack.UnityEditor.SDKManager
 
             #endregion
 
-            if (!string.IsNullOrEmpty(networkDependency.name))
+            if (!String.IsNullOrEmpty(networkDependency.name))
             {
-                internalDependencies.Add(networkDependency.name, networkDependency);
+                _internalDependencies.Add(networkDependency.name, networkDependency);
             }
         }
 
         private void UpdateWindow()
         {
             Reset();
-            coroutine = this.StartCoroutine(GetAppodealSDKData());
+            _coroutine = this.StartCoroutine(GetAppodealSDKData());
             GUI.enabled = true;
             AssetDatabase.Refresh();
         }
