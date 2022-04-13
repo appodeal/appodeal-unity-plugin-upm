@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
@@ -25,7 +26,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             bool areFbEventsEnabled = AppodealSettings.Instance.FacebookAutoLogAppEvents;
             bool isFbIdsCollectionEnabled = AppodealSettings.Instance.FacebookAdvertiserIDCollection;
 
-            if (string.IsNullOrEmpty(fbKey))
+            if (String.IsNullOrEmpty(fbKey))
             {
                 Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
                 return;
