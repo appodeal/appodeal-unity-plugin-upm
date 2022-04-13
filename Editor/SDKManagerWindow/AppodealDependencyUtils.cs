@@ -7,23 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.SDKManager.Models;
 
-// ReSharper disable All
-
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SDKManager
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ReturnValueOfPureMethodIsNotUsed")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealDependencyUtils
     {
         public static FileInfo[] GetInternalDependencyPath()
         {
-            if (string.IsNullOrEmpty(AppodealEditorConstants.PluginPath) ||
-                string.IsNullOrEmpty(AppodealEditorConstants.DependenciesPath))
+            if (String.IsNullOrEmpty(AppodealEditorConstants.PluginPath) ||
+                String.IsNullOrEmpty(AppodealEditorConstants.DependenciesPath))
             {
                 return null;
             }
@@ -89,7 +84,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             var lines = File.ReadAllLines(path);
             foreach (var line in lines)
             {
-                if (string.IsNullOrEmpty(line)) continue;
+                if (String.IsNullOrEmpty(line)) continue;
 
                 if (line.Contains("<iosPods>"))
                 {
@@ -116,7 +111,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             var lines = File.ReadAllLines(path);
             foreach (var line in lines)
             {
-                if (string.IsNullOrEmpty(line)) continue;
+                if (String.IsNullOrEmpty(line)) continue;
 
                 if (line.Contains("<androidPackages>"))
                 {
@@ -216,20 +211,20 @@ namespace AppodealStack.UnityEditor.SDKManager
             }
         }
 
-        public static int CompareVersion(string interal, string latest)
+        public static int CompareVersion(string current, string latest)
         {
-            var xParts = interal.Split('.');
+            var xParts = current.Split('.');
             var yParts = latest.Split('.');
             var partsLength = Math.Max(xParts.Length, yParts.Length);
-            if (partsLength <= 0) return string.Compare(interal, latest, StringComparison.Ordinal);
+            if (partsLength <= 0) return string.Compare(current, latest, StringComparison.Ordinal);
             for (var i = 0; i < partsLength; i++)
             {
                 if (xParts.Length <= i) return -1;
                 if (yParts.Length <= i) return 1;
                 var xPart = xParts[i];
                 var yPart = yParts[i];
-                if (string.IsNullOrEmpty(xPart)) xPart = "0";
-                if (string.IsNullOrEmpty(yPart)) yPart = "0";
+                if (String.IsNullOrEmpty(xPart)) xPart = "0";
+                if (String.IsNullOrEmpty(yPart)) yPart = "0";
                 if (!int.TryParse(xPart, out var xInt) || !int.TryParse(yPart, out var yInt))
                 {
                     var abcCompare = string.Compare(xPart, yPart, StringComparison.Ordinal);
@@ -260,7 +255,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static AppodealDependency GetAppodealDependency(SortedDictionary<string, AppodealDependency> dependencies)
         {
-            return dependencies.Where(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).First().Value;
+            return dependencies.First(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).Value;
         }
     }
 }
