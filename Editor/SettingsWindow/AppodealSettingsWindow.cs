@@ -137,20 +137,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 AppodealSettings.Instance.VibratePermission = KeyRow("VIBRATE",
                     AppodealSettings.Instance.VibratePermission);
 
-                GUILayout.Space(10);
-                if (GUILayout.Button("Multidex", new GUIStyle(EditorStyles.label)
-                {
-                    fontSize = 12,
-                    fontStyle = FontStyle.Bold,
-                    fixedHeight = 18
-                }, GUILayout.Width(100)))
-                {
-                    Application.OpenURL("https://developer.android.com/studio/build/multidex");
-                }
-
-                AppodealSettings.Instance.AndroidMultidex =
-                    KeyRow("Enable multidex", AppodealSettings.Instance.AndroidMultidex);
-                GUILayout.Space(12);
+                GUILayout.Space(67);
             }
 
             #endregion

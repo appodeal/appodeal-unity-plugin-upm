@@ -3,7 +3,6 @@
     "references": [
         "SimpleJSON",
         "AppodealStack.UnityEditor.Utils",
-        "AppodealStack.UnityEditor.Checkers",
         "AppodealStack.UnityEditor.InternalResources"
     ],
     "includePlatforms": [
