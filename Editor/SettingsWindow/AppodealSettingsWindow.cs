@@ -152,14 +152,14 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 HeaderField("Add keys to info.plist",
                     "https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-2.2iOSconfiguration");
 
-                AppodealSettings.Instance.NSUserTrackingUsageDescription = KeyRow("NSUserTrackingUsageDescription",
-                    AppodealSettings.Instance.NSUserTrackingUsageDescription);
-                AppodealSettings.Instance.NSLocationWhenInUseUsageDescription = KeyRow("NSLocationWhenInUseUsageDescription",
-                    AppodealSettings.Instance.NSLocationWhenInUseUsageDescription);
-                AppodealSettings.Instance.NSCalendarsUsageDescription = KeyRow("NSCalendarsUsageDescription",
-                    AppodealSettings.Instance.NSCalendarsUsageDescription);
-                AppodealSettings.Instance.NSAppTransportSecurity = KeyRow("NSAppTransportSecurity",
-                    AppodealSettings.Instance.NSAppTransportSecurity);
+                AppodealSettings.Instance.NsUserTrackingUsageDescription = KeyRow("NSUserTrackingUsageDescription",
+                    AppodealSettings.Instance.NsUserTrackingUsageDescription);
+                AppodealSettings.Instance.NsLocationWhenInUseUsageDescription = KeyRow("NSLocationWhenInUseUsageDescription",
+                    AppodealSettings.Instance.NsLocationWhenInUseUsageDescription);
+                AppodealSettings.Instance.NsCalendarsUsageDescription = KeyRow("NSCalendarsUsageDescription",
+                    AppodealSettings.Instance.NsCalendarsUsageDescription);
+                AppodealSettings.Instance.NsAppTransportSecurity = KeyRow("NSAppTransportSecurity",
+                    AppodealSettings.Instance.NsAppTransportSecurity);
 
                 GUILayout.Space(35);
                 if (GUILayout.Button("SKAdNetwork", new GUIStyle(EditorStyles.label)

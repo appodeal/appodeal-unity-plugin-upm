@@ -13,7 +13,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
         [InitializeOnLoadMethod]
         static void InstallPluginIfUserAgrees()
         {
-            if (IsPluginInstalled() || PluginPreferences.Instance.ShouldIgnoreEDMInstallation) return;
+            if (IsPluginInstalled() || PluginPreferences.Instance.ShouldIgnoreEdmInstallation) return;
 
             if (PluginInstallationRequest())
             {
@@ -47,7 +47,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
                 case 1:
                     return false;
                 case 2:
-                    PluginPreferences.Instance.ShouldIgnoreEDMInstallation = true;
+                    PluginPreferences.Instance.ShouldIgnoreEdmInstallation = true;
                     PluginPreferences.Instance.SaveAsync();
                     return false;
                 default:

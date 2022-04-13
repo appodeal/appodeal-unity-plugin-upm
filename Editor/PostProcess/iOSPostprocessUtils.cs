@@ -143,7 +143,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddNsUserTrackingUsageDescription(string path)
         {
-            if (!AppodealSettings.Instance.NSUserTrackingUsageDescription) return;
+            if (!AppodealSettings.Instance.NsUserTrackingUsageDescription) return;
             if (!CheckContainsKey(path, "NSUserTrackingUsageDescription"))
             {
                 AddKeyToPlist(path, "NSUserTrackingUsageDescription",
@@ -154,7 +154,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddNsLocationWhenInUseUsageDescription(string path)
         {
-            if (!AppodealSettings.Instance.NSLocationWhenInUseUsageDescription) return;
+            if (!AppodealSettings.Instance.NsLocationWhenInUseUsageDescription) return;
             if (!CheckContainsKey(path, "NSLocationWhenInUseUsageDescription"))
             {
                 AddKeyToPlist(path, "NSLocationWhenInUseUsageDescription",
@@ -165,7 +165,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddNsCalendarsUsageDescription(string path)
         {
-            if (!AppodealSettings.Instance.NSCalendarsUsageDescription) return;
+            if (!AppodealSettings.Instance.NsCalendarsUsageDescription) return;
             if (!CheckContainsKey(path, "NSCalendarsUsageDescription"))
             {
                 AddKeyToPlist(path, "NSCalendarsUsageDescription",
