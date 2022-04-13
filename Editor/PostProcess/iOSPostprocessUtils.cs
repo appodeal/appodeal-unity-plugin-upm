@@ -40,7 +40,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
         {
             
-            if (string.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
+            if (String.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
             if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;
 
@@ -108,31 +108,27 @@ namespace AppodealStack.UnityEditor.PostProcess
             if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
                 AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml")))
             {
-                Debug.LogWarning(
-                    "Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml).\nAdmob App Id won't be added.");
+                Debug.LogWarning("Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml).\nAdmob App Id won't be added.");
                 return;
             }
 
             if (!CheckIosAttribute())
             {
-                Debug.LogError(
-                    "Google Admob Config is invalid. Ensure that Appodeal Unity plugin is imported correctly.");
+                Debug.LogError("Google Admob Config is invalid. Ensure that Appodeal Unity plugin is imported correctly.");
                 return;
             }
 
-            if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobIosAppId))
+            if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobIosAppId))
             {
-                Debug.LogError(
-                    "Admob App ID is not set via 'Appodeal/Appodeal Settings' tool.\nThe app may crash on startup!");
+                Debug.LogError("Admob App ID is not set via 'Appodeal/Appodeal Settings' tool.\nThe app may crash on startup!");
                 return;
             }
 
             if (!AppodealSettings.Instance.AdMobIosAppId.StartsWith("ca-app-pub-"))
             {
-                Debug.LogError(
-                        "Incorrect value. The app may crash on startup." +
-                        "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
-                        "\nAlternatively, change the value manually in Info.plist file.");
+                Debug.LogError("Incorrect value. The app may crash on startup." +
+                               "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
+                               "\nAlternatively, change the value manually in Info.plist file.");
             }
 
             if (!CheckContainsKey(path, "GADApplicationIdentifier"))
@@ -243,7 +239,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         public static void PrepareProject(string buildPath)
         {
-            Debug.Log("preparing your xcode project for appodeal");
+            Debug.Log("Preparing your Xcode project for Appodeal");
             var projectPath = PBXProject.GetPBXProjectPath(buildPath);
             var project = new PBXProject();
 
