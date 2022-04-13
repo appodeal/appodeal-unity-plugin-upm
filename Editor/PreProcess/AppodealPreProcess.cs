@@ -95,8 +95,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogWarning(
-                    $"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
+                Debug.LogWarning($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
                 return;
             }
 
@@ -108,7 +107,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
-            if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
+            if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
             {
                 if (CheckContainsAppId(path))
                 {
@@ -244,7 +243,7 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             var contentString = GetContentString(GetDefaultGradleTemplate());
             contentString = Regex.Replace(contentString, GradleImplementation + GradleMultidexDependency,
-                string.Empty);
+                String.Empty);
 
             using (var writer = new StreamWriter(GetDefaultGradleTemplate()))
             {
