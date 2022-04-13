@@ -1040,7 +1040,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         {
                             if (podName != null && version != null && minTargetSdk != null)
                             {
-                                if (!podName.Contains(AppodealEditorConstants.APDAppodealAdExchangeAdapter))
+                                if (!podName.Contains(AppodealEditorConstants.ApdAppodealAdExchangeAdapter))
                                 {
                                     networkDependency.ios_info = new AppodealDependency.IosDependency(podName,
                                         version,

@@ -57,7 +57,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
 
         static void InstallPlugin()
         {
-            string path = Path.Combine(AppodealEditorConstants.PackagePath, AppodealEditorConstants.EDMPackagePath);
+            string path = Path.Combine(AppodealEditorConstants.PackagePath, AppodealEditorConstants.EdmPackagePath);
 
             var fileInfo = new DirectoryInfo(path).GetFiles("*.unitypackage");
             

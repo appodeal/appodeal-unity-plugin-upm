@@ -1,11 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-// ReSharper Disable CheckNamespace
+﻿// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Utils
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class AppodealEditorConstants
+    public static class AppodealEditorConstants
     {
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";
         public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2.1/unity/config/";
@@ -13,7 +9,7 @@ namespace AppodealStack.UnityEditor.Utils
         public const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
         public const string PluginPath = "Assets/Appodeal";
         public const string DependenciesPath = "Editor/Dependencies";
-        public const string EDMPackagePath = "Editor/Dependencies/ExternalDependencyManager";
+        public const string EdmPackagePath = "Editor/Dependencies/ExternalDependencyManager";
         public const string ReplaceDepValue = "com.appodeal.ads.sdk.networks:";
         public const string ReplaceAdmobDepValue = "com.appodeal.ads.sdk.networks:admob";
         public const string ReplaceDepCore = "com.appodeal.ads.sdk:core:";
@@ -42,7 +38,7 @@ namespace AppodealStack.UnityEditor.Utils
         public const string XmlFileExtension = ".xml";
         public const string TwitterMoPub = "TwitterMoPub";
         public const string GoogleAdMob = "GoogleAdMob";
-        public const string APDAppodealAdExchangeAdapter = "APDAppodealAdExchangeAdapter";
+        public const string ApdAppodealAdExchangeAdapter = "APDAppodealAdExchangeAdapter";
         public const string Dependencies = "Dependencies";
 
         public const string FacebookApplicationId = "com.facebook.sdk.ApplicationId";
