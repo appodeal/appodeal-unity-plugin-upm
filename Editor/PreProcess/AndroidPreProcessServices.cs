@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using System;
 using System.IO;
 using System.Xml;
 using System.Linq;
@@ -129,9 +130,8 @@ namespace AppodealStack.UnityEditor.PreProcess
 
             if (!File.Exists(path))
             {
-                Debug.LogWarning(
-                    $"Missing AndroidManifest.xml file at {path}." +
-                    "\nFacebook App ID cannot be added. This service won't be initialized properly!");
+                Debug.LogWarning($"Missing AndroidManifest.xml file at {path}." +
+                                 "\nFacebook App ID cannot be added. This service won't be initialized properly!");
                 return;
             }
 
@@ -147,7 +147,7 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             string appId = AppodealSettings.Instance.FacebookAndroidAppId;
 
-            if (string.IsNullOrEmpty(appId))
+            if (String.IsNullOrEmpty(appId))
             {
                 Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
                 return;
