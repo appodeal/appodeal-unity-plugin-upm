@@ -412,12 +412,5 @@ namespace AppodealStack.UnityEditor.PreProcess
                 }
             }
         }
-
-        internal void AddMultiDexApplication()
-        {
-            var manifest = SelectSingleNode("/manifest/application");
-            if (manifest == null) return;
-            manifest.Attributes.Append(CreateAndroidAttribute("name", "androidx.multidex.MultiDexApplication"));
-        }
     }
 }
