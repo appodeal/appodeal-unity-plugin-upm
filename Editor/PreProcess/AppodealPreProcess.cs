@@ -254,14 +254,14 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         public static string GetDefaultGradleTemplate()
         {
-            var defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(
+            var defaultGradleTemplateFullName = AppodealUnityUtils.CombinePaths(
                 EditorApplication.applicationContentsPath,
                 GradleDefaultTemplatePath,
                 GradleTemplateName);
             if (File.Exists(defaultGradleTemplateFullName)) return defaultGradleTemplateFullName;
             var unixAppContentsPath =
                 Path.GetDirectoryName(Path.GetDirectoryName(EditorApplication.applicationContentsPath));
-            defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(unixAppContentsPath,
+            defaultGradleTemplateFullName = AppodealUnityUtils.CombinePaths(unixAppContentsPath,
                 GradleDefaultTemplatePath,
                 GradleTemplateName);
 

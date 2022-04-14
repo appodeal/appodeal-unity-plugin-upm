@@ -5,7 +5,6 @@ using UnityEngine;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Utils
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class JsonHelper
     {
         public static T[] FromJson<T>(string json)
@@ -27,13 +26,14 @@ namespace AppodealStack.UnityEditor.Utils
             return JsonUtility.ToJson(wrapper, prettyPrint);
         }
 
-        public static string fixJson(string value)
+        public static string FixJson(string value)
         {
             value = "{\"Items\":" + value + "}";
             return value;
         }
 
         [Serializable]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private class Wrapper<T>
         {
             public T[] Items;

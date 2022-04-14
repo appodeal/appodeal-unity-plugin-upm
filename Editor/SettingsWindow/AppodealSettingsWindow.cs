@@ -53,7 +53,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 }
 
                 var skaItems =
-                    JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.fixJson(requestSkaNetworkIds.downloadHandler.text));
+                    JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.FixJson(requestSkaNetworkIds.downloadHandler.text));
 
                 foreach (var skaItem in skaItems)
                 {

@@ -257,9 +257,9 @@ namespace AppodealStack.UnityEditor.PostProcess
             AddProjectLibs(PlatformLibs, project, target);
             project.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
-            var xcodeVersion = AppodealUnityUtils.getXcodeVersion();
+            var xcodeVersion = AppodealUnityUtils.GetXcodeVersion();
             if (xcodeVersion == null ||
-                AppodealUnityUtils.compareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
+                AppodealUnityUtils.CompareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
             {
                 project.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
             }

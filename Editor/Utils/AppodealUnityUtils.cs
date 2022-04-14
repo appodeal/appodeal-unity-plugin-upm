@@ -13,19 +13,20 @@ using System.Text.RegularExpressions;
 namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ShiftExpressionRealShiftCountIsZero")]
     [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+    [SuppressMessage("ReSharper", "InlineOutVariableDeclaration")]
+    [SuppressMessage("ReSharper", "IdentifierTypo")]
     public static class AppodealUnityUtils
     {
-        private const string UNITY_ANDROID_VERSION_ENUM_PREFIX = "AndroidApiLevel";
+        private const string UnityAndroidVersionEnumPrefix = "AndroidApiLevel";
         private const BindingFlags PublicStaticFlags = BindingFlags.Public | BindingFlags.Static;
         public const string KeySkAdNetworkItems = "SKAdNetworkItems";
         public const string KeySkAdNetworkID = "SKAdNetworkIdentifier";
-        public const string GADApplicationIdentifier = "GADApplicationIdentifier";
-        public const string NSUserTrackingUsageDescriptionKey = "NSUserTrackingUsageDescription";
-        public const string NSUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you";
+        public const string GadApplicationIdentifier = "GADApplicationIdentifier";
+        public const string NsUserTrackingUsageDescriptionKey = "NSUserTrackingUsageDescription";
+        public const string NsUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you";
         
-        public const string GADApplicationIdentifierDefaultKey = "ca-app-pub-3940256099942544~1458002511";
+        public const string GadApplicationIdentifierDefaultKey = "ca-app-pub-3940256099942544~1458002511";
 
         #region Optional Android Permissions
 
@@ -38,15 +39,17 @@ namespace AppodealStack.UnityEditor.Utils
         #endregion
 
         [Flags]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [SuppressMessage("ReSharper", "IdentifierTypo")]
         public enum AndroidArchitecture
         {
-            invalid = 0,
-            armv7 = 1 << 0,
-            arm64 = 1 << 1,
-            x86 = 1 << 2,
+            Invalid = 0,
+            ARmv7 = 1 << 0,
+            ARM64 = 1 << 1,
+            X86 = 1 << 2,
         }
 
-        public static string getApplicationId()
+        public static string GetApplicationId()
         {
             var appId = typeof(PlayerSettings).GetProperty("applicationIdentifier", PublicStaticFlags);
             if (appId == null) appId = typeof(PlayerSettings).GetProperty("bundleIdentifier", PublicStaticFlags);
@@ -54,7 +57,7 @@ namespace AppodealStack.UnityEditor.Utils
             return bundleId;
         }
 
-        public static bool isGradleEnabled()
+        public static bool IsGradleEnabled()
         {
             var isGradleEnabledVal = false;
             var androidBuildSystem =
@@ -66,14 +69,14 @@ namespace AppodealStack.UnityEditor.Utils
             return isGradleEnabledVal;
         }
 
-        public static bool isGradleAvailable()
+        public static bool IsGradleAvailable()
         {
             var androidBuildSystem =
                 typeof(EditorUserBuildSettings).GetProperty("androidBuildSystem", PublicStaticFlags);
             return androidBuildSystem != null;
         }
 
-        public static void enableGradleBuildSystem()
+        public static void EnableGradleBuildSystem()
         {
             var androidBuildSystem =
                 typeof(EditorUserBuildSettings).GetProperty("androidBuildSystem", PublicStaticFlags);
@@ -82,36 +85,36 @@ namespace AppodealStack.UnityEditor.Utils
             androidBuildSystem.SetValue(null, gradle, null);
         }
 
-        public static string absolute2Relative(string absolutepath)
+        public static string Absolute2Relative(string absolutePath)
         {
-            var relativepath = absolutepath;
-            if (absolutepath.StartsWith(Application.dataPath, StringComparison.Ordinal))
+            string relativePath = absolutePath;
+            if (absolutePath.StartsWith(Application.dataPath, StringComparison.Ordinal))
             {
-                relativepath = "Assets" + absolutepath.Substring(Application.dataPath.Length);
+                relativePath = "Assets" + absolutePath.Substring(Application.dataPath.Length);
             }
 
-            return relativepath;
+            return relativePath;
         }
 
-        public static string relative2Absolute(string relativepath)
+        public static string Relative2Absolute(string relativePath)
         {
-            var absolutepath = relativepath;
-            if (!relativepath.StartsWith(Application.dataPath, StringComparison.Ordinal))
+            string absolutePath = relativePath;
+            if (!relativePath.StartsWith(Application.dataPath, StringComparison.Ordinal))
             {
-                absolutepath = Application.dataPath + absolutepath.Substring("Assets".Length);
+                absolutePath = Application.dataPath + absolutePath.Substring("Assets".Length);
             }
 
-            return absolutepath;
+            return absolutePath;
         }
 
-        public static int getAndroidMinSDK()
+        public static int GetAndroidMinSDK()
         {
             var minSdkVersion = VersionFromAndroidSDKVersionsEnum(
                 PlayerSettings.Android.minSdkVersion.ToString());
             return minSdkVersion;
         }
 
-        public static int getAndroidTargetSDK()
+        public static int GetAndroidTargetSDK()
         {
             var property = typeof(PlayerSettings.Android).GetProperty("targetSdkVersion");
             var target = -1;
@@ -125,9 +128,9 @@ namespace AppodealStack.UnityEditor.Utils
 
         private static int VersionFromAndroidSDKVersionsEnum(string enumName)
         {
-            if (enumName.StartsWith(UNITY_ANDROID_VERSION_ENUM_PREFIX))
+            if (enumName.StartsWith(UnityAndroidVersionEnumPrefix))
             {
-                enumName = enumName.Substring(UNITY_ANDROID_VERSION_ENUM_PREFIX.Length);
+                enumName = enumName.Substring(UnityAndroidVersionEnumPrefix.Length);
             }
 
             if (enumName == "Auto")
@@ -155,11 +158,11 @@ namespace AppodealStack.UnityEditor.Utils
                 .Concat(new[] {0}).Max();
         }
 
-        public static AndroidArchitecture getAndroidArchitecture()
+        public static AndroidArchitecture GetAndroidArchitecture()
         {
             var targetArchitectures =
                 typeof(PlayerSettings.Android).GetProperty("targetArchitectures");
-            var arch = AndroidArchitecture.invalid;
+            var arch = AndroidArchitecture.Invalid;
             if (targetArchitectures != null)
             {
                 var armv7 = Enum.Parse(targetArchitectures.PropertyType, "ARMv7");
@@ -170,9 +173,9 @@ namespace AppodealStack.UnityEditor.Utils
                 var x64_int = (int) Convert.ChangeType(x64, typeof(int));
                 var currentArch = targetArchitectures.GetValue(null, null);
                 var currentArch_int = (int) Convert.ChangeType(currentArch, typeof(int));
-                if ((currentArch_int & armv7_int) == armv7_int) arch |= AndroidArchitecture.armv7;
-                if ((currentArch_int & arm64_int) == arm64_int) arch |= AndroidArchitecture.arm64;
-                if ((currentArch_int & x64_int) == x64_int) arch |= AndroidArchitecture.x86;
+                if ((currentArch_int & armv7_int) == armv7_int) arch |= AndroidArchitecture.ARmv7;
+                if ((currentArch_int & arm64_int) == arm64_int) arch |= AndroidArchitecture.ARM64;
+                if ((currentArch_int & x64_int) == x64_int) arch |= AndroidArchitecture.X86;
             }
             else
             {
@@ -182,15 +185,15 @@ namespace AppodealStack.UnityEditor.Utils
                 var armv7 = Enum.Parse(targetArchitectures.PropertyType, "ARMv7");
                 var x64 = Enum.Parse(targetArchitectures.PropertyType, "x86");
                 var fat = Enum.Parse(targetArchitectures.PropertyType, "FAT");
-                if (currentDevice.Equals(armv7)) arch = AndroidArchitecture.armv7;
-                else if (currentDevice.Equals(x64)) arch = AndroidArchitecture.x86;
-                else if (currentDevice.Equals(fat)) arch = AndroidArchitecture.armv7 | AndroidArchitecture.x86;
+                if (currentDevice.Equals(armv7)) arch = AndroidArchitecture.ARmv7;
+                else if (currentDevice.Equals(x64)) arch = AndroidArchitecture.X86;
+                else if (currentDevice.Equals(fat)) arch = AndroidArchitecture.ARmv7 | AndroidArchitecture.X86;
             }
 
             return arch;
         }
 
-        public static string combinePaths(params string[] paths)
+        public static string CombinePaths(params string[] paths)
         {
             var result = paths[0];
             for (var i = 1; i < paths.Length; i++)
@@ -201,7 +204,7 @@ namespace AppodealStack.UnityEditor.Utils
             return result;
         }
 
-        public static int compareVersions(string v1, string v2)
+        public static int CompareVersions(string v1, string v2)
         {
             var re = new Regex(@"\d+(\.\d+)+");
             var match1 = re.Match(v1);
@@ -209,16 +212,16 @@ namespace AppodealStack.UnityEditor.Utils
             return new Version(match1.ToString()).CompareTo(new Version(match2.ToString()));
         }
 
-        public static Texture2D makeColorTexture(int width, int height, Color color)
+        public static Texture2D MakeColorTexture(int width, int height, Color color)
         {
             var colors = new Color [width * height];
             for (var i = 0; i < colors.Length; ++i)
                 colors[i] = color;
 
-            var retval = new Texture2D(width, height);
-            retval.SetPixels(colors);
-            retval.Apply();
-            return retval;
+            var retVal = new Texture2D(width, height);
+            retVal.SetPixels(colors);
+            retVal.Apply();
+            return retVal;
         }
 
         public static XmlNode XmlFindChildNode(XmlNode parent, string name)
@@ -248,7 +251,7 @@ namespace AppodealStack.UnityEditor.Utils
             return path?.Replace('\\', '/');
         }
 
-        public static string getXcodeVersion()
+        public static string GetXcodeVersion()
         {
             string profilerOutput = null;
             try

@@ -9,10 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace AppodealStack.UnityEditor.Utils
 {
     [SuppressMessage("ReSharper", "MemberInitializerValueIgnored")]
-    [SuppressMessage("ReSharper", "UnusedVariable")]
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
-    [SuppressMessage("ReSharper", "RedundantToStringCall")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "ConvertToLocalFunction")]
     public class XmlUtilities
     {
         public static int Num;
@@ -61,7 +61,7 @@ namespace AppodealStack.UnityEditor.Utils
             }
             catch (XmlException ex)
             {
-                Debug.Log(string.Format("Failed while parsing XML file {0}\n{1}\n", filename, ex.ToString()));
+                Debug.Log($"Failed while parsing XML file {filename}\n{ex}\n");
                 return false;
             }
 
