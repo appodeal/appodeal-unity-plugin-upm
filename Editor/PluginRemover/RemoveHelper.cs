@@ -22,12 +22,6 @@ namespace AppodealStack.UnityEditor.PluginRemover
         public bool performOnlyIfTotalRemove;
     }
 
-    [System.Serializable]
-    internal class ItemsWrapper
-    {
-        public ItemToRemove[] items;
-    }
-    
     [InitializeOnLoad]
     public class RemoveHelper
     {
@@ -54,8 +48,8 @@ namespace AppodealStack.UnityEditor.PluginRemover
             if (!packageName.Contains(UnityPlugin)) return;
 
             if (EditorUtility.DisplayDialog("Appodeal Warning",
-                "It seems like you are going to install new version of Appodeal plugin. " +
-                "To avoid conflicts it's recommended to delete previous version of the plugin.",
+                "It seems that you are going to install a new version of Appodeal plugin. " +
+                "To avoid conflicts it's recommended to delete the previous version of the plugin first.",
                 "Delete automatically",
                 "I'll do it manually"))
             {

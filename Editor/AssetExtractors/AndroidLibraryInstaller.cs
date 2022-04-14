@@ -1,5 +1,5 @@
-﻿using UnityEditor;
-using System.IO;
+﻿using System.IO;
+using UnityEditor;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
@@ -17,8 +17,8 @@ namespace AppodealStack.UnityEditor.AssetExtractors
 
         private static void ImportAndroidLibraryFromPackage()
         {
-            var source = Path.Combine(AppodealEditorConstants.PackagePath, "Runtime/Plugins/Android/appodeal.androidlib~");
-            var destination = Path.Combine("Assets/Plugins/Android", "appodeal.androidlib");
+            string source = Path.Combine(AppodealEditorConstants.PackagePath, "Runtime/Plugins/Android/appodeal.androidlib~");
+            string destination = Path.Combine("Assets/Plugins/Android", "appodeal.androidlib");
 
             if (Directory.Exists(destination)) return;
 

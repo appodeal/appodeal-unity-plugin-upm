@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
+// ReSharper disable InconsistentNaming
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SDKManager.Models
 {
@@ -12,10 +12,7 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
         Service,
         Core
     }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
-    [SuppressMessage("ReSharper", "ConvertToAutoProperty")]
+    
     [Serializable]
     public class ServerConfig
     {
@@ -23,10 +20,7 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
         public List<AppodealDependency> services;
         public AppodealDependency core;
     }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Local")]
-    [SuppressMessage("ReSharper", "ConvertToAutoProperty")]
+    
     [Serializable]
     public class AppodealDependency
     {

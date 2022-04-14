@@ -10,11 +10,10 @@ using marijnz.EditorCoroutines;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
-#pragma warning disable 618
-
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SettingsWindow
 {
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class AppodealSettingsWindow : EditorWindow
     {
         private static List<string> _skAdNetworkIdentifiers;
@@ -34,7 +33,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             _skAdNetworkIdentifiers = new List<string>();
             var requestSkaNetworkIds = UnityWebRequest.Get("https://mw-backend.appodeal.com/v1/skadnetwork/");
             yield return requestSkaNetworkIds.SendWebRequest();
-            if (requestSkaNetworkIds.isError)
+            if (requestSkaNetworkIds.isNetworkError)
             {
                 Debug.LogError(requestSkaNetworkIds.error);
             }

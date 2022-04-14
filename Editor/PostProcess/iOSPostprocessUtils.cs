@@ -17,6 +17,7 @@ using AppodealStack.UnityEditor.InternalResources;
 namespace AppodealStack.UnityEditor.PostProcess
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class IosPostprocessUtils : MonoBehaviour
     {
         private const string Suffix = ".framework";
@@ -27,7 +28,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         {
             if (buildTarget.ToString() != "iOS") return;
 
-            var path = Path.Combine(buildPath, "Info.plist");
+            string path = Path.Combine(buildPath, "Info.plist");
 
             AddAdMobApplicationIdentifier(path);
             AddNsUserTrackingUsageDescription(path);
@@ -46,7 +47,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
             if (buildTarget != BuildTarget.iOS) return;
 
-            var plistPath = buildPath + "/Info.plist";
+            string plistPath = buildPath + "/Info.plist";
             var plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
 
@@ -55,8 +56,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             {
                 try
                 {
-                    PlistElement element;
-                    plist.root.values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkItems, out element);
+                    plist.root.values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkItems, out var element);
                     if (element != null) array = element.AsArray();
                 }
                 catch (Exception e)
@@ -143,8 +143,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             if (!CheckContainsKey(path, "NSUserTrackingUsageDescription"))
             {
                 AddKeyToPlist(path, "NSUserTrackingUsageDescription",
-                    "$(PRODUCT_NAME)" + " " +
-                    "needs your advertising identifier to provide personalized advertising experience tailored to you.");
+                    "$(PRODUCT_NAME) needs your advertising identifier to provide personalized advertising experience tailored to you.");
             }
         }
 
@@ -154,8 +153,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             if (!CheckContainsKey(path, "NSLocationWhenInUseUsageDescription"))
             {
                 AddKeyToPlist(path, "NSLocationWhenInUseUsageDescription",
-                    "$(PRODUCT_NAME)" + " " +
-                    "needs your location for analytics and advertising purposes.");
+                    "$(PRODUCT_NAME) needs your location for analytics and advertising purposes.");
             }
         }
 
@@ -165,8 +163,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             if (!CheckContainsKey(path, "NSCalendarsUsageDescription"))
             {
                 AddKeyToPlist(path, "NSCalendarsUsageDescription",
-                    "$(PRODUCT_NAME)" + " " +
-                    "needs your calendar to provide personalized advertising experience tailored to you.");
+                    "$(PRODUCT_NAME) needs your calendar to provide personalized advertising experience tailored to you.");
             }
         }
 
@@ -220,8 +217,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             "UIKit",
             "VideoToolbox",
             "WatchConnectivity",
-            "WebKit",
-            
+            "WebKit"
         };
 
         private static readonly string[] WeakFrameworkList =
@@ -240,7 +236,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         public static void PrepareProject(string buildPath)
         {
             Debug.Log("Preparing your Xcode project for Appodeal");
-            var projectPath = PBXProject.GetPBXProjectPath(buildPath);
+            string projectPath = PBXProject.GetPBXProjectPath(buildPath);
             var project = new PBXProject();
 
             project.ReadFromString(File.ReadAllText(projectPath));
@@ -257,7 +253,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             AddProjectLibs(PlatformLibs, project, target);
             project.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
-            var xcodeVersion = AppodealUnityUtils.GetXcodeVersion();
+            string xcodeVersion = AppodealUnityUtils.GetXcodeVersion();
             if (xcodeVersion == null ||
                 AppodealUnityUtils.CompareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
             {
@@ -278,8 +274,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             File.WriteAllText(projectPath, project.WriteToString());
         }
 
-        private static void AddProjectFrameworks(IEnumerable<string> frameworks, PBXProject project, string target,
-            bool weak)
+        private static void AddProjectFrameworks(IEnumerable<string> frameworks, PBXProject project, string target, bool weak)
         {
             foreach (var framework in frameworks)
             {
@@ -329,8 +324,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static bool CheckIosAttribute()
         {
-            var adMobConfigPath = Path.Combine(AppodealEditorConstants.PluginPath,
-                AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml");
+            string adMobConfigPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml");
 
             XDocument config;
             try
@@ -392,9 +386,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             {
                 try
                 {
-                    PlistElement value;
-                    var identifierExists = elem.AsDict().values
-                        .TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out value);
+                    var identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
 
                     if (identifierExists && value.AsString().Equals(id))
                     {
@@ -406,7 +398,6 @@ namespace AppodealStack.UnityEditor.PostProcess
                     Debug.LogError(e.Message);
                 }
             }
-
             return false;
         }
     }

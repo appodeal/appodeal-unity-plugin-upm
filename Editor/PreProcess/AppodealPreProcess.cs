@@ -1,33 +1,35 @@
-// ReSharper disable All
-
 using System;
 using System.IO;
+using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-using UnityEditor.Build.Reporting;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PreProcess
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class AppodealPreProcess : IPreprocessBuildWithReport
     {
         #region Constants
 
         //Templates in Unity Editor Data folder
-        private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
         public const string ManifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
+        
+        private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
 
         //Paths without leading Assets folder
-        public const string AndroidPluginsPath = "Plugins/Android";
-        public const string GradleTemplateName = "mainTemplate.gradle";
-        public const string ManifestTemplateName = "AndroidManifest.xml";
         public const string AppodealTemplatesPath = "Appodeal/InternalResources";
-        private const string AppodealDexesPath = "Assets/Plugins/Android/appodeal/assets/dex";
+        
+        private const string AndroidPluginsPath = "Plugins/Android";
+        private const string GradleTemplateName = "mainTemplate.gradle";
+        private const string ManifestTemplateName = "AndroidManifest.xml";
         private const string AppodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
 
         //Gradle search lines
@@ -44,12 +46,13 @@ namespace AppodealStack.UnityEditor.PreProcess
         public const string GradleTargetCapability = "targetCompatibility ";
 
         //Gradle add lines
-        public const string GradleImplementation = "implementation ";
-        public const string GradleMultidexDependency = "'androidx.multidex:multidex:2.0.1'";
         public const string GradleMultidexEnable = "multiDexEnabled true";
+        
+        private const string GradleImplementation = "implementation ";
+        private const string GradleMultidexDependency = "'androidx.multidex:multidex:2.0.1'";
 
         //Manifest add lines
-        public const string ManifestMultidexApp = "androidx.multidex.MultiDexApplication";
+        private const string ManifestMultidexApp = "androidx.multidex.MultiDexApplication";
 
         #endregion
 
@@ -239,7 +242,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 .Contains(GradleImplementation + GradleMultidexDependency);
         }
 
-        private void RemoveMultidexDependency(string path)
+        private void RemoveMultidexDependency()
         {
             var contentString = GetContentString(GetDefaultGradleTemplate());
             contentString = Regex.Replace(contentString, GradleImplementation + GradleMultidexDependency,
@@ -252,7 +255,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
         }
 
-        public static string GetDefaultGradleTemplate()
+        private static string GetDefaultGradleTemplate()
         {
             var defaultGradleTemplateFullName = AppodealUnityUtils.CombinePaths(
                 EditorApplication.applicationContentsPath,
@@ -292,6 +295,7 @@ namespace AppodealStack.UnityEditor.PreProcess
         public int callbackOrder => 0;
     }
 
+    [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
     internal class AndroidXmlDocument : XmlDocument
     {
         private readonly string _mPath;
@@ -315,7 +319,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             SaveAs(_mPath);
         }
 
-        public void SaveAs(string path)
+        private void SaveAs(string path)
         {
             using (var writer = new XmlTextWriter(path, new UTF8Encoding(false)))
             {
@@ -325,6 +329,8 @@ namespace AppodealStack.UnityEditor.PreProcess
         }
     }
 
+    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     internal class AndroidManifest : AndroidXmlDocument
     {
         public readonly XmlElement ApplicationElement;
@@ -357,7 +363,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             if (manifest == null) return;
             foreach (XmlNode child in manifest.SelectNodes("uses-permission"))
             {
-                for (int i = 0; i < child.Attributes.Count; i++)
+                for (int i = 0; i < child.Attributes?.Count; i++)
                 {
                     if (child.Attributes[i].Value.Equals(permission))
                     {
@@ -372,7 +378,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             var manifest = SelectSingleNode("/manifest/application");
             RemoveAdmobAppId();
             var childMetaData = CreateElement("meta-data");
-            manifest.AppendChild(childMetaData);
+            manifest?.AppendChild(childMetaData);
             childMetaData.Attributes.Append(CreateAndroidAttribute("name",
                 "com.google.android.gms.ads.APPLICATION_ID"));
             childMetaData.Attributes.Append(CreateAndroidAttribute("value", id));
@@ -404,7 +410,7 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             var manifest = SelectSingleNode("/manifest/application");
             if (manifest == null) return;
-            for (int i = 0; i < manifest.Attributes.Count; i++)
+            for (int i = 0; i < manifest.Attributes?.Count; i++)
             {
                 if (manifest.Attributes[i].Value.Equals("androidx.multidex.MultiDexApplication"))
                 {

@@ -16,6 +16,7 @@ namespace AppodealStack.UnityEditor.Utils
     [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
     [SuppressMessage("ReSharper", "InlineOutVariableDeclaration")]
     [SuppressMessage("ReSharper", "IdentifierTypo")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealUnityUtils
     {
         private const string UnityAndroidVersionEnumPrefix = "AndroidApiLevel";

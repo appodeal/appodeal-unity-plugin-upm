@@ -1,22 +1,20 @@
+using System;
+using System.IO;
+using System.Xml;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Networking;
 using File = UnityEngine.Windows.File;
-using System;
-using System.IO;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 using marijnz.EditorCoroutines;
 using AppodealStack.Monetization.Common;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.PluginRemover;
 using AppodealStack.UnityEditor.SDKManager.Models;
-
-#pragma warning disable 618
 
 #pragma warning disable 612
 

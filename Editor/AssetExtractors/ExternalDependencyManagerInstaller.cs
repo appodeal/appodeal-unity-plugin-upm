@@ -1,7 +1,7 @@
-using UnityEditor;
-using UnityEngine;
 using System;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
@@ -36,7 +36,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
 
         private static bool PluginInstallationRequest()
         {
-            var decision = EditorUtility.DisplayDialogComplex("External Dependency Manager Required",
+            int decision = EditorUtility.DisplayDialogComplex("External Dependency Manager Required",
                 "Appodeal uses External Dependency Manager to resolve dependencies.\n\nWould you like to import the package?",
                 "Import", "Cancel", "Ignore - Do not ask anymore");
 

@@ -1,6 +1,6 @@
-﻿using UnityEditor;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
+using UnityEditor;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 

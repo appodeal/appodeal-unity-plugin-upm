@@ -1,6 +1,9 @@
-﻿// ReSharper Disable CheckNamespace
+﻿using System.Diagnostics.CodeAnalysis;
+
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.Utils
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealEditorConstants
     {
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";

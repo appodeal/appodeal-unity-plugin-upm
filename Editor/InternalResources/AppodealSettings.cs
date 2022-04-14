@@ -1,7 +1,7 @@
-using UnityEditor;
-using UnityEngine;
 using System;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 using System.Collections.Generic;
 
 // ReSharper Disable CheckNamespace
@@ -41,8 +41,8 @@ namespace AppodealStack.UnityEditor.InternalResources
             get
             {
                 if (_instance != null) return _instance;
-                var settingsFilePath = Path.Combine("Assets", AppodealSettingsExportPath);
-                var settingsDir = Path.GetDirectoryName(settingsFilePath);
+                string settingsFilePath = Path.Combine("Assets", AppodealSettingsExportPath);
+                string settingsDir = Path.GetDirectoryName(settingsFilePath);
                 if (!Directory.Exists(settingsDir))
                 {
                     Directory.CreateDirectory(settingsDir ?? String.Empty);

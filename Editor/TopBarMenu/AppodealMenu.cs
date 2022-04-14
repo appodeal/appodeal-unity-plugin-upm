@@ -10,19 +10,19 @@ namespace AppodealStack.UnityEditor.TopBarMenu
 {
     public class AppodealMenu : ScriptableObject
     {
-        [MenuItem("Appodeal/SDK Documentation")]
+        [MenuItem("Appodeal/Plugin Documentation")]
         public static void OpenDocumentation()
         {
-            Application.OpenURL("http://www.appodeal.com/sdk/choose_framework?framework=2&full=1&platform=1");
+            Application.OpenURL("https://wiki.appodeal.com/en/unity/get-started");
         }
 
         [MenuItem("Appodeal/Appodeal Homepage")]
         public static void OpenAppodealHome()
         {
-            Application.OpenURL("http://www.appodeal.com");
+            Application.OpenURL("https://appodeal.com/");
         }
        
-        [MenuItem("Appodeal/Manage Appodeal SDK")]
+        [MenuItem("Appodeal/Plugin Configuration")]
         public static void AppodealSdkManager()
         {
             AppodealAdapterManager.ShowSdkManager();

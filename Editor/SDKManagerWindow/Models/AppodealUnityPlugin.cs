@@ -1,11 +1,10 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 
+// ReSharper disable InconsistentNaming
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.SDKManager.Models
 {
     [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Root
     {
         public Metadata metadata;
@@ -13,7 +12,6 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
     }
 
     [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class Metadata
     {
         public int per;
@@ -23,7 +21,6 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
 
 
     [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class AppodealUnityPlugin
     {
         public string created_at;
@@ -50,7 +47,6 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
     }
 
     [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SupportedSdk
     {
         public int id;
