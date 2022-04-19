@@ -71,7 +71,7 @@ namespace AppodealStack.Monetization.Common
         double GetPredictedEcpm(int adType);
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
         void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener);
-        void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener);
+        void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener);
 
         #region Deprecated signatures
 
