@@ -9,7 +9,6 @@ using UnityEngine.Video;
 using UnityEngine.EventSystems;
 using AppodealStack.Monetization.Common;
 using AppodealStack.UnityEditor.Utils;
-using AppodealStack.ConsentManagement.Api;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -43,13 +42,14 @@ namespace AppodealStack.Monetization.Platforms.Dummy
     /// <summary>
     /// Unity Editor implementation of <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-    [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+    [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+    [SuppressMessage("ReSharper", "MergeSequentialChecks")]
+    [SuppressMessage("ReSharper", "MergeCastWithTypeCheck")]
+    [SuppressMessage("ReSharper", "SimplifyConditionalTernaryExpression")]
+    [SuppressMessage("ReSharper", "ConvertClosureToMethodGroup")]
     public class DummyAppodealClient : IAppodealAdsClient
     {
         #region Variables
@@ -66,106 +66,102 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private const string    Clicked = "Clicked";
         private const string    Finished = "Finished";
 
-        private const int       INTERSTITIAL = 1;
-        private const int       REWARDED_VIDEO = 2;
-        private const int       MREC = 4;
-        private const int       BANNER = 8;
-        private const int       BANNER_VIEW = 16;
-        private const int       BANNER_BOTTOM = 32;
-        private const int       BANNER_TOP = 64;
-        private const int       BANNER_LEFT = 128;
-        private const int       BANNER_RIGHT = 256;
+        private const int       Interstitial = 1;
+        private const int       RewardedVideo = 2;
+        private const int       Mrec = 4;
+        private const int       Banner = 8;
+        private const int       BannerView = 16;
+        private const int       BannerBottom = 32;
+        private const int       BannerTop = 64;
+        private const int       BannerLeft = 128;
+        private const int       BannerRight = 256;
 
-        private readonly Dictionary<int,string> bannerPositions = new Dictionary<int,string> {
-            { BANNER_BOTTOM, "BannerBottomAd" },
-            { BANNER_TOP, "BannerTopAd" },
-            { BANNER_LEFT, "BannerLeftAd" },
-            { BANNER_RIGHT, "BannerRightAd" },
-            { BANNER_VIEW, "BannerViewAd" } };
+        private readonly Dictionary<int,string> _bannerPositions = new Dictionary<int,string> {
+            { BannerBottom, "BannerBottomAd" },
+            { BannerTop, "BannerTopAd" },
+            { BannerLeft, "BannerLeftAd" },
+            { BannerRight, "BannerRightAd" },
+            { BannerView, "BannerViewAd" } };
         
-        private readonly Dictionary<int,EditorAd> ads = new Dictionary<int,EditorAd> {
-            {INTERSTITIAL, new EditorAd(INTERSTITIAL, null, "InterstitialAd", "Interstitial", Vector2.zero)},
-            {BANNER, new EditorAd(BANNER, null, "BannerBottomAd", "Banner", new Vector2(600, 95))},
-            {REWARDED_VIDEO, new EditorAd(REWARDED_VIDEO, null, "RewardedAd", "RewardedVideo", Vector2.zero)},
-            {MREC, new EditorAd(MREC, null, "MrecAd", "Mrec", new Vector2(420, 350))} };
+        private readonly Dictionary<int,EditorAd> _ads = new Dictionary<int,EditorAd> {
+            {Interstitial, new EditorAd(Interstitial, null, "InterstitialAd", "Interstitial", Vector2.zero)},
+            {Banner, new EditorAd(Banner, null, "BannerBottomAd", "Banner", new Vector2(600, 95))},
+            {RewardedVideo, new EditorAd(RewardedVideo, null, "RewardedAd", "RewardedVideo", Vector2.zero)},
+            {Mrec, new EditorAd(Mrec, null, "MrecAd", "Mrec", new Vector2(420, 350))} };
         
-        private IInterstitialAdListener     interstitialAdListener;
-        private IBannerAdListener           bannerAdListener;
-        private IRewardedVideoAdListener    rewardedVideoAdListener;
-        private IMrecAdListener             mrecAdListener;
-        private IAppodealInitializationListener appodealInitializationListener;
+        private IInterstitialAdListener     _interstitialAdListener;
+        private IBannerAdListener           _bannerAdListener;
+        private IRewardedVideoAdListener    _rewardedVideoAdListener;
+        private IMrecAdListener             _mrecAdListener;
+        private IAppodealInitializationListener _appodealInitializationListener;
 
-        private VideoPlayer     videoPlayer;
-        private Toggle          loggingToggle;
+        private VideoPlayer     _videoPlayer;
+        private Toggle          _loggingToggle;
 
-        private bool            _isLoggingEnabled;
-        private bool            _isSDKInitialized;
-        private bool            _hasConsentGiven;
-        private bool            _shouldReward;
-        private bool            isLoggingEnabled { get {return _isLoggingEnabled;} set {_isLoggingEnabled = value;} }
-        private bool            isSDKInitialized { get {return _isSDKInitialized;} set {_isSDKInitialized = value;} }
-        private bool            hasConsentGiven { get {return _hasConsentGiven;} set {_hasConsentGiven = value;} }
-        private bool            shouldReward { get {return _shouldReward;} set {_shouldReward = value;} }
+        private bool            IsLoggingEnabled { get; set; }
+        private bool            IsSDKInitialized { get; set; }
+        private bool            HasConsentGiven { get; set; }
+        private bool            ShouldReward { get; set; }
 
         #endregion
         
-        private static int nativeAdTypesForType(int adTypes)
+        private static int NativeAdTypesForType(int adTypes)
         {
             var nativeAdTypes = 0;
 
             if ((adTypes & AppodealAdType.Interstitial) > 0)
             {
-                nativeAdTypes |= INTERSTITIAL;
+                nativeAdTypes |= Interstitial;
             }
 
             if ((adTypes & AppodealAdType.Banner) > 0)
             {
-                nativeAdTypes |= BANNER;
+                nativeAdTypes |= Banner;
             }
 
             if ((adTypes & AppodealAdType.Mrec) > 0)
             {
-                nativeAdTypes |= MREC;
+                nativeAdTypes |= Mrec;
             }
 
             if ((adTypes & AppodealAdType.RewardedVideo) > 0)
             {
-                nativeAdTypes |= REWARDED_VIDEO;
+                nativeAdTypes |= RewardedVideo;
             }
 
             return nativeAdTypes;
         }
 
-        private static int nativeShowStyleForType(int adTypes)
+        private static int NativeShowStyleForType(int adTypes)
         {
             if ((adTypes & AppodealShowStyle.Interstitial) > 0)
             {
-                return INTERSTITIAL;
+                return Interstitial;
             }
 
             if ((adTypes & AppodealShowStyle.BannerTop) > 0)
             {
-                return BANNER_TOP;
+                return BannerTop;
             }
 
             if ((adTypes & AppodealShowStyle.BannerBottom) > 0)
             {
-                return BANNER_BOTTOM;
+                return BannerBottom;
             }
 
             if ((adTypes & AppodealShowStyle.BannerLeft) > 0)
             {
-                return BANNER_LEFT;
+                return BannerLeft;
             }
 
             if ((adTypes & AppodealShowStyle.BannerRight) > 0)
             {
-                return BANNER_RIGHT;
+                return BannerRight;
             }
 
             if ((adTypes & AppodealShowStyle.RewardedVideo) > 0)
             {
-                return REWARDED_VIDEO;
+                return RewardedVideo;
             }
 
             return 0;
@@ -175,20 +171,20 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         
         private void SimSetAutoCache(int adTypes, bool isEnabled)
         {
-            ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => ads[key].IsAutoCacheEnabled = isEnabled);
+            _ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => _ads[key].IsAutoCacheEnabled = isEnabled);
         }
 
         private void SimInitAdTypes(int adTypes)
         {
-            ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => ads[key].IsInitialized = true);
-            ads.Keys.Where(key => ads[key].IsAutoCacheEnabled && ads[key].IsInitialized).ToList().ForEach(key => SimCacheAd(key));
+            _ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => _ads[key].IsInitialized = true);
+            _ads.Keys.Where(key => _ads[key].IsAutoCacheEnabled && _ads[key].IsInitialized).ToList().ForEach(key => SimCacheAd(key));
 
-            if (appodealInitializationListener != null) appodealInitializationListener.OnInitializationFinished(null);
+            if (_appodealInitializationListener != null) _appodealInitializationListener.OnInitializationFinished(null);
         }
 
         private bool SimCheckIfSDKInitialized(string methodName)
         {
-            if (!isSDKInitialized)
+            if (!IsSDKInitialized)
             {
                 Debug.LogError($"Initialize Appodeal SDK before calling {methodName} method");
                 return false;
@@ -207,7 +203,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return GetEditorAdObjectByAdType(adType)?.GameObject != null;
         }
 
-        private bool SimCacheAd(int adType)
+        private void SimCacheAd(int adType)
         {
             EditorAd ad = GetEditorAdObjectByAdType(adType);
             string prefabName = ad?.PrefabName;
@@ -215,7 +211,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (string.IsNullOrEmpty(prefabName))
             {
                 SimFireCallback(ad?.Name, FailedToLoad);
-                return false;
+                return;
             }
 
             var defaultPath = Path.Combine(AppodealEditorConstants.PackagePath, "Editor/EditorAds/", prefabName, ".prefab");
@@ -228,7 +224,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (adGameObject == null)
             {
                 SimFireCallback(ad.Name, FailedToLoad);
-                return false;
+                return;
             }
 
             adGameObject.SetActive(false);
@@ -249,20 +245,20 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                 {
                     btn.onClick.AddListener(() =>
                     {
-                        shouldReward = toggle?.isOn ?? false;
+                        ShouldReward = toggle?.isOn ?? false;
                         
                         Object.Destroy(adGameObject);
 
-                        if (ad.Type == INTERSTITIAL) SimFireCallback(ad.Name, Closed);
-                        else if (ad.Type == REWARDED_VIDEO) SimFireCallback(ad.Name, Closed, shouldReward);
+                        if (ad.Type == Interstitial) SimFireCallback(ad.Name, Closed);
+                        else if (ad.Type == RewardedVideo) SimFireCallback(ad.Name, Closed, ShouldReward);
                         
-                        if (shouldReward)
+                        if (ShouldReward)
                         {
-                            shouldReward = false;
+                            ShouldReward = false;
                             SimFireCallback(ad.Name, Finished, 50d, "diamonds");
                         }
 
-                        videoPlayer = null;
+                        _videoPlayer = null;
 
                         if (ad.IsAutoCacheEnabled) SimCacheAd(ad.Type);
                     });
@@ -279,10 +275,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             ad.GameObject = adGameObject;
             
-            if (ad.Type == BANNER) SimFireCallback(ad.Name, Loaded, 80, false);
+            if (ad.Type == Banner) SimFireCallback(ad.Name, Loaded, 80, false);
             else SimFireCallback(ad.Name, Loaded, false);
-
-            return true;
         }
 
         private bool SimShowAdAtPos(int adType, Vector2 pos)
@@ -323,26 +317,26 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             EditorAd ad = GetEditorAdObjectByAdType(adType);
 
             switch (ad.Type) {
-                case BANNER:
+                case Banner:
                     SetBannerPosition(ad, adType);
                     SetBannerWidth(ad, adType);
                     break;
-                case INTERSTITIAL:
+                case Interstitial:
                     var img = ad.GameObject.transform.Find("Panel").GetComponent<Image>();
                     var sprite = Screen.height < Screen.width ? Resources.Load<Sprite>(HorizontalInterstitialAssetName) : Resources.Load<Sprite>(VerticalInterstitialAssetName);
                     img.sprite = sprite;
                     break;
 
-                case REWARDED_VIDEO:
-                    videoPlayer = ad.GameObject.GetComponentInChildren<VideoPlayer>();
+                case RewardedVideo:
+                    _videoPlayer = ad.GameObject.GetComponentInChildren<VideoPlayer>();
                     var videoClip = Screen.height < Screen.width ? Resources.Load<VideoClip>(HorizontalVideoAssetName) : Resources.Load<VideoClip>(VerticalVideoAssetName);
-                    videoPlayer.clip = videoClip;
+                    _videoPlayer.clip = videoClip;
                     break;
             }
             
             ad.GameObject.SetActive(true);
             SimFireCallback(ad.Name, Shown);
-            videoPlayer?.Play();
+            _videoPlayer?.Play();
 
             return true;
         }
@@ -353,8 +347,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             if (ad == null) return;
 
-            if (ad.PrefabName == "BannerViewAd" && adType != BANNER_VIEW) return;
-            else if (ad.PrefabName != "BannerViewAd" && adType == BANNER_VIEW) return;
+            if (ad.PrefabName == "BannerViewAd" && adType != BannerView) return;
+            else if (ad.PrefabName != "BannerViewAd" && adType == BannerView) return;
 
             ad.GameObject?.SetActive(false);
         }
@@ -379,65 +373,65 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             switch (adTypeName)
             {
                 case "Interstitial":
-                    if (methodName == FailedToLoad) interstitialAdListener?.OnInterstitialFailedToLoad();
-                    else if (methodName == Closed) interstitialAdListener?.OnInterstitialClosed();
-                    else if (methodName == Shown) interstitialAdListener?.OnInterstitialShown();
-                    else if (methodName == Loaded) interstitialAdListener?.OnInterstitialLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
-                    else if (methodName == Clicked) interstitialAdListener?.OnInterstitialClicked();
+                    if (methodName == FailedToLoad) _interstitialAdListener?.OnInterstitialFailedToLoad();
+                    else if (methodName == Closed) _interstitialAdListener?.OnInterstitialClosed();
+                    else if (methodName == Shown) _interstitialAdListener?.OnInterstitialShown();
+                    else if (methodName == Loaded) _interstitialAdListener?.OnInterstitialLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
+                    else if (methodName == Clicked) _interstitialAdListener?.OnInterstitialClicked();
                     break;
                 case "Banner":
-                    if (methodName == FailedToLoad) bannerAdListener?.OnBannerFailedToLoad();
-                    else if (methodName == Shown) bannerAdListener?.OnBannerShown();
-                    else if (methodName == Loaded) bannerAdListener?.OnBannerLoaded((param1 != null && param1 is int) ? (int)param1 : 50, (param2 != null && param2 is bool) ? (bool)param2 : false);
-                    else if (methodName == Clicked) bannerAdListener?.OnBannerClicked();
+                    if (methodName == FailedToLoad) _bannerAdListener?.OnBannerFailedToLoad();
+                    else if (methodName == Shown) _bannerAdListener?.OnBannerShown();
+                    else if (methodName == Loaded) _bannerAdListener?.OnBannerLoaded((param1 != null && param1 is int) ? (int)param1 : 50, (param2 != null && param2 is bool) ? (bool)param2 : false);
+                    else if (methodName == Clicked) _bannerAdListener?.OnBannerClicked();
                     break;
                 case "RewardedVideo":
-                    if (methodName == FailedToLoad) rewardedVideoAdListener?.OnRewardedVideoFailedToLoad();
-                    else if (methodName == Closed) rewardedVideoAdListener?.OnRewardedVideoClosed((param1 != null && param1 is bool) ? (bool)param1 : false);
-                    else if (methodName == Shown) rewardedVideoAdListener?.OnRewardedVideoShown();
-                    else if (methodName == Loaded) rewardedVideoAdListener?.OnRewardedVideoLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
-                    else if (methodName == Clicked) rewardedVideoAdListener?.OnRewardedVideoClicked();
-                    else if (methodName == Finished) rewardedVideoAdListener?.OnRewardedVideoFinished((param1 != null && param1 is double) ? (double)param1 : 100d, (param2 != null && param2 is string) ? (string)param2 : "coins");
+                    if (methodName == FailedToLoad) _rewardedVideoAdListener?.OnRewardedVideoFailedToLoad();
+                    else if (methodName == Closed) _rewardedVideoAdListener?.OnRewardedVideoClosed((param1 != null && param1 is bool) ? (bool)param1 : false);
+                    else if (methodName == Shown) _rewardedVideoAdListener?.OnRewardedVideoShown();
+                    else if (methodName == Loaded) _rewardedVideoAdListener?.OnRewardedVideoLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
+                    else if (methodName == Clicked) _rewardedVideoAdListener?.OnRewardedVideoClicked();
+                    else if (methodName == Finished) _rewardedVideoAdListener?.OnRewardedVideoFinished((param1 != null && param1 is double) ? (double)param1 : 100d, (param2 != null && param2 is string) ? (string)param2 : "coins");
                     break;
                 case "Mrec":
-                    if (methodName == FailedToLoad) mrecAdListener?.OnMrecFailedToLoad();
-                    else if (methodName == Shown) mrecAdListener?.OnMrecShown();
-                    else if (methodName == Loaded) mrecAdListener?.OnMrecLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
-                    else if (methodName == Clicked) mrecAdListener?.OnMrecClicked();
+                    if (methodName == FailedToLoad) _mrecAdListener?.OnMrecFailedToLoad();
+                    else if (methodName == Shown) _mrecAdListener?.OnMrecShown();
+                    else if (methodName == Loaded) _mrecAdListener?.OnMrecLoaded((param1 != null && param1 is bool) ? (bool)param1 : false);
+                    else if (methodName == Clicked) _mrecAdListener?.OnMrecClicked();
                     break;
             }
         }
 
         private void SimSetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            interstitialAdListener = listener;
+            _interstitialAdListener = listener;
         }
 
         private void SimSetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            rewardedVideoAdListener = listener;
+            _rewardedVideoAdListener = listener;
         }
 
         private void SimSetBannerCallbacks(IBannerAdListener listener)
         {
-            bannerAdListener = listener;
+            _bannerAdListener = listener;
         }
 
         private void SimSetMrecCallbacks(IMrecAdListener listener)
         {
-            mrecAdListener = listener;
+            _mrecAdListener = listener;
         }
 
         private EditorAd GetEditorAdObjectByAdType(int adType)
         {
             EditorAd ad;
-            if (adType == BANNER || bannerPositions.ContainsKey(adType))
+            if (adType == Banner || _bannerPositions.ContainsKey(adType))
             {
-                ads.TryGetValue(BANNER, out ad);
+                _ads.TryGetValue(Banner, out ad);
             }
             else
             {
-                ads.TryGetValue(adType, out ad);
+                _ads.TryGetValue(adType, out ad);
             }
 
             return ad;
@@ -460,27 +454,26 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private void SetBannerWidth(EditorAd ad, int adType)
         {
             var rt = ad.GameObject.transform.Find("Panel").GetComponent<RectTransform>();
-            if (adType == BANNER_LEFT || adType == BANNER_RIGHT) rt.sizeDelta = new Vector2(ad.Size.y, Mathf.Min(Screen.height, ad.Size.x));
+            if (adType == BannerLeft || adType == BannerRight) rt.sizeDelta = new Vector2(ad.Size.y, Mathf.Min(Screen.height, ad.Size.x));
             else rt.sizeDelta = new Vector2(Mathf.Min(Screen.width, ad.Size.x), ad.Size.y);
         }
 
         private string GetBannerPrefabNameByBannerPosition(int adType)
         {
-            string prefabName;
-            bannerPositions.TryGetValue(adType, out prefabName);
+            _bannerPositions.TryGetValue(adType, out var prefabName);
 
             return prefabName;
         }
 
         private bool CheckIfLoggingEnabled()
         {
-            if (loggingToggle == null) 
+            if (_loggingToggle == null) 
             {
-                loggingToggle = GameObject.Find("Logging Toggle")?.GetComponent<Toggle>();
-                isLoggingEnabled = loggingToggle?.isOn ?? false;
+                _loggingToggle = GameObject.Find("Logging Toggle")?.GetComponent<Toggle>();
+                IsLoggingEnabled = _loggingToggle?.isOn ?? false;
             }
              
-            return isLoggingEnabled;
+            return IsLoggingEnabled;
         }
 
         #endregion
@@ -489,39 +482,39 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            appodealInitializationListener = listener;
+            _appodealInitializationListener = listener;
             initialize(appKey, adTypes);
         }
 
         public void initialize(string appKey, int adTypes)
         {
-            if (isSDKInitialized) return;
+            if (IsSDKInitialized) return;
 
             Debug.LogWarning("There is only simplified workflow of Appodeal SDK simulated in Editor. Make sure to test advertising on a real Android/iOS device before publishing.");
-            isSDKInitialized = true;
-            SimInitAdTypes(nativeAdTypesForType(adTypes));
+            IsSDKInitialized = true;
+            SimInitAdTypes(NativeAdTypesForType(adTypes));
         }
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
             initialize(appKey, adTypes);
-            hasConsentGiven = hasConsent;
+            HasConsentGiven = hasConsent;
         }
 
         public void initialize(string appKey, int adTypes, IConsent consent)
         {
             initialize(appKey, adTypes);
-            hasConsentGiven = consent?.GetAuthorizationStatus() == ConsentAuthorizationStatus.Authorized;
+            HasConsentGiven = consent?.GetAuthorizationStatus() == ConsentAuthorizationStatus.Authorized;
         }
 
         public bool IsInitialized(int adType)
         {
-            return SimCheckIfAdTypeInitialized(nativeAdTypesForType(adType));
+            return SimCheckIfAdTypeInitialized(NativeAdTypesForType(adType));
         }
 
         public bool Show(int adTypes)
         {
-            return SimShowAd(nativeShowStyleForType(adTypes));
+            return SimShowAd(NativeShowStyleForType(adTypes));
         }
 
         public bool Show(int adTypes, string placement)
@@ -531,17 +524,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public bool ShowBannerView(int yAxis, int xAxis, string placement)
         {
-            return SimShowAdAtPos(BANNER_VIEW, new Vector2(xAxis, yAxis));
+            return SimShowAdAtPos(BannerView, new Vector2(xAxis, yAxis));
         }
 
         public bool ShowMrecView(int yAxis, int xGravity, string placement)
         {
-            return SimShowAdAtPos(MREC, new Vector2(xGravity, yAxis));
+            return SimShowAdAtPos(Mrec, new Vector2(xGravity, yAxis));
         }
 
         public bool IsLoaded(int adTypes)
         {
-            return SimCheckIfAdTypeIsLoaded(nativeAdTypesForType(adTypes));
+            return SimCheckIfAdTypeIsLoaded(NativeAdTypesForType(adTypes));
         }
 
         public void Cache(int adTypes)
@@ -558,32 +551,32 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                 return;
             }
 
-            SimCacheAd(nativeAdTypesForType(adTypes));
+            SimCacheAd(NativeAdTypesForType(adTypes));
         }
 
         public void Hide(int adTypes)
         {
-            SimHideAd(nativeAdTypesForType(adTypes));
+            SimHideAd(NativeAdTypesForType(adTypes));
         }
 
         public void HideBannerView()
         {
-            SimHideAd(BANNER_VIEW);
+            SimHideAd(BannerView);
         }
 
         public void HideMrecView()
         {
-            SimHideAd(MREC);
+            SimHideAd(Mrec);
         }
 
         public bool IsPrecache(int adTypes)
         {
-            return SimIsPrecache(nativeAdTypesForType(adTypes));
+            return SimIsPrecache(NativeAdTypesForType(adTypes));
         }
 
         public void SetAutoCache(int adTypes, bool autoCache)
         {
-            SimSetAutoCache(nativeAdTypesForType(adTypes), autoCache);
+            SimSetAutoCache(NativeAdTypesForType(adTypes), autoCache);
         }
 
         public bool CanShow(int adTypes)
@@ -598,17 +591,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public bool IsAutoCacheEnabled(int adType)
         {
-            return SimIsAutoCacheEnabled(nativeAdTypesForType(adType));
+            return SimIsAutoCacheEnabled(NativeAdTypesForType(adType));
         }
 
         public void Destroy(int adTypes)
         {
-            SimDestroyAd(nativeAdTypesForType(adTypes));
+            SimDestroyAd(NativeAdTypesForType(adTypes));
         }
 
         public void SetLogLevel(AppodealLogLevel logging)
         {
-            isLoggingEnabled = logging != AppodealLogLevel.None;
+            IsLoggingEnabled = logging != AppodealLogLevel.None;
         }
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
@@ -858,7 +851,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateInAppPurchaseAndroid method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateInAppPurchaseIos method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
