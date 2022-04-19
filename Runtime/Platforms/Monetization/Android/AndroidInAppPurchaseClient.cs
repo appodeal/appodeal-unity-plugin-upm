@@ -15,12 +15,10 @@ namespace AppodealStack.Monetization.Platforms.Android
             switch (purchaseType)
             {
                 case AndroidPurchaseType.Subs:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.data.inapp.InAppPurchase")
-                        .CallStatic<AndroidJavaObject>("newSubscriptionBuilder");
+                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.modules.common.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder");
                     break;
                 case AndroidPurchaseType.InApp:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.data.inapp.InAppPurchase")
-                        .CallStatic<AndroidJavaObject>("newInAppBuilder");
+                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.modules.common.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder");
                     break;
             }
         }
@@ -32,7 +30,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public IInAppPurchase Build()
         {
-            _inAppPurchase = new AndroidJavaObject("com.appodeal.ads.data.inapp.InAppPurchase");
+            _inAppPurchase = new AndroidJavaObject("com.appodeal.ads.modules.common.inapp.InAppPurchase");
             _inAppPurchase = GetBuilder().Call<AndroidJavaObject>("build");
             return new AndroidInAppPurchase(_inAppPurchase);
         }
