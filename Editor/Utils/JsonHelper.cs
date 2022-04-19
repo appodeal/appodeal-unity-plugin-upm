@@ -28,7 +28,7 @@ namespace AppodealStack.UnityEditor.Utils
 
         public static string FixJson(string value)
         {
-            value = "{\"Items\":" + value + "}";
+            value = "{\"items\":" + value + "}";
             return value;
         }
 
