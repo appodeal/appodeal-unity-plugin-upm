@@ -100,7 +100,7 @@
 
 - (void)consentManagerDidDismissDialog:(STKConsentManager *)consentManager {
     if (self.onConsentFormClosed != NULL) {
-        self.onConsentFormClosed(GetConsent());
+        self.onConsentFormClosed(CmGetConsent());
     }
 }
 
