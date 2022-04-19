@@ -3,7 +3,6 @@
     "references": [
         "AppodealStack.UnityEditor.Utils",
         "AppodealStack.Monetization.Common",
-        "AppodealStack.ConsentManagement.Api",
         "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
