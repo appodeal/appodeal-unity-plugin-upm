@@ -7,18 +7,19 @@
 #import <Appodeal/Appodeal.h>
 #import <StackConsentManager/StackConsentManager.h>
 
-#import "AppodealInitializationDelegate.h"
-#import "AppodealInterstitialDelegate.h"
-#import "AppodealBannerDelegate.h"
-#import "AppodealBannerViewDelegate.h"
-#import "AppodealMrecViewDelegate.h"
-#import "AppodealRewardedVideoDelegate.h"
 #import "AppodealUnityMrecView.h"
 #import "AppodealUnityBannerView.h"
-#import "AppodealIAPValidationDelegate.h"
 
-static AppodealUnityBannerView *bannerUnity;
+#import "AppodealBannerDelegate.h"
+#import "AppodealMrecViewDelegate.h"
+#import "AppodealBannerViewDelegate.h"
+#import "AppodealInterstitialDelegate.h"
+#import "AppodealRewardedVideoDelegate.h"
+#import "AppodealIAPValidationDelegate.h"
+#import "AppodealInitializationDelegate.h"
+
 static AppodealUnityMrecView *mrecUnity;
+static AppodealUnityBannerView *bannerUnity;
 
 UIViewController *RootViewController() {
     return ((UnityAppController *)[UIApplication sharedApplication].delegate).rootViewController;
@@ -72,7 +73,7 @@ void AppodealInitialize(const char *apiKey, int types, const char *pluginVer, co
     [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types];
 }
 
-void AppodealInitialize(const char *apiKey, int types, BOOL consent, const char *pluginVer, const char *engineVer) {
+void AppodealInitializeOld(const char *apiKey, int types, BOOL consent, const char *pluginVer, const char *engineVer) {
     [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
     [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
     [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types hasConsent:consent];
@@ -152,13 +153,13 @@ void AppodealSetTabletBanners(bool value) {
     if (!bannerUnity) {
         bannerUnity = [AppodealUnityBannerView sharedInstance];
     }
-    
+
     if (value) {
         [Appodeal setPreferredBannerAdSize:kAppodealUnitSize_728x90];
     } else {
         [Appodeal setPreferredBannerAdSize:kAppodealUnitSize_320x50];
     }
-    
+
     [bannerUnity setTabletBanner:value];
 }
 
@@ -306,7 +307,7 @@ BOOL AppodealIsAutoCacheEnabled(int adType) {
 }
 
 void AppodealSetCustomFilterBool(const char *name, BOOL value) {
-    [Appodeal setCustomStateValue:value forKey:[NSString stringWithUTF8String:name]];
+    [Appodeal setCustomStateValue:[NSNumber numberWithBool:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetCustomFilterInt(const char *name, int value) {
@@ -326,7 +327,7 @@ void AppodealResetCustomFilter(const char *name) {
 }
 
 void AppodealSetExtraDataBool(const char *name, BOOL value) {
-    [Appodeal setExtrasValue:value forKey:[NSString stringWithUTF8String:name]];
+    [Appodeal setExtrasValue:[NSNumber numberWithBool:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetExtraDataInt(const char *name, int value) {
@@ -380,7 +381,7 @@ void AppodealSetUserGender(int gender) {
 }
 
 void AppodealLogEvent(const char *eventName, const char *eventParams) {
-    [Appodeal trackEvent:[NSString NSStringFromUTF8String:eventName] customParameters:NSDictionaryFromUTF8String(eventParams)];
+    [Appodeal trackEvent:NSStringFromUTF8String(eventName) customParameters:NSDictionaryFromUTF8String(eventParams)];
 }
 
 void AppodealValidateInAppPurchase(const char *productIdentifier,
@@ -389,21 +390,22 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
                                    const char *transactionId,
                                    const char *additionalParams,
                                    int type,
-                                   InAppPurchaseValidationSuccessCallback success,
-                                   InAppPurchaseValidationFailureCallback failure) {
+                                   InAppPurchaseValidationSucceededCallback success,
+                                   InAppPurchaseValidationFailedCallback failure) {
     NSString *productIdString = NSStringFromUTF8String(productIdentifier);
     NSString *priceString = NSStringFromUTF8String(price);
     NSString *currencyString = NSStringFromUTF8String(currency);
     NSString *transactionIdString = NSStringFromUTF8String(transactionId);
     NSDictionary *additionalParamsDict = NSDictionaryFromUTF8String(additionalParams);
     
-    [Appodeal validateAndTrackInAppPurchaseWithProductId:productIdString
-                                                    type:(APDPurchaseType)type
-                                                   price:priceString
-                                                currency:currencyString
-                                           transactionId:transactionIdString
-                                    additionalParameters:additionalParamsDict
-                                                 success:^(NSDictionary *data) {
+    [Appodeal validateAndTrackInAppPurchase:productIdString
+                                       type:(APDPurchaseType)type
+                                      price:priceString
+                                   currency:[currencyString substringWithRange:NSMakeRange(0, MIN(5,currencyString.length))]
+                              transactionId:transactionIdString
+                       additionalParameters:additionalParamsDict
+
+                                    success:^(NSDictionary *data) {
         NSData *jsonData;
         NSError *jsonError;
         jsonData = [NSJSONSerialization dataWithJSONObject:data
@@ -418,7 +420,7 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
             success ? success(JSONString.UTF8String) : nil;
         }
     }
-                                                failure:^(NSError *error) {
+                                    failure:^(NSError *error) {
         NSString *errorString = (!error) ? @"unknown" : [NSString stringWithFormat:@"error: %@", error.localizedDescription];        
         failure ? failure(errorString.UTF8String) : nil;
     }];
