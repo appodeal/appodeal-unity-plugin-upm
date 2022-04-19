@@ -13,7 +13,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
     /// <summary>
     /// iOS implementation of <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    // [SuppressMessage("ReSharper", "InconsistentNaming")]
+    // [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class IosAppodealClient : IAppodealAdsClient
     {
@@ -338,13 +339,13 @@ namespace AppodealStack.Monetization.Platforms.Ios
         #region In-App Purchase Validation delegate
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationSucceededCallback))]
-        private static void inAppPurchaseValidationSucceeded(string json)
+        private static void InAppPurchaseValidationSucceeded(string json)
         {
             _inAppPurchaseValidationListener?.OnInAppPurchaseValidationSucceeded(json);
         }
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationFailedCallback))]
-        private static void inAppPurchaseValidationFailed(string error)
+        private static void InAppPurchaseValidationFailed(string error)
         {
             _inAppPurchaseValidationListener?.OnInAppPurchaseValidationFailed(error);
         }
@@ -454,7 +455,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
-            AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes), hasConsent,
+            AppodealObjCBridge.AppodealInitializeOld(appKey, NativeAdTypesForType(adTypes), hasConsent,
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
@@ -484,9 +485,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return AppodealObjCBridge.AppodealShowBannerAdViewForPlacement(yAxis, xGravity, placement);
         }
 
-        public bool ShowMrecView(int YAxis, int XGravity, string Placement)
+        public bool ShowMrecView(int yAxis, int xGravity, string placement)
         {
-            return AppodealObjCBridge.AppodealShowMrecAdViewForPlacement(YAxis, XGravity, Placement);
+            return AppodealObjCBridge.AppodealShowMrecAdViewForPlacement(yAxis, xGravity, placement);
         }
 
         public bool IsLoaded(int adTypes)
@@ -780,16 +781,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             var paramsFiltered = new Dictionary<string, object>();
 
-            eventParams.Keys.Where(key => eventParams[key] is System.Int32 || eventParams[key] is System.Double || eventParams[key] is System.String)
+            eventParams.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
                 .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
             AppodealObjCBridge.AppodealLogEvent(eventName, DictionaryToString(paramsFiltered));
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
         {
             _inAppPurchaseValidationListener = listener;
-            AppodealObjCBridge.AppodealValidateInAppPurchase(productIdentifier, price, currency, transactionId, additionalParams, (int) type, inAppPurchaseValidationSucceeded, inAppPurchaseValidationFailed);
+            AppodealObjCBridge.AppodealValidateInAppPurchase(productIdentifier, price, currency, transactionId, DictionaryToString(additionalParams), (int) type, InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 
         public void Destroy(int adType)
