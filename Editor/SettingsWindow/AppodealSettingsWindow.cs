@@ -51,8 +51,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                     yield break;
                 }
 
-                var skaItems =
-                    JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.FixJson(requestSkaNetworkIds.downloadHandler.text));
+                var skaItems = JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.FixJson(requestSkaNetworkIds.downloadHandler.text));
 
                 foreach (var skaItem in skaItems)
                 {
