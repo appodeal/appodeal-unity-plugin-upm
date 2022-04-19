@@ -779,7 +779,7 @@ namespace AppodealStack.Monetization.Api
         /// <param name="additionalParams"></param>
         /// <param name="type"></param>
         /// <param name="listener"></param>
-        public static void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public static void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
         {
             GetInstance().ValidateInAppPurchaseIos(productIdentifier, price, currency, transactionId, additionalParams, type, listener);
         }
