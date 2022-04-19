@@ -42,7 +42,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
                 return new AndroidJavaObject("java.lang.Float", value);
             }
 
-            return value;
+            return null;
         }
     }
 }
