@@ -15,8 +15,7 @@ namespace AppodealStack.Monetization.Platforms.Android
     {
         private readonly IAppodealInitializationListener _listener;
 
-        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base(
-            "com.appodeal.ads.data.initialization.ApdInitializationCallback")
+        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base("com.appodeal.ads.initializing.ApdInitializationCallback")
         {
             _listener = listener;
         }
