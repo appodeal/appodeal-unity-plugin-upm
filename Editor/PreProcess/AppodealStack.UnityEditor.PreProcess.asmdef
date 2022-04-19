@@ -1,7 +1,6 @@
 {
     "name": "AppodealStack.UnityEditor.PreProcess",
     "references": [
-        "SimpleJSON",
         "AppodealStack.UnityEditor.Utils",
         "AppodealStack.UnityEditor.InternalResources"
     ],
