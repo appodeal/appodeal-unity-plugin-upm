@@ -2,9 +2,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
-using AppodealStack.ConsentManagement.Api;
 using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms.Android;
 
@@ -31,8 +29,8 @@ namespace AppodealStack.Monetization.Platforms.Android
         private AndroidJavaClass _appodealClass;
         private AndroidJavaClass _appodealUnityClass;
 
-        private AndroidJavaObject _appodealBannerInstance;
         private AndroidJavaObject _activity;
+        private AndroidJavaObject _appodealBannerInstance;
 
         private static int NativeYAxisPosForUnityViewPos(int viewPos)
         {
@@ -127,10 +125,8 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm",
-                AppodealVersions.GetUnityVersion());
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes),
-                new AppodealInitializationCallback(listener));
+            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
+            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), new AppodealInitializationCallback(listener));
         }
 
         public void initialize(string appKey, int adTypes)
@@ -140,19 +136,15 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm",
-                AppodealVersions.GetUnityVersion());
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes),
-                hasConsent);
+            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
+            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), hasConsent);
         }
 
         public void initialize(string appKey, int adTypes, IConsent consent)
         {
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm",
-                AppodealVersions.GetUnityVersion());
+            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
             var androidConsent = consent.NativeConsent as AndroidConsent;
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes),
-                androidConsent?.GetConsentJavaObject());
+            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), androidConsent?.GetConsentJavaObject());
         }
 
         public bool IsInitialized(int adType)
@@ -252,20 +244,17 @@ namespace AppodealStack.Monetization.Platforms.Android
             {
                 case AppodealLogLevel.None:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel",
-                        logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(0)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(0)));
                     break;
                 }
                 case AppodealLogLevel.Debug:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel",
-                        logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(1)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(1)));
                     break;
                 }
                 case AppodealLogLevel.Verbose:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel",
-                        logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(2)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(2)));
                     break;
                 }
                 default:
@@ -291,27 +280,22 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void UpdateConsentGdpr(GdprUserConsent consent)
         {
+            var gdprConsent = new AndroidJavaClass("com.appodeal.ads.regulator.GDPRUserConsent");
             switch (consent)
             {
                 case GdprUserConsent.Unknown:
                 {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$GDPRUserConsent")
-                            .GetStatic<AndroidJavaObject>("Unknown"));
+                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "Unknown"));
                     break;
                 }
                 case GdprUserConsent.Personalized:
                 {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$GDPRUserConsent")
-                            .GetStatic<AndroidJavaObject>("Personalized"));
+                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "Personalized"));
                     break;
                 }
                 case GdprUserConsent.NonPersonalized:
                 {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$GDPRUserConsent")
-                            .GetStatic<AndroidJavaObject>("NonPersonalized"));
+                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "NonPersonalized"));
                     break;
                 }
                 default:
@@ -321,27 +305,22 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void UpdateConsentCcpa(CcpaUserConsent consent)
         {
+            var ccpaConsent = new AndroidJavaClass("com.appodeal.ads.regulator.CCPAUserConsent");
             switch (consent)
             {
                 case CcpaUserConsent.Unknown:
                 {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$CCPAUserConsent")
-                            .GetStatic<AndroidJavaObject>("Unknown"));
+                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "Unknown"));
                     break;
                 }
                 case CcpaUserConsent.OptIn:
                 {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$CCPAUserConsent")
-                            .GetStatic<AndroidJavaObject>("OptIn"));
+                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "OptIn"));
                     break;
                 }
                 case CcpaUserConsent.OptOut:
                 {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent",
-                        new AndroidJavaClass("com.appodeal.ads.regulator.UserConsent$CCPAUserConsent")
-                            .GetStatic<AndroidJavaObject>("OptOut"));
+                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "OptOut"));
                     break;
                 }
                 default:
@@ -359,20 +338,9 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("disableNetwork", GetActivity(), network, NativeAdTypesForType(adTypes));
         }
 
-        public void SetLocationTracking(bool value)
-        {
-            Debug.Log("Not supported on Android platform");
-        }
-
-        public void disableLocationPermissionCheck()
-        {
-            Debug.Log("Not supported on Android platform");
-        }
-
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
-            GetAppodealClass().CallStatic("setTriggerOnLoadedOnPrecache", NativeAdTypesForType(adTypes),
-                onLoadedTriggerBoth);
+            GetAppodealClass().CallStatic("setTriggerOnLoadedOnPrecache", NativeAdTypesForType(adTypes), onLoadedTriggerBoth);
         }
 
         public void MuteVideosIfCallsMuted(bool value)
@@ -515,27 +483,22 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void setUserGender(AppodealUserGender gender)
         {
+            var genderEnum = new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender");
             switch (gender)
             {
                 case AppodealUserGender.Other:
                 {
-                    GetAppodealClass().CallStatic("setUserGender",
-                        new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(
-                            "OTHER"));
+                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("OTHER"));
                     break;
                 }
                 case AppodealUserGender.Male:
                 {
-                    GetAppodealClass().CallStatic("setUserGender",
-                        new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(
-                            "MALE"));
+                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("MALE"));
                     break;
                 }
                 case AppodealUserGender.Female:
                 {
-                    GetAppodealClass().CallStatic("setUserGender",
-                        new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender").GetStatic<AndroidJavaObject>(
-                            "FEMALE"));
+                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("FEMALE"));
                     break;
                 }
                 default:
@@ -588,7 +551,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             {
                 var paramsFiltered = new Dictionary<string, object>();
 
-                eventParams.Keys.Where(key => eventParams[key] is System.Int32 || eventParams[key] is System.Double || eventParams[key] is System.String)
+                eventParams.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
                     .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
                 var map = new AndroidJavaObject("java.util.HashMap");
@@ -608,14 +571,22 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("validateInAppPurchase", androidPurchase?.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId ,string additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void SetLocationTracking(bool value)
+        {
+            Debug.Log("Not supported on Android platform");
+        }
+
+        public void disableLocationPermissionCheck()
+        {
+            Debug.Log("Not supported on Android platform");
+        }
+
+        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
         {
             Debug.Log("Not supported on Android platform");
         }
     }
 
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
     public static class Helper
     {
         public static object GetJavaObject(object value)
@@ -655,7 +626,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 return new AndroidJavaObject("java.lang.Float", value);
             }
 
-            return value ?? null;
+            return null;
         }
     }
 }
