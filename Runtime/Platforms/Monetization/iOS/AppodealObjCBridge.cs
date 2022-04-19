@@ -39,7 +39,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealInitialize(string apiKey, int types, string pluginVer, string engineVersion);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealInitialize(string apiKey, int types, bool hasConsent, string pluginVer,
+        internal static extern void AppodealInitializeOld(string apiKey, int types, bool hasConsent, string pluginVer,
             string engineVersion);
         
         [DllImport("__Internal")]
