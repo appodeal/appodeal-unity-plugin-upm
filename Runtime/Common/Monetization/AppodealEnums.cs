@@ -55,11 +55,11 @@ namespace AppodealStack.Monetization.Common
 
     /// <summary>
     /// <para>
-    /// Enumeration containing all possible types of In-App purchases for Android Platform.
+    /// Enumeration containing all supported types of In-App purchases for Google Play Store.
     /// </para>
     /// See <see href=""/> for more details.
     /// </summary>
-    public enum AndroidPurchaseType
+    public enum PlayStorePurchaseType
     {
         Subs,
         InApp
@@ -67,11 +67,11 @@ namespace AppodealStack.Monetization.Common
 
     /// <summary>
     /// <para>
-    /// Enumeration containing all possible types of In-App purchases for iOS Platform.
+    /// Enumeration containing all supported types of In-App purchases for Apple App Store.
     /// </para>
     /// See <see href=""/> for more details.
     /// </summary>
-    public enum IosPurchaseType
+    public enum AppStorePurchaseType
     {
      Consumable,
      NonConsumable,

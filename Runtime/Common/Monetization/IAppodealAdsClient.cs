@@ -14,8 +14,8 @@ namespace AppodealStack.Monetization.Common
         void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener);
         bool IsInitialized(int adType);
         void UpdateConsent(IConsent consent);
-        void UpdateConsentGdpr(GdprUserConsent consent);
-        void UpdateConsentCcpa(CcpaUserConsent consent);
+        void UpdateGdprConsent(GdprUserConsent consent);
+        void UpdateCcpaConsent(CcpaUserConsent consent);
         bool IsAutoCacheEnabled(int adType);
         void SetInterstitialCallbacks(IInterstitialAdListener listener);
         void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener);
@@ -70,8 +70,8 @@ namespace AppodealStack.Monetization.Common
         void ResetExtraData(string key);
         double GetPredictedEcpm(int adType);
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
-        void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener);
-        void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener);
+        void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
+        void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
 
         #region Deprecated signatures
 

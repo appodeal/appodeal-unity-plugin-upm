@@ -144,7 +144,8 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
             var androidConsent = consent.NativeConsent as AndroidConsent;
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), androidConsent?.GetConsentJavaObject());
+            if (androidConsent == null) return;
+            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), androidConsent.GetConsentJavaObject());
         }
 
         public bool IsInitialized(int adType)
@@ -275,10 +276,11 @@ namespace AppodealStack.Monetization.Platforms.Android
         public void UpdateConsent(IConsent consent)
         {
             var androidConsent = consent.NativeConsent as AndroidConsent;
-            GetAppodealClass().CallStatic("updateConsent", androidConsent?.GetConsentJavaObject());
+            if (androidConsent == null) return;
+            GetAppodealClass().CallStatic("updateConsent", androidConsent.GetConsentJavaObject());
         }
 
-        public void UpdateConsentGdpr(GdprUserConsent consent)
+        public void UpdateGdprConsent(GdprUserConsent consent)
         {
             var gdprConsent = new AndroidJavaClass("com.appodeal.ads.regulator.GDPRUserConsent");
             switch (consent)
@@ -303,7 +305,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             }
         }
 
-        public void UpdateConsentCcpa(CcpaUserConsent consent)
+        public void UpdateCcpaConsent(CcpaUserConsent consent)
         {
             var ccpaConsent = new AndroidJavaClass("com.appodeal.ads.regulator.CCPAUserConsent");
             switch (consent)
@@ -565,10 +567,11 @@ namespace AppodealStack.Monetization.Platforms.Android
             }
         }
 
-        public void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener)
+        public void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
-            var androidPurchase = purchase.NativeInAppPurchase as AndroidInAppPurchase;
-            GetAppodealClass().CallStatic("validateInAppPurchase", androidPurchase?.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
+            var androidPurchase = purchase.NativeInAppPurchase as AndroidPlayStoreInAppPurchase;
+            if (androidPurchase == null) return;
+            GetAppodealClass().CallStatic("validateInAppPurchase", androidPurchase.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
         }
 
         public void SetLocationTracking(bool value)
@@ -581,7 +584,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             Debug.Log("Not supported on Android platform");
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             Debug.Log("Not supported on Android platform");
         }

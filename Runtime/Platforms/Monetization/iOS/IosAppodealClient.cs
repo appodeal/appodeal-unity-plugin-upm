@@ -434,7 +434,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return 0;
         }
 
-        private static string DictionaryToString(Dictionary <string, object> dictionary) {  
+        private static string DictionaryToString(Dictionary <string, object> dictionary) {
             var dictionaryString = dictionary.Aggregate("", (current, keyValues)
                 => current + (keyValues.Key + "=" + keyValues.Value.GetType() + ":" + keyValues.Value + ","));
             return dictionaryString.TrimEnd(',');
@@ -597,23 +597,23 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealUpdateConsentReport();
         }
 
-        public void UpdateConsentGdpr(GdprUserConsent consent)
+        public void UpdateGdprConsent(GdprUserConsent consent)
         {
             switch (consent)
             {
                 case GdprUserConsent.Unknown:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentGDPR(0);
+                    AppodealObjCBridge.AppodealUpdateGdprConsent(0);
                     break;
                 }
                 case GdprUserConsent.Personalized:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentGDPR(1);
+                    AppodealObjCBridge.AppodealUpdateGdprConsent(1);
                     break;
                 }
                 case GdprUserConsent.NonPersonalized:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentGDPR(2);
+                    AppodealObjCBridge.AppodealUpdateGdprConsent(2);
                     break;
                 }
                 default:
@@ -621,23 +621,23 @@ namespace AppodealStack.Monetization.Platforms.Ios
             }
         }
 
-        public void UpdateConsentCcpa(CcpaUserConsent consent)
+        public void UpdateCcpaConsent(CcpaUserConsent consent)
         {
             switch (consent)
             {
                 case CcpaUserConsent.Unknown:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentCCPA(0);
+                    AppodealObjCBridge.AppodealUpdateCcpaConsent(0);
                     break;
                 }
                 case CcpaUserConsent.OptIn:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentCCPA(1);
+                    AppodealObjCBridge.AppodealUpdateCcpaConsent(1);
                     break;
                 }
                 case CcpaUserConsent.OptOut:
                 {
-                    AppodealObjCBridge.AppodealUpdateConsentCCPA(2);
+                    AppodealObjCBridge.AppodealUpdateCcpaConsent(2);
                     break;
                 }
                 default:
@@ -787,10 +787,10 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealLogEvent(eventName, DictionaryToString(paramsFiltered));
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             _inAppPurchaseValidationListener = listener;
-            AppodealObjCBridge.AppodealValidateInAppPurchase(productIdentifier, price, currency, transactionId, DictionaryToString(additionalParams), (int) type, InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
+            AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 
         public void Destroy(int adType)
@@ -808,19 +808,19 @@ namespace AppodealStack.Monetization.Platforms.Ios
             Debug.Log("Not Supported by iOS SDK");
         }
 
-        public void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener)
+        public void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             Debug.Log("Not Supported by iOS SDK");
         }
 
         public void MuteVideosIfCallsMuted(bool value)
         {
-            // Not supported for iOS SDK
+            Debug.Log("Not Supported by iOS SDK");
         }
 
         public void ShowTestScreen()
         {
-            // Not supported for iOS SDK
+            Debug.Log("Not Supported by iOS SDK");
         }
 
         #region User Settings

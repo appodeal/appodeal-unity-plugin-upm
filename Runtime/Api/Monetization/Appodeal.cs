@@ -75,9 +75,9 @@ namespace AppodealStack.Monetization.Api
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
-        public static void UpdateConsentGdpr(GdprUserConsent consent)
+        public static void UpdateGdprConsent(GdprUserConsent consent)
         {
-            GetInstance().UpdateConsentGdpr(consent);
+            GetInstance().UpdateGdprConsent(consent);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace AppodealStack.Monetization.Api
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://oag.ca.gov/privacy/ccpa</param>
-        public static void UpdateConsentCcpa(CcpaUserConsent consent)
+        public static void UpdateCcpaConsent(CcpaUserConsent consent)
         {
-            GetInstance().UpdateConsentCcpa(consent);
+            GetInstance().UpdateCcpaConsent(consent);
         }
 
         /// <summary>
@@ -760,9 +760,9 @@ namespace AppodealStack.Monetization.Api
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
         /// <param name="purchase"></param>
         /// <param name="listener"></param>
-        public static void ValidateInAppPurchaseAndroid(InAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
+        public static void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
         {
-            GetInstance().ValidateInAppPurchaseAndroid(purchase, listener);
+            GetInstance().ValidatePlayStoreInAppPurchase(purchase, listener);
         }
 
         /// <summary>
@@ -772,16 +772,11 @@ namespace AppodealStack.Monetization.Api
         /// See <see href=""/> for more details.
         /// </summary> 
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
-        /// <param name="productIdentifier"></param>
-        /// <param name="price"></param>
-        /// <param name="currency"></param>
-        /// <param name="transactionId"></param>
-        /// <param name="additionalParams"></param>
-        /// <param name="type"></param>
+        /// <param name="purchase"></param>
         /// <param name="listener"></param>
-        public static void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public static void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
         {
-            GetInstance().ValidateInAppPurchaseIos(productIdentifier, price, currency, transactionId, additionalParams, type, listener);
+            GetInstance().ValidateAppStoreInAppPurchase(purchase, listener);
         }
 
     #region Deprecated methods
@@ -807,7 +802,7 @@ namespace AppodealStack.Monetization.Api
             GetInstance().initialize(appKey, adTypes, consent);
         }
 
-        [Obsolete("It will be removed in the next release. Use UpdateConsentGdpr and UpdateConsentCcpa methods instead.", false)]
+        [Obsolete("It will be removed in the next release. Use UpdateGdprConsent and UpdateCcpaConsent methods instead.", false)]
         public static void updateConsent(bool hasConsent)
         {
             GetInstance().updateConsent(hasConsent);
@@ -1136,8 +1131,7 @@ namespace AppodealStack.Monetization.Api
         public const string APPSFLYER_ID = "appsflyer_id";
     }
 
-    [Obsolete("It's functionality was removed from Android SDK, thus cannot be used anymore. This class will be removed in the next release of Appodeal Unity Plugin.", true)]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [Obsolete("It's Android SDK representation was removed, thus it cannot be used anymore. This class will be removed in the next release of Appodeal Unity Plugin.", true)]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class UserSettings { }
 }

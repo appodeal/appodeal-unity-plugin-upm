@@ -59,7 +59,7 @@ static NSDictionary <NSString *, id> *NSDictionaryFromUTF8String(const char *cSt
             else if ([valueSplitted.firstObject isEqualToString:@"System.Boolean"]) {
                 outputDict[key] = @([valueSplitted.lastObject boolValue]);
             }
-            else {
+            else if ([valueSplitted.firstObject isEqualToString:@"System.String"]){
                 outputDict[key] = valueSplitted.lastObject;
             }
         }
@@ -203,7 +203,7 @@ void AppodealUpdateConsentReport() {
     [Appodeal updateConsent:STKConsentManager.sharedManager.consent];
 }
 
-void AppodealUpdateConsentGDPR(int consent) {
+void AppodealUpdateGdprConsent(int consent) {
     switch (consent) {
         case 0:
             [Appodeal updateUserConsentGDPR:APDGDPRUserConsentUnknown];
@@ -219,7 +219,7 @@ void AppodealUpdateConsentGDPR(int consent) {
     }
 }
 
-void AppodealUpdateConsentCCPA(int consent) {
+void AppodealUpdateCcpaConsent(int consent) {
     switch (consent) {
         case 0:
             [Appodeal updateUserConsentCCPA:APDCCPAUserConsentUnknown];

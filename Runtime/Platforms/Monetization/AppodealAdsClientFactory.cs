@@ -24,14 +24,25 @@ namespace AppodealStack.Monetization.Platforms
 #endif
         }
 
-        public static IInAppPurchaseBuilder GetInAppPurchaseBuilder(AndroidPurchaseType purchaseType)
+        public static IPlayStoreInAppPurchaseBuilder GetPlayStoreInAppPurchaseBuilder(PlayStorePurchaseType purchaseType)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidInAppPurchaseBuilder(purchaseType);
+			return new AndroidPlayStoreInAppPurchaseBuilder(purchaseType);
 #elif UNITY_IPHONE && !UNITY_EDITOR
             return null;
 #else
-            return new DummyInAppPurchaseBuilder();
+            return new DummyPlayStoreInAppPurchaseBuilder();
+#endif
+        }
+
+        public static IAppStoreInAppPurchaseBuilder GetAppStoreInAppPurchaseBuilder(AppStorePurchaseType purchaseType)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+			return null;
+#elif UNITY_IPHONE && !UNITY_EDITOR
+            return new IosAppStoreInAppPurchaseBuilder(purchaseType);
+#else
+            return new DummyAppStoreInAppPurchaseBuilder();
 #endif
         }
     }

@@ -1,26 +1,27 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
 
 // ReSharper disable CheckNamespace
 namespace AppodealStack.Monetization.Api
 {
-    [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class InAppPurchase : IInAppPurchase
+    /// <summary>
+    /// <para>PlayStoreInAppPurchase Unity API for developers, including documentation.</para>
+    /// See <see href=""/> for more details.
+    /// </summary>
+    public class PlayStoreInAppPurchase : IPlayStoreInAppPurchase
     {
         /// <summary>
-        /// Provides access to a native InAppPurchase object.
+        /// Provides access to a native object that implements IPlayStoreInAppPurchase interface.
         /// </summary>
-        public IInAppPurchase NativeInAppPurchase { get; }
+        public IPlayStoreInAppPurchase NativeInAppPurchase { get; }
 
         /// <summary>
-        /// Public constructor of the <see langword="InAppPurchase"/> class.
+        /// Public constructor of the <see langword="PlayStoreInAppPurchase"/> class.
         /// </summary>
-        /// <param name="purchase">class which implements AppodealStack.Monetization.Common.IInAppPurchase interface.</param>
-        public InAppPurchase(IInAppPurchase purchase)
+        /// <param name="purchase">class which implements AppodealStack.Monetization.Common.IPlayStoreInAppPurchase interface.</param>
+        public PlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase)
         {
             NativeInAppPurchase = purchase.NativeInAppPurchase;
         }
@@ -29,8 +30,8 @@ namespace AppodealStack.Monetization.Api
         /// <para>Gets the purchase type.</para>
         /// See <see href=""/> for more details.
         /// </summary>
-        /// <returns>Type of the purchase as AndroidPurchaseType object.</returns>
-        public AndroidPurchaseType GetPurchaseType()
+        /// <returns>Type of the purchase as PlayStorePurchaseType object.</returns>
+        public PlayStorePurchaseType GetPurchaseType()
         {
             return NativeInAppPurchase.GetPurchaseType();
         }
@@ -145,110 +146,34 @@ namespace AppodealStack.Monetization.Api
             return NativeInAppPurchase.GetDeveloperPayload();
         }
 
-        #region Deprecated methods
-
-        [Obsolete("It will be removed in the next release. Use the GetPurchaseType() method instead.", false)]
-        public AndroidPurchaseType getType()
-        {
-            return NativeInAppPurchase.GetPurchaseType();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPublicKey) of this method instead.", false)]
-        public string getPublicKey()
-        {
-            return NativeInAppPurchase.GetPublicKey();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetSignature) of this method instead.", false)]
-        public string getSignature()
-        {
-            return NativeInAppPurchase.GetSignature();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseData) of this method instead.", false)]
-        public string getPurchaseData()
-        {
-            return NativeInAppPurchase.GetPurchaseData();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPrice) of this method instead.", false)]
-        public string getPrice()
-        {
-            return NativeInAppPurchase.GetPrice();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetCurrency) of this method instead.", false)]
-        public string getCurrency()
-        {
-            return NativeInAppPurchase.GetCurrency();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetAdditionalParameters) of this method instead.", false)]
-        public string getAdditionalParameters()
-        {
-            return NativeInAppPurchase.GetAdditionalParameters();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetSku) of this method instead.", false)]
-        public string getSku()
-        {
-            return NativeInAppPurchase.GetSku();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetOrderId) of this method instead.", false)]
-        public string getOrderId()
-        {
-            return NativeInAppPurchase.GetOrderId();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseToken) of this method instead.", false)]
-        public string getPurchaseToken()
-        {
-            return NativeInAppPurchase.GetPurchaseToken();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurchaseTimestamp) of this method instead.", false)]
-        public long getPurchaseTimestamp()
-        {
-            return NativeInAppPurchase.GetPurchaseTimestamp();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetDeveloperPayload) of this method instead.", false)]
-        public string getDeveloperPayload()
-        {
-            return NativeInAppPurchase.GetDeveloperPayload();
-        }
-
-        #endregion
-
         /// <summary>
-        /// Builder class is responsible for creating an object of the <see langword="InAppPurchase"/> class.
+        /// Builder class is responsible for creating an object of the <see langword="PlayStoreInAppPurchase"/> class.
         /// </summary>
         public class Builder
         {
-            private readonly IInAppPurchaseBuilder _inAppPurchaseBuilder;
+            private readonly IPlayStoreInAppPurchaseBuilder _playStoreInAppPurchaseBuilder;
 
-            private IInAppPurchaseBuilder GetBuilderInstance()
+            private IPlayStoreInAppPurchaseBuilder GetBuilderInstance()
             {
-                return _inAppPurchaseBuilder;
+                return _playStoreInAppPurchaseBuilder;
             }
 
             /// <summary>
             /// Public constructor of the <see langword="Builder"/> class.
             /// </summary>
             /// <param name="purchaseType">type of the purchase.</param>
-            public Builder(AndroidPurchaseType purchaseType)
+            public Builder(PlayStorePurchaseType purchaseType)
             {
-                 _inAppPurchaseBuilder = AppodealAdsClientFactory.GetInAppPurchaseBuilder(purchaseType);
+                 _playStoreInAppPurchaseBuilder = AppodealAdsClientFactory.GetPlayStoreInAppPurchaseBuilder(purchaseType);
             }
 
             /// <summary>
-            /// Builds the InAppPurchase object using all data you have set via the other Builder's methods.
+            /// Builds the PlayStoreInAppPurchase object using all data you have set via the other Builder's methods.
             /// </summary>
-            /// <returns>Object of type <see langword="InAppPurchase"/>.</returns>
-            public InAppPurchase Build()
+            /// <returns>Object of type <see langword="PlayStoreInAppPurchase"/>.</returns>
+            public PlayStoreInAppPurchase Build()
             {
-                return new InAppPurchase(GetBuilderInstance().Build());
+                return new PlayStoreInAppPurchase(GetBuilderInstance().Build());
             }
 
             /// <summary>
@@ -355,9 +280,9 @@ namespace AppodealStack.Monetization.Api
             /// </summary>
             /// <param name="additionalParameters">additional parameters as string.</param>
             /// <returns>An instance of the builder class.</returns>
-            public Builder WithAdditionalParams(Dictionary<string, string> additionalParameters)
+            public Builder WithAdditionalParameters(Dictionary<string, string> additionalParameters)
             {
-                GetBuilderInstance().WithAdditionalParams(additionalParameters);
+                GetBuilderInstance().WithAdditionalParameters(additionalParameters);
                 return this;
             }
 
@@ -371,94 +296,6 @@ namespace AppodealStack.Monetization.Api
                 GetBuilderInstance().WithDeveloperPayload(developerPayload);
                 return this;
             }
-
-            #region Deprecated Methods
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (Build) of this method instead.", false)]
-            public InAppPurchase build()
-            {
-                return new InAppPurchase(GetBuilderInstance().Build());
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithPublicKey) of this method instead.", false)]
-            public Builder withPublicKey(string publicKey)
-            {
-                GetBuilderInstance().WithPublicKey(publicKey);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithSignature) of this method instead.", false)]
-            public Builder withSignature(string signature)
-            {
-                GetBuilderInstance().WithSignature(signature);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithPurchaseData) of this method instead.", false)]
-            public Builder withPurchaseData(string purchaseData)
-            {
-                GetBuilderInstance().WithPurchaseData(purchaseData);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithPrice) of this method instead.", false)]
-            public Builder withPrice(string price)
-            {
-                GetBuilderInstance().WithPrice(price);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithCurrency) of this method instead.", false)]
-            public Builder withCurrency(string currency)
-            {
-                GetBuilderInstance().WithCurrency(currency);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithSku) of this method instead.", false)]
-            public Builder withSku(string sku)
-            {
-                GetBuilderInstance().WithSku(sku);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithOrderId) of this method instead.", false)]
-            public Builder withOrderId(string orderId)
-            {
-                GetBuilderInstance().WithOrderId(orderId);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithPurchaseToken) of this method instead.", false)]
-            public Builder withPurchaseToken(string purchaseToken)
-            {
-                GetBuilderInstance().WithPurchaseToken(purchaseToken);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithPurchaseTimestamp) of this method instead.", false)]
-            public Builder withPurchaseTimestamp(long purchaseTimestamp)
-            {
-                GetBuilderInstance().WithPurchaseTimestamp(purchaseTimestamp);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithAdditionalParams) of this method instead.", false)]
-            public Builder withAdditionalParams(Dictionary<string, string> additionalParameters)
-            {
-                GetBuilderInstance().WithAdditionalParams(additionalParameters);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (WithDeveloperPayload) of this method instead.", false)]
-            public Builder withDeveloperPayload(string developerPayload)
-            {
-                GetBuilderInstance().WithDeveloperPayload(developerPayload);
-                return this;
-            }
-
-            #endregion
-
         }
     }
 }

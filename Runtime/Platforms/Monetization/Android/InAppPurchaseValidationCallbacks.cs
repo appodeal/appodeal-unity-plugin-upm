@@ -33,7 +33,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         private string CreateResponse(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
-            var androidPurchase = new AndroidInAppPurchase(purchase);
+            var androidPurchase = new AndroidPlayStoreInAppPurchase(purchase);
 
             string responsePurchase = "\"InAppPurchase\":{";
             responsePurchase += $"\"PublicKey\":\"{androidPurchase.GetPublicKey() ?? String.Empty}\",";

@@ -674,14 +674,14 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void UpdateConsentGdpr(GdprUserConsent consent)
+        public void UpdateGdprConsent(GdprUserConsent consent)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsentGDPR method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateGdprConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void UpdateConsentCcpa(CcpaUserConsent consent)
+        public void UpdateCcpaConsent(CcpaUserConsent consent)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsentCCPA method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateCcpaConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void DisableNetwork(string network)
@@ -846,14 +846,14 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.LogEvent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void ValidateInAppPurchaseAndroid(IInAppPurchase purchase, IInAppPurchaseValidationListener listener)
+        public void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateInAppPurchaseAndroid method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidatePlayStoreInAppPurchase method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void ValidateInAppPurchaseIos(string productIdentifier, string price, string currency, string transactionId, Dictionary<string, object> additionalParams, IosPurchaseType type, IInAppPurchaseValidationListener listener)
+        public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateInAppPurchaseIos method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateAppStoreInAppPurchase method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         #endregion
