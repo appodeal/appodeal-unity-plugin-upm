@@ -1,11 +1,12 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidPlayStoreInAppPurchaseBuilder : IPlayStoreInAppPurchaseBuilder
     {
         private readonly AndroidJavaObject _inAppPurchaseBuilder;

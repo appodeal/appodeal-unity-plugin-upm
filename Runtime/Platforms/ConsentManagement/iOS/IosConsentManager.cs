@@ -11,6 +11,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     /// <summary>
     /// iOS implementation of <see langword="IConsentManager"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class IosConsentManager : IConsentManager
     {
@@ -168,8 +169,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         #endregion
     }
-
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    
     public static class IosHelper
     {
         public static IEnumerable<int> GetEnumerable(IEnumerable<int> enumerable)

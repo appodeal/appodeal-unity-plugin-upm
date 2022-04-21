@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.ConsentManagement.Platforms.Ios
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     internal class ConsentFormObjCBridge
     {

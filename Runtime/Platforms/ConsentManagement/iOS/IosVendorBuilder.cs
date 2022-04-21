@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -8,6 +9,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     /// <summary>
     /// iOS implementation of <see langword="IVendorBuilder"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class IosVendorBuilder : IVendorBuilder
     {
         private readonly VendorBuilderObjCBridge _bridge;

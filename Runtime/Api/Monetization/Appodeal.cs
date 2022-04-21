@@ -14,7 +14,9 @@ namespace AppodealStack.Monetization.Api
     /// </para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class Appodeal
     {
         private static IAppodealAdsClient _client;
@@ -1125,13 +1127,15 @@ namespace AppodealStack.Monetization.Api
     }
 
     [Obsolete("This class will be removed in the next release. Use PredefinedKeys.AppsFlyerId instead.", false)]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class ExtraData
     {
         public const string APPSFLYER_ID = "appsflyer_id";
     }
 
     [Obsolete("It's Android SDK representation was removed, thus it cannot be used anymore. This class will be removed in the next release of Appodeal Unity Plugin.", true)]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class UserSettings { }
 }

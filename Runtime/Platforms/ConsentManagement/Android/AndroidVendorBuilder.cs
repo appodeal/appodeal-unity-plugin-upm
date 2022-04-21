@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -8,6 +9,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     /// <summary>
     /// Android implementation of <see langword="IVendorBuilder"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidVendorBuilder : IVendorBuilder
     {
         private readonly AndroidJavaObject _vendorBuilder;

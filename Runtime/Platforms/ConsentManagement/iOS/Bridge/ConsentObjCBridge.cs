@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.ConsentManagement.Platforms.Ios
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     internal class ConsentObjCBridge
     {
         private readonly IntPtr _consent;

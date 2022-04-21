@@ -1,4 +1,5 @@
-﻿using AppodealStack.Monetization.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using AppodealStack.Monetization.Common;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 using AppodealStack.Monetization.Platforms.Android;
@@ -11,6 +12,7 @@ using AppodealStack.Monetization.Platforms.Dummy;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms
 {
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
     public static class AppodealAdsClientFactory
     {
         public static IAppodealAdsClient GetAppodealAdsClient()

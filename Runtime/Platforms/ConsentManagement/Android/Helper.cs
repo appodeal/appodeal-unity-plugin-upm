@@ -17,7 +17,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
                 return new AndroidJavaObject("java.lang.Character", value);
             }
 
-            if ((value is bool))
+            if (value is bool)
             {
                 return new AndroidJavaObject("java.lang.Boolean", value);
             }

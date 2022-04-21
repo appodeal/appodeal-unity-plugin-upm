@@ -9,6 +9,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     /// <summary>
     /// Builder for the <see langword="IosConsentForm"/> class.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class IosConsentFormBuilder
     {

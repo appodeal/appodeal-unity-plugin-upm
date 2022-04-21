@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
 
@@ -10,6 +10,8 @@ namespace AppodealStack.Monetization.Api
     /// <para>AppStoreInAppPurchase Unity API for developers, including documentation.</para>
     /// See <see href=""/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class AppStoreInAppPurchase : IAppStoreInAppPurchase
     {
         /// <summary>

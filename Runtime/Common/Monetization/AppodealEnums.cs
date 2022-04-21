@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
@@ -71,6 +73,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href=""/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum AppStorePurchaseType
     {
      Consumable,

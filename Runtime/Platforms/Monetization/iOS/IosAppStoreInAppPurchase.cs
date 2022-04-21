@@ -8,7 +8,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
     public class IosAppStoreInAppPurchase : IAppStoreInAppPurchase
     {
         public IAppStoreInAppPurchase NativeInAppPurchase { get; }
-        public AppStorePurchaseType PurchaseType { get; }
+        private AppStorePurchaseType PurchaseType { get; }
 
         public string Price { get; set; }
         public string Currency { get; set; }

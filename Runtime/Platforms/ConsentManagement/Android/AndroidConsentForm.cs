@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -7,6 +8,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     /// <summary>
     /// Android implementation of <see langword="IConsentForm"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidConsentForm : IConsentForm
     {
         private readonly AndroidJavaObject _consentForm;

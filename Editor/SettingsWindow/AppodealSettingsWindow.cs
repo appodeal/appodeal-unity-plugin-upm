@@ -322,6 +322,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
         [Serializable]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
         public class SkAdNetworkItem
         {
             public string name;

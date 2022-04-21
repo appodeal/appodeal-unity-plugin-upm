@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -8,6 +9,8 @@ namespace AppodealStack.ConsentManagement.Platforms.Dummy
     /// <summary>
     /// Unity Editor implementation of <see langword="IVendor"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
     public class DummyVendor : IVendor
     {
         public string GetName()

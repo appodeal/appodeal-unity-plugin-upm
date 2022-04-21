@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.ConsentManagement.Common
 {
@@ -5,6 +7,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>Provides access to consent-related data.</para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface IConsent
     {
         /// <summary>

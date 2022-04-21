@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AppodealStack.ConsentManagement.Platforms.Ios
 {
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
+    [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
     internal class ConsentManagerExceptionObjCBridge
     {
         private readonly IntPtr _consentManagerException;

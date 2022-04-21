@@ -1,5 +1,6 @@
-// ReSharper Disable CheckNamespace
+using System.Diagnostics.CodeAnalysis;
 
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -8,6 +9,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealAdType
     {
         /// <summary>Initializes only Appodeal SDK, but not the ad types.</summary>

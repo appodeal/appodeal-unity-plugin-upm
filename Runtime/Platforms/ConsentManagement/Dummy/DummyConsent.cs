@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -7,6 +8,8 @@ namespace AppodealStack.ConsentManagement.Platforms.Dummy
     /// <summary>
     /// Unity Editor implementation of <see langword="IConsent"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "ReplaceAutoPropertyWithComputedProperty")]
     public class DummyConsent : IConsent
     {
         public ConsentZone GetZone()

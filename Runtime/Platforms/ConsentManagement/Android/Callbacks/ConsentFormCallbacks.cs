@@ -10,6 +10,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
     public class ConsentFormCallbacks : AndroidJavaProxy
     {
         private readonly IConsentFormListener _listener;

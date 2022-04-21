@@ -1,4 +1,6 @@
-﻿// ReSharper Disable CheckNamespace
+﻿using System.Diagnostics.CodeAnalysis;
+
+// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -7,6 +9,8 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// Its fields can be used as arguments for the <see langword="Appodeal.DisableNetwork()"/> methods.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealNetworks
     {
         public const string Vungle = "vungle";

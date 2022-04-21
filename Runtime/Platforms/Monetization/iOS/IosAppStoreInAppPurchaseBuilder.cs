@@ -1,14 +1,14 @@
-using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
 {
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class IosAppStoreInAppPurchaseBuilder : IAppStoreInAppPurchaseBuilder
     {
-        private IosAppStoreInAppPurchase _purchase;
+        private readonly IosAppStoreInAppPurchase _purchase;
 
         public IosAppStoreInAppPurchaseBuilder(AppStorePurchaseType purchaseType)
         {

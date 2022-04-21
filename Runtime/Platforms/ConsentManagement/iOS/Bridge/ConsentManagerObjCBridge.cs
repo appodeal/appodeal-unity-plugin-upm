@@ -9,6 +9,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     internal delegate void ConsentInfoUpdatedFailedCallback(IntPtr error);
 
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
+    [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
     internal class ConsentManagerObjCBridge
     {
         private readonly IntPtr _consentManager;

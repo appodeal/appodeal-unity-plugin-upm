@@ -11,7 +11,9 @@ namespace AppodealStack.ConsentManagement.Api
     /// <para>Vendor Unity API for developers, including documentation.</para>
     /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Vendor : IVendor
     {
         /// <summary>

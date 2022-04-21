@@ -1,4 +1,5 @@
-﻿using AppodealStack.ConsentManagement.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using AppodealStack.ConsentManagement.Common;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 using AppodealStack.ConsentManagement.Platforms.Android;
@@ -11,6 +12,7 @@ using AppodealStack.ConsentManagement.Platforms.Dummy;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.ConsentManagement.Platforms
 {
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
     public static class ConsentManagerClientFactory
     {
         public static IConsentManager GetConsentManager()

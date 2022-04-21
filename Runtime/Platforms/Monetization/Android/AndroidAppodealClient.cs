@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms.Android;
@@ -12,6 +13,8 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// <summary>
     /// Android implementation of <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class AndroidAppodealClient : IAppodealAdsClient
     {
         private const int AppodealAdTypeInterstitial = 3;
