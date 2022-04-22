@@ -14,12 +14,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Dummy
             Debug.Log(Utils.GetDummyMessage());
         }
 
-        public void ShowAsActivity()
-        {
-            Debug.Log(Utils.GetDummyMessage());
-        }
-
-        public void ShowAsDialog()
+        public void Show()
         {
             Debug.Log(Utils.GetDummyMessage());
         }

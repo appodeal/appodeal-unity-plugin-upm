@@ -26,14 +26,9 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
             CfLoad();
         }
 
-        public static void ShowAsActivity()
+        public static void Show()
         {
-            CfShowAsActivity();
-        }
-
-        public static void ShowAsDialog()
-        {
-            CfShowAsDialog();
+            CfShow();
         }
 
         public static bool IsLoaded()
@@ -53,10 +48,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
         private static extern void CfLoad();
 
         [DllImport("__Internal")]
-        private static extern void CfShowAsActivity();
-
-        [DllImport("__Internal")]
-        private static extern void CfShowAsDialog();
+        private static extern void CfShow();
 
         [DllImport("__Internal")]
         private static extern bool CfIsLoaded();

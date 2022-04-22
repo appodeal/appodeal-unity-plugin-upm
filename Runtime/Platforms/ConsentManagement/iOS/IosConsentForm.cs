@@ -21,14 +21,9 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
             ConsentFormObjCBridge.Load();
         }
 
-        public void ShowAsActivity()
+        public void Show()
         {
-            ConsentFormObjCBridge.ShowAsActivity();
-        }
-
-        public void ShowAsDialog()
-        {
-            ConsentFormObjCBridge.ShowAsDialog();
+            ConsentFormObjCBridge.Show();
         }
 
         public bool IsLoaded()

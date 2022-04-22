@@ -133,11 +133,7 @@ void CfLoad(void) {
     [ConsentForm.sharedInstance loadConsentForm];
 }
 
-void CfShowAsActivity(void) {
-    [ConsentForm.sharedInstance showDialog];
-}
-
-void CfShowAsDialog(void) {
+void CfShow(void) {
     [ConsentForm.sharedInstance showDialog];
 }
 

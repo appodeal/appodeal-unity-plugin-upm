@@ -19,8 +19,7 @@ FOUNDATION_EXPORT void CfbWithListener(ConsentFormCallback onConsentFormLoaded,
 
 FOUNDATION_EXPORT ConsentForm *GetConsentForm(void);
 FOUNDATION_EXPORT void CfLoad(void);
-FOUNDATION_EXPORT void CfShowAsActivity(void);
-FOUNDATION_EXPORT void CfShowAsDialog(void);
+FOUNDATION_EXPORT void CfShow(void);
 FOUNDATION_EXPORT bool CfIsLoaded(void);
 FOUNDATION_EXPORT bool CfIsShowing(void);
 

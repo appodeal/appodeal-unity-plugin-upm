@@ -40,14 +40,9 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             GetConsentFormJavaObject().Call("load");
         }
 
-        public void ShowAsActivity()
+        public void Show()
         {
-            GetConsentFormJavaObject().Call("showAsActivity");
-        }
-
-        public void ShowAsDialog()
-        {
-            GetConsentFormJavaObject().Call("showAsDialog");
+            GetConsentFormJavaObject().Call("show");
         }
 
         public bool IsLoaded()

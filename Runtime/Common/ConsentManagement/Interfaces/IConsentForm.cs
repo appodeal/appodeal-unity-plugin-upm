@@ -10,8 +10,7 @@ namespace AppodealStack.ConsentManagement.Common
     public interface IConsentForm
     {
         void Load();
-        void ShowAsActivity();
-        void ShowAsDialog();
+        void Show();
         bool IsLoaded();
         bool IsShowing();
     }

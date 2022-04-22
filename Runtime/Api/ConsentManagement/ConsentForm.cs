@@ -49,22 +49,12 @@ namespace AppodealStack.ConsentManagement.Api
         }
 
         /// <summary>
-        /// <para>Shows the loaded consent form window as activity. (Supported only for <see langword="Android"/> platform)</para>
+        /// <para>Shows the loaded consent form window.</para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
-        /// <remarks>On <see langword="iOS"/>, calling this method will result in <see cref="ShowAsDialog"/> method to be fired.</remarks>
-        public void ShowAsActivity()
+        public void Show()
         {
-            GetNativeConsentForm().ShowAsActivity();
-        }
-
-        /// <summary>
-        /// <para>Shows the loaded consent form window as dialog.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
-        /// </summary>
-        public void ShowAsDialog()
-        {
-            GetNativeConsentForm().ShowAsDialog();
+            GetNativeConsentForm().Show();
         }
 
         /// <summary>
@@ -89,22 +79,22 @@ namespace AppodealStack.ConsentManagement.Api
 
         #region Deprecated Methods
 
+        [Obsolete("It will be removed in the next release. Use the Show() method instead.", false)]
+        public void showAsActivity()
+        {
+            GetNativeConsentForm().Show();
+        }
+
+        [Obsolete("It will be removed in the next release. Use the Show() method instead.", false)]
+        public void showAsDialog()
+        {
+            GetNativeConsentForm().Show();
+        }
+
         [Obsolete("It will be removed in the next release. Use the capitalized version (Load) of this method instead.", false)]
         public void load()
         {
             GetNativeConsentForm().Load();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (ShowAsActivity) of this method instead.", false)]
-        public void showAsActivity()
-        {
-            GetNativeConsentForm().ShowAsActivity();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (ShowAsDialog) of this method instead.", false)]
-        public void showAsDialog()
-        {
-            GetNativeConsentForm().ShowAsDialog();
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (IsLoaded) of this method instead.", false)]
