@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -8,6 +9,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     /// <summary>
     /// Android implementation of <see langword="IConsentManager"/> interface.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public class AndroidConsentManager : IConsentManager
     {
         private AndroidJavaObject _consentManager;
@@ -31,8 +33,8 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
         public void SetCustomVendor(IVendor customVendor)
         {
             var androidVendor = customVendor.NativeVendor as AndroidVendor;
-
-            GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("put", androidVendor?.GetBundle(), androidVendor?.GetVendorJavaObject());
+            if (androidVendor == null) return;
+            GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getCustomVendors").Call<AndroidJavaObject>("put", androidVendor.GetBundle(), androidVendor.GetVendorJavaObject());
         }
 
         public IVendor GetCustomVendor(string bundle)
