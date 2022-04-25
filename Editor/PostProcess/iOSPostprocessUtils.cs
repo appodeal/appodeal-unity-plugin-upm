@@ -236,26 +236,27 @@ namespace AppodealStack.UnityEditor.PostProcess
         public static void PrepareProject(string buildPath)
         {
             Debug.Log("Preparing your Xcode project for Appodeal");
+
             string projectPath = PBXProject.GetPBXProjectPath(buildPath);
             var project = new PBXProject();
-
             project.ReadFromString(File.ReadAllText(projectPath));
+
+            string target = project.GetUnityMainTargetGuid();
+            string unityFrameworkTarget = project.GetUnityFrameworkTargetGuid();
 
             string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
             if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
-                project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
-
-            var target = project.GetUnityMainTargetGuid();
-            var unityFrameworkTarget = project.GetUnityFrameworkTargetGuid();
+            {
+                string firebasePlistGuid = project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
+                project.AddFileToBuild(target, firebasePlistGuid);
+            }
 
             AddProjectFrameworks(FrameworkList, project, target, false);
             AddProjectFrameworks(WeakFrameworkList, project, target, true);
             AddProjectLibs(PlatformLibs, project, target);
-            project.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
 
             string xcodeVersion = AppodealUnityUtils.GetXcodeVersion();
-            if (xcodeVersion == null ||
-                AppodealUnityUtils.CompareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
+            if (xcodeVersion == null || AppodealUnityUtils.CompareVersions(xcodeVersion, MinVersionToEnableBitcode) >= 0)
             {
                 project.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
             }
@@ -264,12 +265,15 @@ namespace AppodealStack.UnityEditor.PostProcess
                 project.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
             }
 
-            project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(SRCROOT)/Libraries");
-            project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)");
-            project.AddBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
-            project.AddBuildProperty(unityFrameworkTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
-            project.AddBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
             project.SetBuildProperty(target, "SWIFT_VERSION", "4.0");
+
+            project.AddBuildProperty(target, "OTHER_LDFLAGS", "-ObjC");
+            project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(SRCROOT)/Libraries");
+            project.AddBuildProperty(target, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
+            project.AddBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
+            project.AddBuildProperty(target, "LIBRARY_SEARCH_PATHS", "$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)");
+
+            project.AddBuildProperty(unityFrameworkTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
 
             File.WriteAllText(projectPath, project.WriteToString());
         }
