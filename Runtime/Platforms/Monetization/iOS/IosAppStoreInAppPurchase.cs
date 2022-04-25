@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using AppodealStack.Monetization.Common;
@@ -10,10 +11,10 @@ namespace AppodealStack.Monetization.Platforms.Ios
         public IAppStoreInAppPurchase NativeInAppPurchase { get; }
         private AppStorePurchaseType PurchaseType { get; }
 
-        public string Price { get; set; }
-        public string Currency { get; set; }
-        public string ProductId { get; set; }
-        public string TransactionId { get; set; }
+        public string Price { get; set; } = String.Empty;
+        public string Currency { get; set; } = String.Empty;
+        public string ProductId { get; set; } = String.Empty;
+        public string TransactionId { get; set; } = String.Empty;
         public Dictionary<string, string> AdditionalParameters { get; set; }
 
         public IosAppStoreInAppPurchase(AppStorePurchaseType purchaseType)
@@ -49,8 +50,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public string GetAdditionalParameters()
         {
-            var dictionaryString = AdditionalParameters.Aggregate("", (current, keyValues) => current + (keyValues.Key + "=" + keyValues.Value + ","));
-            return dictionaryString.TrimEnd(',');
+            return AdditionalParameters?.Aggregate("", (current, keyValues) => current + (keyValues.Key + "=" + keyValues.Value + ",")).TrimEnd(',') ?? String.Empty;
         }
     }
 }
