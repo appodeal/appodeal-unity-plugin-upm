@@ -385,16 +385,16 @@ namespace AppodealSample
 
             var purchase = new PlayStoreInAppPurchase.Builder(PlayStorePurchaseType.Subs)
                 .WithAdditionalParameters(additionalParams)
-                .WithPurchaseTimestamp(System.Int64.MaxValue)
-                .WithDeveloperPayload("DeveloperPayload")
-                .WithPurchaseToken("PurchaseToken")
-                .WithPurchaseData("PurchaseData")
-                .WithPublicKey("YourPublicKey")
-                .WithSignature("Signature")
-                .WithCurrency("Currency")
-                .WithOrderId("OrderId")
-                .WithPrice("Price")
-                .WithSku("Sku")
+                .WithPurchaseTimestamp(793668600)
+                .WithDeveloperPayload("payload")
+                .WithPurchaseToken("token")
+                .WithPurchaseData("data")
+                .WithPublicKey("key")
+                .WithSignature("signature")
+                .WithCurrency("USD")
+                .WithOrderId("orderId")
+                .WithPrice("1.99")
+                .WithSku("sku")
                 .Build();
 
             Appodeal.ValidatePlayStoreInAppPurchase(purchase, this);
@@ -403,10 +403,10 @@ namespace AppodealSample
 
             var purchase = new AppStoreInAppPurchase.Builder(AppStorePurchaseType.Consumable)
                 .WithAdditionalParameters(additionalParams)
-                .WithTransactionId("TransactionId")
-                .WithProductId("ProductId")
-                .WithCurrency("Currency")
-                .WithPrice("Price")
+                .WithTransactionId("transactionId")
+                .WithProductId("productId")
+                .WithCurrency("USD")
+                .WithPrice("2.89")
                 .Build();
 
             Appodeal.ValidateAppStoreInAppPurchase(purchase, this);
@@ -415,7 +415,7 @@ namespace AppodealSample
 
         public void LogEvent()
         {
-            Appodeal.LogEvent("test_event", new Dictionary<string, object> { { "test_key_1", 5 }, { "test_key_2", "test_value" } });
+            Appodeal.LogEvent("test_event", new Dictionary<string, object> { { "test_key_1", 42 }, { "test_key_2", "test_value" } });
         }
 
         #endregion
