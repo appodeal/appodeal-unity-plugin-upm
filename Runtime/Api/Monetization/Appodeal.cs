@@ -760,8 +760,8 @@ namespace AppodealStack.Monetization.Api
         /// See <see href=""/> for more details.
         /// </summary> 
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
-        /// <param name="purchase"></param>
-        /// <param name="listener"></param>
+        /// <param name="purchase">object of type PlayStoreInAppPurchase, containing all data about the purchase.</param>
+        /// <param name="listener">class which implements AppodealStack.Mediation.Common.IInAppPurchaseValidationListener interface.</param>
         public static void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
         {
             GetInstance().ValidatePlayStoreInAppPurchase(purchase, listener);
@@ -774,8 +774,8 @@ namespace AppodealStack.Monetization.Api
         /// See <see href=""/> for more details.
         /// </summary> 
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
-        /// <param name="purchase"></param>
-        /// <param name="listener"></param>
+        /// <param name="purchase">object of type AppStoreInAppPurchase, containing all data about the purchase.</param>
+        /// <param name="listener">class which implements AppodealStack.Mediation.Common.IInAppPurchaseValidationListener interface.</param>
         public static void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
         {
             GetInstance().ValidateAppStoreInAppPurchase(purchase, listener);
