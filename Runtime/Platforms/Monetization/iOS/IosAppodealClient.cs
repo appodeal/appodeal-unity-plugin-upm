@@ -781,7 +781,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             var paramsFiltered = new Dictionary<string, object>();
 
-            eventParams.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
+            eventParams?.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
                 .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
             AppodealObjCBridge.AppodealLogEvent(eventName, DictionaryToString(paramsFiltered));
