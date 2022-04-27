@@ -1,5 +1,11 @@
 <dependencies>
     <iosPods>
-        <iosPod name='APDStackAnalyticsAdapter' version='3.0.0.1' minTargetSdk='10.0'/>
+        <iosPod name='APDStackAnalyticsAdapter' version='3.0.0.1-Alpha.3' minTargetSdk='10.0'/>
     </iosPods>
+    <androidPackages>
+        <androidPackage spec='com.appodeal.ads.sdk.services:stack_analytics:3.0.0.0@aar'/>
+        <repositories>
+            <repository>https://artifactory.appodeal.com/artifactory/appodeal</repository>
+        </repositories>
+    </androidPackages>
 </dependencies>
