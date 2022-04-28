@@ -16,33 +16,38 @@ namespace AppodealSample
                                 IBannerAdListener, IInterstitialAdListener, IRewardedVideoAdListener, IMrecAdListener,
                                 IConsentFormListener, IConsentInfoUpdateListener
     {
+
         #region Constants
 
         private const string InterstitialShow = "Show Interstitial";
         private const string InterstitialCache = "Cache Interstitial";
+        private const string InterstitialCaching = "Caching Interstitial";
         private const string RewardedVideoShow = "Show Rewarded Video";
         private const string RewardedVideoCache = "Cache Rewarded Video";
+        private const string RewardedVideoCaching = "Caching Rewarded Video";
 
         #endregion
 
         #region Appodeal Demo Scene UI Components
 
         [SerializeField] private List<GameObject>   panels;
-        [SerializeField] private Button             previousPanelButton;
         [SerializeField] private Button             nextPanelButton;
-        [SerializeField] private Toggle             testingToggle;
+        [SerializeField] private Button             previousPanelButton;
         [SerializeField] private Toggle             loggingToggle;
+        [SerializeField] private Toggle             testingToggle;
         [SerializeField] private Toggle             safeAreaToggle;
-        [SerializeField] private Toggle             interstitialToggle;
-        [SerializeField] private Toggle             rewardedVideoToggle;
-        [SerializeField] private Toggle             bannerToggle;
-        [SerializeField] private Toggle             mrecToggle;
+        [SerializeField] private Toggle             mrecInitializationToggle;
+        [SerializeField] private Toggle             bannerInitializationToggle;
+        [SerializeField] private Toggle             interstitialInitializationToggle;
+        [SerializeField] private Toggle             rewardedVideoInitializationToggle;
         [SerializeField] private Toggle             smartBannerToggle;
-        [SerializeField] private Toggle             bannerAnimationToggle;
         [SerializeField] private Toggle             tabletBannerToggle;
-        [SerializeField] private Text               pluginVersion;
-        [SerializeField] private Text               interstitialText;
-        [SerializeField] private Text               rewardedVideoText;
+        [SerializeField] private Toggle             bannerAnimationToggle;
+        [SerializeField] private Toggle             interstitialAutoCacheToggle;
+        [SerializeField] private Toggle             rewardedVideoAutoCacheToggle;
+        [SerializeField] private Text               pluginVersionText;
+        [SerializeField] private Text               interstitialButtonText;
+        [SerializeField] private Text               rewardedVideoButtonText;
 
         #endregion
 
@@ -62,9 +67,9 @@ namespace AppodealSample
 
         #region Appodeal ConsentManager Fields
 
-        private ConsentManager  _consentManager;
-        private ConsentForm     _consentForm;
         private IConsent        _consent;
+        private ConsentForm     _consentForm;
+        private ConsentManager  _consentManager;
 
         #endregion
 
@@ -80,21 +85,23 @@ namespace AppodealSample
         {
             Assert.IsNotNull(panels);
             panels.ForEach(panel => Assert.IsNotNull(panel));
-            Assert.IsNotNull(pluginVersion);
-            Assert.IsNotNull(testingToggle);
-            Assert.IsNotNull(loggingToggle);
-            Assert.IsNotNull(safeAreaToggle);
-            Assert.IsNotNull(interstitialToggle);
-            Assert.IsNotNull(rewardedVideoToggle);
-            Assert.IsNotNull(bannerToggle);
-            Assert.IsNotNull(mrecToggle);
-            Assert.IsNotNull(smartBannerToggle);
-            Assert.IsNotNull(bannerAnimationToggle);
-            Assert.IsNotNull(tabletBannerToggle);
-            Assert.IsNotNull(interstitialText);
-            Assert.IsNotNull(rewardedVideoText);
             Assert.IsNotNull(nextPanelButton);
             Assert.IsNotNull(previousPanelButton);
+            Assert.IsNotNull(loggingToggle);
+            Assert.IsNotNull(testingToggle);
+            Assert.IsNotNull(safeAreaToggle);
+            Assert.IsNotNull(mrecInitializationToggle);
+            Assert.IsNotNull(bannerInitializationToggle);
+            Assert.IsNotNull(interstitialInitializationToggle);
+            Assert.IsNotNull(rewardedVideoInitializationToggle);
+            Assert.IsNotNull(smartBannerToggle);
+            Assert.IsNotNull(tabletBannerToggle);
+            Assert.IsNotNull(bannerAnimationToggle);
+            Assert.IsNotNull(interstitialAutoCacheToggle);
+            Assert.IsNotNull(rewardedVideoAutoCacheToggle);
+            Assert.IsNotNull(pluginVersionText);
+            Assert.IsNotNull(interstitialButtonText);
+            Assert.IsNotNull(rewardedVideoButtonText);
         }
 
         private void Start()
@@ -103,9 +110,7 @@ namespace AppodealSample
             panels.FirstOrDefault()?.SetActive(true);
             previousPanelButton.interactable = false;
 
-            pluginVersion.text = $"Appodeal Unity Plugin v{AppodealVersions.GetPluginVersion()}";
-            interstitialText.text = InterstitialCache;
-            rewardedVideoText.text = RewardedVideoCache;
+            pluginVersionText.text = $"Appodeal Unity Plugin v{AppodealVersions.GetPluginVersion()}";
 
             _consentManager = ConsentManager.GetInstance();
             _consentManager.SetStorage(ConsentManagerStorage.SharedPreference);
@@ -116,12 +121,12 @@ namespace AppodealSample
             if (_shouldChangeIntText)
             {
                 _shouldChangeIntText = false;
-                interstitialText.text = Appodeal.IsLoaded(AppodealAdType.Interstitial) ? InterstitialShow : InterstitialCache;
+                interstitialButtonText.text = Appodeal.IsLoaded(AppodealAdType.Interstitial) ? InterstitialShow : Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial) ? InterstitialCaching : InterstitialCache;
             }
             if (_shouldChangeRewText)
             {
                 _shouldChangeRewText = false;
-                rewardedVideoText.text = Appodeal.IsLoaded(AppodealAdType.RewardedVideo) ? RewardedVideoShow : RewardedVideoCache;
+                rewardedVideoButtonText.text = Appodeal.IsLoaded(AppodealAdType.RewardedVideo) ? RewardedVideoShow : Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo) ? RewardedVideoCaching : RewardedVideoCache;
             }
         }
 
@@ -168,7 +173,7 @@ namespace AppodealSample
                     "com.appodeal.test",
                     "https://customvendor.com")
                 .SetPurposeIds(new List<int> {100, 200, 300})
-                .SetFeatureId(new List<int> {400, 500, 600})
+                .SetFeatureIds(new List<int> {400, 500, 600})
                 .SetLegitimateInterestPurposeIds(new List<int> {700, 800, 900})
                 .Build();
 
@@ -233,7 +238,6 @@ namespace AppodealSample
         public void PrintCurrentConsent()
         {
             if (_consentManager?.GetConsent() == null) return;
-            Debug.Log($"[APDUnity] [Consent] GetIabConsentString(): {_consentManager.GetConsent().GetIabConsentString()}");
             Debug.Log($"[APDUnity] [Consent] HasConsentForVendor(): {_consentManager.GetConsent().HasConsentForVendor("com.appodeal.test")}");
             Debug.Log($"[APDUnity] [Consent] GetStatus(): {_consentManager.GetConsent().GetStatus()}");
             Debug.Log($"[APDUnity] [Consent] GetZone(): {_consentManager.GetConsent().GetZone()}");
@@ -257,17 +261,6 @@ namespace AppodealSample
         private void InitWithConsent(bool isConsent)
         {
             Appodeal.SetLogLevel(loggingToggle.isOn ? AppodealLogLevel.Verbose : AppodealLogLevel.None);
-
-            if (isConsent)
-            {
-                Appodeal.UpdateConsent(_consent);
-            }
-            else if (!testingToggle.isOn)
-            {
-                Appodeal.UpdateGdprConsent(GdprUserConsent.NonPersonalized);
-                Appodeal.UpdateCcpaConsent(CcpaUserConsent.OptOut);
-            }
-
             Appodeal.SetTesting(testingToggle.isOn);
             Appodeal.SetUseSafeArea(safeAreaToggle.isOn);
 
@@ -293,18 +286,30 @@ namespace AppodealSample
             Appodeal.DisableNetwork(AppodealNetworks.Vungle);
             Appodeal.DisableNetwork(AppodealNetworks.Yandex, AppodealAdType.Banner);
 
-            Appodeal.SetAutoCache(AppodealAdType.Interstitial, false);
-            Appodeal.SetAutoCache(AppodealAdType.RewardedVideo, false);
+            Appodeal.SetAutoCache(AppodealAdType.Interstitial, interstitialAutoCacheToggle.isOn);
+            Appodeal.SetAutoCache(AppodealAdType.RewardedVideo, rewardedVideoAutoCacheToggle.isOn);
+            interstitialButtonText.text =  interstitialAutoCacheToggle.isOn ? InterstitialCaching : InterstitialCache;
+            rewardedVideoButtonText.text =  rewardedVideoAutoCacheToggle.isOn ? RewardedVideoCaching : RewardedVideoCache;
 
             Appodeal.SetMrecCallbacks(this);
             Appodeal.SetBannerCallbacks(this);
             Appodeal.SetInterstitialCallbacks(this);
             Appodeal.SetRewardedVideoCallbacks(this);
 
-            int adTypes = (interstitialToggle.isOn ? AppodealAdType.Interstitial : 0) |
-                          (bannerToggle.isOn ? AppodealAdType.Banner : 0) |
-                          (rewardedVideoToggle.isOn ? AppodealAdType.RewardedVideo : 0) |
-                          (mrecToggle.isOn ? AppodealAdType.Mrec : 0);
+            if (isConsent)
+            {
+                Appodeal.UpdateConsent(_consent);
+            }
+            else if (!testingToggle.isOn)
+            {
+                Appodeal.UpdateCcpaConsent(CcpaUserConsent.OptOut);
+                Appodeal.UpdateGdprConsent(GdprUserConsent.NonPersonalized);
+            }
+
+            int adTypes = (mrecInitializationToggle.isOn ? AppodealAdType.Mrec : 0) |
+                          (bannerInitializationToggle.isOn ? AppodealAdType.Banner : 0) |
+                          (interstitialInitializationToggle.isOn ? AppodealAdType.Interstitial : 0) |
+                          (rewardedVideoInitializationToggle.isOn ? AppodealAdType.RewardedVideo : 0);
 
             Appodeal.Initialize(AppKey, adTypes, this);
         }
@@ -315,9 +320,10 @@ namespace AppodealSample
             {
                 Appodeal.Show(AppodealShowStyle.Interstitial);
             }
-            else
+            else if (!Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial))
             {
                 Appodeal.Cache(AppodealAdType.Interstitial);
+                interstitialButtonText.text = InterstitialCaching;
             }
         }
 
@@ -327,9 +333,10 @@ namespace AppodealSample
             {
                 Appodeal.Show(AppodealShowStyle.RewardedVideo);
             }
-            else
+            else if (!Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo))
             {
                 Appodeal.Cache(AppodealAdType.RewardedVideo);
+                rewardedVideoButtonText.text = RewardedVideoCaching;
             }
         }
 
