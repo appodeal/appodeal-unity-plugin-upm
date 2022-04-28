@@ -67,16 +67,16 @@ UIViewController* RootViewControllerUnityMrec() {
     
     CGFloat xOffset = .0f;
     CGFloat yOffset = .0f;
-    //Calculate X offset
-    if (XAxis == BANNER_X_POSITION_LEFT) { //Left
+    // Calculate X offset
+    if (XAxis == BANNER_X_POSITION_LEFT) { // Left
         mask |= UIViewAutoresizingFlexibleRightMargin;
-    } else if (XAxis == BANNER_X_POSITION_RIGHT) { //Right
+    } else if (XAxis == BANNER_X_POSITION_RIGHT) { // Right
         mask |= UIViewAutoresizingFlexibleLeftMargin;
         xOffset = superviewSize.width - mrecWidth;
-    } else if (XAxis == BANNER_X_POSITION_CENTER) { //Center
+    } else if (XAxis == BANNER_X_POSITION_CENTER) { // Center
         xOffset = (superviewSize.width - mrecWidth) / 2;
         mask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-    } else if (XAxis / screenScale > superviewSize.width - mrecWidth) { //User defined offset more than screen width
+    } else if (XAxis / screenScale > superviewSize.width - mrecWidth) { // User defined offset more than screen width
         NSLog(@"[Appodeal Banner view][error] Banner view x offset cannot be more than Screen width - actual banner width");
         xOffset = superviewSize.width - mrecWidth;
         mask |= UIViewAutoresizingFlexibleLeftMargin;
@@ -88,13 +88,13 @@ UIViewController* RootViewControllerUnityMrec() {
         xOffset = XAxis / screenScale;
     }
     
-    //Calculate Y offset
+    // Calculate Y offset
     if (YAxis == BANNER_Y_POSITION_TOP) {
         mask |= UIViewAutoresizingFlexibleBottomMargin;
     } else if (YAxis == BANNER_Y_POSITION_BOTTOM) {
         mask |= UIViewAutoresizingFlexibleTopMargin;
         yOffset = superviewSize.height - mrecHeight;
-    } else if (YAxis / screenScale > superviewSize.height - mrecHeight) { //User defined offset more than banner width
+    } else if (YAxis / screenScale > superviewSize.height - mrecHeight) { // User defined offset more than banner width
         NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be more than Screen height - actual banner height");
         yOffset = superviewSize.height - mrecHeight;
         mask |= UIViewAutoresizingFlexibleTopMargin;

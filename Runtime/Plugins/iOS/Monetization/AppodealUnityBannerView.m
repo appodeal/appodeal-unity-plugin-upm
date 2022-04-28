@@ -74,20 +74,20 @@ UIViewController* RootViewControllerUnityBannerView() {
     CGFloat xOffset = .0f;
     CGFloat yOffset = .0f;
     
-    //Calculate X offset
-    if (XAxis == BANNER_X_POSITION_SMART) { //Smart banners
+    // Calculate X offset
+    if (XAxis == BANNER_X_POSITION_SMART) { // Smart banners
         mask |= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         self.bannerView.usesSmartSizing = YES;
         bannerWidth = superviewSize.width;
-    } else if (XAxis == BANNER_X_POSITION_LEFT) { //Left
+    } else if (XAxis == BANNER_X_POSITION_LEFT) { // Left
         mask |= UIViewAutoresizingFlexibleRightMargin;
-    } else if (XAxis == BANNER_X_POSITION_RIGHT) { //Right
+    } else if (XAxis == BANNER_X_POSITION_RIGHT) { // Right
         mask |= UIViewAutoresizingFlexibleLeftMargin;
         xOffset = superviewSize.width - bannerWidth;
-    } else if (XAxis == BANNER_X_POSITION_CENTER) { //Center
+    } else if (XAxis == BANNER_X_POSITION_CENTER) { // Center
         xOffset = (superviewSize.width - bannerWidth) / 2;
         mask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-    } else if (XAxis / screenScale > superviewSize.width - bannerWidth) { //User defined offset more than screen width
+    } else if (XAxis / screenScale > superviewSize.width - bannerWidth) { // User defined offset more than screen width
         NSLog(@"[Appodeal Banner view][error] Banner view x offset cannot be more than Screen width - actual banner width");
         xOffset = superviewSize.width - bannerWidth;
         mask |= UIViewAutoresizingFlexibleLeftMargin;
@@ -99,13 +99,13 @@ UIViewController* RootViewControllerUnityBannerView() {
         xOffset = XAxis / screenScale;
     }
     
-    //Calculate Y offset
+    // Calculate Y offset
     if (YAxis == BANNER_Y_POSITION_TOP) {
         mask |= UIViewAutoresizingFlexibleBottomMargin;
     } else if (YAxis == BANNER_Y_POSITION_BOTTOM) {
         mask |= UIViewAutoresizingFlexibleTopMargin;
         yOffset = superviewSize.height - bannerHeight;
-    } else if (YAxis / screenScale > superviewSize.height - bannerHeight) { //User defined offset more than banner width
+    } else if (YAxis / screenScale > superviewSize.height - bannerHeight) { // User defined offset more than banner width
         NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be more than Screen height - actual banner height");
         yOffset = superviewSize.height - bannerHeight;
         mask |= UIViewAutoresizingFlexibleTopMargin;

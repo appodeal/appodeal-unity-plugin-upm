@@ -1,4 +1,3 @@
-
 #if defined(__has_include) && __has_include("UnityAppController.h")
 #import "UnityAppController.h"
 #else
