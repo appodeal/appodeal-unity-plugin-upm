@@ -20,7 +20,7 @@ namespace AppodealStack.ConsentManagement.Platforms
 #if UNITY_ANDROID && !UNITY_EDITOR
             return new AndroidConsentManager();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-	        return new IosConsentManager();
+            return new IosConsentManager();
 #else
             return new DummyConsentManager();
 #endif
@@ -29,9 +29,9 @@ namespace AppodealStack.ConsentManagement.Platforms
         public static IVendorBuilder GetVendorBuilder(string name, string bundle, string policyUrl)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-		    return new AndroidVendorBuilder(name, bundle, policyUrl);
+            return new AndroidVendorBuilder(name, bundle, policyUrl);
 #elif UNITY_IPHONE && !UNITY_EDITOR
-		    return new IosVendorBuilder(name, bundle, policyUrl);
+            return new IosVendorBuilder(name, bundle, policyUrl);
 #else
             return new DummyVendorBuilder();
 #endif
@@ -40,7 +40,7 @@ namespace AppodealStack.ConsentManagement.Platforms
         public static IConsentForm GetConsentForm(IConsentFormListener listener)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-		    return new AndroidConsentForm(listener);
+            return new AndroidConsentForm(listener);
 #elif UNITY_IPHONE && !UNITY_EDITOR
             var builder = new IosConsentFormBuilder();
             builder.WithListener(listener);
