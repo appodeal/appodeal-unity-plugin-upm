@@ -178,7 +178,7 @@ namespace AppodealStack.ConsentManagement.Api
             /// </summary>
             /// <param name="featureIds">an IEnumerable of integers containing IAB feature ids for your vendor.</param>
             /// <returns>An instance of the builder class.</returns>
-            public Builder SetFeatureId(IEnumerable<int> featureIds)
+            public Builder SetFeatureIds(IEnumerable<int> featureIds)
             {
                 GetNativeVendorBuilder().SetFeatureIds(featureIds);
                 return this;
