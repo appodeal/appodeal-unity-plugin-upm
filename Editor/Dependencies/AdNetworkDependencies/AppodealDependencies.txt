@@ -1,7 +1,7 @@
 <dependencies>
     <iosPods>
-        <iosPod name='Appodeal' version='3.0.0-Alpha.3' minTargetSdk='10.0'/>
-        <iosPod name='APDIABAdapter' version='3.0.0.1-Alpha.3' minTargetSdk='10.0'/>
+        <iosPod name='Appodeal' version='3.0.0-Alpha.4' minTargetSdk='10.0'/>
+        <iosPod name='APDIABAdapter' version='3.0.0.1-Alpha.4' minTargetSdk='10.0'/>
     </iosPods>
     <androidPackages>
         <androidPackage spec='com.appodeal.ads.sdk:core:3.0.0'/>

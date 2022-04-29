@@ -1,6 +1,6 @@
 <dependencies>
     <iosPods>
-        <iosPod name='APDOguryAdapter' version='3.0.0.1-Alpha.3' minTargetSdk='10.0'/>
+        <iosPod name='APDOguryAdapter' version='3.0.0.1-Alpha.4' minTargetSdk='10.0'/>
     </iosPods>
     <androidPackages>
         <androidPackage spec='co.ogury:ogury-sdk:5.2.0'/>
