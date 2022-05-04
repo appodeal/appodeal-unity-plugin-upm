@@ -434,7 +434,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return 0;
         }
 
-        private static string DictionaryToString(Dictionary <string, object> dictionary) {
+        private static string DictionaryToString(Dictionary <string, object> dictionary)
+        {
             var dictionaryString = dictionary.Aggregate("", (current, keyValues)
                 => current + (keyValues.Key + "=" + keyValues.Value.GetType() + ":" + keyValues.Value + ","));
             return dictionaryString.TrimEnd(',');

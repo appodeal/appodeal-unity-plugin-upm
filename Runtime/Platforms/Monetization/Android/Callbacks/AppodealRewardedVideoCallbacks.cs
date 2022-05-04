@@ -10,7 +10,7 @@ namespace AppodealStack.Monetization.Platforms.Android
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealRewardedVideoCallbacks: UnityEngine.AndroidJavaProxy
+    public class AppodealRewardedVideoCallbacks : UnityEngine.AndroidJavaProxy
     {
         private readonly IRewardedVideoAdListener _listener;
 

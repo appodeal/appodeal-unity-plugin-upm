@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealInitializationCallback: AndroidJavaProxy
+    public class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;
 

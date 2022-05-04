@@ -18,9 +18,9 @@ namespace AppodealStack.Monetization.Platforms
         public static IAppodealAdsClient GetAppodealAdsClient()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidAppodealClient();
+            return new AndroidAppodealClient();
 #elif UNITY_IPHONE && !UNITY_EDITOR
-			return new IosAppodealClient();
+            return new IosAppodealClient();
 #else
             return new DummyAppodealClient();
 #endif
@@ -29,7 +29,7 @@ namespace AppodealStack.Monetization.Platforms
         public static IPlayStoreInAppPurchaseBuilder GetPlayStoreInAppPurchaseBuilder(PlayStorePurchaseType purchaseType)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			return new AndroidPlayStoreInAppPurchaseBuilder(purchaseType);
+            return new AndroidPlayStoreInAppPurchaseBuilder(purchaseType);
 #elif UNITY_IPHONE && !UNITY_EDITOR
             return null;
 #else
@@ -40,7 +40,7 @@ namespace AppodealStack.Monetization.Platforms
         public static IAppStoreInAppPurchaseBuilder GetAppStoreInAppPurchaseBuilder(AppStorePurchaseType purchaseType)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			return null;
+            return null;
 #elif UNITY_IPHONE && !UNITY_EDITOR
             return new IosAppStoreInAppPurchaseBuilder(purchaseType);
 #else

@@ -10,7 +10,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
     /// </summary>
     public class DummyAppStoreInAppPurchaseBuilder : IAppStoreInAppPurchaseBuilder
     {
-        private const string DummyMessage = " To test advertising, install your application on the Android/iOS device.";
+        private const string DummyMessage = " To test in-app purchases, install your application on the Android/iOS device.";
 
         public void WithPrice(string price)
         {

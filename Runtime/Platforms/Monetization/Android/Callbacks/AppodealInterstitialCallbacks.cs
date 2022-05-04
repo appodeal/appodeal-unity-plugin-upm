@@ -9,7 +9,7 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealInterstitialCallbacks: UnityEngine.AndroidJavaProxy
+    public class AppodealInterstitialCallbacks : UnityEngine.AndroidJavaProxy
     {
         private readonly IInterstitialAdListener _listener;
 

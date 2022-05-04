@@ -76,9 +76,9 @@ namespace AppodealStack.Monetization.Common
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum AppStorePurchaseType
     {
-     Consumable,
-     NonConsumable,
-     AutoRenewableSubscription,
-     NonRenewingSubscription
+        Consumable,
+        NonConsumable,
+        AutoRenewableSubscription,
+        NonRenewingSubscription
     }
 }

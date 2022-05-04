@@ -753,7 +753,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void ResetCustomFilter(string name)
         {
-             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ResetCustomFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ResetCustomFilter method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void TrackInAppPurchase(double amount, string currency)
