@@ -201,7 +201,7 @@ void AppodealUpdateConsent(BOOL value) {
 }
 
 void AppodealUpdateConsentReport() {
-    [Appodeal updateConsent:STKConsentManager.sharedManager.consent];
+    [Appodeal updateConsentReport:STKConsentManager.sharedManager.consent];
 }
 
 void AppodealUpdateGdprConsent(int consent) {

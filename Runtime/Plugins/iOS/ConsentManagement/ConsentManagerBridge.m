@@ -91,7 +91,7 @@ const char *CmGetIabConsentString() {
 }
 
 id CmGetConsent(void) {
-    if (gConsent) {
+    if (!gConsent) {
         gConsent = [ConsentBridge new];
     }
     return gConsent;
