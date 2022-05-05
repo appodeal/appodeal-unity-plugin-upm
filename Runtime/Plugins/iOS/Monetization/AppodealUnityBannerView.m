@@ -64,30 +64,32 @@ UIViewController* RootViewControllerUnityBannerView() {
 
 - (void)setSharedBannerFrame:(CGFloat)XAxis YAxis:(CGFloat)YAxis {
     UIViewAutoresizing mask = UIViewAutoresizingNone;
-    
+
+    UIView *superView = RootViewControllerUnityBannerView().view;
     CGSize  superviewSize = RootViewControllerUnityBannerView().view.bounds.size;
     CGFloat screenScale = [[UIScreen mainScreen] scale];
-    
+
     CGFloat bannerHeight    = self.bannerView.frame.size.height;
     CGFloat bannerWidth     = self.bannerView.frame.size.width;
-    
+
     CGFloat xOffset = .0f;
     CGFloat yOffset = .0f;
-    
+
     // Calculate X offset
-    if (XAxis == BANNER_X_POSITION_SMART) { // Smart banners
+
+    if (XAxis == BANNER_X_POSITION_SMART) {
         mask |= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         self.bannerView.usesSmartSizing = YES;
         bannerWidth = superviewSize.width;
-    } else if (XAxis == BANNER_X_POSITION_LEFT) { // Left
+    } else if (XAxis == BANNER_X_POSITION_LEFT) {
         mask |= UIViewAutoresizingFlexibleRightMargin;
-    } else if (XAxis == BANNER_X_POSITION_RIGHT) { // Right
+    } else if (XAxis == BANNER_X_POSITION_RIGHT) {
         mask |= UIViewAutoresizingFlexibleLeftMargin;
         xOffset = superviewSize.width - bannerWidth;
-    } else if (XAxis == BANNER_X_POSITION_CENTER) { // Center
+    } else if (XAxis == BANNER_X_POSITION_CENTER) {
         xOffset = (superviewSize.width - bannerWidth) / 2;
         mask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-    } else if (XAxis / screenScale > superviewSize.width - bannerWidth) { // User defined offset more than screen width
+    } else if (XAxis / screenScale > superviewSize.width - bannerWidth) {
         NSLog(@"[Appodeal Banner view][error] Banner view x offset cannot be more than Screen width - actual banner width");
         xOffset = superviewSize.width - bannerWidth;
         mask |= UIViewAutoresizingFlexibleLeftMargin;
@@ -98,27 +100,36 @@ UIViewController* RootViewControllerUnityBannerView() {
         mask |= UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
         xOffset = XAxis / screenScale;
     }
-    
+
     // Calculate Y offset
+
     if (YAxis == BANNER_Y_POSITION_TOP) {
         mask |= UIViewAutoresizingFlexibleBottomMargin;
+        if (@available(iOS 11.0, *)) {
+            yOffset = superView.safeAreaInsets.top;
+        }
     } else if (YAxis == BANNER_Y_POSITION_BOTTOM) {
         mask |= UIViewAutoresizingFlexibleTopMargin;
-        yOffset = superviewSize.height - bannerHeight;
-    } else if (YAxis / screenScale > superviewSize.height - bannerHeight) { // User defined offset more than banner width
-        NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be more than Screen height - actual banner height");
-        yOffset = superviewSize.height - bannerHeight;
-        mask |= UIViewAutoresizingFlexibleTopMargin;
+        if (@available(iOS 11.0, *)) {
+            yOffset = superviewSize.height - bannerHeight - superView.safeAreaInsets.bottom;
+        }
+        else {
+            yOffset = superviewSize.height - bannerHeight;
+        }
     } else if (YAxis < -2) {
         NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be less than 0");
         yOffset = 0;
-    } else if (YAxis == .0f) { // All good
+    } else if (YAxis / screenScale > superviewSize.height - bannerHeight) { // User defined offset more than banner width
+        NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be more than Screen height - actual banner height");
+        mask |= UIViewAutoresizingFlexibleTopMargin;
+        yOffset = superviewSize.height - bannerHeight;
+    } else if (YAxis == .0f) {
         mask |= UIViewAutoresizingFlexibleBottomMargin;
     } else {
         yOffset = YAxis / screenScale;
         mask |= UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     }
-    
+
     NSLog(@"Creating banner frame with parameters: xOffset = %f, yOffset = %f", xOffset, yOffset);
     CGRect bannerRect = CGRectMake(xOffset, yOffset, bannerWidth, bannerHeight);
     [self.bannerView setAutoresizingMask:mask];
