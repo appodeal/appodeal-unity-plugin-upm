@@ -3,8 +3,8 @@
         <iosPod name='APDFirebaseAdapter' version='3.0.0.1-Alpha.4' minTargetSdk='10.0'/>
     </iosPods>
     <androidPackages>
-        <androidPackage spec='com.google.firebase:firebase-config-ktx:21.0.1'/>
-        <androidPackage spec='com.google.firebase:firebase-analytics-ktx:19.0.2'/>
+        <androidPackage spec='com.google.firebase:firebase-config-ktx:21.0.2'/>
+        <androidPackage spec='com.google.firebase:firebase-analytics-ktx:20.1.2'/>
         <androidPackage spec='com.appodeal.ads.sdk.services:firebase:3.0.0.0@aar'/>
         <repositories>
             <repository>https://artifactory.appodeal.com/artifactory/appodeal</repository>

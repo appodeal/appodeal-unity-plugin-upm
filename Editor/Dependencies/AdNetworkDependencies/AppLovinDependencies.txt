@@ -3,7 +3,7 @@
         <iosPod name='APDAppLovinAdapter' version='3.0.0.1-Alpha.4' minTargetSdk='10.0'/>
     </iosPods>
     <androidPackages>
-        <androidPackage spec='com.applovin:applovin-sdk:11.3.0'/>
+        <androidPackage spec='com.applovin:applovin-sdk:11.3.3'/>
         <androidPackage spec='com.appodeal.ads.sdk.networks:applovin:3.0.0.0@aar'/>
         <repositories>
             <repository>https://artifactory.appodeal.com/artifactory/appodeal</repository>
