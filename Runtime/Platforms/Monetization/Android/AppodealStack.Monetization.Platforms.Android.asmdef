@@ -6,8 +6,7 @@
         "AppodealStack.ConsentManagement.Platforms.Android"
     ],
     "includePlatforms": [
-        "Android",
-        "Editor"
+        "Android"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -4,7 +4,6 @@
         "AppodealStack.ConsentManagement.Common"
     ],
     "includePlatforms": [
-        "Editor",
         "iOS"
     ],
     "excludePlatforms": [],
