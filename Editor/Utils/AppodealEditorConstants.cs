@@ -45,6 +45,7 @@ namespace AppodealStack.UnityEditor.Utils
         public const string Dependencies = "Dependencies";
 
         public const string FacebookApplicationId = "com.facebook.sdk.ApplicationId";
+        public const string FacebookClientToken = "com.facebook.sdk.ClientToken";
         public const string FacebookAutoLogAppEventsEnabled = "com.facebook.sdk.AutoLogAppEventsEnabled";
         public const string FacebookAdvertiserIDCollectionEnabled = "com.facebook.sdk.AdvertiserIDCollectionEnabled";
 

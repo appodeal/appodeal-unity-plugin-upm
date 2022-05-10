@@ -146,10 +146,11 @@ namespace AppodealStack.UnityEditor.PreProcess
         private static void UpdateManifest(string fullPath)
         {
             string appId = AppodealSettings.Instance.FacebookAndroidAppId;
+            string clientToken = AppodealSettings.Instance.FacebookAndroidClientToken;
 
-            if (String.IsNullOrEmpty(appId))
+            if (String.IsNullOrEmpty(appId) | String.IsNullOrEmpty(clientToken))
             {
-                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
+                Debug.LogWarning("Facebook App ID / Client Token is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
                 return;
             }
 
@@ -169,17 +170,22 @@ namespace AppodealStack.UnityEditor.PreProcess
             xmlElement.SetAttribute("value", namespaceOfPrefix, "fb" + appId);
             SetOrReplaceXmlElement(xmlNode, xmlElement);
 
-            string value = AppodealSettings.Instance.FacebookAutoLogAppEvents.ToString().ToLower();
             var xmlElement2 = xmlDocument.CreateElement("meta-data");
-            xmlElement2.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAutoLogAppEventsEnabled);
-            xmlElement2.SetAttribute("value", namespaceOfPrefix, value);
+            xmlElement2.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookClientToken);
+            xmlElement2.SetAttribute("value", namespaceOfPrefix, clientToken);
             SetOrReplaceXmlElement(xmlNode, xmlElement2);
 
-            string value2 = AppodealSettings.Instance.FacebookAdvertiserIDCollection.ToString().ToLower();
+            string value = AppodealSettings.Instance.FacebookAutoLogAppEvents.ToString().ToLower();
             var xmlElement3 = xmlDocument.CreateElement("meta-data");
-            xmlElement3.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAdvertiserIDCollectionEnabled);
-            xmlElement3.SetAttribute("value", namespaceOfPrefix, value2);
+            xmlElement3.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAutoLogAppEventsEnabled);
+            xmlElement3.SetAttribute("value", namespaceOfPrefix, value);
             SetOrReplaceXmlElement(xmlNode, xmlElement3);
+
+            string value2 = AppodealSettings.Instance.FacebookAdvertiserIDCollection.ToString().ToLower();
+            var xmlElement4 = xmlDocument.CreateElement("meta-data");
+            xmlElement4.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAdvertiserIDCollectionEnabled);
+            xmlElement4.SetAttribute("value", namespaceOfPrefix, value2);
+            SetOrReplaceXmlElement(xmlNode, xmlElement4);
 
             var settings = new XmlWriterSettings
             {

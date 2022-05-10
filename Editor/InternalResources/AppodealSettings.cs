@@ -31,6 +31,9 @@ namespace AppodealStack.UnityEditor.InternalResources
 
         [SerializeField] private string facebookAndroidAppId = String.Empty;
         [SerializeField] private string facebookIosAppId = String.Empty;
+
+        [SerializeField] private string facebookAndroidClientToken = String.Empty;
+
         [SerializeField] private bool firebaseAutoConfiguration;
         [SerializeField] private bool facebookAutoConfiguration;
         [SerializeField] private bool facebookAutoLogAppEvents;
@@ -162,6 +165,12 @@ namespace AppodealStack.UnityEditor.InternalResources
         {
             get => Instance.facebookIosAppId;
             set => Instance.facebookIosAppId = value.Trim();
+        }
+
+        public string FacebookAndroidClientToken
+        {
+            get => Instance.facebookAndroidClientToken;
+            set => Instance.facebookAndroidClientToken = value.Trim();
         }
 
         public bool FacebookAutoLogAppEvents
