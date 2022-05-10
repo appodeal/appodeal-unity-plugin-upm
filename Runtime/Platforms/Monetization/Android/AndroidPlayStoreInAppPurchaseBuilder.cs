@@ -32,7 +32,6 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public IPlayStoreInAppPurchase Build()
         {
-            _inAppPurchase = new AndroidJavaObject("com.appodeal.ads.modules.common.inapp.InAppPurchase");
             _inAppPurchase = GetBuilder().Call<AndroidJavaObject>("build");
             return new AndroidPlayStoreInAppPurchase(_inAppPurchase);
         }
