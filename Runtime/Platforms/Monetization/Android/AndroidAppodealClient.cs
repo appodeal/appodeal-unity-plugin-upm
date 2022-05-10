@@ -335,12 +335,12 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void DisableNetwork(string network)
         {
-            GetAppodealClass().CallStatic("disableNetwork", GetActivity(), network);
+            GetAppodealClass().CallStatic("disableNetwork", network);
         }
 
         public void DisableNetwork(string network, int adTypes)
         {
-            GetAppodealClass().CallStatic("disableNetwork", GetActivity(), network, NativeAdTypesForType(adTypes));
+            GetAppodealClass().CallStatic("disableNetwork", network, NativeAdTypesForType(adTypes));
         }
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
@@ -574,7 +574,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             var androidPurchase = purchase.NativeInAppPurchase as AndroidPlayStoreInAppPurchase;
             if (androidPurchase == null) return;
-            GetAppodealClass().CallStatic("validateInAppPurchase", androidPurchase.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
+            GetAppodealClass().CallStatic("validateInAppPurchase", GetActivity(), androidPurchase.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
         }
 
         public void SetLocationTracking(bool value)

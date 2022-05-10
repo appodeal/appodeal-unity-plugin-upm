@@ -17,10 +17,10 @@ namespace AppodealStack.Monetization.Platforms.Android
             switch (purchaseType)
             {
                 case PlayStorePurchaseType.Subs:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.modules.common.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder");
+                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder");
                     break;
                 case PlayStorePurchaseType.InApp:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.modules.common.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder");
+                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder");
                     break;
             }
         }

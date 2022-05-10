@@ -16,7 +16,7 @@ namespace AppodealStack.Monetization.Platforms.Android
     {
         private readonly IInAppPurchaseValidationListener _listener;
 
-        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base("com.appodeal.ads.modules.common.inapp.InAppPurchaseValidateCallback")
+        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base("com.appodeal.ads.inapp.InAppPurchaseValidateCallback")
         {
             _listener = listener;
         }
