@@ -906,7 +906,12 @@ namespace AppodealStack.UnityEditor.SDKManager
                 yield return webRequest.SendWebRequest();
                 var pages = AppodealEditorConstants.PluginRequest.Split('/');
                 var page = pages.Length - 1;
+
+#if UNITY_2020_1_OR_NEWER
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError)
+#else
                 if (webRequest.isNetworkError)
+#endif
                 {
                     Debug.Log(pages[page] + ": Error: " + webRequest.error);
                     AppodealDependencyUtils.ShowInternalErrorDialog(this, webRequest.error, string.Empty);
@@ -943,7 +948,12 @@ namespace AppodealStack.UnityEditor.SDKManager
                 yield return webRequest.SendWebRequest();
                 var pages = adaptersUri.Split('/');
                 var page = pages.Length - 1;
+
+#if UNITY_2020_1_OR_NEWER
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError)
+#else
                 if (webRequest.isNetworkError)
+#endif
                 {
                     Debug.Log(pages[page] + ": Error: " + webRequest.error);
                     AppodealDependencyUtils.ShowInternalErrorDialog(this, webRequest.error, string.Empty);
