@@ -561,7 +561,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 _btnFieldWidth))
             {
                 var option = EditorUtility.DisplayDialog("Update dependencies",
-                    "If you will update core, all adapters this platform will be updated automatically. " +
+                    "If you will update core, all adapters for this platform will be updated automatically. " +
                     "Do you want to update core?",
                     "Ok",
                     "Cancel");
