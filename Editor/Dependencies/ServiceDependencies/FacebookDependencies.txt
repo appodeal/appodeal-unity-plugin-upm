@@ -4,7 +4,7 @@
     </iosPods>
     <androidPackages>
         <androidPackage spec='com.facebook.android:facebook-core:13.1.0'/>
-        <androidPackage spec='com.appodeal.ads.sdk.services:facebook:3.0.0.0@aar'/>
+        <androidPackage spec='com.appodeal.ads.sdk.services:facebook_analytics:3.0.0.0@aar'/>
         <repositories>
             <repository>https://artifactory.appodeal.com/artifactory/appodeal</repository>
         </repositories>
