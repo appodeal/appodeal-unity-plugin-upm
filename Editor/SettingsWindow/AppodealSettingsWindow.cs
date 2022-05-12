@@ -33,7 +33,12 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             _skAdNetworkIdentifiers = new List<string>();
             var requestSkaNetworkIds = UnityWebRequest.Get("https://mw-backend.appodeal.com/v1/skadnetwork/");
             yield return requestSkaNetworkIds.SendWebRequest();
+
+#if UNITY_2020_1_OR_NEWER
+            if (requestSkaNetworkIds.result == UnityWebRequest.Result.ConnectionError)
+#else
             if (requestSkaNetworkIds.isNetworkError)
+#endif
             {
                 Debug.LogError(requestSkaNetworkIds.error);
             }

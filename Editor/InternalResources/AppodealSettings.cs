@@ -126,8 +126,12 @@ namespace AppodealStack.UnityEditor.InternalResources
             set
             {
                 Instance.nSAppTransportSecurity = value;
+#if UNITY_2022_1_OR_NEWER
+                PlayerSettings.insecureHttpOption = value ? InsecureHttpOption.AlwaysAllowed : InsecureHttpOption.NotAllowed;
+#else
                 if (BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.iOS, BuildTarget.iOS)) PlayerSettings.iOS.allowHTTPDownload = value;
                 else Instance.nSAppTransportSecurity = false;
+#endif
             }
         }
 
