@@ -4,7 +4,7 @@ Monetize more with less hassle. Our one ad mediation SDK includes it all: 70+ ad
 
 ## Useful links:
 
-[Documentation](https://wiki.appodeal.com/en/unity/get-started)
+### [Documentation](https://wiki.appodeal.com/en/unity/get-started)
 
 ### [Usage Sample](Samples~/UsageSample/AppodealDemo.cs)
 
