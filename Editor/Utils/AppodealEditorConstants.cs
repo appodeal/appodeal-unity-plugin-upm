@@ -13,7 +13,8 @@ namespace AppodealStack.UnityEditor.Utils
         public const string PluginPath = "Assets/Appodeal";
         public const string DependenciesPath = "Editor/Dependencies";
         public const string EdmPackagePath = "Editor/Dependencies/ExternalDependencyManager";
-        public const string ReplaceDepValue = "com.appodeal.ads.sdk.networks:";
+        public const string ReplaceNetworkDepValue = "com.appodeal.ads.sdk.networks:";
+        public const string ReplaceServiceDepValue = "com.appodeal.ads.sdk.services:";
         public const string ReplaceAdmobDepValue = "com.appodeal.ads.sdk.networks:admob";
         public const string ReplaceDepCore = "com.appodeal.ads.sdk:core:";
         public const string PackageName = "Name";

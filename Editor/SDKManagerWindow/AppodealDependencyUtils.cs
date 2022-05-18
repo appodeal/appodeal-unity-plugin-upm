@@ -17,18 +17,9 @@ namespace AppodealStack.UnityEditor.SDKManager
     {
         public static FileInfo[] GetInternalDependencyPath()
         {
-            if (String.IsNullOrEmpty(AppodealEditorConstants.PluginPath) ||
-                String.IsNullOrEmpty(AppodealEditorConstants.DependenciesPath))
-            {
-                return null;
-            }
+            string path = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath);
+            if (!Directory.Exists(path)) return null;
 
-            var path = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath);
-            if (!Directory.Exists(path))
-            {
-                return null;
-            }
-            
             var info = new DirectoryInfo(path);
             var fileInfo = info.GetFiles();
             return fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta")).ToArray();
@@ -38,51 +29,42 @@ namespace AppodealStack.UnityEditor.SDKManager
         {
             EditorUtility.ClearProgressBar();
             Debug.LogError(message);
-            var option = EditorUtility.DisplayDialog("Internal error",
-                $"{message}. Please contact Appodeal support.",
-                "Ok");
-            if (option)
-            {
-                editorWindow.Close();
-            }
+            bool option = EditorUtility.DisplayDialog("Internal error", $"{message}. Please contact Appodeal support.", "Ok");
+            if (option) editorWindow.Close();
         }
 
         public static void ShowInternalErrorDialog(EditorWindow editorWindow, string message)
         {
             EditorUtility.ClearProgressBar();
             Debug.LogError(message);
-            var option = EditorUtility.DisplayDialog("Internal error",
-                $"{message}.",
-                "Ok");
-            if (option)
-            {
-                editorWindow.Close();
-            }
+            bool option = EditorUtility.DisplayDialog("Internal error", $"{message}.", "Ok");
+            if (option) editorWindow.Close();
         }
 
         public static void FormatXml(string inputXml)
         {
             var document = new XmlDocument();
-            document.Load(new StringReader(inputXml));
-            var builder = new StringBuilder();
-            using (var writer = new XmlTextWriter(new StringWriter(builder)))
+            document.Load(inputXml);
+
+            using (var writer = new XmlTextWriter(inputXml, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;
+                writer.Indentation = 4;
                 document.Save(writer);
             }
         }
 
         public static string GetConfigName(string value)
         {
-            var configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}/", string.Empty);
-            return configName.Replace("Dependencies.xml", string.Empty);
+            string configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}/", String.Empty);
+            return configName.Replace("Dependencies.xml", String.Empty);
         }
 
         public static string GetIosContent(string path)
         {
-            var iosContent = string.Empty;
+            string iosContent = String.Empty;
             var lines = File.ReadAllLines(path);
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 if (String.IsNullOrEmpty(line)) continue;
 
@@ -107,9 +89,9 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetAndroidContent(string path)
         {
-            var androidContent = string.Empty;
+            string androidContent = String.Empty;
             var lines = File.ReadAllLines(path);
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 if (String.IsNullOrEmpty(line)) continue;
 
@@ -149,20 +131,15 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetAndroidDependencyName(string value)
         {
-            var dependencyName = value.Replace(AppodealEditorConstants.ReplaceDepValue, string.Empty);
-            var sub = dependencyName.Substring(0,
-                dependencyName.LastIndexOf(":", StringComparison.Ordinal));
-            return sub.Contains("@aar") ? sub.Substring(0, sub.LastIndexOf("@", StringComparison.Ordinal)) : sub;
+            return value.Substring(value.IndexOf(':') + 1, value.LastIndexOf(':') - value.IndexOf(':') - 1);
         }
 
         public static string GetAndroidDependencyVersion(string value)
         {
-            var androidDependencyVersion =
-                value.Replace(AppodealEditorConstants.ReplaceDepValue + GetAndroidDependencyName(value) + ":", string.Empty);
+            string androidDependencyVersion = value.Substring(value.LastIndexOf(':') + 1);
             if (androidDependencyVersion.Contains("@aar"))
             {
-                androidDependencyVersion = androidDependencyVersion.Substring(0,
-                    androidDependencyVersion.LastIndexOf("@", StringComparison.Ordinal));
+                androidDependencyVersion = androidDependencyVersion.Substring(0, androidDependencyVersion.IndexOf('@'));
             }
 
             return androidDependencyVersion;
@@ -170,18 +147,15 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetMajorVersion(string value)
         {
-            //return value.Substring(0, 6).Remove(0, 5).Insert(0, string.Empty);
             return value[0].ToString();
         }
 
         public static string GetAndroidDependencyCoreVersion(string value)
         {
-            var androidDependencyVersion =
-                value.Replace(AppodealEditorConstants.ReplaceDepCore, string.Empty);
+            string androidDependencyVersion = value.Replace(AppodealEditorConstants.ReplaceDepCore, String.Empty);
             if (androidDependencyVersion.Contains("@aar"))
             {
-                androidDependencyVersion = androidDependencyVersion.Substring(0,
-                    androidDependencyVersion.LastIndexOf("@", StringComparison.Ordinal));
+                androidDependencyVersion = androidDependencyVersion.Substring(0, androidDependencyVersion.IndexOf('@'));
             }
 
             return androidDependencyVersion;
@@ -189,11 +163,10 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string ReplaceBetaVersion(string value)
         {
-            return Regex.Replace(value, "-Beta", string.Empty);
+            return Regex.Replace(value, "-Beta", String.Empty);
         }
 
-        public static void ReplaceInFile(
-            string filePath, string searchText, string replaceText)
+        public static void ReplaceInFile(string filePath, string searchText, string replaceText)
         {
             string contentString;
             using (var reader = new StreamReader(filePath))

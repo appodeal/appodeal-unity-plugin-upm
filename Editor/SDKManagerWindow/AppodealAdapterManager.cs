@@ -418,7 +418,6 @@ namespace AppodealStack.UnityEditor.SDKManager
             {
                 UpdateDependency(nameDep, AppodealEditorConstants.SpecCloseDependencies,
                     content + "\n" + AppodealEditorConstants.SpecCloseDependencies);
-                AppodealDependencyUtils.FormatXml(System.IO.File.ReadAllText(path));
             }
             else
             {
@@ -429,7 +428,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                     writer.Close();
                 }
 
-                AppodealDependencyUtils.FormatXml(System.IO.File.ReadAllText(path));
+                AppodealDependencyUtils.FormatXml(path);
             }
 
             UpdateWindow();
@@ -713,7 +712,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         var text = System.IO.File.ReadAllLines(path).Where(s => s.Trim() != string.Empty).ToArray();
                         File.Delete(path);
                         System.IO.File.WriteAllLines(path, text);
-                        AppodealDependencyUtils.FormatXml(System.IO.File.ReadAllText(path));
+                        AppodealDependencyUtils.FormatXml(path);
 
                         UpdateWindow();
                     }
@@ -804,6 +803,8 @@ namespace AppodealStack.UnityEditor.SDKManager
                     writer.Write(contentString);
                     writer.Close();
                 }
+
+                AppodealDependencyUtils.FormatXml(path);
             }
         }
 
@@ -968,11 +969,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         yield break;
                     }
 
-                    // TEMP TWO LINES
-                    string config = new StreamReader("Assets/Config.txt").ReadToEnd();
-                    var serverConfig = JsonUtility.FromJson<ServerConfig>(config);
-
-                    // var serverConfig = JsonUtility.FromJson<ServerConfig>(webRequest.downloadHandler.text);
+                    var serverConfig = JsonUtility.FromJson<ServerConfig>(webRequest.downloadHandler.text);
 
                     serverConfig.core.type = DependencyType.Core;
                     serverConfig.ad_networks.ForEach(network => network.type = DependencyType.AdNetwork);
@@ -1121,10 +1118,13 @@ namespace AppodealStack.UnityEditor.SDKManager
                             if (networkDependency.name == AppodealEditorConstants.Appodeal && 
                                 !specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
                             
+                            if (networkDependency.name != AppodealEditorConstants.Appodeal && 
+                                specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
+                            
                             if (networkDependency.name == AppodealEditorConstants.GoogleAdMob && 
                                 !specName.Contains(AppodealEditorConstants.ReplaceAdmobDepValue)) return true;
 
-                            if (specName.Contains(AppodealEditorConstants.ReplaceDepValue))
+                            if (specName.Contains(AppodealEditorConstants.ReplaceNetworkDepValue) || specName.Contains(AppodealEditorConstants.ReplaceServiceDepValue))
                             {
                                 networkDependency.android_info = new AppodealDependency.AndroidDependency(
                                     AppodealDependencyUtils.GetAndroidDependencyName(specName),
