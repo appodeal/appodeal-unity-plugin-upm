@@ -1,4 +1,4 @@
-# Appodeal Unity Plugin (UPM)
+# Appodeal Unity Plugin (UPM distribution)
 
 ## Changelog
 
