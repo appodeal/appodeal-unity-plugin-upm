@@ -2,9 +2,9 @@
 
 Monetize more with less hassle. Our one ad mediation SDK includes it all: 70+ ad demand sources, all ad formats, in-app bidding algorithm, full-controls, a/b testing plus much more.
 
-## Useful links
+## Useful links:
 
-### [Documentation](https://wiki.appodeal.com/en/unity/get-started)
+[Documentation](https://wiki.appodeal.com/en/unity/get-started)
 
 ### [Usage Sample](Samples~/UsageSample/AppodealDemo.cs)
 
