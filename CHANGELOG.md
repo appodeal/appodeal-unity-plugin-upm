@@ -10,5 +10,10 @@
 + Updated Appodeal iOS SDK to 3.0.0
 + Updated Editor tools with new features
 + Implemented test ads in Unity Editor
-+ Reworked API to follow C# naming convention
-+ Removed Non-Skippable ad type
++ Reworked API for better usability
++ Added XML comments for API
++ Fixed a few bugs
++ Removed NonSkippable ad type
++ Removed UserSettings, Consent, ConsentFormBuilder, ConsentManageException classes
++ Removed setBannerBackground method
++ Replaced showAsActivity & showAsDialog methods of ConsentForm class with a single Show() method.
