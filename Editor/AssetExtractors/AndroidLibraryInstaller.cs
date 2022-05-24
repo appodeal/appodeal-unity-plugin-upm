@@ -19,6 +19,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
         {
             string source = Path.Combine(AppodealEditorConstants.PackagePath, "Runtime/Plugins/Android/appodeal.androidlib~");
             string destination = Path.Combine("Assets/Plugins/Android", "appodeal.androidlib");
+            string valuesDir = Path.Combine(destination, AppodealEditorConstants.FirebaseAndroidConfigPath);
 
             if (Directory.Exists(destination)) return;
 
@@ -28,6 +29,11 @@ namespace AppodealStack.UnityEditor.AssetExtractors
             }
 
             FileUtil.CopyFileOrDirectory(source, destination);
+
+            if (!Directory.Exists(valuesDir))
+            {
+                Directory.CreateDirectory(valuesDir);
+            }
 
             PluginPreferences.Instance.IsAndroidLibraryImported = true;
             PluginPreferences.Instance.SaveAsync();
