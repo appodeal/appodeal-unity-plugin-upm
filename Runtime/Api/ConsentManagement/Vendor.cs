@@ -163,7 +163,8 @@ namespace AppodealStack.ConsentManagement.Api
             }
 
             /// <summary>
-            /// Sets a list of IAB purpose ids.
+            /// <para> Sets a list of IAB purpose ids. </para>
+            /// See <see href="https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/"/> for more details.
             /// </summary>
             /// <param name="purposeIds">an IEnumerable of integers containing IAB purpose ids for your vendor.</param>
             /// <returns>An instance of the builder class.</returns>
@@ -174,7 +175,8 @@ namespace AppodealStack.ConsentManagement.Api
             }
 
             /// <summary>
-            /// Sets a list of IAB feature ids.
+            /// <para> Sets a list of IAB feature ids. </para>
+            /// See <see href="https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/"/> for more details.
             /// </summary>
             /// <param name="featureIds">an IEnumerable of integers containing IAB feature ids for your vendor.</param>
             /// <returns>An instance of the builder class.</returns>
@@ -185,7 +187,8 @@ namespace AppodealStack.ConsentManagement.Api
             }
 
             /// <summary>
-            /// Sets a list of IAB legitimate interest purpose ids.
+            /// <para> Sets a list of IAB legitimate interest purpose ids. </para>
+            /// See <see href="https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/"/> for more details.
             /// </summary>
             /// <param name="legitimateInterestPurposeIds">an IEnumerable of integers containing IAB legitimate interest purpose ids for your vendor.</param>
             /// <returns>An instance of the builder class.</returns>

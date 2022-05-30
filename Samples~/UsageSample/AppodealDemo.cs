@@ -168,13 +168,10 @@ namespace AppodealSample
 
         public void SetCustomVendor()
         {
-            var customVendor = new Vendor.Builder(
-                    "Appodeal Test",
-                    "com.appodeal.test",
-                    "https://customvendor.com")
-                .SetPurposeIds(new List<int> {100, 200, 300})
-                .SetFeatureIds(new List<int> {400, 500, 600})
-                .SetLegitimateInterestPurposeIds(new List<int> {700, 800, 900})
+            var customVendor = new Vendor.Builder("Test Vendor", "com.appodeal.test", "https://appodeal.com")
+                .SetPurposeIds(new List<int> {4, 7})
+                .SetFeatureIds(new List<int> {1, 2})
+                .SetLegitimateInterestPurposeIds(new List<int> {1})
                 .Build();
 
             _consentManager?.SetCustomVendor(customVendor);

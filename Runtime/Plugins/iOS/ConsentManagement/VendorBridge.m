@@ -41,12 +41,12 @@
 - (void)registerCustomVendor {
     if (self.bundle && self.URL) {
         [STKConsentManager.sharedManager registerCustomVendor:^(STKVendorBuilder *builder) {
-            builder.appendName(appName_);
-            builder.appendBundle(appBundle_);
-            builder.appendPolicyURL(appURL_);
-            builder.appendFeaturesIds(self.featuresIds);
-            builder.appendLegIntPurposeIds(self.featuresIds);
+            builder.appendName(self.name);
+            builder.appendBundle(self.bundle);
+            builder.appendPolicyURL(self.URL);
             builder.appendPurposesIds(self.purposesIds);
+            builder.appendFeaturesIds(self.featuresIds);
+            builder.appendLegIntPurposeIds(self.legIntPurposeIds);
         }];
     }
 }

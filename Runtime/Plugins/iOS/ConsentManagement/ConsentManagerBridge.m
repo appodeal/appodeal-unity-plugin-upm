@@ -26,7 +26,7 @@ id CmGetCustomVendor(const char *bundle) {
     if (bundle == NULL) {
         return nil;
     }
-    
+
     NSString *bundleString = [[NSString alloc] initWithUTF8String:bundle];
     return [VendorBridge.sharedVendorBridge.bundle isEqualToString:bundleString] ? VendorBridge.sharedVendorBridge : nil;
 }
@@ -100,14 +100,14 @@ id CmGetConsent(void) {
 #pragma mark - Setters
 
 void CmSetCustomVendor(id customVendor) {
-    // TODO
+    [VendorBridge.sharedVendorBridge registerCustomVendor];
 }
 
 void CmSetStorage(const char *storage) {
     if (storage == NULL) {
         return;
     }
-    
+
     NSString *storageString = [[NSString alloc] initWithUTF8String:storage];
     if ([storageString isEqualToString: @"SHARED_PREFERENCE"]) {
         STKConsentManager.sharedManager.storage = STKConsentDialogStorageUserDefaults;
@@ -127,10 +127,9 @@ void CmRequestConsentInfoUpdate(const char *appodealAppKey,
         onFailedToUpdateConsentInfo(gCurrentError);
         return;
     }
-    
+
     NSString *key = [[NSString alloc] initWithUTF8String:appodealAppKey];
-    
-    [VendorBridge.sharedVendorBridge registerCustomVendor];
+
     [STKConsentManager.sharedManager synchronizeWithAppKey:key
                                                 completion:^(NSError *error) {
         if (error) {
