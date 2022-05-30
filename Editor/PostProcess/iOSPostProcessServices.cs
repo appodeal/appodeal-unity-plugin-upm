@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_IOS
+using System;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -89,3 +90,5 @@ namespace AppodealStack.UnityEditor.PostProcess
         }
     }
 }
+
+#endif

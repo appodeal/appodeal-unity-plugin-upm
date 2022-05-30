@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_IOS
+using System;
 using System.IO;
 using System.Xml.Linq;
 using System.Collections.Generic;
@@ -406,3 +407,5 @@ namespace AppodealStack.UnityEditor.PostProcess
         }
     }
 }
+
+#endif
