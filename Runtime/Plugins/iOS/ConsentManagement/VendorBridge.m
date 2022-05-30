@@ -79,10 +79,6 @@ const char *VendorGetPolicyUrl(void) {
 }
 
 const char *VendorGetPurposeIds(void) {
-    int *purposeIds = malloc(VendorBridge.sharedVendorBridge.purposesIds.count);
-    for (int idx = 0; idx < VendorBridge.sharedVendorBridge.purposesIds.count; idx++) {
-        purposeIds[idx] = VendorBridge.sharedVendorBridge.purposesIds[idx].intValue;
-    }
     return GetConChar(CommaSeparatedStringFromArray(VendorBridge.sharedVendorBridge.purposesIds));
 }
 
