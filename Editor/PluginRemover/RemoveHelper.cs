@@ -29,7 +29,7 @@ namespace AppodealStack.UnityEditor.PluginRemover
         private const string AndroidSupportPlugin = "Appodeal-Unity-Android-Support";
         private const string PlayServicesPlugin = "Unity-Google-Play-Services";
         private const string UnityPlugin = "Appodeal-Unity-";
-        private const string RemoveList = "Editor/InternalResources/remove_list.xml";
+        private const string RemoveList = "Editor/PluginRemover/remove_list.xml";
         private const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
 
         static RemoveHelper()
