@@ -20,22 +20,16 @@
         <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
-        <name>Appodeal Andoid Library Directory</name>
-        <path>Assets/Plugins/Android/appodeal.androidlib</path>
+        <name>Internal Resources Directory</name>
+        <path>Appodeal/Editor/InternalResources</path>
         <is_confirmation_required>false</is_confirmation_required>
-        <check_if_empty>false</check_if_empty>
+        <check_if_empty>true</check_if_empty>
     </item>
     <item>
         <name>Appodeal Dependencies Directory</name>
         <path>Appodeal/Editor/Dependencies</path>
         <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>false</check_if_empty>
-    </item>
-    <item>
-        <name>Internal Resources Directory</name>
-        <path>Appodeal/Editor/InternalResources</path>
-        <is_confirmation_required>false</is_confirmation_required>
-        <check_if_empty>true</check_if_empty>
     </item>
     <item>
         <name>Editor Directory</name>
@@ -48,6 +42,12 @@
         <path>Appodeal</path>
         <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
+        <name>Appodeal Andoid Library Directory</name>
+        <path>Plugins/Android/appodeal.androidlib</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>false</check_if_empty>
     </item>
     <item>
         <name>Appodeal Samples</name>
