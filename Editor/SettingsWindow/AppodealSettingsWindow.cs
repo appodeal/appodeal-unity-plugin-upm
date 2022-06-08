@@ -198,24 +198,24 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
             using (new EditorGUILayout.VerticalScope("box"))
             {
-                LabelField("Facebook Settings");
+                LabelField("Meta Settings");
 
                 AppodealSettings.Instance.FacebookAutoConfiguration = KeyRow("Enable auto configuration",
                     AppodealSettings.Instance.FacebookAutoConfiguration);
                 
                 GUILayout.Space(10);
 
-                AppodealSettings.Instance.FacebookAndroidAppId = AppIdPlatformRow("Facebook App ID (Android)",
+                AppodealSettings.Instance.FacebookAndroidAppId = AppIdPlatformRow("Meta App ID (Android)",
                     AppodealSettings.Instance.FacebookAndroidAppId, GUILayout.Width(200));
                 
                 GUILayout.Space(5);
 
-                AppodealSettings.Instance.FacebookIosAppId = AppIdPlatformRow("Facebook App ID (iOS)",
+                AppodealSettings.Instance.FacebookIosAppId = AppIdPlatformRow("Meta App ID (iOS)",
                     AppodealSettings.Instance.FacebookIosAppId, GUILayout.Width(200));
 
                 GUILayout.Space(15);
 
-                AppodealSettings.Instance.FacebookAndroidClientToken = AppIdPlatformRow("Facebook Client Token (Android)",
+                AppodealSettings.Instance.FacebookAndroidClientToken = AppIdPlatformRow("Meta Client Token (Android)",
                     AppodealSettings.Instance.FacebookAndroidClientToken, GUILayout.Width(200));
 
                 GUILayout.Space(10);
