@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDVungleAdapter" version="3.0.0.1-Beta" minTargetSdk="10.0" />
+        <iosPod name="APDVungleAdapter" version="3.0.0.1-Beta.6" minTargetSdk="10.0" />
+        <iosPod name="BDMVungleAdapter" version="~&gt;1.9.4" minTargetSdk="10.0" />
     </iosPods>
     <androidPackages>
         <androidPackage spec="com.appodeal.ads.sdk:core:3.0.0" />

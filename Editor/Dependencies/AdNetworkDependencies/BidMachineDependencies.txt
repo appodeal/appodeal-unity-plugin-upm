@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDBidMachineAdapter" version="3.0.0.1-Beta" minTargetSdk="10.0" />
+        <iosPod name="APDBidMachineAdapter" version="3.0.0.1-Beta.6" minTargetSdk="10.0" />
+        <iosPod name="BDMCriteoAdapter" version="~&gt;1.9.4" minTargetSdk="10.0" />
+        <iosPod name="BDMPangleAdapter" version="~&gt;1.9.4.2" minTargetSdk="10.0" />
+        <iosPod name="BDMAmazonAdapter" version="~&gt;1.9.4.2" minTargetSdk="10.0" />
+        <iosPod name="BDMSmaatoAdapter" version="~&gt;1.9.4" minTargetSdk="10.0" />
+        <iosPod name="BDMTapjoyAdapter" version="~&gt;1.9.4" minTargetSdk="10.0" />
     </iosPods>
     <androidPackages>
         <androidPackage spec="com.appodeal.ads.sdk.networks:bidmachine:3.0.0.0" />

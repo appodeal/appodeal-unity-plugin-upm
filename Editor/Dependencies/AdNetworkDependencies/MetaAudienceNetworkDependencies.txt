@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDMetaAudienceNetworkAdapter" version="3.0.0.1-Beta" minTargetSdk="10.0" />
+        <iosPod name="APDMetaAudienceNetworkAdapter" version="3.0.0.1-Beta.6" minTargetSdk="10.0" />
+        <iosPod name="BDMMetaAudienceAdapter" version="~&gt;1.9.4" minTargetSdk="10.0" />
     </iosPods>
     <androidPackages>
         <androidPackage spec="org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0" />
