@@ -6,7 +6,7 @@ namespace AppodealStack.UnityEditor.Utils
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealEditorConstants
     {
-        public const string PluginRequest = "https://mw-backend.appodeal.com/v2/unity";
+        public const string PluginRequest = "https://mw-backend.appodeal.com/v2.1/unity";
         public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2.1/unity/config/";
         public const string GitRepoAddress = "https://github.com/appodeal/appodeal-unity-plugin-upm.git";
         public const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
