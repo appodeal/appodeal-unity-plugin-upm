@@ -1,0 +1,22 @@
+{
+    "name": "AppodealStack.ConsentManagement.Platforms",
+    "references": [
+        "AppodealStack.ConsentManagement.Common",
+        "AppodealStack.ConsentManagement.Platforms.Ios",
+        "AppodealStack.ConsentManagement.Platforms.Dummy",
+        "AppodealStack.ConsentManagement.Platforms.Android"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

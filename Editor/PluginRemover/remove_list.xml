@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+    <item>
+        <name>External Dependency Manager</name>
+        <path>ExternalDependencyManager</path>
+        <is_confirmation_required>true</is_confirmation_required>
+        <description>External Dependency Manager is used by many plugins for integrating platform specific libraries and resolving conflicting dependencies. If some of your other plugins use it, removing can lead to issues.</description>
+    </item>
+    <item>
+        <name>Appodeal Settings</name>
+        <path>Appodeal/Editor/InternalResources</path>
+        <filter>(AppodealSettings\.asset)</filter>
+        <is_confirmation_required>true</is_confirmation_required>
+        <description>This file contains your Appodeal preferences, such as Admob App ID and etc. Choose "NO" if you are just updating the plugin.</description>
+    </item>
+    <item>
+        <name>Appodeal Plugin Preferences</name>
+        <path>Appodeal/Editor/InternalResources</path>
+        <filter>(PluginPreferences\.asset)</filter>
+        <is_confirmation_required>false</is_confirmation_required>
+    </item>
+    <item>
+        <name>Internal Resources Directory</name>
+        <path>Appodeal/Editor/InternalResources</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
+        <name>Appodeal Dependencies Directory</name>
+        <path>Appodeal/Editor/Dependencies</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>false</check_if_empty>
+    </item>
+    <item>
+        <name>Editor Directory</name>
+        <path>Appodeal/Editor</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
+        <name>Appodeal Directory</name>
+        <path>Appodeal</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
+        <name>Appodeal Andoid Library Directory</name>
+        <path>Plugins/Android/appodeal.androidlib</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>false</check_if_empty>
+    </item>
+    <item>
+        <name>Appodeal Samples</name>
+        <path>Samples/Appodeal</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>false</check_if_empty>
+    </item>
+    <item>
+        <name>Samples</name>
+        <path>Samples</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+</items>

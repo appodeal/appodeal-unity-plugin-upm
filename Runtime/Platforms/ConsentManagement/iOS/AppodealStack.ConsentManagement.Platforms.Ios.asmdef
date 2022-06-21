@@ -1,0 +1,17 @@
+{
+    "name": "AppodealStack.ConsentManagement.Platforms.Ios",
+    "references": [
+        "AppodealStack.ConsentManagement.Common"
+    ],
+    "includePlatforms": [
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,71 +1,71 @@
-// ReSharper disable All
-#if UNITY_ANDROID
 using System;
 using System.IO;
-using System.Linq;
+using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Linq;
-using UnityEditor;
-using UnityEditor.Android;
-using UnityEditor.Build;
-using AppodealAds.Unity.Editor.Checkers;
-using AppodealAds.Unity.Editor.InternalResources;
-using AppodealAds.Unity.Editor.Utils;
-using AppodealAds.Unity.Editor.AppodealManager;
-using UnityEditor.Build.Reporting;
-using UnityEngine.Android;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
+using AppodealStack.UnityEditor.Utils;
+using AppodealStack.UnityEditor.InternalResources;
 
-namespace AppodealAds.Unity.Editor.PreProcess
+// ReSharper Disable CheckNamespace
+namespace AppodealStack.UnityEditor.PreProcess
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class AppodealPreProcess : IPreprocessBuildWithReport
     {
         #region Constants
 
         //Templates in Unity Editor Data folder
-        private const string gradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
-        public const string manifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
+        public const string ManifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
+        
+        private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
 
         //Paths without leading Assets folder
-        public const string androidPluginsPath = "Plugins/Android";
-        public const string gradleTemplateName = "mainTemplate.gradle";
-        public const string manifestTemplateName = "AndroidManifest.xml";
-        public const string appodealTemplatesPath = "Appodeal/InternalResources";
-        private const string appodealDexesPath = "Assets/Plugins/Android/appodeal/assets/dex";
+        public const string AppodealTemplatesPath = "Appodeal/InternalResources";
+        
+        private const string AndroidPluginsPath = "Plugins/Android";
+        private const string GradleTemplateName = "mainTemplate.gradle";
+        private const string ManifestTemplateName = "AndroidManifest.xml";
+        private const string AppodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
 
         //Gradle search lines
-        public const string GRADLE_GOOGLE_REPOSITORY = "google()";
-        public const string GRADLE_GOOGLE_REPOSITORY_COMPAT = "maven { url \"https://maven.google.com\" }";
-        public const string GRADLE_DEPENDENCIES = "**DEPS**";
-        public const string GRADLE_APP_ID = "**APPLICATIONID**";
-        public const string GRADLE_USE_PROGUARD = "useProguard";
-        public const string GRADLE_MULTIDEX_DEPENDENCY_WO_VERSION = "androidx.multidex:multidex:";
-        public const string GRAFLE_DEFAULT_CONFIG = "defaultConfig";
-        public const string COMPILE_OPTIONS = "compileOptions {";
-        public const string GRADLE_JAVA_VERSION_1_8 = "JavaVersion.VERSION_1_8";
-        public const string GRADLE_SOURCE_CAPABILITY = "sourceCompatibility ";
-        public const string GRADLE_TARGET_CAPATILITY = "targetCompatibility ";
+        public const string GradleGoogleRepository = "google()";
+        public const string GradleGoogleRepositoryCompat = "maven { url \"https://maven.google.com\" }";
+        public const string GradleDependencies = "**DEPS**";
+        public const string GradleAppID = "**APPLICATIONID**";
+        public const string GradleUseProguard = "useProguard";
+        public const string GradleMultidexDependencyWoVersion = "androidx.multidex:multidex:";
+        public const string GradleDefaultConfig = "defaultConfig";
+        public const string CompileOptions = "compileOptions {";
+        public const string GradleJavaVersion18 = "JavaVersion.VERSION_1_8";
+        public const string GradleSourceCapability = "sourceCompatibility ";
+        public const string GradleTargetCapability = "targetCompatibility ";
 
         //Gradle add lines
-        public const string GRADLE_IMPLEMENTATION = "implementation ";
-        public const string GRADLE_MULTIDEX_DEPENDENCY = "'androidx.multidex:multidex:2.0.1'";
-        public const string GRADLE_MULTIDEX_ENABLE = "multiDexEnabled true";
+        public const string GradleMultidexEnable = "multiDexEnabled true";
+        
+        private const string GradleImplementation = "implementation ";
+        private const string GradleMultidexDependency = "'androidx.multidex:multidex:2.0.1'";
 
         //Manifest add lines
-        public const string manifestMutlidexApp = "androidx.multidex.MultiDexApplication";
+        private const string ManifestMultidexApp = "androidx.multidex.MultiDexApplication";
 
         #endregion
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            var manifestPath = Path.Combine("Assets", androidPluginsPath, manifestTemplateName);
+            if (report.summary.platform.ToString() != "Android") return;
+
+            var manifestPath = Path.Combine(Application.dataPath, AppodealAndroidLibDirPath, ManifestTemplateName);
 
             if (!File.Exists(manifestPath))
             {
-                Debug.LogError("Please activate Custom Main Manifest under 'Project Settings/Player/Publishing Settings/' first");
-                throw new BuildFailedException("Custom Main Manifest is not activated");
+                Debug.LogError($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
+                throw new BuildFailedException("Couldn't find Appodeal Android Manifest file");
             }
             
             var androidManifest = new AndroidManifest(manifestPath);
@@ -75,11 +75,14 @@ namespace AppodealAds.Unity.Editor.PreProcess
             EnableMultidex(manifestPath, androidManifest);
 
             androidManifest.Save();
+
+            AndroidPreProcessServices.SetupManifestForFacebook();
+            AndroidPreProcessServices.GenerateXMLForFirebase();
         }
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
         {
-            if(CheckContainsMultidex(manifestPath, manifestMutlidexApp))
+            if(CheckContainsMultidex(manifestPath, ManifestMultidexApp))
             {
                 androidManifest.RemoveMultiDexApplication();
             }
@@ -87,15 +90,15 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            if (!File.Exists(Path.Combine(AppodealDependencyUtils.Plugin_path,
-                AppodealDependencyUtils.Network_configs_path, "GoogleAdMobDependencies.xml")))
+            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, 
+                                                $"{AppodealEditorConstants.GoogleAdMob}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
+            if (!File.Exists(admobDepPath))
             {
                 if (File.Exists(path) && CheckContainsAppId(path))
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogWarning(
-                    "Missing Admob config (Assets/Appodeal/Editor/NetworkConfigs/GoogleAdMobDependencies.xml). Admob App Id won't be added.");
+                Debug.LogWarning($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
                 return;
             }
 
@@ -107,7 +110,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
                 throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
-            if (string.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
+            if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
             {
                 if (CheckContainsAppId(path))
                 {
@@ -235,35 +238,35 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private bool CheckContainsMultidexDependency()
         {
-            return GetContentString(getDefaultGradleTemplate())
-                .Contains(GRADLE_IMPLEMENTATION + GRADLE_MULTIDEX_DEPENDENCY);
+            return GetContentString(GetDefaultGradleTemplate())
+                .Contains(GradleImplementation + GradleMultidexDependency);
         }
 
-        private void RemoveMultidexDependency(string path)
+        private void RemoveMultidexDependency()
         {
-            var contentString = GetContentString(getDefaultGradleTemplate());
-            contentString = Regex.Replace(contentString, GRADLE_IMPLEMENTATION + GRADLE_MULTIDEX_DEPENDENCY,
-                string.Empty);
+            var contentString = GetContentString(GetDefaultGradleTemplate());
+            contentString = Regex.Replace(contentString, GradleImplementation + GradleMultidexDependency,
+                String.Empty);
 
-            using (var writer = new StreamWriter(getDefaultGradleTemplate()))
+            using (var writer = new StreamWriter(GetDefaultGradleTemplate()))
             {
                 writer.Write(contentString);
                 writer.Close();
             }
         }
 
-        public static string getDefaultGradleTemplate()
+        private static string GetDefaultGradleTemplate()
         {
-            var defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(
+            var defaultGradleTemplateFullName = AppodealUnityUtils.CombinePaths(
                 EditorApplication.applicationContentsPath,
-                gradleDefaultTemplatePath,
-                gradleTemplateName);
+                GradleDefaultTemplatePath,
+                GradleTemplateName);
             if (File.Exists(defaultGradleTemplateFullName)) return defaultGradleTemplateFullName;
             var unixAppContentsPath =
                 Path.GetDirectoryName(Path.GetDirectoryName(EditorApplication.applicationContentsPath));
-            defaultGradleTemplateFullName = AppodealUnityUtils.combinePaths(unixAppContentsPath,
-                gradleDefaultTemplatePath,
-                gradleTemplateName);
+            defaultGradleTemplateFullName = AppodealUnityUtils.CombinePaths(unixAppContentsPath,
+                GradleDefaultTemplatePath,
+                GradleTemplateName);
 
             return defaultGradleTemplateFullName;
         }
@@ -282,41 +285,41 @@ namespace AppodealAds.Unity.Editor.PreProcess
 
         private static string GetCustomGradleScriptPath()
         {
-            var androidDirectory = new DirectoryInfo(Path.Combine("Assets", androidPluginsPath));
+            var androidDirectory = new DirectoryInfo(Path.Combine("Assets", AndroidPluginsPath));
             var filePaths = androidDirectory.GetFiles("*.gradle");
             return filePaths.Length > 0
-                ? Path.Combine(Path.Combine(Application.dataPath, androidPluginsPath), filePaths[0].Name)
+                ? Path.Combine(Path.Combine(Application.dataPath, AndroidPluginsPath), filePaths[0].Name)
                 : null;
         }
 
         public int callbackOrder => 0;
     }
 
+    [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
     internal class AndroidXmlDocument : XmlDocument
     {
-        private readonly string mPath;
-        private readonly XmlNamespaceManager nsMgr;
-        protected readonly string AndroidXmlNamespace = "http://schemas.android.com/apk/res/android";
+        private readonly string _mPath;
+        protected const string AndroidXmlNamespace = "http://schemas.android.com/apk/res/android";
 
         protected AndroidXmlDocument(string path)
         {
-            mPath = path;
-            using (var reader = new XmlTextReader(mPath))
+            _mPath = path;
+            using (var reader = new XmlTextReader(_mPath))
             {
                 reader.Read();
                 Load(reader);
             }
 
-            nsMgr = new XmlNamespaceManager(NameTable);
+            var nsMgr = new XmlNamespaceManager(NameTable);
             nsMgr.AddNamespace("android", AndroidXmlNamespace);
         }
 
         public void Save()
         {
-            SaveAs(mPath);
+            SaveAs(_mPath);
         }
 
-        public void SaveAs(string path)
+        private void SaveAs(string path)
         {
             using (var writer = new XmlTextWriter(path, new UTF8Encoding(false)))
             {
@@ -326,13 +329,15 @@ namespace AppodealAds.Unity.Editor.PreProcess
         }
     }
 
+    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     internal class AndroidManifest : AndroidXmlDocument
     {
-        public readonly XmlElement applicationElement;
+        public readonly XmlElement ApplicationElement;
 
         public AndroidManifest(string path) : base(path)
         {
-            applicationElement = SelectSingleNode("/manifest/application") as XmlElement;
+            ApplicationElement = SelectSingleNode("/manifest/application") as XmlElement;
         }
 
         private XmlAttribute CreateAndroidAttribute(string key, string value)
@@ -358,7 +363,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
             if (manifest == null) return;
             foreach (XmlNode child in manifest.SelectNodes("uses-permission"))
             {
-                for (int i = 0; i < child.Attributes.Count; i++)
+                for (int i = 0; i < child.Attributes?.Count; i++)
                 {
                     if (child.Attributes[i].Value.Equals(permission))
                     {
@@ -373,7 +378,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
             var manifest = SelectSingleNode("/manifest/application");
             RemoveAdmobAppId();
             var childMetaData = CreateElement("meta-data");
-            manifest.AppendChild(childMetaData);
+            manifest?.AppendChild(childMetaData);
             childMetaData.Attributes.Append(CreateAndroidAttribute("name",
                 "com.google.android.gms.ads.APPLICATION_ID"));
             childMetaData.Attributes.Append(CreateAndroidAttribute("value", id));
@@ -405,7 +410,7 @@ namespace AppodealAds.Unity.Editor.PreProcess
         {
             var manifest = SelectSingleNode("/manifest/application");
             if (manifest == null) return;
-            for (int i = 0; i < manifest.Attributes.Count; i++)
+            for (int i = 0; i < manifest.Attributes?.Count; i++)
             {
                 if (manifest.Attributes[i].Value.Equals("androidx.multidex.MultiDexApplication"))
                 {
@@ -413,174 +418,5 @@ namespace AppodealAds.Unity.Editor.PreProcess
                 }
             }
         }
-
-        internal void AddMultiDexApplication()
-        {
-            var manifest = SelectSingleNode("/manifest/application");
-            if (manifest == null) return;
-            manifest.Attributes.Append(CreateAndroidAttribute("name", "androidx.multidex.MultiDexApplication"));
-        }
-    }
-
-    internal class EnableJavaVersion : FixProblemInstruction
-    {
-        private readonly string path;
-
-        public EnableJavaVersion(string gradleScriptPath) : base("Java version isn't included to mainTemplate.gradle",
-            true)
-        {
-            path = gradleScriptPath;
-        }
-
-        public override void fixProblem()
-        {
-            var settings = new ImportantGradleSettings(path);
-            var leadingWhitespaces = "    ";
-            const string additionalWhiteSpaces = "";
-            string line;
-            var modifiedGradle = "";
-
-            var gradleScript = new StreamReader(path);
-
-            while ((line = gradleScript.ReadLine()) != null)
-            {
-                if (line.Contains(MultidexActivator.GRAFLE_DEFAULT_CONFIG))
-                {
-                    if (!settings.compileOptions)
-                    {
-                        modifiedGradle += additionalWhiteSpaces + leadingWhitespaces +
-                                          MultidexActivator.COMPILE_OPTIONS + Environment.NewLine;
-                    }
-
-                    if (!settings.sourceCapability)
-                    {
-                        modifiedGradle += leadingWhitespaces + leadingWhitespaces +
-                                          MultidexActivator.GRADLE_SOURCE_CAPABILITY
-                                          + MultidexActivator.GRADLE_JAVA_VERSION_1_8 + Environment.NewLine;
-                    }
-
-                    if (!settings.targetCapability)
-                    {
-                        modifiedGradle += leadingWhitespaces + leadingWhitespaces +
-                                          MultidexActivator.GRADLE_TARGET_CAPATILITY
-                                          + MultidexActivator.GRADLE_JAVA_VERSION_1_8 + Environment.NewLine;
-                    }
-
-                    if (!settings.targetCapability)
-                    {
-                        modifiedGradle += leadingWhitespaces + "}" + Environment.NewLine;
-                    }
-
-                    if (!settings.targetCapability)
-                    {
-                        modifiedGradle += leadingWhitespaces + Environment.NewLine;
-                    }
-                }
-
-                modifiedGradle += line + Environment.NewLine;
-                leadingWhitespaces = Regex.Match(line, "^\\s*").Value;
-            }
-
-            gradleScript.Close();
-            File.WriteAllText(path, modifiedGradle);
-            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(path), ImportAssetOptions.ForceUpdate);
-        }
-    }
-
-    internal class CopyGradleScriptAndEnableMultidex : FixProblemInstruction
-    {
-        public CopyGradleScriptAndEnableMultidex() : base("Assets/Plugins/Android/mainTemplate.gradle not found.\n" +
-                                                          "(required if you aren't going to export your project to Android Studio or Eclipse)",
-            true)
-        {
-        }
-
-        public override void fixProblem()
-        {
-            //EditorApplication.applicationContentsPath is different for macos and win. need to fix to reach manifest and gradle templates 
-            var defaultGradleTemplateFullName = MultidexActivator.getDefaultGradleTemplate();
-
-            var destGradleScriptFullName = AppodealUnityUtils.combinePaths(Application.dataPath,
-                MultidexActivator.androidPluginsPath,
-                MultidexActivator.gradleTemplateName);
-            //Prefer to use build.gradle from the box. Just in case.
-            if (File.Exists(defaultGradleTemplateFullName))
-            {
-                File.Copy(defaultGradleTemplateFullName, destGradleScriptFullName);
-            }
-
-            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(destGradleScriptFullName),
-                ImportAssetOptions.ForceUpdate);
-
-            //There are no multidex settings in default build.gradle but they can add that stuff.
-            var settings = new ImportantGradleSettings(destGradleScriptFullName);
-
-            if (!settings.isMultiDexAddedCompletely())
-                new EnableMultidexInGradle(destGradleScriptFullName).fixProblem();
-        }
-    }
-
-    internal class EnableMultidexInGradle : FixProblemInstruction
-    {
-        private readonly string path;
-
-        public EnableMultidexInGradle(string gradleScriptPath) : base(
-            "Multidex isn't enabled. mainTemplate.gradle should be edited " +
-            "according to the official documentation:\nhttps://developer.android.com/studio/build/multidex", true)
-        {
-            path = gradleScriptPath;
-        }
-
-        public override void fixProblem()
-        {
-            var settings = new ImportantGradleSettings(path);
-            var leadingWhitespaces = "";
-            string line;
-            var prevLine = "";
-            var modifiedGradle = "";
-            var gradleScript = new StreamReader(path);
-            string multidexDependency;
-
-
-            multidexDependency = MultidexActivator.GRADLE_IMPLEMENTATION +
-                                 MultidexActivator.GRADLE_MULTIDEX_DEPENDENCY;
-
-
-            while ((line = gradleScript.ReadLine()) != null)
-            {
-                if (!settings.multidexDependencyPresented && line.Contains(MultidexActivator.GRADLE_DEPENDENCIES))
-                {
-                    modifiedGradle += leadingWhitespaces + multidexDependency + Environment.NewLine;
-                }
-
-                if (!settings.multidexEnabled && line.Contains(MultidexActivator.GRADLE_APP_ID))
-                {
-                    modifiedGradle += leadingWhitespaces + MultidexActivator.GRADLE_MULTIDEX_ENABLE +
-                                      Environment.NewLine;
-                }
-
-                if (settings.deprecatedProguardPresented && line.Contains(MultidexActivator.GRADLE_USE_PROGUARD))
-                {
-                    continue;
-                }
-
-                modifiedGradle += line + Environment.NewLine;
-                leadingWhitespaces = Regex.Match(line, "^\\s*").Value;
-                if (line.Contains("repositories") && prevLine.Contains("allprojects") &&
-                    !settings.googleRepositoryPresented)
-                {
-                    leadingWhitespaces += leadingWhitespaces;
-                    modifiedGradle += leadingWhitespaces + MultidexActivator.GRADLE_GOOGLE_REPOSITORY_COMPAT +
-                                      Environment.NewLine;
-                }
-
-                prevLine = line;
-            }
-
-            gradleScript.Close();
-            File.WriteAllText(path, modifiedGradle);
-            AssetDatabase.ImportAsset(AppodealUnityUtils.absolute2Relative(path), ImportAssetOptions.ForceUpdate);
-        }
     }
 }
-#endif

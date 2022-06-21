@@ -1,0 +1,18 @@
+{
+    "name": "AppodealStack.UnityEditor.PostProcess",
+    "references": [
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.UnityEditor.InternalResources"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

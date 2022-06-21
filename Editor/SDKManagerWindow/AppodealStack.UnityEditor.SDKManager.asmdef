@@ -1,0 +1,21 @@
+{
+    "name": "AppodealStack.UnityEditor.SDKManager",
+    "references": [
+        "marijnz.EditorCoroutines",
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.Monetization.Common",
+        "AppodealStack.UnityEditor.PluginRemover",
+        "AppodealStack.UnityEditor.SDKManager.Models"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

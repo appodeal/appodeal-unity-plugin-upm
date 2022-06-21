@@ -1,0 +1,19 @@
+{
+    "name": "AppodealStack.UnityEditor.TopBarMenu",
+    "references": [
+        "AppodealStack.UnityEditor.SDKManager",
+        "AppodealStack.UnityEditor.PluginRemover",
+        "AppodealStack.UnityEditor.SettingsWindow"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

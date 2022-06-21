@@ -1,542 +1,674 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using AppodealAds.Unity.Api;
-using AppodealAds.Unity.Common;
-using AppodealCM.Unity.Api;
-using AppodealCM.Unity.Common;
-using AppodealCM.Unity.Platforms;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using AppodealStack.Monetization.Api;
+using AppodealStack.Monetization.Common;
+using AppodealStack.ConsentManagement.Api;
+using AppodealStack.ConsentManagement.Common;
 
+// ReSharper disable CheckNamespace
 namespace AppodealSample
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "ParameterHidesMember")]
-    public class AppodealDemo : MonoBehaviour, IConsentFormListener, IConsentInfoUpdateListener,
-        IBannerAdListener, IMrecAdListener, IRewardedVideoAdListener, IInterstitialAdListener
+    public class AppodealDemo : MonoBehaviour, IAppodealInitializationListener, IInAppPurchaseValidationListener,
+                                IBannerAdListener, IInterstitialAdListener, IRewardedVideoAdListener, IMrecAdListener,
+                                IConsentFormListener, IConsentInfoUpdateListener
     {
+
         #region Constants
 
-        private const string CACHE_INTERSTITIAL = "CACHE INTERSTITIAL";
-        private const string SHOW_INTERSTITIAL = "SHOW INTERSTITIAL";
-        private const string CACHE_REWARDED_VIDEO = "CACHE REWARDED VIDEO";
+        private const string InterstitialShow = "Show Interstitial";
+        private const string InterstitialCache = "Cache Interstitial";
+        private const string InterstitialCaching = "Caching Interstitial";
+        private const string RewardedVideoShow = "Show Rewarded Video";
+        private const string RewardedVideoCache = "Cache Rewarded Video";
+        private const string RewardedVideoCaching = "Caching Rewarded Video";
 
         #endregion
 
-        #region UI
+        #region Appodeal Demo Scene UI Components
 
-        [SerializeField] public GameObject consentManagerPanel;
-        [SerializeField] public GameObject appodealPanel;
-        [SerializeField] public Text pluginVersionText;
-        [SerializeField] public Toggle testingToggle;
-        [SerializeField] public Toggle loggingToggle;
-        [SerializeField] public Button interstitialButton;
-        [SerializeField] public Button rewardedVideoButton;
+        [SerializeField] private List<GameObject>   panels;
+        [SerializeField] private Button             nextPanelButton;
+        [SerializeField] private Button             previousPanelButton;
+        [SerializeField] private Toggle             loggingToggle;
+        [SerializeField] private Toggle             testingToggle;
+        [SerializeField] private Toggle             safeAreaToggle;
+        [SerializeField] private Toggle             mrecInitializationToggle;
+        [SerializeField] private Toggle             bannerInitializationToggle;
+        [SerializeField] private Toggle             interstitialInitializationToggle;
+        [SerializeField] private Toggle             rewardedVideoInitializationToggle;
+        [SerializeField] private Toggle             smartBannerToggle;
+        [SerializeField] private Toggle             tabletBannerToggle;
+        [SerializeField] private Toggle             bannerAnimationToggle;
+        [SerializeField] private Toggle             interstitialAutoCacheToggle;
+        [SerializeField] private Toggle             rewardedVideoAutoCacheToggle;
+        [SerializeField] private Text               pluginVersionText;
+        [SerializeField] private Text               interstitialButtonText;
+        [SerializeField] private Text               rewardedVideoButtonText;
 
         #endregion
 
-        #region Application keys
+        #region Appodeal Application Key
 
 #if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_IPHONE
-        public static string appKey = "";
+        private const string AppKey = "";
 #elif UNITY_ANDROID
-       public static string appKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
+        private const string AppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
 #elif UNITY_IPHONE
-       public static string appKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+        private const string AppKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
 #else
-	public static string appKey = "";
+	    private const string AppKey = "";
 #endif
 
         #endregion
 
-        private ConsentForm consentForm;
-        private ConsentManager consentManager;
-        private bool isShouldSaveConsentForm;
-        private Consent currentConsent;
+        #region Appodeal ConsentManager Fields
 
-        private void Awake() {
-            Assert.IsNotNull(consentManagerPanel);
-            Assert.IsNotNull(appodealPanel);
-            Assert.IsNotNull(pluginVersionText);
-            Assert.IsNotNull(testingToggle);
+        private IConsent        _consent;
+        private ConsentForm     _consentForm;
+        private ConsentManager  _consentManager;
+
+        #endregion
+
+        #region  Other Demo Scene Fields
+
+        private bool _shouldChangeIntText, _shouldChangeRewText;
+
+        #endregion
+
+        #region MonoBehavior Functions
+
+        private void Awake()
+        {
+            Assert.IsNotNull(panels);
+            panels.ForEach(panel => Assert.IsNotNull(panel));
+            Assert.IsNotNull(nextPanelButton);
+            Assert.IsNotNull(previousPanelButton);
             Assert.IsNotNull(loggingToggle);
-            Assert.IsNotNull(interstitialButton);
-            Assert.IsNotNull(rewardedVideoButton);
+            Assert.IsNotNull(testingToggle);
+            Assert.IsNotNull(safeAreaToggle);
+            Assert.IsNotNull(mrecInitializationToggle);
+            Assert.IsNotNull(bannerInitializationToggle);
+            Assert.IsNotNull(interstitialInitializationToggle);
+            Assert.IsNotNull(rewardedVideoInitializationToggle);
+            Assert.IsNotNull(smartBannerToggle);
+            Assert.IsNotNull(tabletBannerToggle);
+            Assert.IsNotNull(bannerAnimationToggle);
+            Assert.IsNotNull(interstitialAutoCacheToggle);
+            Assert.IsNotNull(rewardedVideoAutoCacheToggle);
+            Assert.IsNotNull(pluginVersionText);
+            Assert.IsNotNull(interstitialButtonText);
+            Assert.IsNotNull(rewardedVideoButtonText);
         }
 
         private void Start()
         {
-            pluginVersionText.text = $"Appodeal Unity Plugin v{AppodealVersions.APPODEAL_PLUGIN_VERSION}";
-            consentManagerPanel.gameObject.SetActive(true);
-            appodealPanel.gameObject.SetActive(false);
+            panels.ForEach(panel => panel.SetActive(false));
+            panels.FirstOrDefault()?.SetActive(true);
+            previousPanelButton.interactable = false;
 
-            interstitialButton.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
-            rewardedVideoButton.GetComponentInChildren<Text>().text = CACHE_REWARDED_VIDEO;
+            pluginVersionText.text = $"Appodeal Unity Plugin v{AppodealVersions.GetPluginVersion()}";
 
-            consentManager = ConsentManager.getInstance();
+            _consentManager = ConsentManager.GetInstance();
+            _consentManager.SetStorage(ConsentManagerStorage.SharedPreference);
+        }
+
+        private void Update()
+        {
+            if (_shouldChangeIntText)
+            {
+                _shouldChangeIntText = false;
+                interstitialButtonText.text = Appodeal.IsLoaded(AppodealAdType.Interstitial) ? InterstitialShow : Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial) ? InterstitialCaching : InterstitialCache;
+            }
+            if (_shouldChangeRewText)
+            {
+                _shouldChangeRewText = false;
+                rewardedVideoButtonText.text = Appodeal.IsLoaded(AppodealAdType.RewardedVideo) ? RewardedVideoShow : Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo) ? RewardedVideoCaching : RewardedVideoCache;
+            }
         }
 
         private void OnDestroy()
         {
-            Appodeal.destroy(AppodealAdType.BANNER);
+            Appodeal.Destroy(AppodealAdType.Banner);
         }
+
+        #endregion
+
+        #region Appodeal Demo Scene Helper Functions
+
+        public void ShowPreviousPanel()
+        {
+            int index = panels.IndexOf(panels.First(panel => panel.activeSelf));
+            panels[index].SetActive(false);
+            panels[index - 1].SetActive(true);
+            if (index - 1 <= 0) previousPanelButton.interactable = false;
+            if (index + 2 >= panels.Count) nextPanelButton.interactable = true;
+        }
+
+        public void ShowNextPanel()
+        {
+            int index = panels.IndexOf(panels.First(panel => panel.activeSelf));
+            panels[index].SetActive(false);
+            panels[index + 1].SetActive(true);
+            if (index - 1 <= 0) previousPanelButton.interactable = true;
+            if (index + 2 >= panels.Count) nextPanelButton.interactable = false;
+        }
+
+        #endregion
+
+        #region Appodeal Consent Management
 
         public void RequestConsentInfoUpdate()
         {
-            consentManager.requestConsentInfoUpdate(appKey, this);
+            _consentManager?.RequestConsentInfoUpdate(AppKey, this);
         }
 
         public void SetCustomVendor()
         {
-            var customVendor = new Vendor.Builder(
-                    "Appodeal Test",
-                    "com.appodeal.test",
-                    "https://customvendor.com")
-                .setPurposeIds(new List<int> {100, 200, 300})
-                .setFeatureId(new List<int> {400, 500, 600})
-                .setLegitimateInterestPurposeIds(new List<int> {700, 800, 900})
-                .build();
+            var customVendor = new Vendor.Builder("Test Vendor", "com.appodeal.test", "https://appodeal.com")
+                .SetPurposeIds(new List<int> {4, 7})
+                .SetFeatureIds(new List<int> {1, 2})
+                .SetLegitimateInterestPurposeIds(new List<int> {1})
+                .Build();
 
-            consentManager.setCustomVendor(customVendor);
+            _consentManager?.SetCustomVendor(customVendor);
 
-            var vendor = consentManager.getCustomVendor("com.appodeal.test");
+            var vendor = _consentManager?.GetCustomVendor("com.appodeal.test");
             if (vendor == null) return;
-            Debug.Log("Vendor getName: " + vendor.getName());
-            Debug.Log("Vendor getBundle: " + vendor.getBundle());
-            Debug.Log("Vendor getPolicyUrl: " + vendor.getPolicyUrl());
-            foreach (var purposeId in vendor.getPurposeIds())
-            {
-                Debug.Log("Vendor getPurposeIds: " + purposeId);
-            }
 
-            foreach (var featureId in vendor.getFeatureIds())
-            {
-                Debug.Log("Vendor getFeatureIds: " + featureId);
-            }
-
-            foreach (var legitimateInterestPurposeId in vendor.getLegitimateInterestPurposeIds())
-            {
-                Debug.Log("Vendor getLegitimateInterestPurposeIds: " + legitimateInterestPurposeId);
-            }
+            Debug.Log($"[APDUnity] [Vendor] GetName(): {vendor.GetName()}");
+            Debug.Log($"[APDUnity] [Vendor] GetBundle(): {vendor.GetBundle()}");
+            Debug.Log($"[APDUnity] [Vendor] GetPolicyUrl(): {vendor.GetPolicyUrl()}");
+            vendor.GetPurposeIds().ForEach(purposeId => Debug.Log($"[APDUnity] [Vendor] GetPurposeIds(): {purposeId}"));
+            vendor.GetFeatureIds().ForEach(featureId => Debug.Log($"[APDUnity] [Vendor] GetFeatureIds(): {featureId}"));
+            vendor.GetLegitimateInterestPurposeIds().ForEach(id => Debug.Log($"[APDUnity] [Vendor] GetLegitimateInterestPurposeIds(): {id}"));
         }
 
         public void ShouldShowForm()
         {
-            Debug.Log("shouldShowConsentDialog: " + consentManager.shouldShowConsentDialog());
+            Debug.Log($"[APDUnity] [ConsentManager] ShouldShowConsentDialog(): {_consentManager?.ShouldShowConsentDialog()}");
         }
 
         public void GetConsentZone()
         {
-            Debug.Log("getConsentZone: " + consentManager.getConsentZone());
+            Debug.Log($"[APDUnity] [ConsentManager] GetConsentZone(): {_consentManager?.GetConsentZone()}");
         }
 
         public void GetConsentStatus()
         {
-            Debug.Log("getConsentStatus: " + consentManager.getConsentStatus());
+            Debug.Log($"[APDUnity] [ConsentManager] GetConsentStatus(): {_consentManager?.GetConsentStatus()}");
         }
 
         public void LoadConsentForm()
         {
-            consentForm = new ConsentForm.Builder().withListener(this).build();
-            if (consentForm != null)
-            {
-                consentForm.load();
-            }
+            _consentForm = ConsentForm.GetInstance(this);
+            _consentForm?.Load();
         }
 
         public void IsLoadedConsentForm()
         {
-            if (consentForm != null)
-            {
-                Debug.Log("isLoadedConsentForm:  " + consentForm.isLoaded());
-            }
+            if (_consentForm == null) return;
+            Debug.Log($"[APDUnity] [ConsentForm] IsLoadedConsentForm(): {_consentForm.IsLoaded()}");
         }
 
-        public void ShowFormAsActivity()
+        public void ShowConsentForm()
         {
-            if (consentForm != null)
+            if (_consentForm != null)
             {
-                consentForm.showAsActivity();
+                _consentForm.Show();
             }
             else
             {
-                Debug.Log("showForm - false");
+                Debug.Log("[APDUnity] [ConsentForm] form is null");
             }
         }
 
-        public void ShowFormAsDialog()
+        public void PrintIabString()
         {
-            if (consentForm != null)
-            {
-                consentForm.showAsDialog();
-            }
-            else
-            {
-                Debug.Log("showForm - false");
-            }
-        }
-
-        public void PrintIABString()
-        {
-            Debug.Log("Consent IAB String is: " + consentManager.getConsent().getIabConsentString());
+            if (_consentManager?.GetConsent() == null) return;
+            Debug.Log($"[APDUnity] [Consent] GetIabConsentString(): {_consentManager.GetConsent().GetIabConsentString()}");
         }
 
         public void PrintCurrentConsent()
         {
-            if (consentManager.getConsent() == null) return;
-            Debug.Log(
-                "consent.getIabConsentString() - " + consentManager.getConsent().getIabConsentString());
-            Debug.Log(
-                "consent.hasConsentForVendor() - " +
-                consentManager.getConsent().hasConsentForVendor("com.appodeal.test"));
-            Debug.Log("consent.getStatus() - " + consentManager.getConsent().getStatus());
-            Debug.Log("consent.getZone() - " + consentManager.getConsent().getZone());
+            if (_consentManager?.GetConsent() == null) return;
+            Debug.Log($"[APDUnity] [Consent] HasConsentForVendor(): {_consentManager.GetConsent().HasConsentForVendor("com.appodeal.test")}");
+            Debug.Log($"[APDUnity] [Consent] GetStatus(): {_consentManager.GetConsent().GetStatus()}");
+            Debug.Log($"[APDUnity] [Consent] GetZone(): {_consentManager.GetConsent().GetZone()}");
         }
 
         public void PrintAuthorizationStatus()
         {
-            if (consentManager.getConsent() == null) return;
-            Debug.Log($"AuthorizationStatus - {consentManager.getConsent().getAuthorizationStatus()} ");
+            if (_consentManager?.GetConsent() == null) return;
+            Debug.Log($"[APDUnity] [Consent] GetAuthorizationStatus(): {_consentManager.GetConsent().GetAuthorizationStatus()}");
         }
 
-        public void ShowAppodealLogic()
-        {
-            consentManagerPanel.SetActive(false);
-            appodealPanel.SetActive(true);
-        }
+        #endregion
+
+        #region Appodeal Monetization
 
         public void Initialize()
         {
-            InitWithConsent(currentConsent != null);
+            InitWithConsent(_consent != null);
         }
 
-        public void InitWithConsent(bool isConsent)
+        private void InitWithConsent(bool isConsent)
         {
-            Appodeal.setTesting(testingToggle.isOn);
-            Appodeal.setLogLevel(loggingToggle.isOn ? LogLevel.Verbose : LogLevel.None);
-            Appodeal.setUserId("1");
-            Appodeal.setUserAge(1);
-            Appodeal.setUserGender(Gender.OTHER);
-            Appodeal.disableLocationPermissionCheck();
-            Appodeal.setTriggerOnLoadedOnPrecache(AppodealAdType.INTERSTITIAL, true);
-            Appodeal.setSmartBanners(true);
-            Appodeal.setBannerAnimation(false);
-            Appodeal.setTabletBanners(false);
-            Appodeal.setBannerBackground(false);
-            Appodeal.setChildDirectedTreatment(false);
-            Appodeal.muteVideosIfCallsMuted(true);
-            Appodeal.setSharedAdsInstanceAcrossActivities(true);
-            Appodeal.setAutoCache(AppodealAdType.INTERSTITIAL, false);
-            Appodeal.setAutoCache(AppodealAdType.REWARDED_VIDEO, false);
-            Appodeal.setUseSafeArea(true);
+            Appodeal.SetLogLevel(loggingToggle.isOn ? AppodealLogLevel.Verbose : AppodealLogLevel.None);
+            Appodeal.SetTesting(testingToggle.isOn);
+            Appodeal.SetUseSafeArea(safeAreaToggle.isOn);
 
-            Appodeal.setBannerCallbacks(this);
-            Appodeal.setInterstitialCallbacks(this);
-            Appodeal.setRewardedVideoCallbacks(this);
-            Appodeal.setMrecCallbacks(this);
+            Appodeal.SetUserId("1");
+            Appodeal.SetCustomFilter(PredefinedKeys.UserAge, 18);
+            Appodeal.SetCustomFilter(PredefinedKeys.UserGender, (int) AppodealUserGender.Male);
+            Appodeal.ResetCustomFilter(PredefinedKeys.UserGender);
+
+            Appodeal.SetExtraData("testKey", "testValue");
+            Appodeal.ResetExtraData("testKey");
+
+            Appodeal.SetBannerRotation(-110, 90);
+            Appodeal.SetSmartBanners(smartBannerToggle.isOn);
+            Appodeal.SetTabletBanners(tabletBannerToggle.isOn);
+            Appodeal.SetBannerAnimation(bannerAnimationToggle.isOn);
+
+            Appodeal.SetLocationTracking(false);
+            Appodeal.MuteVideosIfCallsMuted(true);
+            Appodeal.SetChildDirectedTreatment(false);
+
+            Appodeal.SetTriggerOnLoadedOnPrecache(AppodealAdType.Interstitial, true);
+
+            Appodeal.DisableNetwork(AppodealNetworks.Vungle);
+            Appodeal.DisableNetwork(AppodealNetworks.Yandex, AppodealAdType.Banner);
+
+            Appodeal.SetAutoCache(AppodealAdType.Interstitial, interstitialAutoCacheToggle.isOn);
+            Appodeal.SetAutoCache(AppodealAdType.RewardedVideo, rewardedVideoAutoCacheToggle.isOn);
+            interstitialButtonText.text =  interstitialAutoCacheToggle.isOn ? InterstitialCaching : InterstitialCache;
+            rewardedVideoButtonText.text =  rewardedVideoAutoCacheToggle.isOn ? RewardedVideoCaching : RewardedVideoCache;
+
+            Appodeal.SetMrecCallbacks(this);
+            Appodeal.SetBannerCallbacks(this);
+            Appodeal.SetInterstitialCallbacks(this);
+            Appodeal.SetRewardedVideoCallbacks(this);
 
             if (isConsent)
             {
-                Appodeal.initialize(appKey,
-                    AppodealAdType.INTERSTITIAL | AppodealAdType.BANNER | AppodealAdType.REWARDED_VIDEO | AppodealAdType.MREC,
-                    currentConsent);
+                Appodeal.UpdateConsent(_consent);
             }
-            else
+            else if (!testingToggle.isOn)
             {
-                Appodeal.initialize(appKey,
-                    AppodealAdType.INTERSTITIAL | AppodealAdType.BANNER | AppodealAdType.REWARDED_VIDEO | AppodealAdType.MREC,
-                    true);
+                Appodeal.UpdateCcpaConsent(CcpaUserConsent.OptOut);
+                Appodeal.UpdateGdprConsent(GdprUserConsent.NonPersonalized);
             }
 
-            Appodeal.setCustomFilter("newBoolean", true);
-            Appodeal.setCustomFilter("newInt", 1234567890);
-            Appodeal.setCustomFilter("newDouble", 123.123456789);
-            Appodeal.setCustomFilter("newString", "newStringFromSDK");
+            int adTypes = (mrecInitializationToggle.isOn ? AppodealAdType.Mrec : 0) |
+                          (bannerInitializationToggle.isOn ? AppodealAdType.Banner : 0) |
+                          (interstitialInitializationToggle.isOn ? AppodealAdType.Interstitial : 0) |
+                          (rewardedVideoInitializationToggle.isOn ? AppodealAdType.RewardedVideo : 0);
+
+            Appodeal.Initialize(AppKey, adTypes, this);
         }
 
         public void ShowInterstitial()
         {
-            if (Appodeal.canShow(AppodealAdType.INTERSTITIAL) && !Appodeal.isPrecache(AppodealAdType.INTERSTITIAL))
+            if (Appodeal.IsLoaded(AppodealAdType.Interstitial) && Appodeal.CanShow(AppodealAdType.Interstitial, "default") && !Appodeal.IsPrecache(AppodealAdType.Interstitial))
             {
-                Appodeal.show(AppodealAdType.INTERSTITIAL);
+                Appodeal.Show(AppodealShowStyle.Interstitial);
             }
-            else
+            else if (!Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial))
             {
-                Appodeal.cache(AppodealAdType.INTERSTITIAL);
+                Appodeal.Cache(AppodealAdType.Interstitial);
+                interstitialButtonText.text = InterstitialCaching;
             }
         }
 
         public void ShowRewardedVideo()
         {
-            if (Appodeal.canShow(AppodealAdType.REWARDED_VIDEO))
+            if (Appodeal.IsLoaded(AppodealAdType.RewardedVideo) && Appodeal.CanShow(AppodealAdType.RewardedVideo, "default"))
             {
-                Appodeal.show(AppodealAdType.REWARDED_VIDEO);
+                Appodeal.Show(AppodealShowStyle.RewardedVideo);
             }
-            else
+            else if (!Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo))
             {
-                Appodeal.cache(AppodealAdType.REWARDED_VIDEO);
+                Appodeal.Cache(AppodealAdType.RewardedVideo);
+                rewardedVideoButtonText.text = RewardedVideoCaching;
             }
         }
 
         public void ShowBannerBottom()
         {
-            Appodeal.show(AppodealAdType.BANNER_BOTTOM, "default");
+            Appodeal.Show(AppodealShowStyle.BannerBottom, "default");
         }
 
         public void ShowBannerTop()
         {
-            Appodeal.show(AppodealAdType.BANNER_TOP, "default");
-        }
-
-        public void HideBanner()
-        {
-            Appodeal.hide(AppodealAdType.BANNER);
-        }
-
-        public void ShowBannerView()
-        {
-            Appodeal.showBannerView(AppodealViewPosition.VERTICAL_BOTTOM,
-                AppodealViewPosition.HORIZONTAL_CENTER, "default");
-        }
-
-        public void HideBannerView()
-        {
-            Appodeal.hideBannerView();
-        }
-
-        public void ShowMrecView()
-        {
-            Appodeal.showMrecView(AppodealViewPosition.VERTICAL_TOP,
-                AppodealViewPosition.HORIZONTAL_CENTER, "default");
-        }
-
-        public void HideMrecView()
-        {
-            Appodeal.hideMrecView();
+            Appodeal.Show(AppodealShowStyle.BannerTop, "default");
         }
 
         public void ShowBannerLeft()
         {
-            Appodeal.show(AppodealAdType.BANNER_LEFT);
+            Appodeal.Show(AppodealShowStyle.BannerLeft, "default");
         }
 
         public void ShowBannerRight()
         {
-            Appodeal.show(AppodealAdType.BANNER_RIGHT);
+            Appodeal.Show(AppodealShowStyle.BannerRight, "default");
         }
 
-        #region ConsentFormListener
-
-        public void onConsentFormLoaded()
+        public void HideBanner()
         {
-            Debug.Log("ConsentFormListener - onConsentFormLoaded");
+            Appodeal.Hide(AppodealAdType.Banner);
         }
 
-        public void onConsentFormError(ConsentManagerException exception)
+        public void ShowBannerView()
         {
-            Debug.Log($"ConsentFormListener - onConsentFormError, reason - {exception.getReason()}");
+            Appodeal.ShowBannerView(AppodealViewPosition.VerticalBottom, AppodealViewPosition.HorizontalCenter, "default");
         }
 
-        public void onConsentFormOpened()
+        public void HideBannerView()
         {
-            Debug.Log("ConsentFormListener - onConsentFormOpened");
+            Appodeal.HideBannerView();
         }
 
-        public void onConsentFormClosed(Consent consent)
+        public void ShowMrecView()
         {
-            currentConsent = consent;
-            Debug.Log($"ConsentFormListener - onConsentFormClosed, consentStatus - {consent.getStatus()}");
+            Appodeal.ShowMrecView(AppodealViewPosition.VerticalTop, AppodealViewPosition.HorizontalCenter, "default");
         }
 
-        #endregion
-
-        #region ConsentInfoUpdateListener
-
-        public void onConsentInfoUpdated(Consent consent)
+        public void HideMrecView()
         {
-            currentConsent = consent;
-            Debug.Log("onConsentInfoUpdated");
+            Appodeal.HideMrecView();
         }
 
-        public void onFailedToUpdateConsentInfo(ConsentManagerException error)
+        public void ValidateInAppPurchase()
         {
-            Debug.Log($"onFailedToUpdateConsentInfo");
+#if UNITY_ANDROID
+            var additionalParams = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
-            if (error == null) return;
-            Debug.Log($"onFailedToUpdateConsentInfo Reason: {error.getReason()}");
+            var purchase = new PlayStoreInAppPurchase.Builder(PlayStorePurchaseType.Subs)
+                .WithAdditionalParameters(additionalParams)
+                .WithPurchaseTimestamp(793668600)
+                .WithDeveloperPayload("payload")
+                .WithPurchaseToken("token")
+                .WithPurchaseData("data")
+                .WithPublicKey("key")
+                .WithSignature("signature")
+                .WithCurrency("USD")
+                .WithOrderId("orderId")
+                .WithPrice("1.99")
+                .WithSku("sku")
+                .Build();
 
-            switch (error.getCode())
-            {
-                case 0:
-                    Debug.Log("onFailedToUpdateConsentInfo - UNKNOWN");
-                    break;
-                case 1:
-                    Debug.Log(
-                        "onFailedToUpdateConsentInfo - INTERNAL - Error on SDK side. Includes JS-bridge or encoding/decoding errors");
-                    break;
-                case 2:
-                    Debug.Log("onFailedToUpdateConsentInfo - NETWORKING - HTTP errors, parse request/response ");
-                    break;
-                case 3:
-                    Debug.Log("onFailedToUpdateConsentInfo - INCONSISTENT - Incorrect SDK API usage");
-                    break;
-            }
+            Appodeal.ValidatePlayStoreInAppPurchase(purchase, this);
+#elif UNITY_IOS
+            var additionalParams = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
+
+            var purchase = new AppStoreInAppPurchase.Builder(AppStorePurchaseType.Consumable)
+                .WithAdditionalParameters(additionalParams)
+                .WithTransactionId("transactionId")
+                .WithProductId("productId")
+                .WithCurrency("USD")
+                .WithPrice("2.89")
+                .Build();
+
+            Appodeal.ValidateAppStoreInAppPurchase(purchase, this);
+#endif
         }
 
-        #endregion
-
-        #region Banner callback handlers
-
-        public void onBannerLoaded(int height, bool precache)
+        public void LogEvent()
         {
-            Debug.Log("onBannerLoaded");
-            Debug.Log($"Banner height - {height}");
-            Debug.Log($"Banner precache - {precache}");
-        }
-
-        public void onBannerFailedToLoad()
-        {
-            Debug.Log("onBannerFailedToLoad");
-        }
-
-        public void onBannerShown()
-        {
-            print("onBannerShown");
-        }
-
-        public void onBannerClicked()
-        {
-            print("onBannerClicked");
-        }
-
-        public void onBannerExpired()
-        {
-            print("onBannerExpired");
+            Appodeal.LogEvent("test_event", new Dictionary<string, object> { { "test_key_1", 42 }, { "test_key_2", "test_value" } });
         }
 
         #endregion
 
-        #region Interstitial callback handlers
+        #region IAppodealInitializeListener implementation
 
-        public void onInterstitialLoaded(bool isPrecache)
+        public void OnInitializationFinished(List<string> errors)
         {
-            if (!isPrecache)
-            {
-                interstitialButton.GetComponentInChildren<Text>().text = SHOW_INTERSTITIAL;
-            }
-            else
-            {
-                Debug.Log("Appodeal. Interstitial loaded. isPrecache - true");
-            }
+            string output = errors == null ? String.Empty : String.Join(", ", errors);
+            Debug.Log($"[APDUnity] [Callback] OnInitializationFinished(errors:[{output}])");
 
-            Debug.Log("onInterstitialLoaded");
-        }
+            Debug.Log($"[APDUnity] [Appodeal] IsAutoCacheEnabled() for banner: {Appodeal.IsAutoCacheEnabled(AppodealAdType.Banner)}");
+            Debug.Log($"[APDUnity] [Appodeal] IsInitialized() for banner: {Appodeal.IsInitialized(AppodealAdType.Banner)}");
+            Debug.Log($"[APDUnity] [Appodeal] IsSmartBannersEnabled(): {Appodeal.IsSmartBannersEnabled()}");
+            Debug.Log($"[APDUnity] [Appodeal] GetUserId(): {Appodeal.GetUserId()}");
+            Debug.Log($"[APDUnity] [Appodeal] GetSegmentId(): {Appodeal.GetSegmentId()}");
+            Debug.Log($"[APDUnity] [Appodeal] GetRewardParameters(): {Appodeal.GetRewardParameters()}");
+            Debug.Log($"[APDUnity] [Appodeal] GetNativeSDKVersion(): {Appodeal.GetNativeSDKVersion()}");
 
-        public void onInterstitialFailedToLoad()
-        {
-            Debug.Log("onInterstitialFailedToLoad");
-        }
+            var networksList = Appodeal.GetNetworks(AppodealAdType.RewardedVideo);
+            output = networksList == null ? String.Empty : String.Join(", ", (networksList.ToArray()));
+            Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for RV: {output}");
 
-        public void onInterstitialShowFailed()
-        {
-            Debug.Log("onInterstitialShowFailed");
-        }
+            networksList = Appodeal.GetNetworks(AppodealAdType.Interstitial);
+            output = networksList == null ? String.Empty : String.Join(", ", (networksList.ToArray()));
+            Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Interstitial: {output}");
 
-        public void onInterstitialShown()
-        {
-            Debug.Log("onInterstitialShown");
-        }
+            networksList = Appodeal.GetNetworks(AppodealAdType.Banner);
+            output = networksList == null ? String.Empty : String.Join(", ", (networksList.ToArray()));
+            Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Banner: {output}");
 
-        public void onInterstitialClosed()
-        {
-            interstitialButton.GetComponentInChildren<Text>().text = CACHE_INTERSTITIAL;
-            Debug.Log("onInterstitialClosed");
-        }
-
-        public void onInterstitialClicked()
-        {
-            Debug.Log("onInterstitialClicked");
-        }
-
-        public void onInterstitialExpired()
-        {
-            Debug.Log("onInterstitialExpired");
+            networksList = Appodeal.GetNetworks(AppodealAdType.Mrec);
+            output = networksList == null ? String.Empty : String.Join(", ", (networksList.ToArray()));
+            Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Mrec: {output}");
         }
 
         #endregion
 
-        #region Rewarded Video callback handlers
+        #region IInAppPurchaseValidationListener implementation
 
-        public void onRewardedVideoLoaded(bool isPrecache)
+        public void OnInAppPurchaseValidationSucceeded(string json)
         {
-            rewardedVideoButton.GetComponentInChildren<Text>().text = "SHOW REWARDED VIDEO";
-            print("onRewardedVideoLoaded");
+            Debug.Log($"[APDUnity] [Callback] OnInAppPurchaseValidationSucceeded(string json:\n{json})");
         }
 
-        public void onRewardedVideoFailedToLoad()
+        public void OnInAppPurchaseValidationFailed(string json)
         {
-            print("onRewardedVideoFailedToLoad");
-        }
-
-        public void onRewardedVideoShowFailed()
-        {
-            print("onRewardedVideoShowFailed");
-        }
-
-        public void onRewardedVideoShown()
-        {
-            print("onRewardedVideoShown");
-        }
-
-        public void onRewardedVideoClosed(bool finished)
-        {
-            rewardedVideoButton.GetComponentInChildren<Text>().text = "CACHE REWARDED VIDEO";
-            print($"onRewardedVideoClosed. Finished - {finished}");
-        }
-
-        public void onRewardedVideoFinished(double amount, string name)
-        {
-            print("onRewardedVideoFinished. Reward: " + amount + " " + name);
-        }
-
-        public void onRewardedVideoExpired()
-        {
-            print("onRewardedVideoExpired");
-        }
-
-        public void onRewardedVideoClicked()
-        {
-            print("onRewardedVideoClicked");
+            Debug.Log($"[APDUnity] [Callback] OnInAppPurchaseValidationFailed(string json:\n{json})");
         }
 
         #endregion
 
-        #region Mrec callback handlers
+        #region IBannerAdListener implementation
 
-        public void onMrecLoaded(bool precache)
+        public void OnBannerLoaded(int height, bool isPrecache)
         {
-            print($"onMrecLoaded. Precache - {precache}");
+            Debug.Log($"[APDUnity] [Callback] OnBannerLoaded(int height:{height}, bool precache:{isPrecache})");
+            Debug.Log($"[APDUnity] GetPredictedEcpm(): {Appodeal.GetPredictedEcpm(AppodealAdType.Banner)}");
         }
 
-        public void onMrecFailedToLoad()
+        public void OnBannerFailedToLoad()
         {
-            print("onMrecFailedToLoad");
+            Debug.Log("[APDUnity] [Callback] OnBannerFailedToLoad()");
         }
 
-        public void onMrecShown()
+        public void OnBannerShown()
         {
-            print("onMrecShown");
+            Debug.Log("[APDUnity] [Callback] OnBannerShown()");
         }
 
-        public void onMrecClicked()
+        public void OnBannerShowFailed()
         {
-            print("onMrecClicked");
+            Debug.Log("[APDUnity] [Callback] OnBannerShowFailed()");
         }
 
-        public void onMrecExpired()
+        public void OnBannerClicked()
         {
-            print("onMrecExpired");
+            Debug.Log("[APDUnity] [Callback] OnBannerClicked()");
+        }
+
+        public void OnBannerExpired()
+        {
+            Debug.Log("[APDUnity] [Callback] OnBannerExpired()");
+        }
+
+        #endregion
+
+        #region IInterstitialAdListener implementation
+
+        public void OnInterstitialLoaded(bool isPrecache)
+        {
+            if (!isPrecache) _shouldChangeIntText = true;
+            Debug.Log($"[APDUnity] [Callback] OnInterstitialLoaded(bool isPrecache:{isPrecache})");
+            Debug.Log($"[APDUnity] GetPredictedEcpm(): {Appodeal.GetPredictedEcpm(AppodealAdType.Interstitial)}");
+        }
+
+        public void OnInterstitialFailedToLoad()
+        {
+            Debug.Log("[APDUnity] [Callback] OnInterstitialFailedToLoad()");
+        }
+
+        public void OnInterstitialShowFailed()
+        {
+            Debug.Log("[APDUnity] [Callback] OnInterstitialShowFailed()");
+        }
+
+        public void OnInterstitialShown()
+        {
+            Debug.Log("[APDUnity] [Callback] OnInterstitialShown()");
+        }
+
+        public void OnInterstitialClosed()
+        {
+            _shouldChangeIntText = true;
+            Debug.Log("[APDUnity] [Callback] OnInterstitialClosed()");
+        }
+
+        public void OnInterstitialClicked()
+        {
+            Debug.Log("[APDUnity] [Callback] OnInterstitialClicked()");
+        }
+
+        public void OnInterstitialExpired()
+        {
+            Debug.Log("[APDUnity] [Callback] OnInterstitialExpired()");
+        }
+
+        #endregion
+
+        #region IRewardedVideoAdListener implementation
+
+        public void OnRewardedVideoLoaded(bool isPrecache)
+        {
+            _shouldChangeRewText = true;
+            Debug.Log($"[APDUnity] [Callback] OnRewardedVideoLoaded(bool isPrecache:{isPrecache})");
+            Debug.Log($"[APDUnity] GetPredictedEcpm(): {Appodeal.GetPredictedEcpm(AppodealAdType.RewardedVideo)}");
+        }
+
+        public void OnRewardedVideoFailedToLoad()
+        {
+            Debug.Log("[APDUnity] [Callback] OnRewardedVideoFailedToLoad()");
+        }
+
+        public void OnRewardedVideoShowFailed()
+        {
+            Debug.Log("[APDUnity] [Callback] OnRewardedVideoShowFailed()");
+        }
+
+        public void OnRewardedVideoShown()
+        {
+            Debug.Log("[APDUnity] [Callback] OnRewardedVideoShown()");
+        }
+
+        public void OnRewardedVideoClosed(bool finished)
+        {
+            _shouldChangeRewText = true;
+            Debug.Log($"[APDUnity] [Callback] OnRewardedVideoClosed(bool finished:{finished})");
+        }
+
+        public void OnRewardedVideoFinished(double amount, string currency)
+        {
+            Debug.Log($"[APDUnity] [Callback] OnRewardedVideoFinished(double amount:{amount}, string name:{currency})");
+        }
+
+        public void OnRewardedVideoExpired()
+        {
+            Debug.Log("[APDUnity] [Callback] OnRewardedVideoExpired()");
+        }
+
+        public void OnRewardedVideoClicked()
+        {
+            Debug.Log("[APDUnity] [Callback] OnRewardedVideoClicked()");
+        }
+
+        #endregion
+
+        #region IMrecAdListener implementation
+
+        public void OnMrecLoaded(bool isPrecache)
+        {
+            Debug.Log($"[APDUnity] [Callback] OnMrecLoaded(bool isPrecache:{isPrecache})");
+            Debug.Log($"[APDUnity] GetPredictedEcpm(): {Appodeal.GetPredictedEcpm(AppodealAdType.Mrec)}");
+        }
+
+        public void OnMrecFailedToLoad()
+        {
+            Debug.Log("[APDUnity] [Callback] OnMrecFailedToLoad()");
+        }
+
+        public void OnMrecShown()
+        {
+            Debug.Log("[APDUnity] [Callback] OnMrecShown()");
+        }
+
+        public void OnMrecShowFailed()
+        {
+            Debug.Log("[APDUnity] [Callback] OnMrecShowFailed()");
+        }
+
+        public void OnMrecClicked()
+        {
+            Debug.Log("[APDUnity] [Callback] OnMrecClicked()");
+        }
+
+        public void OnMrecExpired()
+        {
+            Debug.Log("[APDUnity] [Callback] OnMrecExpired()");
+        }
+
+        #endregion
+
+        #region IConsentFormListener implementation
+
+        public void OnConsentFormLoaded()
+        {
+            Debug.Log("[APDUnity] [Callback] OnConsentFormLoaded()");
+        }
+
+        public void OnConsentFormError(IConsentManagerException exception)
+        {
+            Debug.Log("[APDUnity] [Callback] OnConsentFormError(ConsentManagerException exception)");
+            Debug.Log($"[APDUnity] [ConsentManagerException] GetReason(): {exception?.GetReason()}, GetCode(): {exception?.GetCode()}");
+        }
+
+        public void OnConsentFormOpened()
+        {
+            Debug.Log("[APDUnity] [Callback] OnConsentFormOpened()");
+        }
+
+        public void OnConsentFormClosed(IConsent consent)
+        {
+            _consent = consent;
+            Debug.Log("[APDUnity] [Callback] OnConsentFormClosed(IConsent consent)");
+        }
+
+        #endregion
+
+        #region IConsentInfoUpdateListener implementation
+
+        public void OnConsentInfoUpdated(IConsent consent)
+        {
+            _consent = consent;
+            Debug.Log("[APDUnity] [Callback] OnConsentInfoUpdated(IConsent consent)");
+        }
+
+        public void OnFailedToUpdateConsentInfo(IConsentManagerException error)
+        {
+            Debug.Log("[APDUnity] [Callback] OnFailedToUpdateConsentInfo(ConsentManagerException error)");
+            Debug.Log($"[APDUnity] [ConsentManagerException] GetReason(): {error?.GetReason()}, GetCode(): {error?.GetCode()}");
         }
 
         #endregion
