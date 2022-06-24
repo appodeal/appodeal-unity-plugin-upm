@@ -56,8 +56,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetConfigName(string value)
         {
-            string configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}/", String.Empty);
-            return configName.Replace("Dependencies.xml", String.Empty);
+            return Regex.Match(value, @"[\\/](?!.*[\\/])(.*)Dependencies.xml").Groups[1].Value;
         }
 
         public static string GetIosContent(string path)
