@@ -709,9 +709,6 @@ namespace AppodealStack.UnityEditor.SDKManager
                             $"{nameDep}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
 
                         AppodealDependencyUtils.ReplaceInFile(path, internalContent, "");
-                        var text = System.IO.File.ReadAllLines(path).Where(s => s.Trim() != string.Empty).ToArray();
-                        File.Delete(path);
-                        System.IO.File.WriteAllLines(path, text);
                         AppodealDependencyUtils.FormatXml(path);
 
                         UpdateWindow();
