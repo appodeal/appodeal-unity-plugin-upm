@@ -607,9 +607,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         throw new ArgumentOutOfRangeException(nameof(platformSdk), platformSdk, null);
                 }
 
-                UpdateDependency(internalDependencyName,
-                    internalDependencyUnityContent,
-                    latestDependencyUnityContent);
+                UpdateDependency(internalDependencyName, internalDependencyUnityContent, latestDependencyUnityContent);
 
                 UpdateWindow();
             }
@@ -704,13 +702,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         new GUIContent { text = AppodealEditorConstants.ActionRemove },
                         _btnFieldWidth))
                     {
-                        var path = Path.Combine(AppodealEditorConstants.PluginPath,
-                            AppodealEditorConstants.DependenciesPath,
-                            $"{nameDep}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
-
-                        AppodealDependencyUtils.ReplaceInFile(path, internalContent, "");
-                        AppodealDependencyUtils.FormatXml(path);
-
+                        UpdateDependency(nameDep, internalContent, String.Empty);
                         UpdateWindow();
                     }
 
@@ -786,21 +778,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             }
             else
             {
-                string contentString;
-                using (var reader = new StreamReader(path))
-                {
-                    contentString = reader.ReadToEnd();
-                    reader.Close();
-                }
-
-                contentString = Regex.Replace(contentString, previous, latest);
-
-                using (var writer = new StreamWriter(path))
-                {
-                    writer.Write(contentString);
-                    writer.Close();
-                }
-
+                AppodealDependencyUtils.ReplaceInFile(path, previous, latest);
                 AppodealDependencyUtils.FormatXml(path);
             }
         }
