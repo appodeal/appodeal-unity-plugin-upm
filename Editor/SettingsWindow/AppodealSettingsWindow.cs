@@ -74,8 +74,10 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             yield return null;
         }
 
-        private void OnDestroy() {
-            AppodealSettings.Instance.SaveAsync();
+        private void OnDestroy()
+        {
+            AppodealSettings.SaveAsync();
+            AssetDatabase.SaveAssets();
         }
 
         private void OnGUI()
