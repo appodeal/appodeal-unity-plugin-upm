@@ -190,11 +190,11 @@ namespace AppodealStack.Monetization.Api
         /// <example>To show rewarded video use:<code>Appodeal.Show(AppodealShowStyle.RewardedVideo);</code></example>
         /// </summary>
         ///<remarks>To show banner at custom position and Mrec ads use <see langword="Appodeal.ShowBannerView()"/> or <see langword="Appodeal.ShowMrecView()"/> methods instead.</remarks>
-        /// <param name="adType">type of advertisement.</param>
+        /// <param name="showStyle">show style of advertisement.</param>
         /// <returns>True if an ad was shown, otherwise - false.</returns>
-        public static bool Show(int adType)
+        public static bool Show(int showStyle)
         {
-            return GetInstance().Show(adType);
+            return GetInstance().Show(showStyle);
         }
 
         /// <summary>
@@ -210,12 +210,12 @@ namespace AppodealStack.Monetization.Api
         /// <example>To show rewarded video use:<code>Appodeal.Show(AppodealShowStyle.RewardedVideo, placementName);</code></example>
         /// </summary>
         ///<remarks>To show banner at custom position and Mrec ads use <see langword="Appodeal.ShowBannerView()"/> or <see langword="Appodeal.ShowMrecView()"/> methods instead.</remarks>
-        /// <param name="adType">type of advertisement.</param>
+        /// <param name="showStyle">show style of advertisement.</param>
         /// <param name="placement">name of placement.</param>
         /// <returns>True if an ad was shown, otherwise - false.</returns>
-        public static bool Show(int adType, string placement)
+        public static bool Show(int showStyle, string placement)
         {
-            return GetInstance().Show(adType, placement);
+            return GetInstance().Show(showStyle, placement);
         }
 
         /// <summary>
