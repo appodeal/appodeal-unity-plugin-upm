@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using UnityEditor;
 
@@ -8,53 +7,59 @@ namespace AppodealStack.UnityEditor.InternalResources
 {
     public class PluginPreferences : ScriptableObject
     {
-        private const string PluginPreferencesExportPath = "Appodeal/Editor/InternalResources/PluginPreferences.asset";
+        private const string PluginPreferencesExportPath = "Assets/Appodeal/Editor/InternalResources";
+        private const string PluginPreferencesFileName = "PluginPreferences.asset";
+        
+        [HideInInspector] [SerializeField] private bool shouldIgnoreEdmInstallation;
+        [HideInInspector] [SerializeField] private bool isEdmImported;
+        [HideInInspector] [SerializeField] private bool areAdaptersImported;
+        [HideInInspector] [SerializeField] private bool isAndroidLibraryImported;
+        
         private static PluginPreferences _instance;
-
-        [SerializeField] private bool shouldIgnoreEdmInstallation;
-        [SerializeField] private bool areNetworkConfigsImported;
-        [SerializeField] private bool isAndroidLibraryImported;
-
         public static PluginPreferences Instance
         {
             get
             {
-                if (_instance != null) return _instance;
-                string preferencesFilePath = Path.Combine("Assets", PluginPreferencesExportPath);
-                string preferencesDirectory = Path.GetDirectoryName(preferencesFilePath);
-                if (!Directory.Exists(preferencesDirectory))
-                {
-                    Directory.CreateDirectory(preferencesDirectory ?? String.Empty);
-                }
-
+                if (_instance) return _instance;
+                
+                Directory.CreateDirectory(PluginPreferencesExportPath);
+                
+                string preferencesFilePath = $"{PluginPreferencesExportPath}/{PluginPreferencesFileName}";
+                
                 _instance = AssetDatabase.LoadAssetAtPath<PluginPreferences>(preferencesFilePath);
-                if (_instance != null) return _instance;
+                if (_instance) return _instance;
                 _instance = CreateInstance<PluginPreferences>();
                 AssetDatabase.CreateAsset(_instance, preferencesFilePath);
-
+                
                 return _instance;
             }
         }
-
+        
         public bool ShouldIgnoreEdmInstallation
         {
             get => shouldIgnoreEdmInstallation;
-            set => Instance.shouldIgnoreEdmInstallation = value;
+            set => shouldIgnoreEdmInstallation = value;
         }
-
-        public bool AreNetworkConfigsImported
+        
+        public bool IsEdmImported
         {
-            get => areNetworkConfigsImported;
-            set => Instance.areNetworkConfigsImported = value;
+            get => isEdmImported;
+            set => isEdmImported = value;
         }
-
+        
+        public bool AreAdaptersImported
+        {
+            get => areAdaptersImported;
+            set => areAdaptersImported = value;
+        }
+        
         public bool IsAndroidLibraryImported
         {
             get => isAndroidLibraryImported;
-            set => Instance.isAndroidLibraryImported = value;
+            set => isAndroidLibraryImported = value;
         }
-
-        public void SaveAsync()
+        
+        public static void SaveAsync()
         {
             EditorUtility.SetDirty(_instance);
         }

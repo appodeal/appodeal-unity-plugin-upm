@@ -1,43 +1,44 @@
 ﻿using System.IO;
 using UnityEditor;
+using UnityEngine;
 using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
-    static class AndroidLibraryInstaller
+    internal static class AndroidLibraryInstaller
     {
-        [InitializeOnLoadMethod]
-        static void InstallAndroidLibrary()
+        public static bool InstallAndroidLibrary()
         {
-            if (PluginPreferences.Instance.IsAndroidLibraryImported) return;
-            ImportAndroidLibraryFromPackage();
+            return !PluginPreferences.Instance.IsAndroidLibraryImported && CopyAndroidLibraryFromPackage();
         }
-
-        private static void ImportAndroidLibraryFromPackage()
+        
+        private static bool CopyAndroidLibraryFromPackage()
         {
-            string source = Path.Combine(AppodealEditorConstants.PackagePath, "Runtime/Plugins/Android/appodeal.androidlib~");
-            string destination = Path.Combine("Assets/Plugins/Android", "appodeal.androidlib");
-            string valuesDir = Path.Combine(destination, AppodealEditorConstants.FirebaseAndroidConfigPath);
-
-            if (Directory.Exists(destination)) return;
-
-            if (!Directory.Exists("Assets/Plugins/Android"))
+            string source = $"{AppodealEditorConstants.PackagePath}/Runtime/Plugins/Android/appodeal.androidlib~";
+            string destination = $"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}";
+            
+            if (!Directory.Exists(source))
             {
-                Directory.CreateDirectory("Assets/Plugins/Android");
+                Debug.LogError($"[Appodeal] Directory not found: '{source}'. Please, contact support@apppodeal.com about this issue.");
+                return false;
             }
-
+            
+            Directory.CreateDirectory("Assets/Plugins/Android");
+            
+            if (Directory.Exists(destination))
+            {
+                FileUtil.DeleteFileOrDirectory(destination);
+                FileUtil.DeleteFileOrDirectory($"{destination}.meta");
+            }
+            
             FileUtil.CopyFileOrDirectory(source, destination);
-
-            if (!Directory.Exists(valuesDir))
-            {
-                Directory.CreateDirectory(valuesDir);
-            }
-
+            
             PluginPreferences.Instance.IsAndroidLibraryImported = true;
-            PluginPreferences.Instance.SaveAsync();
-            AssetDatabase.Refresh();
+            PluginPreferences.SaveAsync();
+            
+            return true;
         }
     }
 }
