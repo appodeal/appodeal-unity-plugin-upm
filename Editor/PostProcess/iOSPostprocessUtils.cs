@@ -247,7 +247,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
             if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
             {
-                string firebasePlistGuid = project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
+                string firebasePlistGuid = project.AddFile("GoogleService-Info.plist", "GoogleService-Info.plist", PBXSourceTree.Source);
                 project.AddFileToBuild(mainTarget, firebasePlistGuid);
             }
 
