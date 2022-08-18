@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://wiki.appodeal.com/en/unity/get-started/advanced/changelog).*
 
+### 3.0.1 (August 18, 2022)
+
++ Updated adapters for Android & iOS SDKs to latest
++ Fixed a bug with Dependency Manager on Windows
++ Minor improvements
+
 ### 3.0.0 (June 21, 2022)
 
 + Updated Appodeal Android SDK to 3.0.0
