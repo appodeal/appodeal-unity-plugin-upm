@@ -9,8 +9,8 @@
         <androidPackage spec="org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" />
         <androidPackage spec="com.appodeal.ads.sdk.core:public:3.0.0" />
         <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />
-        <androidPackage spec="com.facebook.android:facebook-core:13.2.0" />
-        <androidPackage spec="com.appodeal.ads.sdk.services:facebook_analytics:3.0.0.0" />
+        <androidPackage spec="com.facebook.android:facebook-core:14.1.0" />
+        <androidPackage spec="com.appodeal.ads.sdk.services:facebook_analytics:3.0.0.2" />
         <repositories>
             <repository>https://artifactory.appodeal.com/appodeal</repository>
         </repositories>
