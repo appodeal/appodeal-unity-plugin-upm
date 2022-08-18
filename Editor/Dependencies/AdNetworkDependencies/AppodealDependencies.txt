@@ -5,6 +5,7 @@
     </iosPods>
     <androidPackages>
         <androidPackage spec="com.appodeal.ads.sdk.networks:vast:3.0.0.0" />
+        <androidPackage spec="com.appodeal.ads.sdk.networks:appodeal:3.0.0.0" />
         <androidPackage spec="com.appodeal.ads.sdk:core:3.0.0" />
         <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />
         <androidPackage spec="com.appodeal.ads:consent:3.0.0" />
