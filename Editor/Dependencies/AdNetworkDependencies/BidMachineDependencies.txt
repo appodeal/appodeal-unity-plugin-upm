@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDBidMachineAdapter" version="3.0.0.3" minTargetSdk="10.0" />
+        <iosPod name="APDBidMachineAdapter" version="3.0.0.4" minTargetSdk="10.0" />
         <iosPod name="BDMCriteoAdapter" version="~>1.9.4" minTargetSdk="10.0" />
         <iosPod name="BDMPangleAdapter" version="~>1.9.4.2" minTargetSdk="10.0" />
         <iosPod name="BDMAmazonAdapter" version="~>1.9.4.2" minTargetSdk="10.0" />
