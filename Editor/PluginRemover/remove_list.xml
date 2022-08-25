@@ -50,6 +50,18 @@
         <check_if_empty>false</check_if_empty>
     </item>
     <item>
+        <name>Android Plugins Directory</name>
+        <path>Plugins/Android</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
+        <name>Plugins Directory</name>
+        <path>Plugins</path>
+        <is_confirmation_required>false</is_confirmation_required>
+        <check_if_empty>true</check_if_empty>
+    </item>
+    <item>
         <name>Appodeal Samples</name>
         <path>Samples/Appodeal</path>
         <is_confirmation_required>false</is_confirmation_required>
