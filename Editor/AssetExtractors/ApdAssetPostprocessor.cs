@@ -1,7 +1,6 @@
+using System.IO;
 using UnityEditor;
-#if UNITY_2020_3_OR_NEWER
 using AppodealStack.UnityEditor.InternalResources;
-#endif
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
@@ -10,10 +9,13 @@ namespace AppodealStack.UnityEditor.AssetExtractors
     {
 #if UNITY_2021_3_OR_NEWER
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+        {
 #else
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
-#endif
         {
+            const string prefsPath = "Assets/Appodeal/Editor/InternalResources/PluginPreferences.asset";
+            if (File.Exists(prefsPath) && AssetDatabase.LoadAssetAtPath<PluginPreferences>(prefsPath) == null) return;
+#endif
             if (AndroidLibraryInstaller.InstallAndroidLibrary() | AppodealAdaptersInstaller.InstallAdapters() | ExternalDependencyManagerInstaller.InstallPluginIfUserAgrees())
             {
                 AssetDatabase.Refresh();
