@@ -34,6 +34,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
                 case 2:
                     PluginPreferences.Instance.ShouldIgnoreEdmInstallation = true;
                     PluginPreferences.SaveAsync();
+                    SessionState.SetBool(EdmInstallCancelledKey, true);
                     return false;
                 default:
                     return false;
