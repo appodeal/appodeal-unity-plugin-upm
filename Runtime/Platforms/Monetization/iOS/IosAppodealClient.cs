@@ -32,6 +32,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private static IMrecAdListener                      _mrecListener;
         private static IBannerAdListener                    _bannerListener;
+        private static IAdRevenueListener                   _revenueListener;
         private static IInterstitialAdListener              _interstitialListener;
         private static IRewardedVideoAdListener             _rewardedVideoListener;
         private static IAppodealInitializationListener      _initializationListener;
@@ -336,6 +337,35 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         #endregion
 
+        #region AdRevenue delegate
+
+        [MonoPInvokeCallback(typeof(AppodealAdRevenueCallback))]
+        private static void AppodealSdkDidReceiveRevenue(string adType, string networkName, string adUnitName, string demandSource, string placement, double revenue, string currency, string revenuePrecision)
+        {
+            _revenueListener?.OnAdRevenueReceived(
+                new AppodealAdRevenue
+                {
+                    AdType = adType,
+                    NetworkName = networkName,
+                    AdUnitName = adUnitName,
+                    DemandSource = demandSource,
+                    Placement = placement,
+                    Revenue = revenue,
+                    Currency = currency,
+                    RevenuePrecision = revenuePrecision
+                }
+            );
+        }
+
+        public void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            _revenueListener = listener;
+
+            AppodealObjCBridge.AppodealSetAdRevenueDelegate(AppodealSdkDidReceiveRevenue);
+        }
+
+        #endregion
+        
         #region In-App Purchase Validation delegate
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationSucceededCallback))]

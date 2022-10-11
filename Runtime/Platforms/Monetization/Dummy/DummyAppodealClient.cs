@@ -93,6 +93,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private IBannerAdListener           _bannerAdListener;
         private IRewardedVideoAdListener    _rewardedVideoAdListener;
         private IMrecAdListener             _mrecAdListener;
+        private IAdRevenueListener          _adRevenueListener;
         private IAppodealInitializationListener _appodealInitializationListener;
 
         private VideoPlayer     _videoPlayer;
@@ -338,6 +339,20 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             SimFireCallback(ad.Name, Shown);
             _videoPlayer?.Play();
 
+            _adRevenueListener?.OnAdRevenueReceived(
+                new AppodealAdRevenue
+                {
+                    AdType = ad.Name,
+                    NetworkName = "UnityEditor",
+                    AdUnitName = $"Test{ad.Name}AdUnit",
+                    DemandSource = "TestAds",
+                    Placement = "default",
+                    Revenue = 0d,
+                    Currency = "USD",
+                    RevenuePrecision = "undefined"
+                }
+            );
+            
             return true;
         }
 
@@ -420,6 +435,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private void SimSetMrecCallbacks(IMrecAdListener listener)
         {
             _mrecAdListener = listener;
+        }
+
+        private void SimSetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            _adRevenueListener = listener;
         }
 
         private EditorAd GetEditorAdObjectByAdType(int adType)
@@ -622,6 +642,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
             SimSetMrecCallbacks(listener);
+        }
+
+        public void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            SimSetAdRevenueCallback(listener);
         }
 
         #endregion

@@ -21,6 +21,7 @@ namespace AppodealStack.Monetization.Common
         void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener);
         void SetBannerCallbacks(IBannerAdListener listener);
         void SetMrecCallbacks(IMrecAdListener listener);
+        void SetAdRevenueCallback(IAdRevenueListener listener);
         void Cache(int adType);
         bool Show(int adType);
         bool Show(int adType, string placement);

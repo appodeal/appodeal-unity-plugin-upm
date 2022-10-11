@@ -531,6 +531,11 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(listener));
         }
         
+        public void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(listener));
+        }
+        
         public void setSharedAdsInstanceAcrossActivities(bool value)
         {
             GetAppodealClass().CallStatic("setSharedAdsInstanceAcrossActivities", value);

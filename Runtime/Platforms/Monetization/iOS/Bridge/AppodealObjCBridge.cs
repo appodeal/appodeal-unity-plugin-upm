@@ -4,6 +4,8 @@
 namespace AppodealStack.Monetization.Platforms.Ios
 {
     internal delegate void AppodealInitializationCallback();
+    
+    internal delegate void AppodealAdRevenueCallback(string adType, string networkName, string adUnitName, string demandSource, string placement, double revenue, string currency, string revenuePrecision);
 
     internal delegate void AppodealInterstitialCallbacks();
 
@@ -222,6 +224,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [DllImport("__Internal")]
         internal static extern void AppodealSetInitializationDelegate(
             AppodealInitializationCallback appodealSDKDidInitialize
+        );
+
+        [DllImport("__Internal")]
+        internal static extern void AppodealSetAdRevenueDelegate(
+            AppodealAdRevenueCallback didReceiveRevenue
         );
 
         [DllImport("__Internal")]

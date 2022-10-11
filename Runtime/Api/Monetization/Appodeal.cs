@@ -161,6 +161,19 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
+        /// Sets Ad Revenue callback.
+        /// </para>
+        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// </summary>
+        /// <remarks>See <see href=""/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealStack.Mediation.Common.IAdRevenueListener interface.</param>
+        public static void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            GetInstance().SetAdRevenueCallback(listener);
+        }
+
+        /// <summary>
+        /// <para>
         /// Caches ads in a manual mode.
         /// Use it only if <see cref="IsAutoCacheEnabled"/> is set to false.
         /// </para>

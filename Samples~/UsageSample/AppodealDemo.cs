@@ -14,7 +14,7 @@ namespace AppodealSample
 {
     public class AppodealDemo : MonoBehaviour, IAppodealInitializationListener, IInAppPurchaseValidationListener,
                                 IBannerAdListener, IInterstitialAdListener, IRewardedVideoAdListener, IMrecAdListener,
-                                IConsentFormListener, IConsentInfoUpdateListener
+                                IConsentFormListener, IConsentInfoUpdateListener, IAdRevenueListener
     {
 
         #region Constants
@@ -292,6 +292,7 @@ namespace AppodealSample
             Appodeal.SetBannerCallbacks(this);
             Appodeal.SetInterstitialCallbacks(this);
             Appodeal.SetRewardedVideoCallbacks(this);
+            Appodeal.SetAdRevenueCallback(this);
 
             if (isConsent)
             {
@@ -673,5 +674,13 @@ namespace AppodealSample
 
         #endregion
 
+        #region IAdRevenueListener implementation
+
+        public void OnAdRevenueReceived(AppodealAdRevenue ad)
+        {
+            Debug.Log($"[APDUnity] [Callback] OnAdRevenueReceived({ad.ToJsonString(true)})");
+        }
+
+        #endregion
     }
 }
