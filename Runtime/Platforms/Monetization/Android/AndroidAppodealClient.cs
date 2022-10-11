@@ -248,17 +248,17 @@ namespace AppodealStack.Monetization.Platforms.Android
             {
                 case AppodealLogLevel.None:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(0)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "none"));
                     break;
                 }
                 case AppodealLogLevel.Debug:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(1)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "debug"));
                     break;
                 }
                 case AppodealLogLevel.Verbose:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("fromInteger", Helper.GetJavaObject(2)));
+                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "verbose"));
                     break;
                 }
                 default:
@@ -447,15 +447,17 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public KeyValuePair<string, double> GetRewardParameters()
         {
-            string currency = GetAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters").Get<string>("second");
-            double amount = GetAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters").Get<AndroidJavaObject>("first").Call<double>("doubleValue");
+            var reward = GetAppodealClass().CallStatic<AndroidJavaObject>("getReward");
+            string currency = reward.Call<string>("getCurrency");
+            double amount = reward.Call<double>("getAmount");
             return new KeyValuePair<string, double>(currency, amount);
         }
 
         public KeyValuePair<string, double> GetRewardParameters(string placement)
         {
-            string currency = GetAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement).Get<string>("second");
-            double amount = GetAppodealClass().CallStatic<AndroidJavaObject>("getRewardParameters", placement).Get<AndroidJavaObject>("first").Call<double>("doubleValue");
+            var reward = GetAppodealClass().CallStatic<AndroidJavaObject>("getReward", placement);
+            string currency = reward.Call<string>("getCurrency");
+            double amount = reward.Call<double>("getAmount");
             return new KeyValuePair<string, double>(currency, amount);
         }
 
