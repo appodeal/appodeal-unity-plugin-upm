@@ -437,7 +437,7 @@ namespace AppodealSample
             Debug.Log($"[APDUnity] [Appodeal] IsSmartBannersEnabled(): {Appodeal.IsSmartBannersEnabled()}");
             Debug.Log($"[APDUnity] [Appodeal] GetUserId(): {Appodeal.GetUserId()}");
             Debug.Log($"[APDUnity] [Appodeal] GetSegmentId(): {Appodeal.GetSegmentId()}");
-            Debug.Log($"[APDUnity] [Appodeal] GetRewardParameters(): {Appodeal.GetRewardParameters()}");
+            Debug.Log($"[APDUnity] [Appodeal] GetReward(): {Appodeal.GetReward().ToJsonString(true)}");
             Debug.Log($"[APDUnity] [Appodeal] GetNativeSDKVersion(): {Appodeal.GetNativeSDKVersion()}");
 
             var networksList = Appodeal.GetNetworks(AppodealAdType.RewardedVideo);

@@ -445,6 +445,19 @@ namespace AppodealStack.Monetization.Platforms.Android
             return networksList;
         }
 
+        public AppodealReward GetReward(string placement)
+        {
+            var reward = String.IsNullOrEmpty(placement)
+                ? GetAppodealClass().CallStatic<AndroidJavaObject>("getReward")
+                : GetAppodealClass().CallStatic<AndroidJavaObject>("getReward", placement);
+            
+            return new AppodealReward()
+            {
+                Amount = reward.Call<double>("getAmount"),
+                Currency = reward.Call<string>("getCurrency")
+            };
+        }
+
         public KeyValuePair<string, double> GetRewardParameters()
         {
             var reward = GetAppodealClass().CallStatic<AndroidJavaObject>("getReward");

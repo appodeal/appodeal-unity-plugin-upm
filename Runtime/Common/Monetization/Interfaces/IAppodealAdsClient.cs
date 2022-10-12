@@ -58,6 +58,7 @@ namespace AppodealStack.Monetization.Common
         void ResetCustomFilter(string name);
         bool CanShow(int adType);
         bool CanShow(int adType, string placement);
+        AppodealReward GetReward(string placement);
         KeyValuePair<string, double> GetRewardParameters();
         KeyValuePair<string, double> GetRewardParameters(string placement);
         void MuteVideosIfCallsMuted(bool value);

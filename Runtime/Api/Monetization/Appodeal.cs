@@ -623,24 +623,17 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Gets reward parameters for <see langword="default"/> placement.
+        /// <para>
+        /// Gets reward data for <see langword="specified"/> placement.
+        /// </para>
+        /// If placement name is not specified, default one will be used.
         /// </summary> 
         /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
-        /// <returns>Reward currency as key; reward amount as value.</returns>
-        public static KeyValuePair<string, double> GetRewardParameters()
+        /// <param name="placement">name of the placement as displayed in dashboard.</param>
+        /// <returns>Object of type <see cref="AppodealReward"/>.</returns>
+        public static AppodealReward GetReward(string placement = null)
         {
-            return GetInstance().GetRewardParameters();
-        }
-
-        /// <summary>
-        /// Gets reward parameters for <see langword="specified"/> placement.
-        /// </summary>
-        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
-        /// <param name="placement">placement name.</param>
-        /// <returns>Reward currency as key; reward amount as value.</returns>
-        public static KeyValuePair<string, double> GetRewardParameters(string placement)
-        {
-            return GetInstance().GetRewardParameters(placement);
+            return GetInstance().GetReward(placement);
         }
 
         /// <summary>
@@ -1067,6 +1060,18 @@ namespace AppodealStack.Monetization.Api
         public static bool canShow(int adType, string placement)
         {
             return GetInstance().CanShow(adType, placement);
+        }
+
+        [Obsolete("It will be removed in the next release. Use GetReward() method instead.", false)]
+        public static KeyValuePair<string, double> GetRewardParameters()
+        {
+            return GetInstance().GetRewardParameters();
+        }
+
+        [Obsolete("It will be removed in the next release. Use GetReward() method instead.", false)]
+        public static KeyValuePair<string, double> GetRewardParameters(string placement)
+        {
+            return GetInstance().GetRewardParameters(placement);
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetRewardParameters) of this method instead.", false)]

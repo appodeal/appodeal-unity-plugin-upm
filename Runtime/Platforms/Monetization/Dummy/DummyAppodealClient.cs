@@ -609,6 +609,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return IsLoaded(adTypes);
         }
 
+        public AppodealReward GetReward(string placement)
+        {
+            return new AppodealReward() { Amount = 42d, Currency = null };
+        }
+
         public bool IsAutoCacheEnabled(int adType)
         {
             return SimIsAutoCacheEnabled(NativeAdTypesForType(adType));

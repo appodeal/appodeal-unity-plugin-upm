@@ -724,6 +724,17 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return AppodealObjCBridge.AppodealCanShow(NativeAdTypesForType(adTypes));
         }
 
+        public AppodealReward GetReward(string placement)
+        {
+            string placementName = String.IsNullOrEmpty(placement) ? "default" : placement;
+            
+            return new AppodealReward()
+            {
+                Amount = AppodealObjCBridge.AppodealGetRewardAmount(placementName),
+                Currency = AppodealObjCBridge.AppodealGetRewardCurrency(placementName)
+            };
+        }
+
         public KeyValuePair<string, double> GetRewardParameters()
         {
             string currency = AppodealObjCBridge.AppodealGetRewardCurrency("default");
