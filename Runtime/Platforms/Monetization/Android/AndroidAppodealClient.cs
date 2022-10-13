@@ -1,8 +1,8 @@
-using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms.Android;
@@ -126,10 +126,33 @@ namespace AppodealStack.Monetization.Platforms.Android
             return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
         }
 
+        private void SetCallbacks()
+        {
+            GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(AppodealEvents.Mrec.Instance.MrecAdEventsImpl));
+            GetAppodealClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(AppodealEvents.Banner.Instance.BannerAdEventsImpl));
+            GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl));
+            GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
+            GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl));
+        }
+
+        private AppodealInitializationCallback GetInitCallback(IAppodealInitializationListener listener)
+        {
+            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
+            return new AppodealInitializationCallback(AppodealEvents.Instance.InitEventsImpl);
+        }
+
+        private InAppPurchaseValidationCallbacks GetPurchaseCallback(InAppPurchaseValidationListener listener)
+        {
+            AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
+            return new InAppPurchaseValidationCallbacks(AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl);
+        }
+
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
+            SetCallbacks();
+
             GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), new AppodealInitializationCallback(listener));
+            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), GetInitCallback(listener));
         }
 
         public void initialize(string appKey, int adTypes)
@@ -139,12 +162,16 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
+            SetCallbacks();
+
             GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
             GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), hasConsent);
         }
 
         public void initialize(string appKey, int adTypes, IConsent consent)
         {
+            SetCallbacks();
+
             GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
             var androidConsent = consent.NativeConsent as AndroidConsent;
             if (androidConsent == null) return;
@@ -528,27 +555,27 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(listener));
+            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         public void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(listener));
+            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         public void SetBannerCallbacks(IBannerAdListener listener)
         {
-            GetAppodealClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(listener));
+            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
-            GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(listener));
+            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
         
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
-            GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(listener));
+            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
         
         public void setSharedAdsInstanceAcrossActivities(bool value)
@@ -594,7 +621,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             var androidPurchase = purchase.NativeInAppPurchase as AndroidPlayStoreInAppPurchase;
             if (androidPurchase == null) return;
-            GetAppodealClass().CallStatic("validateInAppPurchase", GetActivity(), androidPurchase.GetInAppPurchase(), new InAppPurchaseValidationCallbacks(listener));
+            GetAppodealClass().CallStatic("validateInAppPurchase", GetActivity(), androidPurchase.GetInAppPurchase(), GetPurchaseCallback(listener));
         }
 
         public void SetLocationTracking(bool value)

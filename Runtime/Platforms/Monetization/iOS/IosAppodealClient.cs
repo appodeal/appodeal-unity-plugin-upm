@@ -49,9 +49,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private void SetAppodealInitializationCallback(IAppodealInitializationListener listener)
         {
-            _initializationListener = listener;
-
-            AppodealObjCBridge.AppodealSetInitializationDelegate(AppodealSdkDidInitialize);
+            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -102,17 +100,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            _interstitialListener = listener;
-
-            AppodealObjCBridge.AppodealSetInterstitialDelegate(
-                InterstitialDidLoad,
-                InterstitialDidFailToLoad,
-                InterstitialDidFailToPresent,
-                InterstitialWillPresent,
-                InterstitialDidDismiss,
-                InterstitialDidClick,
-                InterstitialDidExpired
-            );
+            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -169,18 +157,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            _rewardedVideoListener = listener;
-
-            AppodealObjCBridge.AppodealSetRewardedVideoDelegate(
-                RewardedVideoDidLoadAd,
-                RewardedVideoDidFailToLoadAd,
-                RewardedVideoDidFailToPresentWithError,
-                RewardedVideoWillDismiss,
-                RewardedVideoDidFinish,
-                RewardedVideoDidPresent,
-                RewardedVideoDidExpired,
-                RewardedVideoDidReceiveTap
-            );
+            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -263,23 +240,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetBannerCallbacks(IBannerAdListener listener)
         {
-            _bannerListener = listener;
-
-            AppodealObjCBridge.AppodealSetBannerDelegate(
-                BannerDidLoadAd,
-                BannerDidFailToLoadAd,
-                BannerDidClick,
-                BannerDidExpired,
-                BannerDidShow,
-                BannerDidFailToPresent);
-
-            AppodealObjCBridge.AppodealSetBannerViewDelegate(
-                BannerViewDidLoadAd,
-                BannerViewDidFailToLoadAd,
-                BannerViewDidClick,
-                BannerViewDidShow,
-                BannerViewDidFailToPresent,
-                BannerViewDidExpired);
+            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -324,15 +285,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
-            _mrecListener = listener;
-
-            AppodealObjCBridge.AppodealSetMrecViewDelegate(
-                MrecViewDidLoadAd,
-                MrecViewDidFailToLoadAd,
-                MrecViewDidClick,
-                MrecViewDidShow,
-                MrecViewDidFailToPresent,
-                MrecViewDidExpired);
+            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -359,9 +312,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
-            _revenueListener = listener;
-
-            AppodealObjCBridge.AppodealSetAdRevenueDelegate(AppodealSdkDidReceiveRevenue);
+            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -378,6 +329,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
         private static void InAppPurchaseValidationFailed(string error)
         {
             _inAppPurchaseValidationListener?.OnInAppPurchaseValidationFailed(error);
+        }
+
+        private void SetInAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener)
+        {
+            AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -471,9 +427,73 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return dictionaryString.TrimEnd(',');
         }
 
+        private static void SetCallbacks()
+        {
+            _revenueListener = AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl;
+            _initializationListener = AppodealEvents.Instance.InitEventsImpl;
+            _inAppPurchaseValidationListener = AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl;
+            _mrecListener = AppodealEvents.Mrec.Instance.MrecAdEventsImpl;
+            _bannerListener = AppodealEvents.Banner.Instance.BannerAdEventsImpl;
+            _interstitialListener = AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl;
+            _rewardedVideoListener = AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
+
+            AppodealObjCBridge.AppodealSetAdRevenueDelegate(AppodealSdkDidReceiveRevenue);
+
+            AppodealObjCBridge.AppodealSetInitializationDelegate(AppodealSdkDidInitialize);
+
+            AppodealObjCBridge.AppodealSetMrecViewDelegate(
+                MrecViewDidLoadAd,
+                MrecViewDidFailToLoadAd,
+                MrecViewDidClick,
+                MrecViewDidShow,
+                MrecViewDidFailToPresent,
+                MrecViewDidExpired
+            );
+
+            AppodealObjCBridge.AppodealSetBannerDelegate(
+                BannerDidLoadAd,
+                BannerDidFailToLoadAd,
+                BannerDidClick,
+                BannerDidExpired,
+                BannerDidShow,
+                BannerDidFailToPresent
+            );
+
+            AppodealObjCBridge.AppodealSetBannerViewDelegate(
+                BannerViewDidLoadAd,
+                BannerViewDidFailToLoadAd,
+                BannerViewDidClick,
+                BannerViewDidShow,
+                BannerViewDidFailToPresent,
+                BannerViewDidExpired
+            );
+
+            AppodealObjCBridge.AppodealSetInterstitialDelegate(
+                InterstitialDidLoad,
+                InterstitialDidFailToLoad,
+                InterstitialDidFailToPresent,
+                InterstitialWillPresent,
+                InterstitialDidDismiss,
+                InterstitialDidClick,
+                InterstitialDidExpired
+            );
+
+            AppodealObjCBridge.AppodealSetRewardedVideoDelegate(
+                RewardedVideoDidLoadAd,
+                RewardedVideoDidFailToLoadAd,
+                RewardedVideoDidFailToPresentWithError,
+                RewardedVideoWillDismiss,
+                RewardedVideoDidFinish,
+                RewardedVideoDidPresent,
+                RewardedVideoDidExpired,
+                RewardedVideoDidReceiveTap
+            );
+        }
+
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            if (listener != null) SetAppodealInitializationCallback(listener);
+            SetAppodealInitializationCallback(listener);
+            SetCallbacks();
 
             AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes),
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
@@ -486,12 +506,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void initialize(string appKey, int adTypes, bool hasConsent)
         {
+            SetCallbacks();
+
             AppodealObjCBridge.AppodealInitializeOld(appKey, NativeAdTypesForType(adTypes), hasConsent,
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
         public void initialize(string appKey, int adTypes, IConsent consent)
         {
+            SetCallbacks();
+
             AppodealObjCBridge.AppodealInitializeWithConsent(appKey, NativeAdTypesForType(adTypes),
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
@@ -831,7 +855,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
-            _inAppPurchaseValidationListener = listener;
+            SetInAppPurchaseValidationCallbacks(listener);
             AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 

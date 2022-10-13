@@ -419,27 +419,27 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SimSetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            _interstitialAdListener = listener;
+            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         private void SimSetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            _rewardedVideoAdListener = listener;
+            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         private void SimSetBannerCallbacks(IBannerAdListener listener)
         {
-            _bannerAdListener = listener;
+            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         private void SimSetMrecCallbacks(IMrecAdListener listener)
         {
-            _mrecAdListener = listener;
+            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
 
         private void SimSetAdRevenueCallback(IAdRevenueListener listener)
         {
-            _adRevenueListener = listener;
+            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
         private EditorAd GetEditorAdObjectByAdType(int adType)
@@ -496,13 +496,25 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return IsLoggingEnabled;
         }
 
+        private void SetCallbacks()
+        {
+            _adRevenueListener = AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl;
+            _appodealInitializationListener = AppodealEvents.Instance.InitEventsImpl;
+            _mrecAdListener = AppodealEvents.Mrec.Instance.MrecAdEventsImpl;
+            _bannerAdListener = AppodealEvents.Banner.Instance.BannerAdEventsImpl;
+            _interstitialAdListener = AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl;
+            _rewardedVideoAdListener = AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
+        }
+
         #endregion
 
         #region ImplementedMethods
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            _appodealInitializationListener = listener;
+            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
+            SetCallbacks();
+            
             initialize(appKey, adTypes);
         }
 
@@ -510,6 +522,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         {
             if (IsSDKInitialized) return;
 
+            SetCallbacks();
+            
             Debug.LogWarning("There is only simplified workflow of Appodeal SDK simulated in Editor. Make sure to test advertising on a real Android/iOS device before publishing.");
             IsSDKInitialized = true;
             SimInitAdTypes(NativeAdTypesForType(adTypes));
