@@ -128,23 +128,23 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         private void SetCallbacks()
         {
-            GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(AppodealEvents.Mrec.Instance.MrecAdEventsImpl));
-            GetAppodealClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(AppodealEvents.Banner.Instance.BannerAdEventsImpl));
-            GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl));
-            GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
-            GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl));
+            GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl));
+            GetAppodealClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(AppodealCallbacks.Banner.Instance.BannerAdEventsImpl));
+            GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl));
+            GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
+            GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl));
         }
 
         private AppodealInitializationCallback GetInitCallback(IAppodealInitializationListener listener)
         {
-            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
-            return new AppodealInitializationCallback(AppodealEvents.Instance.InitEventsImpl);
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
+            return new AppodealInitializationCallback(AppodealCallbacks.Sdk.Instance.SdkEventsImpl);
         }
 
-        private InAppPurchaseValidationCallbacks GetPurchaseCallback(InAppPurchaseValidationListener listener)
+        private InAppPurchaseValidationCallbacks GetPurchaseCallback(IInAppPurchaseValidationListener listener)
         {
-            AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
-            return new InAppPurchaseValidationCallbacks(AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl);
+            AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
+            return new InAppPurchaseValidationCallbacks(AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl);
         }
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
@@ -555,27 +555,27 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         public void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
+            AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         public void SetBannerCallbacks(IBannerAdListener listener)
         {
-            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
-            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
         
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
-            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
+            AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
         
         public void setSharedAdsInstanceAcrossActivities(bool value)

@@ -347,7 +347,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     AdUnitName = $"Test{ad.Name}AdUnit",
                     DemandSource = "TestAds",
                     Placement = "default",
-                    Revenue = 0d,
+                    Revenue = 42d,
                     Currency = "USD",
                     RevenuePrecision = "undefined"
                 }
@@ -419,27 +419,27 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SimSetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         private void SimSetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
+            AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         private void SimSetBannerCallbacks(IBannerAdListener listener)
         {
-            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         private void SimSetMrecCallbacks(IMrecAdListener listener)
         {
-            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
 
         private void SimSetAdRevenueCallback(IAdRevenueListener listener)
         {
-            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
+            AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
         private EditorAd GetEditorAdObjectByAdType(int adType)
@@ -498,12 +498,12 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SetCallbacks()
         {
-            _adRevenueListener = AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl;
-            _appodealInitializationListener = AppodealEvents.Instance.InitEventsImpl;
-            _mrecAdListener = AppodealEvents.Mrec.Instance.MrecAdEventsImpl;
-            _bannerAdListener = AppodealEvents.Banner.Instance.BannerAdEventsImpl;
-            _interstitialAdListener = AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl;
-            _rewardedVideoAdListener = AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
+            _adRevenueListener = AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl;
+            _appodealInitializationListener = AppodealCallbacks.Sdk.Instance.SdkEventsImpl;
+            _mrecAdListener = AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl;
+            _bannerAdListener = AppodealCallbacks.Banner.Instance.BannerAdEventsImpl;
+            _interstitialAdListener = AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl;
+            _rewardedVideoAdListener = AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
         }
 
         #endregion
@@ -512,7 +512,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
             SetCallbacks();
             
             initialize(appKey, adTypes);

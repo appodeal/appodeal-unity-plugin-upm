@@ -1,66 +1,69 @@
 using System;
 
 // ReSharper Disable CheckNamespace
-// ReSharper Disable MemberHidesStaticFromOuterClass
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
     /// Class containing monetization events.
     /// </summary>
-    public sealed class AppodealEvents
+    public static class AppodealCallbacks
     {
-        #region AppodealEvents Singleton
-        
-        private AppodealEvents() { }
-        
-        private static AppodealEvents _instance;
-        
-        private static readonly object Lock = new object();
-        
-        /// <summary>
-        /// Returns an instance of the <see cref="AppodealEvents"/> class.
-        /// </summary>
-        public static AppodealEvents Instance
+        public sealed class Sdk
         {
-            get
+            #region Sdk Singleton
+
+            private Sdk() { }
+
+            private static Sdk _instance;
+
+            private static readonly object Lock = new object();
+
+            /// <summary>
+            /// Returns an instance of the <see cref="AppodealCallbacks.Sdk"/> class.
+            /// </summary>
+            public static Sdk Instance
             {
-                if (_instance == null)
+                get
                 {
-                    lock (Lock)
+                    if (_instance == null)
                     {
-                        if (_instance == null)
+                        lock (Lock)
                         {
-                            _instance = new AppodealEvents();
-                            _instance.InitializeCallbacks();
+                            if (_instance == null)
+                            {
+                                _instance = new Sdk();
+                                _instance.InitializeCallbacks();
+                            }
                         }
                     }
+
+                    return _instance;
                 }
-                return _instance;
+            }
+
+            #endregion
+
+            private ISdkProxyListener _sdkEventsImpl;
+
+            /// <summary>
+            /// Returns an instance of the <see cref="SdkProxyListener"/> class.
+            /// </summary>
+            public ISdkProxyListener SdkEventsImpl => _sdkEventsImpl ?? (_sdkEventsImpl = new SdkProxyListener());
+
+            /// <summary>
+            /// <para>
+            /// Raised when Appodeal SDK initialization is finished.
+            /// </para>
+            /// Arguments are of a type <see cref="SdkInitializedEventArgs"/>.
+            /// </summary>
+            public static event EventHandler<SdkInitializedEventArgs> OnInitialized;
+
+            private void InitializeCallbacks()
+            {
+                SdkEventsImpl.OnInitialized += (sender, args) => OnInitialized?.Invoke(this, args);
             }
         }
-        
-        #endregion
-        
-        private IAppodealInitializationProxyListener _initEventsImpl;
-        
-        /// <summary>
-        /// Returns an instance of the <see cref="AppodealInitializationProxyListener"/> class.
-        /// </summary>
-        public IAppodealInitializationProxyListener InitEventsImpl => _initEventsImpl ?? (_initEventsImpl = new AppodealInitializationProxyListener());
-        
-        /// <summary>
-        /// <para>
-        /// Raised when Appodeal SDK initialization is finished.
-        /// </para>
-        /// Arguments are of a type <see cref="SdkInitializedEventArgs"/>.
-        /// </summary>
-        public static event EventHandler<SdkInitializedEventArgs> OnSdkInitialized;
-        
-        private void InitializeCallbacks()
-        {
-            InitEventsImpl.OnSdkInitialized += (sender, args) => OnSdkInitialized?.Invoke(this, args);
-        }
-        
+
         /// <summary>
         /// Class containing AdRevenue events.
         /// </summary>
@@ -75,7 +78,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.AdRevenue"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.AdRevenue"/> class.
             /// </summary>
             public static AdRevenue Instance
             {
@@ -133,7 +136,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.InAppPurchase"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.InAppPurchase"/> class.
             /// </summary>
             public static InAppPurchase Instance
             {
@@ -200,7 +203,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.Mrec"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.Mrec"/> class.
             /// </summary>
             public static Mrec Instance
             {
@@ -288,7 +291,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.Banner"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.Banner"/> class.
             /// </summary>
             public static Banner Instance
             {
@@ -376,7 +379,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.Interstitial"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.Interstitial"/> class.
             /// </summary>
             public static Interstitial Instance
             {
@@ -470,7 +473,7 @@ namespace AppodealStack.Monetization.Common
             private static readonly object Lock = new object();
             
             /// <summary>
-            /// Returns an instance of the <see cref="AppodealEvents.RewardedVideo"/> class.
+            /// Returns an instance of the <see cref="AppodealCallbacks.RewardedVideo"/> class.
             /// </summary>
             public static RewardedVideo Instance
             {

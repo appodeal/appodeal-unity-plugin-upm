@@ -49,7 +49,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private void SetAppodealInitializationCallback(IAppodealInitializationListener listener)
         {
-            AppodealEvents.Instance.InitEventsImpl.Listener = listener;
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
         }
 
         #endregion
@@ -100,7 +100,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -157,7 +157,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
+            AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -240,7 +240,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetBannerCallbacks(IBannerAdListener listener)
         {
-            AppodealEvents.Banner.Instance.BannerAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -285,7 +285,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
-            AppodealEvents.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
+            AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -312,7 +312,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
-            AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
+            AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -333,7 +333,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private void SetInAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener)
         {
-            AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
+            AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
         }
 
         #endregion
@@ -429,13 +429,13 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private static void SetCallbacks()
         {
-            _revenueListener = AppodealEvents.AdRevenue.Instance.AdRevenueEventsImpl;
-            _initializationListener = AppodealEvents.Instance.InitEventsImpl;
-            _inAppPurchaseValidationListener = AppodealEvents.InAppPurchase.Instance.PurchaseEventsImpl;
-            _mrecListener = AppodealEvents.Mrec.Instance.MrecAdEventsImpl;
-            _bannerListener = AppodealEvents.Banner.Instance.BannerAdEventsImpl;
-            _interstitialListener = AppodealEvents.Interstitial.Instance.InterstitialAdEventsImpl;
-            _rewardedVideoListener = AppodealEvents.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
+            _revenueListener = AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl;
+            _initializationListener = AppodealCallbacks.Sdk.Instance.SdkEventsImpl;
+            _inAppPurchaseValidationListener = AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl;
+            _mrecListener = AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl;
+            _bannerListener = AppodealCallbacks.Banner.Instance.BannerAdEventsImpl;
+            _interstitialListener = AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl;
+            _rewardedVideoListener = AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
 
             AppodealObjCBridge.AppodealSetAdRevenueDelegate(AppodealSdkDidReceiveRevenue);
 
