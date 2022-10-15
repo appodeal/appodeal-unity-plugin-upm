@@ -44,7 +44,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// <remarks>Once result is obtained, either <see langword="OnConsentInfoUpdated"/> or <see langword="OnFailedToUpdateConsentInfo"/> callback method will be triggered.</remarks>
         /// <param name="appodealAppKey">appodeal app key that was assigned to your app when it was created.</param>
         /// <param name="listener">class which implements AppodealStack.ConsentManager.Common.IConsentInfoUpdateListener interface.</param>
-        public void RequestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
+        public void RequestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener = null)
         {
             GetNativeConsentManager().RequestConsentInfoUpdate(appodealAppKey, listener);
         }

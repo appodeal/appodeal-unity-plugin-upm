@@ -33,7 +33,7 @@ namespace AppodealStack.ConsentManagement.Api
         /// </summary>
         /// <param name="listener">class which implements AppodealStack.ConsentManager.Common.IConsentFormListener interface.</param>
         /// <returns>Object of type <see langword="ConsentForm"/>.</returns>
-        public static ConsentForm GetInstance(IConsentFormListener listener)
+        public static ConsentForm GetInstance(IConsentFormListener listener = null)
         {
             return new ConsentForm(listener);
         }
