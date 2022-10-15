@@ -9,56 +9,56 @@ namespace AppodealStack.UnityEditor.InternalResources
     {
         private const string PluginPreferencesExportPath = "Assets/Appodeal/Editor/InternalResources";
         private const string PluginPreferencesFileName = "PluginPreferences.asset";
-        
+
         [HideInInspector] [SerializeField] private bool shouldIgnoreEdmInstallation;
         [HideInInspector] [SerializeField] private bool isEdmImported;
         [HideInInspector] [SerializeField] private bool areAdaptersImported;
         [HideInInspector] [SerializeField] private bool isAndroidLibraryImported;
-        
+
         private static PluginPreferences _instance;
         public static PluginPreferences Instance
         {
             get
             {
                 if (_instance) return _instance;
-                
+
                 Directory.CreateDirectory(PluginPreferencesExportPath);
-                
+
                 string preferencesFilePath = $"{PluginPreferencesExportPath}/{PluginPreferencesFileName}";
-                
+
                 _instance = AssetDatabase.LoadAssetAtPath<PluginPreferences>(preferencesFilePath);
                 if (_instance) return _instance;
                 _instance = CreateInstance<PluginPreferences>();
                 AssetDatabase.CreateAsset(_instance, preferencesFilePath);
-                
+
                 return _instance;
             }
         }
-        
+
         public bool ShouldIgnoreEdmInstallation
         {
             get => shouldIgnoreEdmInstallation;
             set => shouldIgnoreEdmInstallation = value;
         }
-        
+
         public bool IsEdmImported
         {
             get => isEdmImported;
             set => isEdmImported = value;
         }
-        
+
         public bool AreAdaptersImported
         {
             get => areAdaptersImported;
             set => areAdaptersImported = value;
         }
-        
+
         public bool IsAndroidLibraryImported
         {
             get => isAndroidLibraryImported;
             set => isAndroidLibraryImported = value;
         }
-        
+
         public static void SaveAsync()
         {
             EditorUtility.SetDirty(_instance);

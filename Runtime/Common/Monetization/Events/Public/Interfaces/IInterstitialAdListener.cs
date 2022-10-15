@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when Interstitial is loaded.
+        /// Raised when Interstitial is loaded.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -20,7 +20,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Interstitial fails to load after passing the waterfall.
+        /// Raised when Interstitial fails to load after passing the waterfall.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -29,7 +29,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when attempt to show Interstitial fails for some reason.
+        /// Raised when attempt to show Interstitial fails for some reason.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -37,7 +37,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires a few seconds after Interstitial is displayed on the screen.
+        /// Raised a few seconds after Interstitial is displayed on the screen.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -45,7 +45,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when user closes Interstitial.
+        /// Raised when user closes Interstitial.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -53,7 +53,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when user clicks on the Interstitial ad.
+        /// Raised when user clicks on the Interstitial ad.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>
@@ -61,7 +61,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Interstitial expires and should not be used.
+        /// Raised when Interstitial expires and should not be used.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.
         /// </summary>

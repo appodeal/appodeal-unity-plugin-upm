@@ -34,7 +34,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
         {
             return ConsentGetAuthorizationStatus();
         }
-        
+
         public static string GetIabConsentString()
         {
             return ConsentGetIabConsentString();
@@ -50,7 +50,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         [DllImport("__Internal")]
         private static extern string ConsentGetStatus();
-        
+
         [DllImport("__Internal")]
         private static extern string ConsentGetAuthorizationStatus();
 

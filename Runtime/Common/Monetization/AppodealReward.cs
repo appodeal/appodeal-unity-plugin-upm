@@ -17,7 +17,7 @@ namespace AppodealStack.Monetization.Common
         /// See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.
         /// </summary>
         public double Amount;
-        
+
         /// <summary>
         /// <para>
         /// The currency name that can be used to differentiate rewards.
@@ -26,7 +26,7 @@ namespace AppodealStack.Monetization.Common
         /// </summary>
         /// <remarks>It can be null if currency name was not specified in settings.</remarks>
         public string Currency;
-        
+
         /// <summary>
         /// <para>
         /// Returns ad revenue information as a json-formatted string.

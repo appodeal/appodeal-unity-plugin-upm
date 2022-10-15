@@ -39,7 +39,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         #region FacebookAppID
 
             if (plist.root[FacebookAppID] == null) plist.root.SetString(FacebookAppID, fbKey);
-        
+
         #endregion
 
         #region FacebookAutoLogAppEventsEnabled
@@ -61,11 +61,11 @@ namespace AppodealStack.UnityEditor.PostProcess
             var schemesDict = typesArray.values.Find(el => el.AsDict()[CfBundleURLSchemes] != null)?.AsDict() ?? typesArray.AddDict();
 
             if (schemesDict[CfBundleURLName]?.AsString() == null) schemesDict.SetString(CfBundleURLName, FacebookUrlName);
-            
+
             var schemesArray = schemesDict[CfBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CfBundleURLSchemes);
 
             if (schemesArray.values.Find(el => el.AsString() == fbKey) == null) schemesArray.AddString($"fb{fbKey}");
-        
+
         #endregion
 
             File.WriteAllText(plistPath, plist.WriteToString());

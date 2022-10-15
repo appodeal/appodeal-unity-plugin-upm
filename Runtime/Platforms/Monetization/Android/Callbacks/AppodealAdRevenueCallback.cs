@@ -12,12 +12,12 @@ namespace AppodealStack.Monetization.Platforms.Android
     public class AppodealAdRevenueCallback : UnityEngine.AndroidJavaProxy
     {
         private readonly IAdRevenueListener _listener;
-        
+
         internal AppodealAdRevenueCallback(IAdRevenueListener listener) : base("com.appodeal.ads.revenue.AdRevenueCallbacks")
         {
             _listener = listener;
         }
-        
+
         private void onAdRevenueReceive(UnityEngine.AndroidJavaObject ad)
         {
             _listener?.OnAdRevenueReceived(

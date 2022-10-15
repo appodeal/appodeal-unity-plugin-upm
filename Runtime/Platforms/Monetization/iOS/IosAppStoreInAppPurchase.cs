@@ -5,7 +5,7 @@ using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
-{    
+{
     public class IosAppStoreInAppPurchase : IAppStoreInAppPurchase
     {
         public IAppStoreInAppPurchase NativeInAppPurchase { get; }

@@ -15,7 +15,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns true if loaded ad is precache, otherwise - false.
         /// </summary>
         public bool IsPrecache { get; }
-        
+
         /// <summary>
         /// Constructor for Ad Loaded Event Args
         /// </summary>

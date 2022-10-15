@@ -12,7 +12,7 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
         Service,
         Core
     }
-    
+
     [Serializable]
     public class ServerConfig
     {
@@ -20,7 +20,7 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
         public List<AppodealDependency> services;
         public AppodealDependency core;
     }
-    
+
     [Serializable]
     public class AppodealDependency
     {

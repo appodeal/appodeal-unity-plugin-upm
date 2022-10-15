@@ -10,7 +10,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when Appodeal SDK initialization is finished.
+        /// Raised when Appodeal SDK initialization is finished.
         /// </para>
         /// See <see href=""/> for more details.
         /// </summary>

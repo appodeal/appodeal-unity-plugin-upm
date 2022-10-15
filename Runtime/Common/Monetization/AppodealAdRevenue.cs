@@ -16,7 +16,7 @@ namespace AppodealStack.Monetization.Common
         /// See <see href=""/> for more details.
         /// </summary>
         public string AdType;
-        
+
         /// <summary>
         /// <para>
         /// Ad Network Name as a not-null string.
@@ -24,7 +24,7 @@ namespace AppodealStack.Monetization.Common
         /// See <see href=""/> for more details.
         /// </summary>
         public string NetworkName;
-        
+
         /// <summary>
         /// <para>
         /// Appodeal Ad Unit Name as a not-null string.
@@ -32,7 +32,7 @@ namespace AppodealStack.Monetization.Common
         /// See <see href=""/> for more details.
         /// </summary>
         public string AdUnitName;
-        
+
         /// <summary>
         /// <para>
         /// Demand Source as a not-null string.
@@ -41,7 +41,7 @@ namespace AppodealStack.Monetization.Common
         /// </summary>
         /// <remarks>Bidder name in case of RTB, otherwise - the same as ad network name.</remarks>
         public string DemandSource;
-        
+
         /// <summary>
         /// <para>
         /// Appodeal Placement as a not-null string.
@@ -49,7 +49,7 @@ namespace AppodealStack.Monetization.Common
         /// See <see href=""/> for more details.
         /// </summary>
         public string Placement;
-        
+
         /// <summary>
         /// <para>
         /// The amount of revenue for an ad.
@@ -58,7 +58,7 @@ namespace AppodealStack.Monetization.Common
         /// </summary>
         /// <remarks>It can be zero in case of an invalid impression.</remarks>
         public double Revenue;
-        
+
         /// <summary>
         /// <para>
         /// The Revenue Currency as a not-null string.
@@ -67,7 +67,7 @@ namespace AppodealStack.Monetization.Common
         /// </summary>
         /// <remarks>At the moment the only supported currency is USD.</remarks>
         public string Currency;
-        
+
         /// <summary>
         /// <para>
         /// Ad Revenue Precision as a not-null string.
@@ -76,7 +76,7 @@ namespace AppodealStack.Monetization.Common
         /// </summary>
         /// <remarks><para>'exact' - programmatic revenue is the resulting price of an auction.</para><para>'publisher_defined' - revenue from cross-promo campaigns.</para><para>'estimated' - revenue based on ad unit price floor or historical eCPM.</para><para>'undefined' - revenue amount is not defined.</para></remarks>
         public string RevenuePrecision;
-        
+
         /// <summary>
         /// <para>
         /// Returns ad revenue information as a json-formatted string.

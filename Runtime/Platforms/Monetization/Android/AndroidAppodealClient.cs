@@ -257,7 +257,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             GetAppodealClass().CallStatic("set728x90Banners", value);
         }
-        
+
         public void SetBannerRotation(int leftBannerRotation, int rightBannerRotation)
         {
             GetAppodealClass().CallStatic("setBannerRotation", leftBannerRotation, rightBannerRotation);
@@ -404,7 +404,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             return GetAppodealClass().CallStatic<bool>("canShow", NativeAdTypesForType(adTypes), placement);
         }
-        
+
         public void SetCustomFilter(string name, bool value)
         {
             GetAppodealClass().CallStatic("setCustomFilter", name, value);
@@ -477,7 +477,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             var reward = String.IsNullOrEmpty(placement)
                 ? GetAppodealClass().CallStatic<AndroidJavaObject>("getReward")
                 : GetAppodealClass().CallStatic<AndroidJavaObject>("getReward", placement);
-            
+
             return new AppodealReward()
             {
                 Amount = reward.Call<double>("getAmount"),
@@ -572,12 +572,12 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
         }
-        
+
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
             AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
-        
+
         public void setSharedAdsInstanceAcrossActivities(bool value)
         {
             GetAppodealClass().CallStatic("setSharedAdsInstanceAcrossActivities", value);
@@ -607,7 +607,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                     .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
                 var map = new AndroidJavaObject("java.util.HashMap");
-                
+
                 foreach (var entry in paramsFiltered)
                 {
                     map.Call<AndroidJavaObject>("put", entry.Key, Helper.GetJavaObject(entry.Value));

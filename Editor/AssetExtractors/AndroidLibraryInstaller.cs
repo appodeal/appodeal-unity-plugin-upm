@@ -13,31 +13,31 @@ namespace AppodealStack.UnityEditor.AssetExtractors
         {
             return !PluginPreferences.Instance.IsAndroidLibraryImported && CopyAndroidLibraryFromPackage();
         }
-        
+
         private static bool CopyAndroidLibraryFromPackage()
         {
             string source = $"{AppodealEditorConstants.PackagePath}/Runtime/Plugins/Android/appodeal.androidlib~";
             string destination = $"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}";
-            
+
             if (!Directory.Exists(source))
             {
                 Debug.LogError($"[Appodeal] Directory not found: '{source}'. Please, contact support@apppodeal.com about this issue.");
                 return false;
             }
-            
+
             Directory.CreateDirectory("Assets/Plugins/Android");
-            
+
             if (Directory.Exists(destination))
             {
                 FileUtil.DeleteFileOrDirectory(destination);
                 FileUtil.DeleteFileOrDirectory($"{destination}.meta");
             }
-            
+
             FileUtil.CopyFileOrDirectory(source, destination);
-            
+
             PluginPreferences.Instance.IsAndroidLibraryImported = true;
             PluginPreferences.SaveAsync();
-            
+
             return true;
         }
     }

@@ -22,7 +22,6 @@ namespace AppodealStack.UnityEditor.SDKManager.Models
         public int page;
     }
 
-
     [Serializable]
     [SuppressMessage("ReSharper", "NotAccessedField.Global")]
     public class AppodealUnityPlugin

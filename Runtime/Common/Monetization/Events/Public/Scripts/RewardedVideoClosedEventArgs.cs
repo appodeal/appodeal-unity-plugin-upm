@@ -13,7 +13,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns true if video has been fully watched, otherwise - false.
         /// </summary>
         public bool Finished { get; }
-        
+
         /// <summary>
         /// Constructor for Rewarded Video Closed Event Args
         /// </summary>

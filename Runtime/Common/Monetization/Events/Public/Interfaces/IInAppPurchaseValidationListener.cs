@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when In-App purchase is successfully validated.
+        /// Raised when In-App purchase is successfully validated.
         /// </para>
         /// See <see href=""/> for more details.
         /// </summary>
@@ -20,7 +20,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when In-App purchase validation fails.
+        /// Raised when In-App purchase validation fails.
         /// </para>
         /// See <see href=""/> for more details.
         /// </summary>

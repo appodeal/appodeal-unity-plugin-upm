@@ -11,7 +11,7 @@ namespace AppodealStack.ConsentManagement.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when the Consent Form is successfully loaded.
+        /// Raised when the Consent Form is successfully loaded.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-2.3.ShowConsentwindow"/> for more details.
         /// </summary>
@@ -19,7 +19,7 @@ namespace AppodealStack.ConsentManagement.Common
 
         /// <summary>
         /// <para>
-        /// Fires when loading or showing of the Consent Form fails.
+        /// Raised when loading or showing of the Consent Form fails.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-2.3.ShowConsentwindow"/> for more details.
         /// </summary>
@@ -28,7 +28,7 @@ namespace AppodealStack.ConsentManagement.Common
 
         /// <summary>
         /// <para>
-        /// Fires when the Consent Form window appears on the screen.
+        /// Raised when the Consent Form window appears on the screen.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-2.3.ShowConsentwindow"/> for more details.
         /// </summary>
@@ -36,7 +36,7 @@ namespace AppodealStack.ConsentManagement.Common
 
         /// <summary>
         /// <para>
-        /// Fires when the Consent Form window is closed.
+        /// Raised when the Consent Form window is closed.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-2.3.ShowConsentwindow"/> for more details.
         /// </summary>

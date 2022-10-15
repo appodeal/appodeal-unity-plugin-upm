@@ -8,7 +8,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when Appodeal SDK tracks ad impression.
+        /// Raised when Appodeal SDK tracks ad impression.
         /// </para>
         /// See <see href=""/> for more details.
         /// </summary>

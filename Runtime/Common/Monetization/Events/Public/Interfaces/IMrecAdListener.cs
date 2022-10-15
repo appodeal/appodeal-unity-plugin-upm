@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when Mrec is loaded.
+        /// Raised when Mrec is loaded.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>
@@ -20,7 +20,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Mrec fails to load after passing the waterfall.
+        /// Raised when Mrec fails to load after passing the waterfall.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>
@@ -29,7 +29,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires a few seconds after Mrec is displayed on the screen.
+        /// Raised a few seconds after Mrec is displayed on the screen.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>
@@ -37,7 +37,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when attempt to show Mrec fails for some reason.
+        /// Raised when attempt to show Mrec fails for some reason.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>
@@ -45,7 +45,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when user clicks on Mrec ad.
+        /// Raised when user clicks on Mrec ad.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>
@@ -53,7 +53,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Mrec expires and should not be used.
+        /// Raised when Mrec expires and should not be used.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.
         /// </summary>

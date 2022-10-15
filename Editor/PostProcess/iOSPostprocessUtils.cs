@@ -40,7 +40,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
         {
-            
+
             if (String.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
             if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;

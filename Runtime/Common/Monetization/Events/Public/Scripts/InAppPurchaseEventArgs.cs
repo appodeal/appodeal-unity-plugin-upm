@@ -14,7 +14,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns json-formatted string containing purchase data and errors, if any.
         /// </summary>
         public string Json { get; }
-        
+
         /// <summary>
         /// Constructor for InApp Purchase Event Args
         /// </summary>

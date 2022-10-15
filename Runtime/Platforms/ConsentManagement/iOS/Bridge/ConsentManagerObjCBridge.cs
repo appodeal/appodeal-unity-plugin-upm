@@ -85,7 +85,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
         private static extern void CmRequestConsentInfoUpdate(string appodealAppKey,
                                                               ConsentInfoUpdatedCallback onConsentInfoUpdated,
                                                               ConsentInfoUpdatedFailedCallback onFailedToUpdateConsentInfo);
-        
+
         [DllImport("__Internal")]
         private static extern void CmDisableAppTrackingTransparencyRequest();
 

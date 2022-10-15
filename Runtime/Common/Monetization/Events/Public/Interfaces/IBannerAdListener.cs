@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when Banner is loaded.
+        /// Raised when Banner is loaded.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>
@@ -21,7 +21,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Banner fails to load after passing the waterfall.
+        /// Raised when Banner fails to load after passing the waterfall.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>
@@ -30,7 +30,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires a few seconds after Banner is displayed on the screen.
+        /// Raised a few seconds after Banner is displayed on the screen.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>
@@ -38,7 +38,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when attempt to show Banner fails for some reason.
+        /// Raised when attempt to show Banner fails for some reason.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>
@@ -46,7 +46,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when user clicks on the Banner ad.
+        /// Raised when user clicks on the Banner ad.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>
@@ -54,7 +54,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Fires when Banner expires and should not be used.
+        /// Raised when Banner expires and should not be used.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.
         /// </summary>

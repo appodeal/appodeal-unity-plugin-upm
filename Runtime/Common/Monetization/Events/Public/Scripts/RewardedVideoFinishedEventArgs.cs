@@ -13,12 +13,12 @@ namespace AppodealStack.Monetization.Common
         /// Returns reward amount for watching an ad if specified in dashboard for current placement.
         /// </summary>
         public double Amount { get; }
-        
+
         /// <summary>
         /// Returns reward currency for watching an ad if specified in dashboard for current placement.
         /// </summary>
         public string Currency { get; }
-        
+
         /// <summary>
         /// Constructor for Rewarded Video Finished Event Args
         /// </summary>

@@ -26,7 +26,7 @@ namespace AppodealStack.UnityEditor.SDKManager
         Android,
         Ios
     }
-    
+
     public class AppodealAdapterManager : EditorWindow
     {
         #region Dictionaries
@@ -57,9 +57,9 @@ namespace AppodealStack.UnityEditor.SDKManager
         #endregion
 
         private Vector2 _scrollPosition;
-        
+
         private AppodealUnityPlugin _appodealUnityPlugin;
-        
+
         public static void ShowSdkManager()
         {
             GetWindow(typeof(AppodealAdapterManager),
@@ -839,7 +839,6 @@ namespace AppodealStack.UnityEditor.SDKManager
         {
             yield return null;
 
-
             if (!EditorUtility.DisplayCancelableProgressBar(
                 AppodealEditorConstants.AppodealSdkManager,
                 AppodealEditorConstants.Loading,
@@ -958,7 +957,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                .ToList().ForEach(dep => _latestDependencies.Add(dep.name, dep));
 
                     if (_latestDependencies.Count > 0)
-                    {   
+                    {
                         var missingAdapters = _internalDependencies.Keys.Where(key => !_latestDependencies.ContainsKey(key)).ToList();
                         if (missingAdapters.Count > 0) {
                             AppodealDependencyUtils.ShowInternalErrorDialog(this,
@@ -1065,7 +1064,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             #endregion
 
             #region AndroidInternalDependencies
-            
+
             string specName;
 
             XmlUtilities.ParseXmlTextFileElements(dependencyPath,
@@ -1090,13 +1089,13 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 return false;
                             }
 
-                            if (networkDependency.name == AppodealEditorConstants.Appodeal && 
+                            if (networkDependency.name == AppodealEditorConstants.Appodeal &&
                                 !specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
-                            
-                            if (networkDependency.name != AppodealEditorConstants.Appodeal && 
+
+                            if (networkDependency.name != AppodealEditorConstants.Appodeal &&
                                 specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
-                            
-                            if (networkDependency.name == AppodealEditorConstants.GoogleAdMob && 
+
+                            if (networkDependency.name == AppodealEditorConstants.GoogleAdMob &&
                                 !specName.Contains(AppodealEditorConstants.ReplaceAdmobDepValue)) return true;
 
                             if (specName.Contains(AppodealEditorConstants.ReplaceNetworkDepValue) || specName.Contains(AppodealEditorConstants.ReplaceServiceDepValue))
@@ -1105,7 +1104,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     AppodealDependencyUtils.GetAndroidDependencyName(specName),
                                     AppodealDependencyUtils.GetAndroidDependencyVersion(specName),
                                     AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                
+
                                 return false;
                             }
                             else if (specName.Contains(AppodealEditorConstants.ReplaceDepCore))
@@ -1114,7 +1113,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     "appodeal",
                                     AppodealDependencyUtils.GetAndroidDependencyCoreVersion(specName),
                                     AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                
+
                                 return false;
                             }
                             else

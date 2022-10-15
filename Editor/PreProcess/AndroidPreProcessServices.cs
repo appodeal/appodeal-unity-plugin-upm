@@ -13,7 +13,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 {
     public static class AndroidPreProcessServices
     {
-    
+
     #region Firebase
 
         public static void GenerateXMLForFirebase()
@@ -23,13 +23,13 @@ namespace AppodealStack.UnityEditor.PreProcess
                 RemoveFirebaseXmlDir($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
                 return;
             }
-            
+
             if (!Directory.Exists($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}"))
             {
                 Debug.LogError($"[Appodeal] Android Library was not found on path '{AppodealEditorConstants.AppodealAndroidLibPath}'. Please, contact support@apppodeal.com about this issue.");
                 return;
             }
-            
+
             string jsonFilePath = $"Assets/{AppodealEditorConstants.FirebaseAndroidJsonFile}";
 
             if (!File.Exists(jsonFilePath))
@@ -45,13 +45,13 @@ namespace AppodealStack.UnityEditor.PreProcess
                 Debug.LogError($"[Appodeal] Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
                 return;
             }
-            
+
             string valuesDir = Path.Combine(Application.dataPath,
                                             AppodealEditorConstants.AppodealAndroidLibPath,
                                             AppodealEditorConstants.FirebaseAndroidConfigPath);
-            
+
             Directory.CreateDirectory(valuesDir);
-            
+
             string xmlFilePath = Path.Combine(Application.dataPath,
                                               AppodealEditorConstants.AppodealAndroidLibPath,
                                               AppodealEditorConstants.FirebaseAndroidConfigPath,
@@ -73,7 +73,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 var androidClientInfo = clientInfo.android_client_info;
 
                 if (androidClientInfo?.package_name != Application.identifier) continue;
-                
+
                 var projectInfo = model.project_info;
                 return new Dictionary<string, string>
                 {
@@ -119,18 +119,18 @@ namespace AppodealStack.UnityEditor.PreProcess
             xmlElement.SetAttribute("translatable", "false");
             var xmlText = xmlDocument.CreateTextNode(elValue);
             xmlElement.AppendChild(xmlText);
-            
+
             return xmlElement;
         }
 
         private static void RemoveFirebaseXmlDir(string path)
         {
             if (!Directory.Exists(path)) return;
-            
+
             FileUtil.DeleteFileOrDirectory(path);
             FileUtil.DeleteFileOrDirectory($"{path}.meta");
         }
-    
+
     #endregion
 
     #region Facebook
@@ -175,7 +175,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 Debug.LogError("Error parsing " + fullPath);
                 return;
             }
-            
+
             string namespaceOfPrefix = xmlNode.GetNamespaceOfPrefix("android");
             var xmlElement = xmlDocument.CreateElement("meta-data");
             xmlElement.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookApplicationId);
@@ -206,7 +206,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 NewLineChars = "\r\n",
                 NewLineHandling = NewLineHandling.Replace
             };
-            
+
             using(var w = XmlWriter.Create(fullPath, settings))
             {
                 xmlDocument.Save(w);

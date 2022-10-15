@@ -11,7 +11,7 @@ namespace AppodealStack.ConsentManagement.Common
     {
         /// <summary>
         /// <para>
-        /// Fires when the status of the Consent is obtained from Appodeal server.
+        /// Raised when the status of the Consent is obtained from Appodeal server.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-Step2:StackConsentManagerUpdatePolicy"/> for more details.
         /// </summary>
@@ -20,7 +20,7 @@ namespace AppodealStack.ConsentManagement.Common
 
         /// <summary>
         /// <para>
-        /// Fires when obtaining status of the Consent from Appodeal server fails.
+        /// Raised when obtaining status of the Consent from Appodeal server fails.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa#id-[Development]UnitySDK.GDPRandCCPA-Step2:StackConsentManagerUpdatePolicy"/> for more details.
         /// </summary>

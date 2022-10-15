@@ -14,7 +14,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns list of initialization errors, if any. Otherwise - null.
         /// </summary>
         public List<string> Errors { get; }
-        
+
         /// <summary>
         /// Constructor for Sdk Initialized Event Args
         /// </summary>

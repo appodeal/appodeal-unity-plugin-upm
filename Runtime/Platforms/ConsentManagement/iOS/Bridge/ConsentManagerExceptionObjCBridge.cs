@@ -10,7 +10,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     internal class ConsentManagerExceptionObjCBridge
     {
         private readonly IntPtr _consentManagerException;
-        
+
         public ConsentManagerExceptionObjCBridge()
         {
             _consentManagerException = GetConsentManagerException();

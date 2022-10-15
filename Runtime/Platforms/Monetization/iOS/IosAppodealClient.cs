@@ -38,7 +38,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         private static IAppodealInitializationListener      _initializationListener;
         private static IInAppPurchaseValidationListener     _inAppPurchaseValidationListener;
 
-
         #region AppodealInitialization delegate
 
         [MonoPInvokeCallback(typeof(AppodealInitializationCallback))]
@@ -200,8 +199,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             _bannerListener?.OnBannerShowFailed();
         }
 
-
-
         [MonoPInvokeCallback(typeof(AppodealBannerViewDidLoadCallback))]
         private static void BannerViewDidLoadAd(int height, bool isPrecache)
         {
@@ -316,7 +313,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         }
 
         #endregion
-        
+
         #region In-App Purchase Validation delegate
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationSucceededCallback))]
@@ -751,7 +748,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         public AppodealReward GetReward(string placement)
         {
             string placementName = String.IsNullOrEmpty(placement) ? "default" : placement;
-            
+
             return new AppodealReward()
             {
                 Amount = AppodealObjCBridge.AppodealGetRewardAmount(placementName),

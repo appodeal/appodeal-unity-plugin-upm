@@ -175,7 +175,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         #endregion
     }
-    
+
     public static class IosHelper
     {
         public static IEnumerable<int> GetEnumerable(IEnumerable<int> enumerable)

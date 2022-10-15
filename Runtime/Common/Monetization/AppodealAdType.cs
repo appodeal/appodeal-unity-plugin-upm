@@ -25,7 +25,7 @@ namespace AppodealStack.Monetization.Common
 
         /// <summary>
         /// <para>
-        /// Banner ads are rectangular graphic, usually located either at the top or bottom of the screen. 
+        /// Banner ads are rectangular graphic, usually located either at the top or bottom of the screen.
         /// </para>
         /// See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner"/> for more details.
         /// </summary>

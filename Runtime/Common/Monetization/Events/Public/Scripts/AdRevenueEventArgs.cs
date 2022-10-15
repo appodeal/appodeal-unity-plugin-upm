@@ -13,7 +13,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns object of type <see cref="AppodealAdRevenue"/> containing data about the last ad impression.
         /// </summary>
         public AppodealAdRevenue Ad { get; }
-        
+
         /// <summary>
         /// Constructor for Ad Revenue Event Args
         /// </summary>
