@@ -256,8 +256,10 @@ namespace AppodealStack.UnityEditor.PostProcess
             AddProjectLibs(PlatformLibs, project, mainTarget);
 
             project.SetBuildProperty(mainTarget, "SWIFT_VERSION", "5.0");
-            project.SetBuildProperty(mainTarget, "ENABLE_BITCODE", "YES");
             project.SetBuildProperty(mainTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
+
+            project.SetBuildProperty(project.ProjectGuid(), "ENABLE_BITCODE", "NO");
+
             project.SetBuildProperty(unityFrameworkTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
 
             project.AddBuildProperty(mainTarget, "OTHER_LDFLAGS", "-ObjC");
