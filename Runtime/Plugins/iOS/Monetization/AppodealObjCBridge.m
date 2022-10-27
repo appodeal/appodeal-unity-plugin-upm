@@ -6,6 +6,7 @@
 
 #import <Appodeal/Appodeal.h>
 #import <StackConsentManager/StackConsentManager.h>
+#import <ConsentFlow/ConsentFlow.h>
 
 #import "AppodealUnityMrecView.h"
 #import "AppodealUnityBannerView.h"
@@ -69,10 +70,19 @@ static NSDictionary <NSString *, id> *NSDictionaryFromUTF8String(const char *cSt
     return outputDict;
 }
 
-void AppodealInitialize(const char *apiKey, int types, const char *pluginVer, const char *engineVer) {
+void AppodealInitialize(const char *apiKey, int types, int cmVersion, const char *pluginVer, const char *engineVer) {
     [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
     [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
-    [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types];
+
+    switch (cmVersion) {
+        case 1:
+            [Appodeal initializeWith:[NSString stringWithUTF8String:apiKey] adTypes:types consentFlowBehaviour:APDConsentFlowBehaviourV1];
+            break;
+        case 2:
+        default:
+            [Appodeal initializeWith:[NSString stringWithUTF8String:apiKey] adTypes:types consentFlowBehaviour:APDConsentFlowBehaviourV2];
+            break;
+    }
 }
 
 void AppodealInitializeOld(const char *apiKey, int types, BOOL consent, const char *pluginVer, const char *engineVer) {
@@ -384,6 +394,10 @@ void AppodealSetUserGender(int gender) {
 
 void AppodealLogEvent(const char *eventName, const char *eventParams) {
     [Appodeal trackEvent:NSStringFromUTF8String(eventName) customParameters:NSDictionaryFromUTF8String(eventParams)];
+}
+
+void AppodealSetAttAuthorizationRequestShowInterval(int interval) {
+    [Appodeal setAppTrackingTransparencyPermissionCheckInterval:interval];
 }
 
 void AppodealValidateInAppPurchase(const char *productIdentifier,

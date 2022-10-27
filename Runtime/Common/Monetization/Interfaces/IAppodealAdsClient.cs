@@ -11,7 +11,7 @@ namespace AppodealStack.Monetization.Common
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public interface IAppodealAdsClient
     {
-        void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener);
+        void Initialize(string appKey, int adTypes, int cmVersion, IAppodealInitializationListener listener);
         bool IsInitialized(int adType);
         void UpdateConsent(IConsent consent);
         void UpdateGdprConsent(GdprUserConsent consent);
@@ -74,6 +74,7 @@ namespace AppodealStack.Monetization.Common
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
+        void SetAttAuthorizationRequestShowInterval(int interval);
 
         #region Deprecated signatures
 

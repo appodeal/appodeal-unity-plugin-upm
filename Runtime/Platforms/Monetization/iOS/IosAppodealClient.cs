@@ -487,12 +487,12 @@ namespace AppodealStack.Monetization.Platforms.Ios
             );
         }
 
-        public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
+        public void Initialize(string appKey, int adTypes, int cmVersion, IAppodealInitializationListener listener)
         {
             SetAppodealInitializationCallback(listener);
             SetCallbacks();
 
-            AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes),
+            AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes), cmVersion,
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
@@ -854,6 +854,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             SetInAppPurchaseValidationCallbacks(listener);
             AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
+        }
+
+        public void SetAttAuthorizationRequestShowInterval(int interval)
+        {
+            AppodealObjCBridge.AppodealSetAttAuthorizationRequestShowInterval(interval);
         }
 
         public void Destroy(int adType)

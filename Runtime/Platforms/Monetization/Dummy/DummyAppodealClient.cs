@@ -510,7 +510,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         #region ImplementedMethods
 
-        public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
+        public void Initialize(string appKey, int adTypes, int cmVersion, IAppodealInitializationListener listener)
         {
             AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
             SetCallbacks();
@@ -898,6 +898,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateAppStoreInAppPurchase method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+        }
+
+        public void SetAttAuthorizationRequestShowInterval(int interval)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetAttAuthorizationRequestShowInterval method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         #endregion

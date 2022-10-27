@@ -147,7 +147,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             return new InAppPurchaseValidationCallbacks(AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl);
         }
 
-        public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
+        public void Initialize(string appKey, int adTypes, int cmVersion, IAppodealInitializationListener listener)
         {
             SetCallbacks();
 
@@ -635,6 +635,11 @@ namespace AppodealStack.Monetization.Platforms.Android
         }
 
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
+        {
+            Debug.Log("Not supported on Android platform");
+        }
+
+        public void SetAttAuthorizationRequestShowInterval(int interval)
         {
             Debug.Log("Not supported on Android platform");
         }

@@ -38,7 +38,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
     internal static class AppodealObjCBridge
     {
         [DllImport("__Internal")]
-        internal static extern void AppodealInitialize(string apiKey, int types, string pluginVer, string engineVersion);
+        internal static extern void AppodealInitialize(string apiKey, int types, int cmVersion, string pluginVer, string engineVersion);
 
         [DllImport("__Internal")]
         internal static extern void AppodealInitializeOld(string apiKey, int types, bool hasConsent, string pluginVer,
@@ -209,6 +209,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern void AppodealLogEvent(string eventName, string eventParams);
+
+        [DllImport("__Internal")]
+        internal static extern void AppodealSetAttAuthorizationRequestShowInterval(int interval);
 
         [DllImport("__Internal")]
         internal static extern void AppodealValidateInAppPurchase(

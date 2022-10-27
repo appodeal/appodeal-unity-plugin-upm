@@ -310,7 +310,9 @@ namespace AppodealSample
                           (interstitialInitializationToggle.isOn ? AppodealAdType.Interstitial : 0) |
                           (rewardedVideoInitializationToggle.isOn ? AppodealAdType.RewardedVideo : 0);
 
-            Appodeal.Initialize(AppKey, adTypes);
+            Appodeal.SetAttAuthorizationRequestShowInterval(2);
+
+            Appodeal.Initialize(AppKey, adTypes, 2);
         }
 
         public void ShowInterstitial()

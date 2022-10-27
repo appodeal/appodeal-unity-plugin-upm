@@ -41,9 +41,9 @@ namespace AppodealStack.Monetization.Api
         /// <param name="appKey">appodeal app key that was assigned to your app when it was created.</param>
         /// <param name="adTypes">type of advertisement you want to initialize.</param>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IAppodealInitializeListener interface.</param>
-        public static void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener = null)
+        public static void Initialize(string appKey, int adTypes, int cmVersion, IAppodealInitializationListener listener = null)
         {
-            GetInstance().Initialize(appKey, adTypes, listener);
+            GetInstance().Initialize(appKey, adTypes, cmVersion, listener);
         }
 
         /// <summary>
@@ -785,6 +785,11 @@ namespace AppodealStack.Monetization.Api
         public static void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener = null)
         {
             GetInstance().ValidateAppStoreInAppPurchase(purchase, listener);
+        }
+
+        public static void SetAttAuthorizationRequestShowInterval(int interval)
+        {
+            GetInstance().SetAttAuthorizationRequestShowInterval(interval);
         }
 
     #region Deprecated methods
