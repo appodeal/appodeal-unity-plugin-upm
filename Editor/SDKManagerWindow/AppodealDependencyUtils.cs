@@ -77,6 +77,26 @@ namespace AppodealStack.UnityEditor.SDKManager
                     iosContent += line + "\n";
                 }
 
+                if (line.Contains("<sources>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("<source>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("</sources>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("</iosPod>"))
+                {
+                    iosContent += line + "\n";
+                }
+
                 if (line.Contains("</iosPods>"))
                 {
                     iosContent += line;
