@@ -98,16 +98,8 @@ namespace AppodealStack.UnityEditor.PreProcess
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogWarning($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
+                Debug.Log($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
                 return;
-            }
-
-            if (!File.Exists(path))
-            {
-                Debug.LogError(
-                    $"Missing AndroidManifest {path}." +
-                    "\nAdmob App ID can't be added. The app may crash on startup!");
-                throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
             if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
@@ -119,7 +111,6 @@ namespace AppodealStack.UnityEditor.PreProcess
                 Debug.LogError(
                     $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
-                throw new BuildFailedException("Admob App ID is not valid");
             }
             else
             {
@@ -128,7 +119,6 @@ namespace AppodealStack.UnityEditor.PreProcess
                     Debug.LogError(
                         "Incorrect value. The app may crash on startup." +
                         "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
-                    throw new BuildFailedException("Admob App ID is not valid");
                 }
 
                 if (CheckContainsAppId(path))
