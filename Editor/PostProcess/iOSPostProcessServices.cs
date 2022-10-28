@@ -19,6 +19,9 @@ namespace AppodealStack.UnityEditor.PostProcess
         private const string FacebookAutoLogAppEventsEnabled = "FacebookAutoLogAppEventsEnabled";
         private const string FacebookAdvertiserIDCollectionEnabled = "FacebookAdvertiserIDCollectionEnabled";
 
+        private const string FirPlistFileName = "GoogleService-Info.plist";
+        private const string BundleIdPlistKey = "BUNDLE_ID";
+
         public static void AddFacebookKeys(string plistPath)
         {
             if (!AppodealSettings.Instance.FacebookAutoConfiguration) return;
@@ -75,20 +78,25 @@ namespace AppodealStack.UnityEditor.PostProcess
         {
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration) return false;
 
-            string FirebasePlistFile = "GoogleService-Info.plist";
+            string plistFileUnityPath = Application.dataPath + '/' + FirPlistFileName;
+            string plistFileXcodePath = buildPath + '/' + FirPlistFileName;
 
-            if (File.Exists(Path.Combine(Application.dataPath, FirebasePlistFile)))
+            if (File.Exists(plistFileUnityPath))
             {
-                FileUtil.CopyFileOrDirectory(Path.Combine(Application.dataPath, FirebasePlistFile), Path.Combine(buildPath, FirebasePlistFile));
-                return true;
-            }
-            else
-            {
-                Debug.LogWarning($"Firebase Plist file was not found at {Path.Combine(Application.dataPath, FirebasePlistFile)}. This service won't be initialized.");
+                var plist = new PlistDocument();
+                plist.ReadFromFile(plistFileUnityPath);
+                plist.root.values.TryGetValue(BundleIdPlistKey, out var bundle);
+                if (bundle?.AsString() == Application.identifier)
+                {
+                    FileUtil.CopyFileOrDirectory(plistFileUnityPath, plistFileXcodePath);
+                    return true;
+                }
+                Debug.LogWarning($"No valid Firebase Plist file was found for {Application.identifier} at {plistFileUnityPath}. This service won't be initialized properly.");
                 return false;
             }
+            Debug.LogWarning($"Firebase Plist file was not found at {plistFileUnityPath}. This service won't be initialized properly.");
+            return false;
         }
     }
 }
-
 #endif
