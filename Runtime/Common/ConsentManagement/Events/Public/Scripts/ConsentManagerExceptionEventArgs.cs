@@ -6,7 +6,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <summary>
     /// This class is designed to store arguments of
     /// <see cref="ConsentManagerCallbacks.ConsentInfo.OnFailedToUpdate">ConsentInfo.OnFailedToUpdate</see> and
-    /// <see cref="ConsentManagerCallbacks.ConsentForm.OnExceptionOccured">ConsentForm.OnExceptionOccured</see> events.
+    /// <see cref="ConsentManagerCallbacks.ConsentForm.OnExceptionOccurred">ConsentForm.OnExceptionOccurred</see> events.
     /// </summary>
     public class ConsentManagerExceptionEventArgs : EventArgs
     {

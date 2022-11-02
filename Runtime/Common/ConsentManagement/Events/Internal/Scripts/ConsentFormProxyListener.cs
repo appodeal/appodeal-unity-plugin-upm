@@ -8,7 +8,7 @@ namespace AppodealStack.ConsentManagement.Common
         public IConsentFormListener Listener { get; set; }
 
         public event EventHandler OnLoaded;
-        public event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccured;
+        public event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccurred;
         public event EventHandler OnOpened;
         public event EventHandler<ConsentEventArgs> OnClosed;
 
@@ -21,7 +21,7 @@ namespace AppodealStack.ConsentManagement.Common
         public void OnConsentFormError(IConsentManagerException exception)
         {
             Listener?.OnConsentFormError(exception);
-            OnExceptionOccured?.Invoke(this, new ConsentManagerExceptionEventArgs(exception));
+            OnExceptionOccurred?.Invoke(this, new ConsentManagerExceptionEventArgs(exception));
         }
 
         public void OnConsentFormOpened()

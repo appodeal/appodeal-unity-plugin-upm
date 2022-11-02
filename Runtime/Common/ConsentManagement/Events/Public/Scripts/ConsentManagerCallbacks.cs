@@ -63,7 +63,7 @@ namespace AppodealStack.ConsentManagement.Common
             /// </para>
             /// Arguments are of a type <see cref="ConsentManagerExceptionEventArgs"/>.
             /// </summary>
-            public static event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccured;
+            public static event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccurred;
 
             /// <summary>
             /// Raised when the Consent Form window appears on the screen.
@@ -81,7 +81,7 @@ namespace AppodealStack.ConsentManagement.Common
             private void InitializeCallbacks()
             {
                 ConsentFormEventsImpl.OnLoaded += (sender, args) => OnLoaded?.Invoke(this, args);
-                ConsentFormEventsImpl.OnExceptionOccured += (sender, args) => OnExceptionOccured?.Invoke(this, args);
+                ConsentFormEventsImpl.OnExceptionOccurred += (sender, args) => OnExceptionOccurred?.Invoke(this, args);
                 ConsentFormEventsImpl.OnOpened += (sender, args) => OnOpened?.Invoke(this, args);
                 ConsentFormEventsImpl.OnClosed += (sender, args) => OnClosed?.Invoke(this, args);
             }

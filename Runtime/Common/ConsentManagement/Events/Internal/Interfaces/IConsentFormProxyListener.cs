@@ -8,7 +8,7 @@ namespace AppodealStack.ConsentManagement.Common
         IConsentFormListener Listener { get; set; }
 
         event EventHandler OnLoaded;
-        event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccured;
+        event EventHandler<ConsentManagerExceptionEventArgs> OnExceptionOccurred;
         event EventHandler OnOpened;
         event EventHandler<ConsentEventArgs> OnClosed;
     }
