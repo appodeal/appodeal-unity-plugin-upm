@@ -205,7 +205,7 @@ namespace AppodealSample
         public void LoadConsentForm()
         {
             ConsentManagerCallbacks.ConsentForm.OnLoaded += OnConsentFormLoaded;
-            ConsentManagerCallbacks.ConsentForm.OnExceptionOccured += OnConsentFormExceptionOccured;
+            ConsentManagerCallbacks.ConsentForm.OnExceptionOccurred += OnConsentFormExceptionOccurred;
             ConsentManagerCallbacks.ConsentForm.OnOpened += OnConsentFormOpened;
             ConsentManagerCallbacks.ConsentForm.OnClosed += OnConsentFormClosed;
 
@@ -688,9 +688,9 @@ namespace AppodealSample
             Debug.Log("[APDUnity] [Callback] OnConsentFormLoaded()");
         }
 
-        private void OnConsentFormExceptionOccured(object sender, ConsentManagerExceptionEventArgs e)
+        private void OnConsentFormExceptionOccurred(object sender, ConsentManagerExceptionEventArgs e)
         {
-            Debug.Log("[APDUnity] [Callback] OnConsentFormExceptionOccured(ConsentManagerException exception)");
+            Debug.Log("[APDUnity] [Callback] OnConsentFormExceptionOccurred(ConsentManagerException exception)");
             Debug.Log($"[APDUnity] [ConsentManagerException] GetReason(): {e.Exception?.GetReason()}, GetCode(): {e.Exception?.GetCode()}");
         }
 
