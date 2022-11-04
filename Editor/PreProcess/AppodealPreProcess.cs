@@ -108,7 +108,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogError(
+                Debug.LogWarning(
                     $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
             }
