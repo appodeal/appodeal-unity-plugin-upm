@@ -25,9 +25,15 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
         }
 
+        private ConsentInfoUpdateCallbacks GetConsentInfoCallback(IConsentInfoUpdateListener listener)
+        {
+            ConsentManagerCallbacks.ConsentInfo.Instance.ConsentInfoEventsImpl.Listener = listener;
+            return new ConsentInfoUpdateCallbacks(ConsentManagerCallbacks.ConsentInfo.Instance.ConsentInfoEventsImpl);
+        }
+
         public void RequestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
         {
-            GetConsentManagerJavaObject().CallStatic("requestConsentInfoUpdate", GetActivity(), appodealAppKey, new ConsentInfoUpdateCallbacks(listener));
+            GetConsentManagerJavaObject().CallStatic("requestConsentInfoUpdate", GetActivity(), appodealAppKey, GetConsentInfoCallback(listener));
         }
 
         public void SetCustomVendor(IVendor customVendor)

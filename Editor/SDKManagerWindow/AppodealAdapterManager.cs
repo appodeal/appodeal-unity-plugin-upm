@@ -26,7 +26,7 @@ namespace AppodealStack.UnityEditor.SDKManager
         Android,
         Ios
     }
-    
+
     public class AppodealAdapterManager : EditorWindow
     {
         #region Dictionaries
@@ -57,9 +57,9 @@ namespace AppodealStack.UnityEditor.SDKManager
         #endregion
 
         private Vector2 _scrollPosition;
-        
+
         private AppodealUnityPlugin _appodealUnityPlugin;
-        
+
         public static void ShowSdkManager()
         {
             GetWindow(typeof(AppodealAdapterManager),
@@ -607,9 +607,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         throw new ArgumentOutOfRangeException(nameof(platformSdk), platformSdk, null);
                 }
 
-                UpdateDependency(internalDependencyName,
-                    internalDependencyUnityContent,
-                    latestDependencyUnityContent);
+                UpdateDependency(internalDependencyName, internalDependencyUnityContent, latestDependencyUnityContent);
 
                 UpdateWindow();
             }
@@ -704,16 +702,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                         new GUIContent { text = AppodealEditorConstants.ActionRemove },
                         _btnFieldWidth))
                     {
-                        var path = Path.Combine(AppodealEditorConstants.PluginPath,
-                            AppodealEditorConstants.DependenciesPath,
-                            $"{nameDep}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
-
-                        AppodealDependencyUtils.ReplaceInFile(path, internalContent, "");
-                        var text = System.IO.File.ReadAllLines(path).Where(s => s.Trim() != string.Empty).ToArray();
-                        File.Delete(path);
-                        System.IO.File.WriteAllLines(path, text);
-                        AppodealDependencyUtils.FormatXml(path);
-
+                        UpdateDependency(nameDep, internalContent, String.Empty);
                         UpdateWindow();
                     }
 
@@ -789,21 +778,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             }
             else
             {
-                string contentString;
-                using (var reader = new StreamReader(path))
-                {
-                    contentString = reader.ReadToEnd();
-                    reader.Close();
-                }
-
-                contentString = Regex.Replace(contentString, previous, latest);
-
-                using (var writer = new StreamWriter(path))
-                {
-                    writer.Write(contentString);
-                    writer.Close();
-                }
-
+                AppodealDependencyUtils.ReplaceInFile(path, previous, latest);
                 AppodealDependencyUtils.FormatXml(path);
             }
         }
@@ -863,7 +838,6 @@ namespace AppodealStack.UnityEditor.SDKManager
         private IEnumerator GetAppodealSDKData()
         {
             yield return null;
-
 
             if (!EditorUtility.DisplayCancelableProgressBar(
                 AppodealEditorConstants.AppodealSdkManager,
@@ -983,7 +957,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                .ToList().ForEach(dep => _latestDependencies.Add(dep.name, dep));
 
                     if (_latestDependencies.Count > 0)
-                    {   
+                    {
                         var missingAdapters = _internalDependencies.Keys.Where(key => !_latestDependencies.ContainsKey(key)).ToList();
                         if (missingAdapters.Count > 0) {
                             AppodealDependencyUtils.ShowInternalErrorDialog(this,
@@ -1090,7 +1064,7 @@ namespace AppodealStack.UnityEditor.SDKManager
             #endregion
 
             #region AndroidInternalDependencies
-            
+
             string specName;
 
             XmlUtilities.ParseXmlTextFileElements(dependencyPath,
@@ -1115,13 +1089,13 @@ namespace AppodealStack.UnityEditor.SDKManager
                                 return false;
                             }
 
-                            if (networkDependency.name == AppodealEditorConstants.Appodeal && 
+                            if (networkDependency.name == AppodealEditorConstants.Appodeal &&
                                 !specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
-                            
-                            if (networkDependency.name != AppodealEditorConstants.Appodeal && 
+
+                            if (networkDependency.name != AppodealEditorConstants.Appodeal &&
                                 specName.Contains(AppodealEditorConstants.ReplaceDepCore)) return true;
-                            
-                            if (networkDependency.name == AppodealEditorConstants.GoogleAdMob && 
+
+                            if (networkDependency.name == AppodealEditorConstants.GoogleAdMob &&
                                 !specName.Contains(AppodealEditorConstants.ReplaceAdmobDepValue)) return true;
 
                             if (specName.Contains(AppodealEditorConstants.ReplaceNetworkDepValue) || specName.Contains(AppodealEditorConstants.ReplaceServiceDepValue))
@@ -1130,7 +1104,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     AppodealDependencyUtils.GetAndroidDependencyName(specName),
                                     AppodealDependencyUtils.GetAndroidDependencyVersion(specName),
                                     AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                
+
                                 return false;
                             }
                             else if (specName.Contains(AppodealEditorConstants.ReplaceDepCore))
@@ -1139,7 +1113,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                                     "appodeal",
                                     AppodealDependencyUtils.GetAndroidDependencyCoreVersion(specName),
                                     AppodealDependencyUtils.GetAndroidContent(dependencyPath));
-                                
+
                                 return false;
                             }
                             else

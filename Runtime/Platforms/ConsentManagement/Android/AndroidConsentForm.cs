@@ -25,6 +25,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             return _consentForm;
         }
 
+        private ConsentFormCallbacks GetConsentFormCallback(IConsentFormListener listener)
+        {
+            ConsentManagerCallbacks.ConsentForm.Instance.ConsentFormEventsImpl.Listener = listener;
+            return new ConsentFormCallbacks(ConsentManagerCallbacks.ConsentForm.Instance.ConsentFormEventsImpl);
+        }
+
         public AndroidConsentForm(AndroidJavaObject builder)
         {
             _consentForm = builder;
@@ -32,7 +38,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public AndroidConsentForm(IConsentFormListener consentFormListener)
         {
-            _consentForm = new AndroidJavaObject("com.appodeal.consent.ConsentForm", GetActivity(), new ConsentFormCallbacks(consentFormListener));
+            _consentForm = new AndroidJavaObject("com.appodeal.consent.ConsentForm", GetActivity(), GetConsentFormCallback(consentFormListener));
         }
 
         public void Load()

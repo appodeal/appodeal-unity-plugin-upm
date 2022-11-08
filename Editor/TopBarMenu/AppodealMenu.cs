@@ -21,13 +21,13 @@ namespace AppodealStack.UnityEditor.TopBarMenu
         {
             Application.OpenURL("https://appodeal.com/");
         }
-       
+
         [MenuItem("Appodeal/Plugin Configuration")]
         public static void AppodealSdkManager()
         {
             AppodealAdapterManager.ShowSdkManager();
         }
-        
+
         [MenuItem("Appodeal/Appodeal Settings")]
         public static void AppodealSettings()
         {

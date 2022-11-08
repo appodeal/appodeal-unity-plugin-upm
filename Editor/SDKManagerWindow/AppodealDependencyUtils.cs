@@ -56,8 +56,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static string GetConfigName(string value)
         {
-            string configName = value.Replace($"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}/", String.Empty);
-            return configName.Replace("Dependencies.xml", String.Empty);
+            return Regex.Match(value, @"[\\/](?!.*[\\/])(.*)Dependencies.xml").Groups[1].Value;
         }
 
         public static string GetIosContent(string path)
@@ -74,6 +73,26 @@ namespace AppodealStack.UnityEditor.SDKManager
                 }
 
                 if (line.Contains("<iosPod name="))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("<sources>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("<source>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("</sources>"))
+                {
+                    iosContent += line + "\n";
+                }
+
+                if (line.Contains("</iosPod>"))
                 {
                     iosContent += line + "\n";
                 }
@@ -175,7 +194,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 reader.Close();
             }
 
-            contentString = Regex.Replace(contentString, searchText, replaceText);
+            contentString = Regex.Replace(contentString.Replace("\r", ""), searchText, replaceText);
 
             using (var writer = new StreamWriter(filePath))
             {

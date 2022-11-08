@@ -40,7 +40,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddSkAdNetworkIds(BuildTarget buildTarget, string buildPath)
         {
-            
+
             if (String.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
             if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;
@@ -247,7 +247,7 @@ namespace AppodealStack.UnityEditor.PostProcess
             string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
             if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
             {
-                string firebasePlistGuid = project.AddFile(firebasePlistPath, "GoogleService-Info.plist", PBXSourceTree.Sdk);
+                string firebasePlistGuid = project.AddFile("GoogleService-Info.plist", "GoogleService-Info.plist", PBXSourceTree.Source);
                 project.AddFileToBuild(mainTarget, firebasePlistGuid);
             }
 
@@ -256,8 +256,10 @@ namespace AppodealStack.UnityEditor.PostProcess
             AddProjectLibs(PlatformLibs, project, mainTarget);
 
             project.SetBuildProperty(mainTarget, "SWIFT_VERSION", "5.0");
-            project.SetBuildProperty(mainTarget, "ENABLE_BITCODE", "YES");
             project.SetBuildProperty(mainTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
+
+            project.SetBuildProperty(project.ProjectGuid(), "ENABLE_BITCODE", "NO");
+
             project.SetBuildProperty(unityFrameworkTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
 
             project.AddBuildProperty(mainTarget, "OTHER_LDFLAGS", "-ObjC");

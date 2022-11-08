@@ -51,7 +51,7 @@ namespace AppodealStack.Monetization.Api
         /// <example>To check interstitials use:<code>Appodeal.IsInitialized(AppodealAdType.Interstitial);</code></example>
         /// <example>To check banners use:<code>Appodeal.IsInitialized(AppodealAdType.Banner);</code></example>
         /// <example>To check rewarded video use:<code>Appodeal.IsInitialized(AppodealAdType.RewardedVideo);</code></example>
-        /// <example>To check 300*250 banners use:<code>Appodeal.IsInitialized(AppodealAdType.Mrec);</code></example> 
+        /// <example>To check 300*250 banners use:<code>Appodeal.IsInitialized(AppodealAdType.Mrec);</code></example>
         /// </summary>
         /// <param name="adType">type of advertisement.</param>
         /// <returns>True if ad type is initialized, otherwise - false.</returns>
@@ -98,7 +98,7 @@ namespace AppodealStack.Monetization.Api
         /// <example>To check interstitials use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial);</code></example>
         /// <example>To check banners use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Banner);</code></example>
         /// <example>To check rewarded video use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo);</code></example>
-        /// <example>To check 300*250 banners use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Mrec);</code></example> 
+        /// <example>To check 300*250 banners use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Mrec);</code></example>
         /// </summary>
         /// <param name="adType">type of advertisement.</param>
         /// <returns>True if auto cache is enabled, otherwise - false.</returns>
@@ -161,14 +161,27 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
+        /// Sets Ad Revenue callback.
+        /// </para>
+        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// </summary>
+        /// <remarks>See <see href=""/> for more details.</remarks>
+        /// <param name="listener">class which implements AppodealStack.Mediation.Common.IAdRevenueListener interface.</param>
+        public static void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            GetInstance().SetAdRevenueCallback(listener);
+        }
+
+        /// <summary>
+        /// <para>
         /// Caches ads in a manual mode.
         /// Use it only if <see cref="IsAutoCacheEnabled"/> is set to false.
         /// </para>
         /// <example>To cache interstitials use:<code>Appodeal.Cache(AppodealAdType.Interstitial);</code></example>
         /// <example>To cache banners use:<code>Appodeal.Cache(AppodealAdType.Banner);</code></example>
         /// <example>To cache rewarded video use:<code>Appodeal.Cache(AppodealAdType.RewardedVideo);</code></example>
-        /// <example>To cache 300*250 banners use:<code>Appodeal.Cache(AppodealAdType.Mrec);</code></example> 
-        /// Note, manual caching of Mrec ads via <see langword="Appodeal.Cache()"/> method works only for  <see langword="Android"/> platform. 
+        /// <example>To cache 300*250 banners use:<code>Appodeal.Cache(AppodealAdType.Mrec);</code></example>
+        /// Note, manual caching of Mrec ads via <see langword="Appodeal.Cache()"/> method works only for  <see langword="Android"/> platform.
         /// </summary>
         /// <remarks>See <see href="https://faq.appodeal.com/en/articles/2658522-sdk-caching"/> for more details.</remarks>
         /// <param name="adType">type of advertisement.</param>
@@ -190,11 +203,11 @@ namespace AppodealStack.Monetization.Api
         /// <example>To show rewarded video use:<code>Appodeal.Show(AppodealShowStyle.RewardedVideo);</code></example>
         /// </summary>
         ///<remarks>To show banner at custom position and Mrec ads use <see langword="Appodeal.ShowBannerView()"/> or <see langword="Appodeal.ShowMrecView()"/> methods instead.</remarks>
-        /// <param name="adType">type of advertisement.</param>
+        /// <param name="showStyle">show style of advertisement.</param>
         /// <returns>True if an ad was shown, otherwise - false.</returns>
-        public static bool Show(int adType)
+        public static bool Show(int showStyle)
         {
-            return GetInstance().Show(adType);
+            return GetInstance().Show(showStyle);
         }
 
         /// <summary>
@@ -210,12 +223,12 @@ namespace AppodealStack.Monetization.Api
         /// <example>To show rewarded video use:<code>Appodeal.Show(AppodealShowStyle.RewardedVideo, placementName);</code></example>
         /// </summary>
         ///<remarks>To show banner at custom position and Mrec ads use <see langword="Appodeal.ShowBannerView()"/> or <see langword="Appodeal.ShowMrecView()"/> methods instead.</remarks>
-        /// <param name="adType">type of advertisement.</param>
+        /// <param name="showStyle">show style of advertisement.</param>
         /// <param name="placement">name of placement.</param>
         /// <returns>True if an ad was shown, otherwise - false.</returns>
-        public static bool Show(int adType, string placement)
+        public static bool Show(int showStyle, string placement)
         {
-            return GetInstance().Show(adType, placement);
+            return GetInstance().Show(showStyle, placement);
         }
 
         /// <summary>
@@ -253,7 +266,7 @@ namespace AppodealStack.Monetization.Api
         {
             return GetInstance().ShowMrecView(yAxis, xGravity, placement);
         }
-        
+
         /// <summary>
         /// <para>
         /// Hides active banner from screen.
@@ -280,7 +293,7 @@ namespace AppodealStack.Monetization.Api
         {
             GetInstance().HideMrecView();
         }
-        
+
         /// <summary>
         /// <para>
         /// Defines whether or not auto cache is enabled for specified ad types (It is <see langword="true"/> for all ad types by default).
@@ -297,7 +310,7 @@ namespace AppodealStack.Monetization.Api
         {
             GetInstance().SetAutoCache(adTypes, autoCache);
         }
-        
+
         /// <summary>
         /// <para>
         /// Defines whether or not <see langword="On[AdType]Loaded"/> callback should be fired if precache is loaded.
@@ -404,7 +417,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// Defines whether or not safe area of the screen can be used. (Supported only for <see langword="Android"/> platform)
-        /// </summary> 
+        /// </summary>
         /// <param name="value">true to enable usage of safe area, false to disable.</param>
         public static void SetUseSafeArea(bool value)
         {
@@ -488,7 +501,7 @@ namespace AppodealStack.Monetization.Api
             return GetInstance().GetUserId();
         }
 
-        /// <summary>Gets native SDK version.</summary> 
+        /// <summary>Gets native SDK version.</summary>
         /// <returns>Appodeal (Android or iOS) SDK version string.</returns>
         public static string GetNativeSDKVersion()
         {
@@ -599,7 +612,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// Checks whether or not advertisement can be shown within <see langword="specified"/> placement.
-        /// </summary> 
+        /// </summary>
         /// <remarks>See <see href="https://faq.appodeal.com/en/collections/107523-placements"/> for more details.</remarks>
         /// <param name="adType">type of advertisement.</param>
         /// <param name="placement">placement name.</param>
@@ -610,24 +623,17 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Gets reward parameters for <see langword="default"/> placement.
-        /// </summary> 
-        /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
-        /// <returns>Reward currency as key; reward amount as value.</returns>
-        public static KeyValuePair<string, double> GetRewardParameters()
-        {
-            return GetInstance().GetRewardParameters();
-        }
-
-        /// <summary>
-        /// Gets reward parameters for <see langword="specified"/> placement.
+        /// <para>
+        /// Gets reward data for <see langword="specified"/> placement.
+        /// </para>
+        /// If placement name is not specified, default one will be used.
         /// </summary>
         /// <remarks>See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.</remarks>
-        /// <param name="placement">placement name.</param>
-        /// <returns>Reward currency as key; reward amount as value.</returns>
-        public static KeyValuePair<string, double> GetRewardParameters(string placement)
+        /// <param name="placement">name of the placement as displayed in dashboard.</param>
+        /// <returns>Object of type <see cref="AppodealReward"/>.</returns>
+        public static AppodealReward GetReward(string placement = null)
         {
-            return GetInstance().GetRewardParameters(placement);
+            return GetInstance().GetReward(placement);
         }
 
         /// <summary>
@@ -664,7 +670,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// Destroys the cached ad. (Supported only for <see langword="Android"/> platform)
-        /// </summary> 
+        /// </summary>
         /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-DestroyHiddenBanner"/> for more details.</remarks>
         /// <param name="adType">type of advertisement. Currently supported only for AppodealAdType.Banner and AppodealAdType.Mrec</param>
         public static void Destroy(int adType)
@@ -707,7 +713,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// Adds a key-value pair to Appodeal Extra Data.
-        /// </summary> 
+        /// </summary>
         /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
         /// <param name="key">unique identifier.</param>
         /// <param name="value">variable that will be added to Extra Data by key.</param>
@@ -731,7 +737,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// Gets predicted eCPM for certain ad type.
-        /// </summary> 
+        /// </summary>
         /// <param name="adType">type of advertisement.</param>
         public static double GetPredictedEcpm(int adType)
         {
@@ -758,7 +764,7 @@ namespace AppodealStack.Monetization.Api
         /// Validates In-App purchase. (Supported only for <see langword="Android"/> platform)
         /// </para>
         /// See <see href=""/> for more details.
-        /// </summary> 
+        /// </summary>
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
         /// <param name="purchase">object of type PlayStoreInAppPurchase, containing all data about the purchase.</param>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IInAppPurchaseValidationListener interface.</param>
@@ -772,7 +778,7 @@ namespace AppodealStack.Monetization.Api
         /// Validates In-App purchase. (Supported only for <see langword="iOS"/> platform)
         /// </para>
         /// See <see href=""/> for more details.
-        /// </summary> 
+        /// </summary>
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
         /// <param name="purchase">object of type AppStoreInAppPurchase, containing all data about the purchase.</param>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IInAppPurchaseValidationListener interface.</param>
@@ -1054,6 +1060,18 @@ namespace AppodealStack.Monetization.Api
         public static bool canShow(int adType, string placement)
         {
             return GetInstance().CanShow(adType, placement);
+        }
+
+        [Obsolete("It will be removed in the next release. Use GetReward() method instead.", false)]
+        public static KeyValuePair<string, double> GetRewardParameters()
+        {
+            return GetInstance().GetRewardParameters();
+        }
+
+        [Obsolete("It will be removed in the next release. Use GetReward() method instead.", false)]
+        public static KeyValuePair<string, double> GetRewardParameters(string placement)
+        {
+            return GetInstance().GetRewardParameters(placement);
         }
 
         [Obsolete("It will be removed in the next release. Use the capitalized version (GetRewardParameters) of this method instead.", false)]

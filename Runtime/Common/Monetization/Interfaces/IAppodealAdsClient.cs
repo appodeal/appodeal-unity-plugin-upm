@@ -21,6 +21,7 @@ namespace AppodealStack.Monetization.Common
         void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener);
         void SetBannerCallbacks(IBannerAdListener listener);
         void SetMrecCallbacks(IMrecAdListener listener);
+        void SetAdRevenueCallback(IAdRevenueListener listener);
         void Cache(int adType);
         bool Show(int adType);
         bool Show(int adType, string placement);
@@ -57,6 +58,7 @@ namespace AppodealStack.Monetization.Common
         void ResetCustomFilter(string name);
         bool CanShow(int adType);
         bool CanShow(int adType, string placement);
+        AppodealReward GetReward(string placement);
         KeyValuePair<string, double> GetRewardParameters();
         KeyValuePair<string, double> GetRewardParameters(string placement);
         void MuteVideosIfCallsMuted(bool value);

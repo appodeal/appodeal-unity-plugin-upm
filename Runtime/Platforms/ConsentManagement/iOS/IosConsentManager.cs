@@ -23,6 +23,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
             return _bridge;
         }
 
+        private void SetConsentInfoListener(IConsentInfoUpdateListener listener)
+        {
+            ConsentManagerCallbacks.ConsentInfo.Instance.ConsentInfoEventsImpl.Listener = listener;
+            _consentInfoUpdateListener = ConsentManagerCallbacks.ConsentInfo.Instance.ConsentInfoEventsImpl;
+        }
+
         public IosConsentManager()
         {
             _bridge = new ConsentManagerObjCBridge();
@@ -35,7 +41,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public void RequestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
         {
-            _consentInfoUpdateListener = listener;
+            SetConsentInfoListener(listener);
             ConsentManagerObjCBridge.RequestConsentInfoUpdate(appodealAppKey, OnConsentInfoUpdated, OnFailedToUpdateConsentInfo);
         }
 
@@ -169,7 +175,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         #endregion
     }
-    
+
     public static class IosHelper
     {
         public static IEnumerable<int> GetEnumerable(IEnumerable<int> enumerable)

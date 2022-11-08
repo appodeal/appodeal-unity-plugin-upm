@@ -15,7 +15,7 @@ using AppodealStack.ConsentManagement.Common;
 namespace AppodealStack.Monetization.Platforms.Dummy
 {
     #region EditorAdClass
-    
+
     internal class EditorAd
     {
         public bool             IsAutoCacheEnabled = true;
@@ -82,17 +82,18 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             { BannerLeft, "BannerLeftAd" },
             { BannerRight, "BannerRightAd" },
             { BannerView, "BannerViewAd" } };
-        
+
         private readonly Dictionary<int,EditorAd> _ads = new Dictionary<int,EditorAd> {
             {Interstitial, new EditorAd(Interstitial, null, "InterstitialAd", "Interstitial", Vector2.zero)},
             {Banner, new EditorAd(Banner, null, "BannerBottomAd", "Banner", new Vector2(600, 95))},
             {RewardedVideo, new EditorAd(RewardedVideo, null, "RewardedAd", "RewardedVideo", Vector2.zero)},
             {Mrec, new EditorAd(Mrec, null, "MrecAd", "Mrec", new Vector2(420, 350))} };
-        
+
         private IInterstitialAdListener     _interstitialAdListener;
         private IBannerAdListener           _bannerAdListener;
         private IRewardedVideoAdListener    _rewardedVideoAdListener;
         private IMrecAdListener             _mrecAdListener;
+        private IAdRevenueListener          _adRevenueListener;
         private IAppodealInitializationListener _appodealInitializationListener;
 
         private VideoPlayer     _videoPlayer;
@@ -104,7 +105,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private bool            ShouldReward { get; set; }
 
         #endregion
-        
+
         private static int NativeAdTypesForType(int adTypes)
         {
             var nativeAdTypes = 0;
@@ -168,7 +169,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         }
 
         #region SimAppodealLogicForEditor
-        
+
         private void SimSetAutoCache(int adTypes, bool isEnabled)
         {
             _ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => _ads[key].IsAutoCacheEnabled = isEnabled);
@@ -228,7 +229,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             }
 
             adGameObject.SetActive(false);
-            
+
             if (Object.FindObjectsOfType<EventSystem>().Length < 1)
             {
                 adGameObject.transform.Find("EventSystem")?.gameObject.SetActive(true);
@@ -246,12 +247,12 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     btn.onClick.AddListener(() =>
                     {
                         ShouldReward = toggle?.isOn ?? false;
-                        
+
                         Object.Destroy(adGameObject);
 
                         if (ad.Type == Interstitial) SimFireCallback(ad.Name, Closed);
                         else if (ad.Type == RewardedVideo) SimFireCallback(ad.Name, Closed, ShouldReward);
-                        
+
                         if (ShouldReward)
                         {
                             ShouldReward = false;
@@ -274,7 +275,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             }
 
             ad.GameObject = adGameObject;
-            
+
             if (ad.Type == Banner) SimFireCallback(ad.Name, Loaded, 80, false);
             else SimFireCallback(ad.Name, Loaded, false);
         }
@@ -300,7 +301,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
                 var rt = ad.GameObject.transform.Find("Panel").GetComponent<RectTransform>();
                 rt.anchoredPosition = calculatedPos;
-                
+
                 return true;
             }
             else return false;
@@ -309,7 +310,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private bool SimShowAd(int adType)
         {
             if (!SimCheckIfSDKInitialized(nameof(Show))) return false;
-            
+
             if (!SimCheckIfAdTypeInitialized(adType)) return false;
 
             if (!SimCheckIfAdTypeIsLoaded(adType)) return false;
@@ -333,10 +334,24 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     _videoPlayer.clip = videoClip;
                     break;
             }
-            
+
             ad.GameObject.SetActive(true);
             SimFireCallback(ad.Name, Shown);
             _videoPlayer?.Play();
+
+            _adRevenueListener?.OnAdRevenueReceived(
+                new AppodealAdRevenue
+                {
+                    AdType = ad.Name,
+                    NetworkName = "UnityEditor",
+                    AdUnitName = $"Test{ad.Name}AdUnit",
+                    DemandSource = "TestAds",
+                    Placement = "default",
+                    Revenue = 42d,
+                    Currency = "USD",
+                    RevenuePrecision = "undefined"
+                }
+            );
 
             return true;
         }
@@ -404,22 +419,27 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SimSetInterstitialCallbacks(IInterstitialAdListener listener)
         {
-            _interstitialAdListener = listener;
+            AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl.Listener = listener;
         }
 
         private void SimSetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
-            _rewardedVideoAdListener = listener;
+            AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl.Listener = listener;
         }
 
         private void SimSetBannerCallbacks(IBannerAdListener listener)
         {
-            _bannerAdListener = listener;
+            AppodealCallbacks.Banner.Instance.BannerAdEventsImpl.Listener = listener;
         }
 
         private void SimSetMrecCallbacks(IMrecAdListener listener)
         {
-            _mrecAdListener = listener;
+            AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl.Listener = listener;
+        }
+
+        private void SimSetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
         private EditorAd GetEditorAdObjectByAdType(int adType)
@@ -467,13 +487,23 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private bool CheckIfLoggingEnabled()
         {
-            if (_loggingToggle == null) 
+            if (_loggingToggle == null)
             {
                 _loggingToggle = GameObject.Find("Logging Toggle")?.GetComponent<Toggle>();
                 IsLoggingEnabled = _loggingToggle?.isOn ?? false;
             }
-             
+
             return IsLoggingEnabled;
+        }
+
+        private void SetCallbacks()
+        {
+            _adRevenueListener = AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl;
+            _appodealInitializationListener = AppodealCallbacks.Sdk.Instance.SdkEventsImpl;
+            _mrecAdListener = AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl;
+            _bannerAdListener = AppodealCallbacks.Banner.Instance.BannerAdEventsImpl;
+            _interstitialAdListener = AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl;
+            _rewardedVideoAdListener = AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
         }
 
         #endregion
@@ -482,13 +512,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            _appodealInitializationListener = listener;
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
+            SetCallbacks();
+
             initialize(appKey, adTypes);
         }
 
         public void initialize(string appKey, int adTypes)
         {
             if (IsSDKInitialized) return;
+
+            SetCallbacks();
 
             Debug.LogWarning("There is only simplified workflow of Appodeal SDK simulated in Editor. Make sure to test advertising on a real Android/iOS device before publishing.");
             IsSDKInitialized = true;
@@ -540,7 +574,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void Cache(int adTypes)
         {
             if (!SimCheckIfSDKInitialized(nameof(Show))) return;
-            
+
             if (!IsInitialized(adTypes))
             {
                 return;
@@ -589,6 +623,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return IsLoaded(adTypes);
         }
 
+        public AppodealReward GetReward(string placement)
+        {
+            return new AppodealReward() { Amount = 42d, Currency = null };
+        }
+
         public bool IsAutoCacheEnabled(int adType)
         {
             return SimIsAutoCacheEnabled(NativeAdTypesForType(adType));
@@ -622,6 +661,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetMrecCallbacks(IMrecAdListener listener)
         {
             SimSetMrecCallbacks(listener);
+        }
+
+        public void SetAdRevenueCallback(IAdRevenueListener listener)
+        {
+            SimSetAdRevenueCallback(listener);
         }
 
         #endregion

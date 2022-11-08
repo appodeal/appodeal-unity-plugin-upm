@@ -21,12 +21,12 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         //Templates in Unity Editor Data folder
         public const string ManifestDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Apk/AndroidManifest.xml";
-        
+
         private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
 
         //Paths without leading Assets folder
         public const string AppodealTemplatesPath = "Appodeal/InternalResources";
-        
+
         private const string AndroidPluginsPath = "Plugins/Android";
         private const string GradleTemplateName = "mainTemplate.gradle";
         private const string ManifestTemplateName = "AndroidManifest.xml";
@@ -47,7 +47,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         //Gradle add lines
         public const string GradleMultidexEnable = "multiDexEnabled true";
-        
+
         private const string GradleImplementation = "implementation ";
         private const string GradleMultidexDependency = "'androidx.multidex:multidex:2.0.1'";
 
@@ -67,7 +67,7 @@ namespace AppodealStack.UnityEditor.PreProcess
                 Debug.LogError($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
                 throw new BuildFailedException("Couldn't find Appodeal Android Manifest file");
             }
-            
+
             var androidManifest = new AndroidManifest(manifestPath);
 
             AddOptionalPermissions(manifestPath, androidManifest);
@@ -90,7 +90,7 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, 
+            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath,
                                                 $"{AppodealEditorConstants.GoogleAdMob}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
             if (!File.Exists(admobDepPath))
             {
@@ -98,16 +98,8 @@ namespace AppodealStack.UnityEditor.PreProcess
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogWarning($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
+                Debug.Log($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
                 return;
-            }
-
-            if (!File.Exists(path))
-            {
-                Debug.LogError(
-                    $"Missing AndroidManifest {path}." +
-                    "\nAdmob App ID can't be added. The app may crash on startup!");
-                throw new BuildFailedException("Admob App ID can't be added because Manifest file is missing.");
             }
 
             if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
@@ -119,7 +111,6 @@ namespace AppodealStack.UnityEditor.PreProcess
                 Debug.LogError(
                     $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
-                throw new BuildFailedException("Admob App ID is not valid");
             }
             else
             {
@@ -128,7 +119,6 @@ namespace AppodealStack.UnityEditor.PreProcess
                     Debug.LogError(
                         "Incorrect value. The app may crash on startup." +
                         "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
-                    throw new BuildFailedException("Admob App ID is not valid");
                 }
 
                 if (CheckContainsAppId(path))
@@ -188,7 +178,6 @@ namespace AppodealStack.UnityEditor.PreProcess
                     androidManifest.RemovePermission(AppodealUnityUtils.ExternalStorageWrite);
                 }
             }
-
 
             if (AppodealSettings.Instance.AccessWifiStatePermission)
             {

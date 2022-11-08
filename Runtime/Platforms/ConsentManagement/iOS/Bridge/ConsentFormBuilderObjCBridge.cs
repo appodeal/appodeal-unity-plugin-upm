@@ -7,7 +7,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
     internal delegate void ConsentFormCallback();
     internal delegate void ConsentFormCallbackError(IntPtr error);
     internal delegate void ConsentFormCallbackClosed(IntPtr consent);
-    
+
     internal class ConsentFormBuilderObjCBridge
     {
         private readonly IntPtr _consentFormBuilder;

@@ -5,6 +5,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
 {
     internal delegate void AppodealInitializationCallback();
 
+    internal delegate void AppodealAdRevenueCallback(string adType, string networkName, string adUnitName, string demandSource, string placement, double revenue, string currency, string revenuePrecision);
+
     internal delegate void AppodealInterstitialCallbacks();
 
     internal delegate void AppodealInterstitialDidLoadCallback(bool isPrecache);
@@ -41,7 +43,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [DllImport("__Internal")]
         internal static extern void AppodealInitializeOld(string apiKey, int types, bool hasConsent, string pluginVer,
             string engineVersion);
-        
+
         [DllImport("__Internal")]
         internal static extern void AppodealInitializeWithConsent(string apiKey, int types, string pluginVer,
             string engineVersion);
@@ -90,7 +92,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetBannerAnimation(bool value);
-        
+
         [DllImport("__Internal")]
         internal static extern void AppodealSetBannerRotation(int leftBannerRotation, int rightBannerRotation);
 
@@ -156,7 +158,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterBool(string name, bool value);
-        
+
         [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterString(string name, string value);
 
@@ -198,10 +200,10 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetUserGender(int gender);
-        
+
         [DllImport("__Internal")]
         internal static extern bool AppodealIsPrecacheAd(int adType);
-        
+
         [DllImport("__Internal")]
         internal static extern bool AppodealIsAutoCacheEnabled(int adType);
 
@@ -222,6 +224,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [DllImport("__Internal")]
         internal static extern void AppodealSetInitializationDelegate(
             AppodealInitializationCallback appodealSDKDidInitialize
+        );
+
+        [DllImport("__Internal")]
+        internal static extern void AppodealSetAdRevenueDelegate(
+            AppodealAdRevenueCallback didReceiveRevenue
         );
 
         [DllImport("__Internal")]

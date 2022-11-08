@@ -1,16 +1,16 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.InternalResources
 {
     public class AppodealSettings : ScriptableObject
     {
-        private const string AppodealSettingsExportPath = "Appodeal/Editor/InternalResources/AppodealSettings.asset";
-        private static AppodealSettings _instance;
+        private const string AppodealSettingsExportPath = "Assets/Appodeal/Editor/InternalResources";
+        private const string AppodealSettingsFileName = "AppodealSettings.asset";
 
         [SerializeField] private string adMobAndroidAppId = String.Empty;
         [SerializeField] private string adMobIosAppId = String.Empty;
@@ -36,23 +36,23 @@ namespace AppodealStack.UnityEditor.InternalResources
 
         [SerializeField] private bool firebaseAutoConfiguration;
         [SerializeField] private bool facebookAutoConfiguration;
+
         [SerializeField] private bool facebookAutoLogAppEvents;
         [SerializeField] private bool facebookAdvertiserIDCollection;
 
+        private static AppodealSettings _instance;
         public static AppodealSettings Instance
         {
             get
             {
-                if (_instance != null) return _instance;
-                string settingsFilePath = Path.Combine("Assets", AppodealSettingsExportPath);
-                string settingsDir = Path.GetDirectoryName(settingsFilePath);
-                if (!Directory.Exists(settingsDir))
-                {
-                    Directory.CreateDirectory(settingsDir ?? String.Empty);
-                }
+                if (_instance) return _instance;
+
+                Directory.CreateDirectory(AppodealSettingsExportPath);
+
+                string settingsFilePath = $"{AppodealSettingsExportPath}/{AppodealSettingsFileName}";
 
                 _instance = AssetDatabase.LoadAssetAtPath<AppodealSettings>(settingsFilePath);
-                if (_instance != null) return _instance;
+                if (_instance) return _instance;
                 _instance = CreateInstance<AppodealSettings>();
                 AssetDatabase.CreateAsset(_instance, settingsFilePath);
 
@@ -62,62 +62,62 @@ namespace AppodealStack.UnityEditor.InternalResources
 
         public string AdMobAndroidAppId
         {
-            get => Instance.adMobAndroidAppId;
-            set => Instance.adMobAndroidAppId = value.Trim();
+            get => adMobAndroidAppId;
+            set => adMobAndroidAppId = value.Trim();
         }
 
         public string AdMobIosAppId
         {
-            get => Instance.adMobIosAppId;
-            set => Instance.adMobIosAppId = value.Trim();
+            get => adMobIosAppId;
+            set => adMobIosAppId = value.Trim();
         }
 
         public bool AccessCoarseLocationPermission
         {
             get => accessCoarseLocationPermission;
-            set => Instance.accessCoarseLocationPermission = value;
+            set => accessCoarseLocationPermission = value;
         }
 
         public bool WriteExternalStoragePermission
         {
             get => writeExternalStoragePermission;
-            set => Instance.writeExternalStoragePermission = value;
+            set => writeExternalStoragePermission = value;
         }
 
         public bool AccessWifiStatePermission
         {
             get => accessWifiStatePermission;
-            set => Instance.accessWifiStatePermission = value;
+            set => accessWifiStatePermission = value;
         }
 
         public bool VibratePermission
         {
             get => vibratePermission;
-            set => Instance.vibratePermission = value;
+            set => vibratePermission = value;
         }
 
         public bool AccessFineLocationPermission
         {
             get => accessFineLocationPermission;
-            set => Instance.accessFineLocationPermission = value;
+            set => accessFineLocationPermission = value;
         }
 
         public bool NsUserTrackingUsageDescription
         {
             get => nSUserTrackingUsageDescription;
-            set => Instance.nSUserTrackingUsageDescription = value;
+            set => nSUserTrackingUsageDescription = value;
         }
 
         public bool NsLocationWhenInUseUsageDescription
         {
             get => nSLocationWhenInUseUsageDescription;
-            set => Instance.nSLocationWhenInUseUsageDescription = value;
+            set => nSLocationWhenInUseUsageDescription = value;
         }
 
         public bool NsCalendarsUsageDescription
         {
             get => nSCalendarsUsageDescription;
-            set => Instance.nSCalendarsUsageDescription = value;
+            set => nSCalendarsUsageDescription = value;
         }
 
         public bool NsAppTransportSecurity
@@ -125,12 +125,12 @@ namespace AppodealStack.UnityEditor.InternalResources
             get => nSAppTransportSecurity;
             set
             {
-                Instance.nSAppTransportSecurity = value;
+                nSAppTransportSecurity = value;
 #if UNITY_2022_1_OR_NEWER
                 PlayerSettings.insecureHttpOption = value ? InsecureHttpOption.AlwaysAllowed : InsecureHttpOption.NotAllowed;
 #else
                 if (BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.iOS, BuildTarget.iOS)) PlayerSettings.iOS.allowHTTPDownload = value;
-                else Instance.nSAppTransportSecurity = false;
+                else nSAppTransportSecurity = false;
 #endif
             }
         }
@@ -138,58 +138,58 @@ namespace AppodealStack.UnityEditor.InternalResources
         public bool IosSkAdNetworkItems
         {
             get => iosSkAdNetworkItems;
-            set => Instance.iosSkAdNetworkItems = value;
+            set => iosSkAdNetworkItems = value;
         }
 
         public List<string> IosSkAdNetworkItemsList
         {
             get => iosSkAdNetworkItemsList;
-            set => Instance.iosSkAdNetworkItemsList = value;
+            set => iosSkAdNetworkItemsList = value;
         }
 
         public bool FirebaseAutoConfiguration
         {
             get => firebaseAutoConfiguration;
-            set => Instance.firebaseAutoConfiguration = value;
+            set => firebaseAutoConfiguration = value;
         }
 
         public bool FacebookAutoConfiguration
         {
             get => facebookAutoConfiguration;
-            set => Instance.facebookAutoConfiguration = value;
+            set => facebookAutoConfiguration = value;
         }
 
         public string FacebookAndroidAppId
         {
-            get => Instance.facebookAndroidAppId;
-            set => Instance.facebookAndroidAppId = value.Trim();
+            get => facebookAndroidAppId;
+            set => facebookAndroidAppId = value.Trim();
         }
 
         public string FacebookIosAppId
         {
-            get => Instance.facebookIosAppId;
-            set => Instance.facebookIosAppId = value.Trim();
+            get => facebookIosAppId;
+            set => facebookIosAppId = value.Trim();
         }
 
         public string FacebookAndroidClientToken
         {
-            get => Instance.facebookAndroidClientToken;
-            set => Instance.facebookAndroidClientToken = value.Trim();
+            get => facebookAndroidClientToken;
+            set => facebookAndroidClientToken = value.Trim();
         }
 
         public bool FacebookAutoLogAppEvents
         {
             get => facebookAutoLogAppEvents;
-            set => Instance.facebookAutoLogAppEvents = value;
+            set => facebookAutoLogAppEvents = value;
         }
 
         public bool FacebookAdvertiserIDCollection
         {
             get => facebookAdvertiserIDCollection;
-            set => Instance.facebookAdvertiserIDCollection = value;
+            set => facebookAdvertiserIDCollection = value;
         }
 
-        public void SaveAsync()
+        public static void SaveAsync()
         {
             EditorUtility.SetDirty(_instance);
         }

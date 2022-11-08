@@ -38,8 +38,14 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public void WithListener(IConsentFormListener listener)
         {
-            _consentFormListener = listener;
+            SetConsentFormListener(listener);
             ConsentFormBuilderObjCBridge.WithListener(OnConsentFormLoaded, OnConsentFormError, OnConsentFormOpened, OnConsentFormClosed);
+        }
+
+        private void SetConsentFormListener(IConsentFormListener listener)
+        {
+            ConsentManagerCallbacks.ConsentForm.Instance.ConsentFormEventsImpl.Listener = listener;
+            _consentFormListener = ConsentManagerCallbacks.ConsentForm.Instance.ConsentFormEventsImpl;
         }
 
         #region ConsentForm Callbacks

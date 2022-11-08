@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -8,36 +7,21 @@ using AppodealStack.UnityEditor.InternalResources;
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
-    static class ExternalDependencyManagerInstaller
+    internal static class ExternalDependencyManagerInstaller
     {
-        [InitializeOnLoadMethod]
-        static void InstallPluginIfUserAgrees()
-        {
-            if (IsPluginInstalled() || PluginPreferences.Instance.ShouldIgnoreEdmInstallation) return;
+        private const string EdmInstallCancelledKey = "EDMInstallCancelled";
 
-            if (PluginInstallationRequest())
-            {
-                InstallPlugin();
-            }
-        }
-
-        private static bool IsPluginInstalled()
+        public static bool InstallPluginIfUserAgrees()
         {
-            try
-            {
-                return Type.GetType("Google.VersionHandler, Google.VersionHandler") != null;
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                return false;
-            }
+            if (PluginPreferences.Instance.IsEdmImported || PluginPreferences.Instance.ShouldIgnoreEdmInstallation || SessionState.GetBool(EdmInstallCancelledKey, false)) return false;
+
+            return PluginInstallationRequest() && InstallPlugin();
         }
 
         private static bool PluginInstallationRequest()
         {
-            int decision = EditorUtility.DisplayDialogComplex("External Dependency Manager Required",
-                "Appodeal uses External Dependency Manager to resolve dependencies.\n\nWould you like to import the package?",
+            int decision = EditorUtility.DisplayDialogComplex("EDM Installation Request",
+                "Appodeal recommends to use an\nExternal Dependency Manager\nto resolve dependencies.\n\nWould you like to import this package?",
                 "Import", "Cancel", "Ignore - Do not ask anymore");
 
             switch (decision)
@@ -45,26 +29,42 @@ namespace AppodealStack.UnityEditor.AssetExtractors
                 case 0:
                     return true;
                 case 1:
+                    SessionState.SetBool(EdmInstallCancelledKey, true);
                     return false;
                 case 2:
                     PluginPreferences.Instance.ShouldIgnoreEdmInstallation = true;
-                    PluginPreferences.Instance.SaveAsync();
+                    PluginPreferences.SaveAsync();
+                    SessionState.SetBool(EdmInstallCancelledKey, true);
                     return false;
                 default:
                     return false;
             }
         }
 
-        static void InstallPlugin()
+        private static bool InstallPlugin()
         {
-            string path = Path.Combine(AppodealEditorConstants.PackagePath, AppodealEditorConstants.EdmPackagePath);
+            var edmDir = new DirectoryInfo($"{AppodealEditorConstants.PackagePath}/{AppodealEditorConstants.EdmPackagePath}");
 
-            var fileInfo = new DirectoryInfo(path).GetFiles("*.unitypackage");
-            
-            if (fileInfo.Length > 0)
+            if (!edmDir.Exists)
             {
-                AssetDatabase.ImportPackage(fileInfo[0].FullName, false);
+                Debug.LogError($"[Appodeal] Directory not found: '{edmDir}'. Please, contact support@apppodeal.com about this issue.");
+                return false;
             }
+
+            var edmPackages = edmDir.GetFiles("*.unitypackage");
+
+            if (edmPackages.Length < 1)
+            {
+                Debug.LogError($"[Appodeal] No EDM Packages were found on path: '{edmDir}'. Please, contact support@apppodeal.com about this issue.");
+                return false;
+            }
+
+            AssetDatabase.ImportPackage(edmPackages[0].FullName, false);
+
+            PluginPreferences.Instance.IsEdmImported = true;
+            PluginPreferences.SaveAsync();
+
+            return true;
         }
     }
 }

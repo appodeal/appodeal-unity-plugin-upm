@@ -16,6 +16,7 @@
 #import "AppodealInterstitialDelegate.h"
 #import "AppodealRewardedVideoDelegate.h"
 
+#import "AppodealAdRevenueDelegate.h"
 #import "AppodealIAPValidationDelegate.h"
 #import "AppodealInitializationDelegate.h"
 
@@ -425,6 +426,16 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
         NSString *errorString = (!error) ? @"unknown" : [NSString stringWithFormat:@"error: %@", error.localizedDescription];        
         failure ? failure(errorString.UTF8String) : nil;
     }];
+}
+
+static AppodealAdRevenueDelegate *AppodealAdRevenueDelegateInstance;
+void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
+    
+    AppodealAdRevenueDelegateInstance = [AppodealAdRevenueDelegate new];
+    
+    AppodealAdRevenueDelegateInstance.adRevenueReceivedCallback = adRevenueReceived;
+
+    [Appodeal setAdRevenueDelegate:AppodealAdRevenueDelegateInstance];
 }
 
 static AppodealInitializationDelegate *AppodealInitializationDelegateInstance;

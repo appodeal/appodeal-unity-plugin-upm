@@ -74,8 +74,10 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             yield return null;
         }
 
-        private void OnDestroy() {
-            AppodealSettings.Instance.SaveAsync();
+        private void OnDestroy()
+        {
+            AppodealSettings.SaveAsync();
+            AssetDatabase.SaveAssets();
         }
 
         private void OnGUI()
@@ -118,7 +120,6 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             #region Android Settings
 
             GUILayout.BeginHorizontal();
-
 
             using (new EditorGUILayout.VerticalScope("box", GUILayout.Width(200), GUILayout.Height(200)))
             {
@@ -172,7 +173,6 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                     Application.OpenURL("https://developer.apple.com/documentation/storekit/skadnetwork");
                 }
 
-
                 AppodealSettings.Instance.IosSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
                     AppodealSettings.Instance.IosSkAdNetworkItems);
 
@@ -202,12 +202,12 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
                 AppodealSettings.Instance.FacebookAutoConfiguration = KeyRow("Enable auto configuration",
                     AppodealSettings.Instance.FacebookAutoConfiguration);
-                
+
                 GUILayout.Space(10);
 
                 AppodealSettings.Instance.FacebookAndroidAppId = AppIdPlatformRow("Meta App ID (Android)",
                     AppodealSettings.Instance.FacebookAndroidAppId, GUILayout.Width(200));
-                
+
                 GUILayout.Space(5);
 
                 AppodealSettings.Instance.FacebookIosAppId = AppIdPlatformRow("Meta App ID (iOS)",
@@ -227,7 +227,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                     AppodealSettings.Instance.FacebookAutoLogAppEvents);
                 AppodealSettings.Instance.FacebookAdvertiserIDCollection = KeyRow("Enable FacebookAdvertiserIDCollection",
                     AppodealSettings.Instance.FacebookAdvertiserIDCollection);
-                
+
                 GUILayout.Space(5);
             }
 
@@ -243,7 +243,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
                 AppodealSettings.Instance.FirebaseAutoConfiguration = KeyRow("Enable auto configuration",
                     AppodealSettings.Instance.FirebaseAutoConfiguration);
-                
+
                 GUILayout.Space(5);
             }
 
@@ -326,7 +326,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                 alignment = TextAnchor.MiddleCenter
 
             }, GUILayout.Height(20));
-            
+
             HorizontalLine();
         }
 

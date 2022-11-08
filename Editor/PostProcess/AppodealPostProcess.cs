@@ -12,7 +12,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
             if (target.ToString() != "iOS") return;
-            
+
             IosPostprocessUtils.PrepareProject(path);
         }
     }
