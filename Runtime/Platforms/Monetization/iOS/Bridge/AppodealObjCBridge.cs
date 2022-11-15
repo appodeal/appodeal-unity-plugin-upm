@@ -214,6 +214,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetAttAuthorizationRequestShowInterval(int interval);
 
         [DllImport("__Internal")]
+        internal static extern void AppodealSetAttAuthorizationRequestFirstShowOnSession(int session);
+
+        [DllImport("__Internal")]
         internal static extern void AppodealValidateInAppPurchase(
             string productIdentifier,
             string price,

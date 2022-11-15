@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDMyTargetAdapter" version="3.0.1.1" minTargetSdk="10.0" />
-        <iosPod name="BDMMyTargetAdapter" version="~> 1.9.5" minTargetSdk="10.0" />
+        <iosPod name="APDMyTargetAdapter" version="3.1.0.1-MB.1" minTargetSdk="10.0" />
+        <iosPod name="BidMachineMyTargetAdapter" version="~> 2.0.0.0" minTargetSdk="10.0" />
     </iosPods>
     <androidPackages>
         <androidPackage spec="io.bidmachine:ads.networks.my_target:1.9.10.9" />

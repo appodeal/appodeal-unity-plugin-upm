@@ -905,6 +905,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetAttAuthorizationRequestShowInterval method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
+        public void SetAttAuthorizationRequestFirstShowOnSession(int session)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetAttAuthorizationRequestFirstShowOnSession method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+        }
+
         #endregion
     }
 }

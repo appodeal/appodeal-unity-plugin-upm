@@ -861,6 +861,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetAttAuthorizationRequestShowInterval(interval);
         }
 
+        public void SetAttAuthorizationRequestFirstShowOnSession(int session)
+        {
+            AppodealObjCBridge.AppodealSetAttAuthorizationRequestFirstShowOnSession(session);
+        }
+
         public void Destroy(int adType)
         {
             Debug.Log("Not Supported by iOS SDK");

@@ -75,6 +75,7 @@ namespace AppodealStack.Monetization.Common
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void SetAttAuthorizationRequestShowInterval(int interval);
+        void SetAttAuthorizationRequestFirstShowOnSession(int session);
 
         #region Deprecated signatures
 

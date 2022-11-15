@@ -643,6 +643,11 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             Debug.Log("Not supported on Android platform");
         }
+
+        public void SetAttAuthorizationRequestFirstShowOnSession(int session)
+        {
+            Debug.Log("Not supported on Android platform");
+        }
     }
 
     public static class Helper

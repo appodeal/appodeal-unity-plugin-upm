@@ -792,6 +792,11 @@ namespace AppodealStack.Monetization.Api
             GetInstance().SetAttAuthorizationRequestShowInterval(interval);
         }
 
+        public static void SetAttAuthorizationRequestFirstShowOnSession(int session)
+        {
+            GetInstance().SetAttAuthorizationRequestFirstShowOnSession(session);
+        }
+
     #region Deprecated methods
 
         [Obsolete("It was removed from iOS SDK, thus cannot be used anymore. It will be removed in the next release of Appodeal Unity Plugin.", true)]

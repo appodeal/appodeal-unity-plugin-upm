@@ -400,6 +400,10 @@ void AppodealSetAttAuthorizationRequestShowInterval(int interval) {
     [Appodeal setAppTrackingTransparencyPermissionCheckInterval:interval];
 }
 
+void AppodealSetAttAuthorizationRequestFirstShowOnSession(int session) {
+    [Appodeal setAppTrackingTransparencyPostponeInterval:session];
+}
+
 void AppodealValidateInAppPurchase(const char *productIdentifier,
                                    const char *price,
                                    const char *currency,
