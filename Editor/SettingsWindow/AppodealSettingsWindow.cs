@@ -20,7 +20,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
         public static void ShowAppodealSettingsWindow()
         {
-            GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 730), true, "Appodeal Settings");
+            GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 760), true, "Appodeal Settings");
         }
 
         private void OnEnable()
@@ -217,6 +217,11 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
                 AppodealSettings.Instance.FacebookAndroidClientToken = AppIdPlatformRow("Meta Client Token (Android)",
                     AppodealSettings.Instance.FacebookAndroidClientToken, GUILayout.Width(200));
+
+                GUILayout.Space(5);
+
+                AppodealSettings.Instance.FacebookIosClientToken = AppIdPlatformRow("Meta Client Token (iOS)",
+                    AppodealSettings.Instance.FacebookIosClientToken, GUILayout.Width(200));
 
                 GUILayout.Space(10);
 
