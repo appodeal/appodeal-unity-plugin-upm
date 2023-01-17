@@ -4,6 +4,14 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://wiki.appodeal.com/en/unity/get-started/advanced/changelog).*
 
+### 3.0.2 (January 17, 2023)
+
++ Updated Appodeal Android SDK to 3.0.2
++ Updated Appodeal iOS SDK to 3.0.2
++ Added Meta Client Token (iOS) to Appodeal Settings
++ Fixed wrong editor version scripting symbol
++ Minor improvements
+
 ### 3.0.1 (November 08, 2022)
 
 + Updated Appodeal Android SDK to 3.0.1

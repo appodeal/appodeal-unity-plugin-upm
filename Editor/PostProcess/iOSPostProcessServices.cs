@@ -16,6 +16,7 @@ namespace AppodealStack.UnityEditor.PostProcess
         private const string CfBundleURLName = "CFBundleURLName";
         private const string FacebookUrlName = "facebook-unity-sdk";
         private const string FacebookAppID = "FacebookAppID";
+        private const string FacebookClientToken = "FacebookClientToken";
         private const string FacebookAutoLogAppEventsEnabled = "FacebookAutoLogAppEventsEnabled";
         private const string FacebookAdvertiserIDCollectionEnabled = "FacebookAdvertiserIDCollectionEnabled";
 
@@ -26,13 +27,20 @@ namespace AppodealStack.UnityEditor.PostProcess
         {
             if (!AppodealSettings.Instance.FacebookAutoConfiguration) return;
 
-            string fbKey = AppodealSettings.Instance.FacebookIosAppId;
+            string fbAppId = AppodealSettings.Instance.FacebookIosAppId;
+            string fbClientToken = AppodealSettings.Instance.FacebookIosClientToken;
             bool areFbEventsEnabled = AppodealSettings.Instance.FacebookAutoLogAppEvents;
             bool isFbIdsCollectionEnabled = AppodealSettings.Instance.FacebookAdvertiserIDCollection;
 
-            if (String.IsNullOrEmpty(fbKey))
+            if (String.IsNullOrEmpty(fbAppId))
             {
-                Debug.LogWarning("Facebook App ID is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
+                Debug.LogWarning("Meta App ID (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(fbClientToken))
+            {
+                Debug.LogWarning("Meta Client Token (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
                 return;
             }
 
@@ -41,7 +49,13 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         #region FacebookAppID
 
-            if (plist.root[FacebookAppID] == null) plist.root.SetString(FacebookAppID, fbKey);
+            if (plist.root[FacebookAppID] == null) plist.root.SetString(FacebookAppID, fbAppId);
+
+        #endregion
+
+        #region FacebookClientToken
+
+            if (plist.root[FacebookClientToken] == null) plist.root.SetString(FacebookClientToken, fbClientToken);
 
         #endregion
 
@@ -67,7 +81,7 @@ namespace AppodealStack.UnityEditor.PostProcess
 
             var schemesArray = schemesDict[CfBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CfBundleURLSchemes);
 
-            if (schemesArray.values.Find(el => el.AsString() == fbKey) == null) schemesArray.AddString($"fb{fbKey}");
+            if (schemesArray.values.Find(el => el.AsString() == fbAppId) == null) schemesArray.AddString($"fb{fbAppId}");
 
         #endregion
 

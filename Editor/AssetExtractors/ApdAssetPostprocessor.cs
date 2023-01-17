@@ -20,7 +20,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
             {
                 AssetDatabase.Refresh();
             }
-#if UNITY_2020_3_OR_NEWER
+#if UNITY_2020_3_16_OR_NEWER
             AssetDatabase.SaveAssetIfDirty(PluginPreferences.Instance);
 #endif
         }
