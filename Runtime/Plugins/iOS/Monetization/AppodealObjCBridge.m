@@ -369,13 +369,13 @@ char *AppodealGetUserId() {
 void AppodealSetUserGender(int gender) {
     switch (gender) {
         case 0:
-            [Appodeal setUserGender:APDUserGenderOther];
+            [Appodeal setUserGender:AppodealUserGenderOther];
             break;
         case 1:
-            [Appodeal setUserGender:APDUserGenderMale];
+            [Appodeal setUserGender:AppodealUserGenderMale];
             break;
         case 2:
-            [Appodeal setUserGender:APDUserGenderFemale];
+            [Appodeal setUserGender:AppodealUserGenderFemale];
             break;
         default:
             break;
