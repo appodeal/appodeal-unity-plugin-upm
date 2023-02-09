@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1180980964859591818}
   - component: {fileID: 7948195828183092180}
   m_Layer: 5
-  m_Name: BannerViewAd
+  m_Name: ApdBannerViewAd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

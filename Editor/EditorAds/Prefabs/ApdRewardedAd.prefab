@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 1813040954406413242}
   - component: {fileID: 7423956613411460324}
   m_Layer: 5
-  m_Name: RewardedAd
+  m_Name: ApdRewardedAd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

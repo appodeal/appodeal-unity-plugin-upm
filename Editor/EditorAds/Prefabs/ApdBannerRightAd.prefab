@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 6565737125752102565}
   - component: {fileID: 2679687071632730619}
   m_Layer: 5
-  m_Name: BannerRightAd
+  m_Name: ApdBannerRightAd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
