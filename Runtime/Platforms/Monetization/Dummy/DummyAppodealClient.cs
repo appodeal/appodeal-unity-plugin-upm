@@ -54,10 +54,10 @@ namespace AppodealStack.Monetization.Platforms.Dummy
     {
         #region Variables
 
-        private const string    HorizontalInterstitialAssetName = "InterstitialH";
-        private const string    VerticalInterstitialAssetName = "InterstitialV";
-        private const string    HorizontalVideoAssetName = "VideoH";
-        private const string    VerticalVideoAssetName = "VideoV";
+        private const string    HorizontalInterstitialAssetName = "ApdInterstitialH";
+        private const string    VerticalInterstitialAssetName = "ApdInterstitialV";
+        private const string    HorizontalVideoAssetName = "ApdVideoH";
+        private const string    VerticalVideoAssetName = "ApdVideoV";
 
         private const string    FailedToLoad = "FailedToLoad";
         private const string    Closed = "Closed";
@@ -77,17 +77,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private const int       BannerRight = 256;
 
         private readonly Dictionary<int,string> _bannerPositions = new Dictionary<int,string> {
-            { BannerBottom, "BannerBottomAd" },
-            { BannerTop, "BannerTopAd" },
-            { BannerLeft, "BannerLeftAd" },
-            { BannerRight, "BannerRightAd" },
-            { BannerView, "BannerViewAd" } };
+            { BannerBottom, "ApdBannerBottomAd" },
+            { BannerTop, "ApdBannerTopAd" },
+            { BannerLeft, "ApdBannerLeftAd" },
+            { BannerRight, "ApdBannerRightAd" },
+            { BannerView, "ApdBannerViewAd" } };
 
         private readonly Dictionary<int,EditorAd> _ads = new Dictionary<int,EditorAd> {
-            {Interstitial, new EditorAd(Interstitial, null, "InterstitialAd", "Interstitial", Vector2.zero)},
-            {Banner, new EditorAd(Banner, null, "BannerBottomAd", "Banner", new Vector2(600, 95))},
-            {RewardedVideo, new EditorAd(RewardedVideo, null, "RewardedAd", "RewardedVideo", Vector2.zero)},
-            {Mrec, new EditorAd(Mrec, null, "MrecAd", "Mrec", new Vector2(420, 350))} };
+            {Interstitial, new EditorAd(Interstitial, null, "ApdInterstitialAd", "Interstitial", Vector2.zero)},
+            {Banner, new EditorAd(Banner, null, "ApdBannerBottomAd", "Banner", new Vector2(600, 95))},
+            {RewardedVideo, new EditorAd(RewardedVideo, null, "ApdRewardedAd", "RewardedVideo", Vector2.zero)},
+            {Mrec, new EditorAd(Mrec, null, "ApdMrecAd", "Mrec", new Vector2(420, 350))} };
 
         private IInterstitialAdListener     _interstitialAdListener;
         private IBannerAdListener           _bannerAdListener;
@@ -362,8 +362,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             if (ad == null) return;
 
-            if (ad.PrefabName == "BannerViewAd" && adType != BannerView) return;
-            else if (ad.PrefabName != "BannerViewAd" && adType == BannerView) return;
+            if (ad.PrefabName == "ApdBannerViewAd" && adType != BannerView) return;
+            else if (ad.PrefabName != "ApdBannerViewAd" && adType == BannerView) return;
 
             ad.GameObject?.SetActive(false);
         }
