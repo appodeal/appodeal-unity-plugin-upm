@@ -1,6 +1,7 @@
-using UnityEngine;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
@@ -14,6 +15,10 @@ namespace AppodealStack.Monetization.Platforms.Android
     public class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;
+        private static SynchronizationContext _unityContext;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base("com.appodeal.ads.initializing.ApdInitializationCallback")
         {
@@ -24,7 +29,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             if (errors == null)
             {
-                _listener?.OnInitializationFinished(null);
+                _unityContext?.Post(obj => _listener?.OnInitializationFinished(null), null);
                 return;
             }
 
@@ -36,7 +41,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
             }
 
-            _listener?.OnInitializationFinished(errorsList);
+            _unityContext?.Post(obj => _listener?.OnInitializationFinished(errorsList), null);
         }
     }
 }

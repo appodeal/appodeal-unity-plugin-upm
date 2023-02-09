@@ -1,7 +1,8 @@
-using UnityEngine;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
@@ -15,6 +16,10 @@ namespace AppodealStack.Monetization.Platforms.Android
     public class InAppPurchaseValidationCallbacks : AndroidJavaProxy
     {
         private readonly IInAppPurchaseValidationListener _listener;
+        private static SynchronizationContext _unityContext;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base("com.appodeal.ads.inapp.InAppPurchaseValidateCallback")
         {
@@ -23,12 +28,12 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         private void onInAppPurchaseValidateSuccess(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
-            _listener?.OnInAppPurchaseValidationSucceeded(CreateResponse(purchase, errors));
+            _unityContext?.Post(obj => _listener?.OnInAppPurchaseValidationSucceeded(CreateResponse(purchase, errors)), null);
         }
 
         private void onInAppPurchaseValidateFail(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
-            _listener?.OnInAppPurchaseValidationFailed(CreateResponse(purchase, errors));
+            _unityContext?.Post(obj => _listener?.OnInAppPurchaseValidationFailed(CreateResponse(purchase, errors)), null);
         }
 
         private string CreateResponse(AndroidJavaObject purchase, AndroidJavaObject errors)

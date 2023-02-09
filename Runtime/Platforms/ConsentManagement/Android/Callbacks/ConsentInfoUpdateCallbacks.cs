@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -13,6 +14,10 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
     public class ConsentInfoUpdateCallbacks : AndroidJavaProxy
     {
         private readonly IConsentInfoUpdateListener _listener;
+        private static SynchronizationContext _unityContext;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal ConsentInfoUpdateCallbacks(IConsentInfoUpdateListener listener) : base("com.appodeal.consent.IConsentInfoUpdateListener")
         {
@@ -21,12 +26,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         private void onConsentInfoUpdated(AndroidJavaObject consent)
         {
-            _listener?.OnConsentInfoUpdated(new AndroidConsent(consent));
+            _unityContext?.Post(obj => _listener?.OnConsentInfoUpdated(new AndroidConsent(consent)), null);
         }
 
         private void onFailedToUpdateConsentInfo(AndroidJavaObject error)
         {
-            _listener?.OnFailedToUpdateConsentInfo(new AndroidConsentManagerException(error));
+            _unityContext?.Post(obj => _listener?.OnFailedToUpdateConsentInfo(new AndroidConsentManagerException(error)), null);
         }
     }
 }
