@@ -6,17 +6,26 @@
   "documentationUrl": "https://wiki.appodeal.com/en/unity/get-started",
   "changelogUrl": "https://wiki.appodeal.com/en/unity/get-started/advanced/changelog",
   "unity": "2019.4",
-  "author":
-  {
-      "name": "Appodeal Stack",
-      "email": "hi@appodeal.com",
-      "url": "https://appodeal.com"
+  "dependencies": {
+    "com.google.external-dependency-manager": "1.2.175"
   },
+  "keywords": [
+    "Ads",
+    "Appodeal",
+    "Mediation",
+    "Monetization"
+  ],
   "samples": [
     {
       "displayName": "Usage Sample",
       "description": "Appodeal Usage Sample with a Demo Scene and C# Implementation",
       "path": "Samples~/UsageSample"
     }
-  ]
+  ],
+  "author":
+  {
+      "name": "Appodeal Stack",
+      "email": "hi@appodeal.com",
+      "url": "https://appodeal.com"
+  }
 }

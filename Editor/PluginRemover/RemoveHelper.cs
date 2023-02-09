@@ -22,40 +22,10 @@ namespace AppodealStack.UnityEditor.PluginRemover
         public bool performOnlyIfTotalRemove;
     }
 
-    [InitializeOnLoad]
-    public class RemoveHelper
+    public static class RemoveHelper
     {
-        private const string PlayServicesResolverPlugin = "Appodeal-Unity-Play-Services-Resolver";
-        private const string AndroidSupportPlugin = "Appodeal-Unity-Android-Support";
-        private const string PlayServicesPlugin = "Unity-Google-Play-Services";
-        private const string UnityPlugin = "Appodeal-Unity-";
         private const string RemoveList = "Editor/PluginRemover/remove_list.xml";
         private const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
-
-        static RemoveHelper()
-        {
-            AssetDatabase.importPackageStarted += ImportPackageStartedListener;
-        }
-
-        private static void ImportPackageStartedListener(string packageName)
-        {
-            if (packageName.Contains(PlayServicesResolverPlugin) || packageName.Contains(AndroidSupportPlugin) ||
-                packageName.Contains(PlayServicesPlugin))
-            {
-                return;
-            }
-
-            if (!packageName.Contains(UnityPlugin)) return;
-
-            if (EditorUtility.DisplayDialog("Appodeal Warning",
-                "It seems that you are going to install a new version of Appodeal plugin. " +
-                "To avoid conflicts it's recommended to delete the previous version of the plugin first.",
-                "Delete automatically",
-                "I'll do it manually"))
-            {
-                RemovePlugin(true);
-            }
-        }
 
         private static IEnumerable<ItemToRemove> ReadXML()
         {
@@ -135,8 +105,8 @@ namespace AppodealStack.UnityEditor.PluginRemover
 
         public static bool RemovePlugin(bool isCleanBeforeUpdate = false)
         {
-            if (EditorUtility.DisplayDialog("Remove Appodeal plugin",
-                "Are you sure you want to remove the Appodeal plugin from your project?",
+            if (EditorUtility.DisplayDialog("Remove Appodeal Plugin",
+                "Are you sure you want to remove Appodeal from your project?",
                 "Yes",
                 "Cancel"))
             {
