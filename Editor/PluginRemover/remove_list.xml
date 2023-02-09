@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <items>
     <item>
-        <name>External Dependency Manager</name>
-        <path>ExternalDependencyManager</path>
-        <is_confirmation_required>true</is_confirmation_required>
-        <description>External Dependency Manager is used by many plugins for integrating platform specific libraries and resolving conflicting dependencies. If some of your other plugins use it, removing can lead to issues.</description>
-    </item>
-    <item>
         <name>Appodeal Settings</name>
         <path>Appodeal/Editor/InternalResources</path>
         <filter>(AppodealSettings\.asset)</filter>

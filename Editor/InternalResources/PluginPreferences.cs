@@ -10,8 +10,6 @@ namespace AppodealStack.UnityEditor.InternalResources
         private const string PluginPreferencesExportPath = "Assets/Appodeal/Editor/InternalResources";
         private const string PluginPreferencesFileName = "PluginPreferences.asset";
 
-        [HideInInspector] [SerializeField] private bool shouldIgnoreEdmInstallation;
-        [HideInInspector] [SerializeField] private bool isEdmImported;
         [HideInInspector] [SerializeField] private bool areAdaptersImported;
         [HideInInspector] [SerializeField] private bool isAndroidLibraryImported;
 
@@ -33,18 +31,6 @@ namespace AppodealStack.UnityEditor.InternalResources
 
                 return _instance;
             }
-        }
-
-        public bool ShouldIgnoreEdmInstallation
-        {
-            get => shouldIgnoreEdmInstallation;
-            set => shouldIgnoreEdmInstallation = value;
-        }
-
-        public bool IsEdmImported
-        {
-            get => isEdmImported;
-            set => isEdmImported = value;
         }
 
         public bool AreAdaptersImported

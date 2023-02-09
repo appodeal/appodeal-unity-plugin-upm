@@ -16,7 +16,7 @@ namespace AppodealStack.UnityEditor.AssetExtractors
             const string prefsPath = "Assets/Appodeal/Editor/InternalResources/PluginPreferences.asset";
             if (File.Exists(prefsPath) && AssetDatabase.LoadAssetAtPath<PluginPreferences>(prefsPath) == null) return;
 #endif
-            if (AndroidLibraryInstaller.InstallAndroidLibrary() | AppodealAdaptersInstaller.InstallAdapters() | ExternalDependencyManagerInstaller.InstallPluginIfUserAgrees())
+            if (AndroidLibraryInstaller.InstallAndroidLibrary() | AppodealAdaptersInstaller.InstallAdapters())
             {
                 AssetDatabase.Refresh();
             }
