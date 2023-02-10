@@ -75,18 +75,6 @@ void AppodealInitialize(const char *apiKey, int types, const char *pluginVer, co
     [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types];
 }
 
-void AppodealInitializeOld(const char *apiKey, int types, BOOL consent, const char *pluginVer, const char *engineVer) {
-    [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
-    [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
-    [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types hasConsent:consent];
-}
-
-void AppodealInitializeWithConsent(const char *apiKey, int types, const char *pluginVer, const char *engineVer) {
-    [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
-    [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
-    [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types consentReport:STKConsentManager.sharedManager.consent];
-}
-
 BOOL AppodealIsInitialized(int types) {
     return [Appodeal isInitializedForAdType:types];
 }
@@ -197,10 +185,6 @@ void AppodealSetChildDirectedTreatment(BOOL value) {
     [Appodeal setChildDirectedTreatment:value];
 }
 
-void AppodealUpdateConsent(BOOL value) {
-    [Appodeal updateConsent:value];
-}
-
 void AppodealUpdateConsentReport() {
     [Appodeal updateConsentReport:STKConsentManager.sharedManager.consent];
 }
@@ -255,10 +239,6 @@ void AppodealDisableNetworkForAdTypes(const char *networkName, int type) {
 
 void AppodealSetLocationTracking(BOOL value) {
     [Appodeal setLocationTracking:value];
-}
-
-void AppodealDisableLocationPermissionCheck() {
-    [Appodeal setLocationTracking:NO];
 }
 
 void AppodealSetTriggerPrecacheCallbacks(int types, bool value) {
@@ -352,10 +332,6 @@ void AppodealTrackInAppPurchase(int amount, const char *currency) {
     [[APDSdk sharedSdk] trackInAppPurchase:[NSNumber numberWithInt:amount] currency:[NSString stringWithUTF8String:currency]];
 }
 
-void AppodealSetUserAge(int age) {
-    [Appodeal setUserAge:age];
-}
-
 void AppodealSetUserId(const char *userid) {
     [Appodeal setUserId:[NSString stringWithUTF8String:userid]];
 }
@@ -364,22 +340,6 @@ char *AppodealGetUserId() {
     const char *cString = [[Appodeal userId] UTF8String];
     char *cStringCopy = calloc([[Appodeal userId] length]+1, 1);
     return strncpy(cStringCopy, cString, [[Appodeal userId] length]);
-}
-
-void AppodealSetUserGender(int gender) {
-    switch (gender) {
-        case 0:
-            [Appodeal setUserGender:AppodealUserGenderOther];
-            break;
-        case 1:
-            [Appodeal setUserGender:AppodealUserGenderMale];
-            break;
-        case 2:
-            [Appodeal setUserGender:AppodealUserGenderFemale];
-            break;
-        default:
-            break;
-    }
 }
 
 void AppodealLogEvent(const char *eventName, const char *eventParams) {
@@ -399,7 +359,7 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
     NSString *currencyString = NSStringFromUTF8String(currency);
     NSString *transactionIdString = NSStringFromUTF8String(transactionId);
     NSDictionary *additionalParamsDict = NSDictionaryFromUTF8String(additionalParams);
-    
+
     [Appodeal validateAndTrackInAppPurchase:productIdString
                                        type:(APDPurchaseType)type
                                       price:priceString
@@ -430,9 +390,9 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
 
 static AppodealAdRevenueDelegate *AppodealAdRevenueDelegateInstance;
 void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
-    
+
     AppodealAdRevenueDelegateInstance = [AppodealAdRevenueDelegate new];
-    
+
     AppodealAdRevenueDelegateInstance.adRevenueReceivedCallback = adRevenueReceived;
 
     [Appodeal setAdRevenueDelegate:AppodealAdRevenueDelegateInstance];
@@ -440,9 +400,9 @@ void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
 
 static AppodealInitializationDelegate *AppodealInitializationDelegateInstance;
 void AppodealSetInitializationDelegate(AppodealInitializationCallback initializationCompleted) {
-    
+
     AppodealInitializationDelegateInstance = [AppodealInitializationDelegate new];
-    
+
     AppodealInitializationDelegateInstance.initializationCompletedCallback = initializationCompleted;
 
     [Appodeal setInitializationDelegate:AppodealInitializationDelegateInstance];
@@ -456,9 +416,9 @@ void AppodealSetInterstitialDelegate(AppodealInterstitialDidLoadCallback interst
                                      AppodealInterstitialCallbacks interstitialDidDismiss,
                                      AppodealInterstitialCallbacks interstitialDidClick,
                                      AppodealInterstitialCallbacks interstitialDidExpired) {
-    
+
     AppodealInterstitialDelegateInstance = [AppodealInterstitialDelegate new];
-    
+
     AppodealInterstitialDelegateInstance.interstitialDidLoadCallback = interstitialDidLoadAd;
     AppodealInterstitialDelegateInstance.interstitialDidFailToLoadAdCallback = interstitialDidFailToLoadAd;
     AppodealInterstitialDelegateInstance.interstitialDidFailToPresentCallback = interstitialDidFailToPresent;
@@ -466,7 +426,7 @@ void AppodealSetInterstitialDelegate(AppodealInterstitialDidLoadCallback interst
     AppodealInterstitialDelegateInstance.interstitialDidDismissCallback = interstitialDidDismiss;
     AppodealInterstitialDelegateInstance.interstitialDidClickCallback = interstitialDidClick;
     AppodealInterstitialDelegateInstance.interstitialsDidExpiredCallback = interstitialDidExpired;
-    
+
     [Appodeal setInterstitialDelegate:AppodealInterstitialDelegateInstance];
 }
 
@@ -477,16 +437,16 @@ void AppodealSetBannerDelegate(AppodealBannerDidLoadCallback bannerDidLoadAd,
                                AppodealBannerCallbacks bannerDidExpired,
                                AppodealBannerCallbacks bannerDidShow,
                                AppodealBannerCallbacks bannerDidFailToPresent) {
-    
+
     AppodealBannerDelegateInstance = [AppodealBannerDelegate new];
-    
+
     AppodealBannerDelegateInstance.bannerDidLoadAdCallback = bannerDidLoadAd;
     AppodealBannerDelegateInstance.bannerDidFailToLoadAdCallback = bannerDidFailToLoadAd;
     AppodealBannerDelegateInstance.bannerDidClickCallback = bannerDidClick;
     AppodealBannerDelegateInstance.bannerDidExpiredCallback = bannerDidExpired;
     AppodealBannerDelegateInstance.bannerDidShowCallback = bannerDidShow;
     AppodealBannerDelegateInstance.bannerDidFailToPresentCallback = bannerDidFailToPresent;
-    
+
     [Appodeal setBannerDelegate:AppodealBannerDelegateInstance];
 }
 
@@ -497,16 +457,16 @@ void AppodealSetBannerViewDelegate(AppodealBannerViewDidLoadCallback bannerViewD
                                    AppodealBannerViewCallbacks bannerViewDidShow,
                                    AppodealBannerViewCallbacks bannerViewDidFailToPresent,
                                    AppodealBannerViewCallbacks bannerViewDidExpired) {
-    
+
     AppodealBannerViewDelegateInstance = [AppodealBannerViewDelegate new];
-    
+
     AppodealBannerViewDelegateInstance.bannerViewDidLoadAdCallback = bannerViewDidLoadAd;
     AppodealBannerViewDelegateInstance.bannerViewDidFailToLoadAdCallback = bannerViewDidFailToLoadAd;
     AppodealBannerViewDelegateInstance.bannerViewDidClickCallback = bannerViewDidClick;
     AppodealBannerViewDelegateInstance.bannerViewDidShowCallback = bannerViewDidShow;
     AppodealBannerViewDelegateInstance.bannerViewDidFailToPresentCallback = bannerViewDidFailToPresent;
     AppodealBannerViewDelegateInstance.bannerViewDidExpiredCallback = bannerViewDidExpired;
-    
+
     if(!bannerUnity) {
         bannerUnity = [AppodealUnityBannerView sharedInstance];
     }
@@ -520,16 +480,16 @@ void AppodealSetMrecViewDelegate(AppodealMrecViewDidLoadCallback mrecViewDidLoad
                                  AppodealMrecViewCallbacks mrecViewDidShow,
                                  AppodealMrecViewCallbacks mrecViewDidFailToPresent,
                                  AppodealMrecViewCallbacks mrecViewDidExpired) {
-    
+
     AppodealMrecViewDelegateInstance = [AppodealMrecViewDelegate new];
-    
+
     AppodealMrecViewDelegateInstance.mrecViewDidLoadAdCallback = mrecViewDidLoadAd;
     AppodealMrecViewDelegateInstance.mrecViewDidFailToLoadAdCallback = mrecViewDidFailToLoadAd;
     AppodealMrecViewDelegateInstance.mrecViewDidClickCallback = mrecViewDidClick;
     AppodealMrecViewDelegateInstance.mrecViewDidShowCallback = mrecViewDidShow;
     AppodealMrecViewDelegateInstance.mrecViewDidFailToPresentCallback = mrecViewDidFailToPresent;
     AppodealMrecViewDelegateInstance.mrecViewDidExpiredCallback = mrecViewDidExpired;
-    
+
     if (!mrecUnity) {
         mrecUnity = [AppodealUnityMrecView sharedInstance];
     }
@@ -545,9 +505,9 @@ void AppodealSetRewardedVideoDelegate(AppodealRewardedVideoDidLoadCallback rewar
                                       AppodealRewardedVideoCallbacks rewardedVideoDidPresent,
                                       AppodealRewardedVideoCallbacks rewardedVideoDidExpired,
                                       AppodealRewardedVideoCallbacks rewardedVideoDidReceiveTap) {
-    
+
     AppodealRewardedVideoDelegateInstance = [AppodealRewardedVideoDelegate new];
-    
+
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidLoadAdCallback = rewardedVideoDidLoadAd;
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidFailToLoadAdCallback = rewardedVideoDidFailToLoadAd;
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidFailToPresentCallback = rewardedVideoDidFailToPresent;
@@ -556,6 +516,6 @@ void AppodealSetRewardedVideoDelegate(AppodealRewardedVideoDidLoadCallback rewar
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidPresentCallback = rewardedVideoDidPresent;
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidExpireCallback = rewardedVideoDidExpired;
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidReceiveTapActionCallback = rewardedVideoDidReceiveTap;
-    
+
     [Appodeal setRewardedVideoDelegate:AppodealRewardedVideoDelegateInstance];
 }

@@ -59,8 +59,6 @@ namespace AppodealStack.Monetization.Common
         bool CanShow(int adType);
         bool CanShow(int adType, string placement);
         AppodealReward GetReward(string placement);
-        KeyValuePair<string, double> GetRewardParameters();
-        KeyValuePair<string, double> GetRewardParameters(string placement);
         void MuteVideosIfCallsMuted(bool value);
         void ShowTestScreen();
         void SetChildDirectedTreatment(bool value);
@@ -77,14 +75,7 @@ namespace AppodealStack.Monetization.Common
 
         #region Deprecated signatures
 
-        void initialize(string appKey, int adTypes);
-        void initialize(string appKey, int adTypes, bool hasConsent);
-        void initialize(string appKey, int adTypes, IConsent consent);
-        void updateConsent(bool value);
         void setSharedAdsInstanceAcrossActivities(bool value);
-        void disableLocationPermissionCheck();
-        void setUserGender(AppodealUserGender gender);
-        void setUserAge(int age);
 
         #endregion
 

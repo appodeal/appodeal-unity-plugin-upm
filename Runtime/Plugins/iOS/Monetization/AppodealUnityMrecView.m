@@ -32,28 +32,12 @@ UIViewController* RootViewControllerUnityMrec() {
 - (id)init {
     self = [super init];
     if(self) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wdeprecated"
         self.mrecView = [[APDMRECView alloc] init];
-        #pragma clang diagnostic pop
         self.mrecView.frame = CGRectMake(0, 0, 300, 250);
         self.mrecView.usesSmartSizing = NO;
         self.onScreen = NO;
-        
-        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didReceiveNotification)
-                                                     name:UIApplicationDidChangeStatusBarOrientationNotification
-                                                   object:nil];
     }
     return self;
-}
-
-- (void)didReceiveNotification {
-    if (self.onScreen) {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        [self.mrecView rotateToOrientation:orientation];
-    }
 }
 
 - (void)setSharedMrecFrame:(CGFloat)XAxis YAxis:(CGFloat)YAxis {
