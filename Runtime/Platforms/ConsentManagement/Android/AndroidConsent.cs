@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
@@ -93,26 +91,6 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             }
 
             return hasConsent;
-        }
-
-        public List<IVendor> GetAcceptedVendors()
-        {
-            var vendors = new List<IVendor>();
-
-            AndroidJNI.PushLocalFrame(100);
-            using (var joPurposeIdsList = GetConsentJavaObject().Call<AndroidJavaObject>("getAcceptedVendors"))
-            {
-                for (var i = 0; i < joPurposeIdsList.Call<int>("size"); i++)
-                {
-                    using (var vendor = joPurposeIdsList.Call<AndroidJavaObject>("get", i))
-                    {
-                        vendors.Add((new AndroidVendor(vendor)));
-                    }
-                }
-            }
-            AndroidJNI.PopLocalFrame(IntPtr.Zero);
-
-            return vendors;
         }
 
         public string GetIabConsentString()

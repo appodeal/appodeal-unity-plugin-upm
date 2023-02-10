@@ -101,7 +101,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private bool            IsLoggingEnabled { get; set; }
         private bool            IsSDKInitialized { get; set; }
-        private bool            HasConsentGiven { get; set; }
         private bool            ShouldReward { get; set; }
 
         #endregion
@@ -514,33 +513,14 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
-            SetCallbacks();
-
-            initialize(appKey, adTypes);
-        }
-
-        public void initialize(string appKey, int adTypes)
-        {
             if (IsSDKInitialized) return;
 
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
             SetCallbacks();
 
             Debug.LogWarning("There is only simplified workflow of Appodeal SDK simulated in Editor. Make sure to test advertising on a real Android/iOS device before publishing.");
             IsSDKInitialized = true;
             SimInitAdTypes(NativeAdTypesForType(adTypes));
-        }
-
-        public void initialize(string appKey, int adTypes, bool hasConsent)
-        {
-            initialize(appKey, adTypes);
-            HasConsentGiven = hasConsent;
-        }
-
-        public void initialize(string appKey, int adTypes, IConsent consent)
-        {
-            initialize(appKey, adTypes);
-            HasConsentGiven = consent?.GetAuthorizationStatus() == ConsentAuthorizationStatus.Authorized;
         }
 
         public bool IsInitialized(int adType)
@@ -710,11 +690,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetChildDirectedTreatment method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void updateConsent(bool value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.updateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void UpdateConsent(IConsent consent)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
@@ -743,11 +718,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetLocationTracking(bool value)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetLocationTracking method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void disableLocationPermissionCheck()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableLocationPermissionCheck method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
@@ -813,18 +783,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return new List<string>();
         }
 
-        public KeyValuePair<string, double> GetRewardParameters()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return new KeyValuePair<string, double>("USD", 0);
-        }
-
-        public KeyValuePair<string, double> GetRewardParameters(string placement)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return new KeyValuePair<string, double>("USD", 0);
-        }
-
         public double GetPredictedEcpm(int adType)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetPredictedEcpm method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
@@ -875,16 +833,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetUserId method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
             return "";
-        }
-
-        public void setUserAge(int age)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetUserAge method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void setUserGender(AppodealUserGender gender)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setGender method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void LogEvent(string eventName, Dictionary<string, object> eventParams)
