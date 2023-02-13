@@ -434,7 +434,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public List<string> GetNetworks(int adTypes)
         {
-            var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", GetActivity(), NativeAdTypesForType(adTypes));
+            var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", NativeAdTypesForType(adTypes));
             int countOfNetworks = networks.Call<int>("size");
             var networksList = new List<string>();
             for(int i = 0; i < countOfNetworks; i++)
