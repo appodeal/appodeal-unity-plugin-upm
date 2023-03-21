@@ -15,7 +15,7 @@
         <androidPackage spec="org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" />
         <androidPackage spec="org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0" />
         <repositories>
-            <repository>https://artifactory.appodeal.com/appodeal</repository>
+            <repository>https://artifactory.appodeal.com/appodeal-beta</repository>
         </repositories>
     </androidPackages>
 </dependencies>
