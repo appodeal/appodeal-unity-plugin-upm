@@ -462,6 +462,13 @@ namespace AppodealStack.Monetization.Platforms.Android
             return GetAppodealClass().CallStatic<double>("getPredictedEcpm", NativeAdTypesForType(adType));
         }
 
+        public double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            return String.IsNullOrEmpty(placement)
+                ? GetAppodealClass().CallStatic<double>("getPredictedEcpmByPlacement", NativeAdTypesForType(adType))
+                : GetAppodealClass().CallStatic<double>("getPredictedEcpmByPlacement", NativeAdTypesForType(adType), placement);
+        }
+
         public void Destroy(int adTypes)
         {
             GetAppodealClass().CallStatic("destroy", NativeAdTypesForType(adTypes));

@@ -272,6 +272,10 @@ double AppodealGetPredictedEcpm(int types) {
     return [Appodeal predictedEcpmForAdType:types];
 }
 
+double AppodealGetPredictedEcpmForPlacement(int adType, const char* placement) {
+    return [Appodeal predictedEcpmForAdType:adType placement:[NSString stringWithUTF8String:placement]];
+}
+
 BOOL AppodealCanShow(int style) {
     return [Appodeal canShow:style forPlacement:@"default"];
 }
