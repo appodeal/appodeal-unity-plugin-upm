@@ -730,6 +730,12 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return AppodealObjCBridge.AppodealGetPredictedEcpm(NativeAdTypesForType(adType));
         }
 
+		public double GetPredictedEcpmForPlacement(int adType, string placement)
+		{
+			if (String.IsNullOrEmpty(placement)) placement = "default";
+			return AppodealObjCBridge.AppodealGetPredictedEcpmForPlacement(NativeAdTypesForType(adType), placement);
+		}
+
         public void SetCustomFilter(string name, bool value)
         {
             AppodealObjCBridge.AppodealSetCustomFilterBool(name, value);

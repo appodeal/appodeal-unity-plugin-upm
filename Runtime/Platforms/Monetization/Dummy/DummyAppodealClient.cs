@@ -789,6 +789,12 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return 0;
         }
 
+        public double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetPredictedEcpmForPlacement method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return 0;
+        }
+
         public void SetExtraData(string key, bool value)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetExtraData method on an unsupported platform. Run your application on either Android or iOS device to test this method.");

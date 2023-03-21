@@ -745,6 +745,16 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
+        /// Gets predicted eCPM for certain ad type and placement.
+        /// </summary>
+        /// <param name="adType">type of advertisement.</param>
+        /// <param name="placement">name of Appodeal placement from dashboard.</param>
+        public static double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            return GetInstance().GetPredictedEcpmForPlacement(adType, placement);
+        }
+
+        /// <summary>
         /// <para>Sends event data to all connected analytic services such as Firebase, Adjust, AppsFlyer and Facebook.</para>
         /// See <see href=""/> for more details.
         /// </summary>
