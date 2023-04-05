@@ -5,6 +5,7 @@
 #endif
 
 #import <Appodeal/Appodeal.h>
+#import <AppodealExtensions/AppodealExtensions-Swift.h>
 #import <StackConsentManager/StackConsentManager.h>
 
 #import "AppodealUnityMrecView.h"
@@ -19,6 +20,8 @@
 #import "AppodealAdRevenueDelegate.h"
 #import "AppodealIAPValidationDelegate.h"
 #import "AppodealInitializationDelegate.h"
+
+#define Advertising [Appodeal ext]
 
 static AppodealUnityMrecView *mrecUnity;
 static AppodealUnityBannerView *bannerUnity;
@@ -70,21 +73,21 @@ static NSDictionary <NSString *, id> *NSDictionaryFromUTF8String(const char *cSt
 }
 
 void AppodealInitialize(const char *apiKey, int types, const char *pluginVer, const char *engineVer) {
-    [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
-    [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
-    [Appodeal initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types];
+    [Advertising setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
+    [Advertising setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
+    [Advertising initializeWithApiKey:[NSString stringWithUTF8String:apiKey] types:types];
 }
 
 BOOL AppodealIsInitialized(int types) {
-    return [Appodeal isInitializedForAdType:types];
+    return [Advertising isInitializedFor:types];
 }
 
 BOOL AppodealShowAd(int style) {
-    return [Appodeal showAd:style rootViewController: RootViewController()];
+    return [Advertising showAd:style rootViewController: RootViewController()];
 }
 
 BOOL AppodealShowAdForPlacement(int style, const char *placement) {
-    return [Appodeal showAd:style forPlacement:[NSString stringWithUTF8String:placement] rootViewController:RootViewController()];
+    return [Advertising showAd:style forPlacement:[NSString stringWithUTF8String:placement] rootViewController:RootViewController()];
 }
 
 BOOL AppodealShowBannerAdViewForPlacement(int YAxis, int XAxis, const char *placement) {
@@ -104,15 +107,15 @@ BOOL AppodealShowMrecAdViewForPlacement(int YAxis, int XAxis, const char *placem
 }
 
 BOOL AppodealIsReadyWithStyle(int style) {
-    return [Appodeal isReadyForShowWithStyle:style];
+    return [Advertising isReadyForShowWith:style];
 }
 
 void AppodealCacheAd(int types) {
-    [Appodeal cacheAd:types];
+    [Advertising cacheAd:types];
 }
 
 void AppodealSetAutoCache(BOOL autoCache, int types) {
-    [Appodeal setAutocache:autoCache types:types];
+    [Advertising setAutocache:autoCache types:types];
 }
 
 void AppodealHideBanner() {
@@ -164,13 +167,13 @@ void AppodealSetBannerRotation(int leftBannerRotation, int rightBannerRotation) 
 void AppodealSetLogLevel(int level) {
     switch (level) {
         case 1:
-            [Appodeal setLogLevel:APDLogLevelOff];
+            [Advertising setLogLevel:APDLogLevelOff];
             break;
         case 2:
-            [Appodeal setLogLevel:APDLogLevelDebug];
+            [Advertising setLogLevel:APDLogLevelDebug];
             break;
         case 3:
-            [Appodeal setLogLevel:APDLogLevelVerbose];
+            [Advertising setLogLevel:APDLogLevelVerbose];
             break;
         default:
             break;
@@ -178,7 +181,7 @@ void AppodealSetLogLevel(int level) {
 }
 
 void AppodealSetTestingEnabled(BOOL testingEnabled) {
-    [Appodeal setTestingEnabled:testingEnabled];
+    [Advertising setTestingEnabled:testingEnabled];
 }
 
 void AppodealSetChildDirectedTreatment(BOOL value) {
@@ -242,7 +245,7 @@ void AppodealSetLocationTracking(BOOL value) {
 }
 
 void AppodealSetTriggerPrecacheCallbacks(int types, bool value) {
-    [Appodeal setTriggerPrecacheCallbacks:value types:types];
+    [Advertising setTriggerPrecacheCallbacks:value types:types];
 }
 
 char *AppodealGetVersion() {
@@ -277,11 +280,11 @@ double AppodealGetPredictedEcpmForPlacement(int adType, const char* placement) {
 }
 
 BOOL AppodealCanShow(int style) {
-    return [Appodeal canShow:style forPlacement:@"default"];
+    return [Advertising canShow:style forPlacement:@"default"];
 }
 
 BOOL AppodealCanShowWithPlacement(int style, const char *placement) {
-    return [Appodeal canShow:style forPlacement:[NSString stringWithUTF8String:placement]];
+    return [Advertising canShow:style forPlacement:[NSString stringWithUTF8String:placement]];
 }
 
 BOOL AppodealIsPrecacheAd(int adType) {
@@ -289,7 +292,7 @@ BOOL AppodealIsPrecacheAd(int adType) {
 }
 
 BOOL AppodealIsAutoCacheEnabled(int adType) {
-    return [Appodeal isAutocacheEnabled:adType];
+    return [Advertising isAutocacheEnabled:adType];
 }
 
 void AppodealSetCustomFilterBool(const char *name, BOOL value) {
@@ -313,23 +316,23 @@ void AppodealResetCustomFilter(const char *name) {
 }
 
 void AppodealSetExtraDataBool(const char *name, BOOL value) {
-    [Appodeal setExtrasValue:[NSNumber numberWithBool:value] forKey:[NSString stringWithUTF8String:name]];
+    [Advertising setExtrasValue:[NSNumber numberWithBool:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetExtraDataInt(const char *name, int value) {
-    [Appodeal setExtrasValue:[NSNumber numberWithInt:value] forKey:[NSString stringWithUTF8String:name]];
+    [Advertising setExtrasValue:[NSNumber numberWithInt:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetExtraDataDouble(const char *name, double value) {
-    [Appodeal setExtrasValue:[NSNumber numberWithDouble:value] forKey:[NSString stringWithUTF8String:name]];
+    [Advertising setExtrasValue:[NSNumber numberWithDouble:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealSetExtraDataString(const char *name, const char *value) {
-    [Appodeal setExtrasValue:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:name]];
+    [Advertising setExtrasValue:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealResetExtraData(const char *name) {
-    [Appodeal setExtrasValue:nil forKey:[NSString stringWithUTF8String:name]];
+    [Advertising setExtrasValue:nil forKey:[NSString stringWithUTF8String:name]];
 }
 
 void AppodealTrackInAppPurchase(int amount, const char *currency) {
@@ -409,7 +412,7 @@ void AppodealSetInitializationDelegate(AppodealInitializationCallback initializa
 
     AppodealInitializationDelegateInstance.initializationCompletedCallback = initializationCompleted;
 
-    [Appodeal setInitializationDelegate:AppodealInitializationDelegateInstance];
+    [Advertising setInitializationDelegate:AppodealInitializationDelegateInstance];
 }
 
 static AppodealInterstitialDelegate *AppodealInterstitialDelegateInstance;
@@ -431,7 +434,7 @@ void AppodealSetInterstitialDelegate(AppodealInterstitialDidLoadCallback interst
     AppodealInterstitialDelegateInstance.interstitialDidClickCallback = interstitialDidClick;
     AppodealInterstitialDelegateInstance.interstitialsDidExpiredCallback = interstitialDidExpired;
 
-    [Appodeal setInterstitialDelegate:AppodealInterstitialDelegateInstance];
+    [Advertising setInterstitialDelegate:AppodealInterstitialDelegateInstance];
 }
 
 static AppodealBannerDelegate *AppodealBannerDelegateInstance;
@@ -451,7 +454,7 @@ void AppodealSetBannerDelegate(AppodealBannerDidLoadCallback bannerDidLoadAd,
     AppodealBannerDelegateInstance.bannerDidShowCallback = bannerDidShow;
     AppodealBannerDelegateInstance.bannerDidFailToPresentCallback = bannerDidFailToPresent;
 
-    [Appodeal setBannerDelegate:AppodealBannerDelegateInstance];
+    [Advertising setBannerDelegate:AppodealBannerDelegateInstance];
 }
 
 static AppodealBannerViewDelegate *AppodealBannerViewDelegateInstance;
@@ -521,5 +524,5 @@ void AppodealSetRewardedVideoDelegate(AppodealRewardedVideoDidLoadCallback rewar
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidExpireCallback = rewardedVideoDidExpired;
     AppodealRewardedVideoDelegateInstance.rewardedVideoDidReceiveTapActionCallback = rewardedVideoDidReceiveTap;
 
-    [Appodeal setRewardedVideoDelegate:AppodealRewardedVideoDelegateInstance];
+    [Advertising setRewardedVideoDelegate:AppodealRewardedVideoDelegateInstance];
 }
