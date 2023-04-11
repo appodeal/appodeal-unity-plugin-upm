@@ -8,4 +8,9 @@
         <iosPod name="BidonAdapterDTExchange" version="0.1.6.1-Beta" minTargetSdk="10.0" />
         <iosPod name="BidonAdapterUnityAds" version="0.1.6.1-Beta" minTargetSdk="10.0" />
     </iosPods>
+    <androidPackages>
+        <repositories>
+            <repository>https://maven.pkg.github.com/bidon-io/bidon-sdk-android</repository>
+        </repositories>
+    </androidPackages>
 </dependencies>
