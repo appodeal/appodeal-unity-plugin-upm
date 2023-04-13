@@ -119,7 +119,7 @@ void AppodealSetAutoCache(BOOL autoCache, int types) {
 }
 
 void AppodealHideBanner() {
-    [Appodeal hideBanner];
+    [Advertising hideBanner];
 }
 
 void AppodealHideBannerView() {
@@ -402,7 +402,7 @@ void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
 
     AppodealAdRevenueDelegateInstance.adRevenueReceivedCallback = adRevenueReceived;
 
-    [Appodeal setAdRevenueDelegate:AppodealAdRevenueDelegateInstance];
+    [Advertising setAdRevenueDelegate:AppodealAdRevenueDelegateInstance];
 }
 
 static AppodealInitializationDelegate *AppodealInitializationDelegateInstance;

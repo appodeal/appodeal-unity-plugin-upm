@@ -1,4 +1,5 @@
 #import <Appodeal/Appodeal.h>
+#import <AppodealExtensions/AppodealExtensions-Swift.h>
 
 @interface AppodealUnityBannerView : NSObject
 
@@ -11,7 +12,7 @@ UIViewController* RootViewControllerUnityBannerView(void);
 - (void)reinitAppodealBannerView;
 - (void)setTabletBanner: (BOOL) value;
 
-@property(nonatomic, strong) APDBannerView *bannerView;
+@property(nonatomic, strong) AppodealUnifiedBannerView *bannerView;
 @property(nonatomic, assign) BOOL onScreen;
 @property(nonatomic, assign) BOOL tabletBanner;
 
