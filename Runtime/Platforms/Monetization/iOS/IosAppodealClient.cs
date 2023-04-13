@@ -493,7 +493,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             SetCallbacks();
 
             AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes),
-                $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
+                AppodealVersions.GetPluginVersion(), AppodealVersions.GetUnityVersion());
         }
 
         public bool IsInitialized(int adType)
