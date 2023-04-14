@@ -4,7 +4,7 @@
         <iosPod name="Appodeal" version="3.1.1-Beta.2" minTargetSdk="11.0" />
     </iosPods>
     <androidPackages>
-        <androidPackage spec="com.appodeal.ads:sdk-bidon:3.1.2.0-rc2" />
+        <androidPackage spec="com.appodeal.ads:sdk-bidon:3.1.2.0-rc4" />
         <repositories>
             <repository>https://artifactory.appodeal.com/appodeal-beta</repository>
             <repository>https://artifactory.appodeal.com/appodeal</repository>

@@ -188,7 +188,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public bool IsLoaded(int adTypes)
         {
-            return GetAppodealClass().CallStatic<bool>("isLoaded", NativeAdTypesForType(adTypes));
+            return GetAppodealExtClass().CallStatic<bool>("isLoaded", NativeAdTypesForType(adTypes));
         }
 
         public void Cache(int adTypes)
