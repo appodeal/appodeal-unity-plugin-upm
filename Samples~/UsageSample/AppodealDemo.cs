@@ -283,7 +283,8 @@ namespace AppodealSample
             Appodeal.MuteVideosIfCallsMuted(true);
             Appodeal.SetChildDirectedTreatment(false);
 
-            Appodeal.SetTriggerOnLoadedOnPrecache(AppodealAdType.Interstitial, true);
+            Appodeal.SetTriggerOnLoadedOnPrecache(AppodealAdType.Interstitial, false);
+            Appodeal.SetTriggerOnLoadedOnPrecache(AppodealAdType.RewardedVideo, false);
 
             Appodeal.DisableNetwork(AppodealNetworks.Vungle);
             Appodeal.DisableNetwork(AppodealNetworks.Yandex, AppodealAdType.Banner);
