@@ -32,7 +32,7 @@ UIViewController* RootViewControllerUnityMrec() {
 - (id)init {
     self = [super init];
     if(self) {
-        self.mrecView = [[APDMRECView alloc] init];
+        self.mrecView = [[AppodealUnifiedBannerView alloc] initWithSize:kAPDAdSize300x250];
         self.mrecView.frame = CGRectMake(0, 0, 300, 250);
         self.mrecView.usesSmartSizing = NO;
         self.onScreen = NO;

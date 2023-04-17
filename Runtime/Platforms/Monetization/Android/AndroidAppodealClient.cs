@@ -30,6 +30,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         private const int AppodealShowStyleBannerRight = 2048;
 
         private AndroidJavaClass _appodealClass;
+        private AndroidJavaClass _appodealExtClass;
         private AndroidJavaClass _appodealUnityClass;
 
         private AndroidJavaObject _activity;
@@ -111,6 +112,11 @@ namespace AppodealStack.Monetization.Platforms.Android
             return _appodealClass ?? (_appodealClass = new AndroidJavaClass("com.appodeal.ads.Appodeal"));
         }
 
+        private AndroidJavaClass GetAppodealExtClass()
+        {
+            return _appodealExtClass ?? (_appodealExtClass = new AndroidJavaClass("com.appodeal.ads.AppodealExt"));
+        }
+
         public AndroidJavaClass GetAppodealUnityClass()
         {
             return _appodealUnityClass ?? (_appodealUnityClass = new AndroidJavaClass("com.appodeal.unity.AppodealUnity"));
@@ -129,9 +135,9 @@ namespace AppodealStack.Monetization.Platforms.Android
         private void SetCallbacks()
         {
             GetAppodealClass().CallStatic("setMrecCallbacks", new AppodealMrecCallbacks(AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl));
-            GetAppodealClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(AppodealCallbacks.Banner.Instance.BannerAdEventsImpl));
-            GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl));
-            GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
+            GetAppodealExtClass().CallStatic("setBannerCallbacks", new AppodealBannerCallbacks(AppodealCallbacks.Banner.Instance.BannerAdEventsImpl));
+            GetAppodealExtClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl));
+            GetAppodealExtClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
             GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl));
         }
 
@@ -151,23 +157,23 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             SetCallbacks();
 
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), GetInitCallback(listener));
+            GetAppodealExtClass().CallStatic("setFramework", "unity", AppodealVersions.GetPluginVersion(), AppodealVersions.GetUnityVersion());
+            GetAppodealExtClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), GetInitCallback(listener));
         }
 
         public bool IsInitialized(int adType)
         {
-            return GetAppodealClass().CallStatic<bool>("isInitialized", NativeAdTypesForType(adType));
+            return GetAppodealExtClass().CallStatic<bool>("isInitialized", NativeAdTypesForType(adType));
         }
 
         public bool Show(int adTypes)
         {
-            return GetAppodealClass().CallStatic<bool>("show", GetActivity(), NativeShowStyleForType(adTypes));
+            return GetAppodealExtClass().CallStatic<bool>("show", GetActivity(), NativeShowStyleForType(adTypes));
         }
 
         public bool Show(int adTypes, string placement)
         {
-            return GetAppodealClass().CallStatic<bool>("show", GetActivity(), NativeShowStyleForType(adTypes), placement);
+            return GetAppodealExtClass().CallStatic<bool>("show", GetActivity(), NativeShowStyleForType(adTypes), placement);
         }
 
         public bool ShowBannerView(int yAxis, int xAxis, string placement)
@@ -182,12 +188,12 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public bool IsLoaded(int adTypes)
         {
-            return GetAppodealClass().CallStatic<bool>("isLoaded", NativeAdTypesForType(adTypes));
+            return GetAppodealExtClass().CallStatic<bool>("isLoaded", NativeAdTypesForType(adTypes));
         }
 
         public void Cache(int adTypes)
         {
-            GetAppodealClass().CallStatic("cache", GetActivity(), NativeAdTypesForType(adTypes));
+            GetAppodealExtClass().CallStatic("cache", GetActivity(), NativeAdTypesForType(adTypes));
         }
 
         public void Hide(int adTypes)
@@ -212,7 +218,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetAutoCache(int adTypes, bool autoCache)
         {
-            GetAppodealClass().CallStatic("setAutoCache", NativeAdTypesForType(adTypes), autoCache);
+            GetAppodealExtClass().CallStatic("setAutoCache", NativeAdTypesForType(adTypes), autoCache);
         }
 
         public void SetSmartBanners(bool value)
@@ -242,7 +248,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetTesting(bool test)
         {
-            GetAppodealClass().CallStatic("setTesting", test);
+            GetAppodealExtClass().CallStatic("setTesting", test);
         }
 
         public void SetLogLevel(AppodealLogLevel logging)
@@ -252,17 +258,17 @@ namespace AppodealStack.Monetization.Platforms.Android
             {
                 case AppodealLogLevel.None:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "none"));
+                    GetAppodealExtClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "none"));
                     break;
                 }
                 case AppodealLogLevel.Debug:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "debug"));
+                    GetAppodealExtClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "debug"));
                     break;
                 }
                 case AppodealLogLevel.Verbose:
                 {
-                    GetAppodealClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "verbose"));
+                    GetAppodealExtClass().CallStatic("setLogLevel", logLevel.CallStatic<AndroidJavaObject>("valueOf", "verbose"));
                     break;
                 }
                 default:
@@ -344,7 +350,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
-            GetAppodealClass().CallStatic("setTriggerOnLoadedOnPrecache", NativeAdTypesForType(adTypes), onLoadedTriggerBoth);
+            GetAppodealExtClass().CallStatic("setTriggerOnLoadedOnPrecache", NativeAdTypesForType(adTypes), onLoadedTriggerBoth);
         }
 
         public void MuteVideosIfCallsMuted(bool value)
@@ -369,12 +375,12 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public bool CanShow(int adTypes)
         {
-            return GetAppodealClass().CallStatic<bool>("canShow", NativeAdTypesForType(adTypes));
+            return GetAppodealExtClass().CallStatic<bool>("canShow", NativeAdTypesForType(adTypes));
         }
 
         public bool CanShow(int adTypes, string placement)
         {
-            return GetAppodealClass().CallStatic<bool>("canShow", NativeAdTypesForType(adTypes), placement);
+            return GetAppodealExtClass().CallStatic<bool>("canShow", NativeAdTypesForType(adTypes), placement);
         }
 
         public void SetCustomFilter(string name, bool value)
@@ -404,27 +410,27 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetExtraData(string key, bool value)
         {
-            GetAppodealClass().CallStatic("setExtraData", key, value);
+            GetAppodealExtClass().CallStatic("setExtraData", key, value);
         }
 
         public void SetExtraData(string key, int value)
         {
-            GetAppodealClass().CallStatic("setExtraData", key, value);
+            GetAppodealExtClass().CallStatic("setExtraData", key, value);
         }
 
         public void SetExtraData(string key, double value)
         {
-            GetAppodealClass().CallStatic("setExtraData", key, value);
+            GetAppodealExtClass().CallStatic("setExtraData", key, value);
         }
 
         public void SetExtraData(string key, string value)
         {
-            GetAppodealClass().CallStatic("setExtraData", key, value);
+            GetAppodealExtClass().CallStatic("setExtraData", key, value);
         }
 
         public void ResetExtraData(string key)
         {
-            GetAppodealClass().CallStatic("setExtraData", key, null);
+            GetAppodealExtClass().CallStatic("setExtraData", key, null);
         }
 
         public void TrackInAppPurchase(double amount, string currency)
@@ -521,7 +527,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public bool IsAutoCacheEnabled(int adType)
         {
-            return GetAppodealClass().CallStatic<bool>("isAutoCacheEnabled", NativeAdTypesForType(adType));
+            return GetAppodealExtClass().CallStatic<bool>("isAutoCacheEnabled", NativeAdTypesForType(adType));
         }
 
         public void LogEvent(string eventName, Dictionary<string, object> eventParams)

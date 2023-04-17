@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
 #import <Appodeal/Appodeal.h>
+#import <AppodealExtensions/AppodealExtensions-Swift.h>
 
 typedef void (*AppodealMrecViewCallbacks) ();
 typedef void (*AppodealMrecViewDidLoadCallback) ();
 
-@interface AppodealMrecViewDelegate : NSObject <APDBannerViewDelegate>
+@interface AppodealMrecViewDelegate : NSObject <AppodealUnifiedBannerViewDelegate>
 
 @property (assign, nonatomic) AppodealMrecViewDidLoadCallback mrecViewDidLoadAdCallback;
 @property (assign, nonatomic) AppodealMrecViewCallbacks mrecViewDidFailToLoadAdCallback;

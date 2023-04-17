@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
 #import <Appodeal/Appodeal.h>
+#import <AppodealExtensions/AppodealExtensions-Swift.h>
 
 typedef void (*AppodealBannerViewCallbacks) ();
 typedef void (*AppodealBannerViewDidLoadCallback) ();
 
-@interface AppodealBannerViewDelegate : NSObject <APDBannerViewDelegate>
+@interface AppodealBannerViewDelegate : NSObject <AppodealUnifiedBannerViewDelegate>
 
 @property (assign, nonatomic) AppodealBannerViewDidLoadCallback bannerViewDidLoadAdCallback;
 @property (assign, nonatomic) AppodealBannerViewCallbacks bannerViewDidFailToLoadAdCallback;

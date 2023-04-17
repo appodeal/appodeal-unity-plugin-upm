@@ -44,7 +44,7 @@ UIViewController* RootViewControllerUnityBannerView() {
 - (void)reinitAppodealBannerView {
     BOOL tabletOrPhoneSize = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && self.tabletBanner;
     CGSize size = tabletOrPhoneSize ? kAPDAdSize728x90 : kAPDAdSize320x50;
-    self.bannerView = [[APDBannerView alloc] initWithSize:size];
+    self.bannerView = [[AppodealUnifiedBannerView alloc] initWithSize:size];
     self.onScreen = NO;
 }
 
