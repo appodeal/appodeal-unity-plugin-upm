@@ -4,8 +4,8 @@
         <iosPod name="APDGoogleAdMobAdapter" version="3.1.2.1-rc.1" minTargetSdk="11.0" />
     </iosPods>
     <androidPackages>
-        <androidPackage spec="com.appodeal.ads.sdk.networks:admob:3.1.1.0-rc1" />
-        <androidPackage spec="com.appodeal.ads.sdk:core:3.1.1-rc1" />
+        <androidPackage spec="com.appodeal.ads.sdk.networks:admob:3.1.2.0-rc.1" />
+        <androidPackage spec="com.appodeal.ads.sdk:core:3.1.2-rc.1" />
         <androidPackage spec="com.google.android.gms:play-services-ads:21.5.0" />
         <androidPackage spec="androidx.constraintlayout:constraintlayout:2.1.4" />
         <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />

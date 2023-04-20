@@ -4,8 +4,8 @@
         <iosPod name="APDIABAdapter" version="3.1.2.1-rc.1" minTargetSdk="11.0" />
     </iosPods>
     <androidPackages>
-        <androidPackage spec="com.appodeal.ads.sdk.networks:iab:3.1.1.0-rc1" />
-        <androidPackage spec="com.appodeal.ads.sdk:core:3.1.1-rc1" />
+        <androidPackage spec="com.appodeal.ads.sdk.networks:iab:3.1.2.0-rc.1" />
+        <androidPackage spec="com.appodeal.ads.sdk:core:3.1.2-rc.1" />
         <androidPackage spec="com.explorestack:iab:1.4.1" />
         <androidPackage spec="org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />
         <androidPackage spec="org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0" />
