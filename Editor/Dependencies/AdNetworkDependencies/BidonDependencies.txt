@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="AppodealExtensions" version="0.2.1-rc.1" minTargetSdk="12.0" />
-        <iosPod name="BidonAdapterAppLovin" version="0.2.1.1+ds3" minTargetSdk="12.0" />
-        <iosPod name="BidonAdapterBidMachine" version="0.2.1.1+ds3" minTargetSdk="12.0" />
-        <iosPod name="BidonAdapterGoogleMobileAds" version="0.2.1.1+ds3" minTargetSdk="12.0" />
-        <iosPod name="BidonAdapterDTExchange" version="0.2.1.1+ds3" minTargetSdk="12.0" />
-        <iosPod name="BidonAdapterUnityAds" version="0.2.1.1+ds3" minTargetSdk="12.0" />
+        <iosPod name="AppodealExtensions" version="0.2.1-rc.2" minTargetSdk="12.0" />
+        <iosPod name="BidonAdapterAppLovin" version="0.2.1.1+ds4" minTargetSdk="12.0" />
+        <iosPod name="BidonAdapterBidMachine" version="0.2.1.1+ds4" minTargetSdk="12.0" />
+        <iosPod name="BidonAdapterGoogleMobileAds" version="0.2.1.1+ds4" minTargetSdk="12.0" />
+        <iosPod name="BidonAdapterDTExchange" version="0.2.1.1+ds4" minTargetSdk="12.0" />
+        <iosPod name="BidonAdapterUnityAds" version="0.2.1.1+ds4" minTargetSdk="12.0" />
     </iosPods>
     <androidPackages>
         <repositories>
