@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <iosPods>
-        <iosPod name="APDAdjustAdapter" version="3.1.2.1-rc.2" minTargetSdk="11.0">
+        <iosPod name="APDAdjustAdapter" version="3.1.2.1-rc.3" minTargetSdk="11.0">
             <sources>
                 <source>https://github.com/appodeal/CocoaPods.git</source>
             </sources>
