@@ -155,29 +155,6 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), GetInitCallback(listener));
         }
 
-        public void initialize(string appKey, int adTypes)
-        {
-            initialize(appKey, adTypes, true);
-        }
-
-        public void initialize(string appKey, int adTypes, bool hasConsent)
-        {
-            SetCallbacks();
-
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), hasConsent);
-        }
-
-        public void initialize(string appKey, int adTypes, IConsent consent)
-        {
-            SetCallbacks();
-
-            GetAppodealClass().CallStatic("setFramework", "unity", $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-            var androidConsent = consent.NativeConsent as AndroidConsent;
-            if (androidConsent == null) return;
-            GetAppodealClass().CallStatic("initialize", GetActivity(), appKey, NativeAdTypesForType(adTypes), androidConsent.GetConsentJavaObject());
-        }
-
         public bool IsInitialized(int adType)
         {
             return GetAppodealClass().CallStatic<bool>("isInitialized", NativeAdTypesForType(adType));
@@ -296,11 +273,6 @@ namespace AppodealStack.Monetization.Platforms.Android
         public void SetChildDirectedTreatment(bool value)
         {
             GetAppodealClass().CallStatic("setChildDirectedTreatment", Helper.GetJavaObject(value));
-        }
-
-        public void updateConsent(bool value)
-        {
-            GetAppodealClass().CallStatic("updateConsent", Helper.GetJavaObject(value));
         }
 
         public void UpdateConsent(IConsent consent)
@@ -462,7 +434,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public List<string> GetNetworks(int adTypes)
         {
-            var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", GetActivity(), NativeAdTypesForType(adTypes));
+            var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", NativeAdTypesForType(adTypes));
             int countOfNetworks = networks.Call<int>("size");
             var networksList = new List<string>();
             for(int i = 0; i < countOfNetworks; i++)
@@ -485,33 +457,22 @@ namespace AppodealStack.Monetization.Platforms.Android
             };
         }
 
-        public KeyValuePair<string, double> GetRewardParameters()
-        {
-            var reward = GetAppodealClass().CallStatic<AndroidJavaObject>("getReward");
-            string currency = reward.Call<string>("getCurrency");
-            double amount = reward.Call<double>("getAmount");
-            return new KeyValuePair<string, double>(currency, amount);
-        }
-
-        public KeyValuePair<string, double> GetRewardParameters(string placement)
-        {
-            var reward = GetAppodealClass().CallStatic<AndroidJavaObject>("getReward", placement);
-            string currency = reward.Call<string>("getCurrency");
-            double amount = reward.Call<double>("getAmount");
-            return new KeyValuePair<string, double>(currency, amount);
-        }
-
         public double GetPredictedEcpm(int adType)
         {
             return GetAppodealClass().CallStatic<double>("getPredictedEcpm", NativeAdTypesForType(adType));
+        }
+
+        public double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            return String.IsNullOrEmpty(placement)
+                ? GetAppodealClass().CallStatic<double>("getPredictedEcpmByPlacement", NativeAdTypesForType(adType))
+                : GetAppodealClass().CallStatic<double>("getPredictedEcpmByPlacement", NativeAdTypesForType(adType), placement);
         }
 
         public void Destroy(int adTypes)
         {
             GetAppodealClass().CallStatic("destroy", NativeAdTypesForType(adTypes));
         }
-
-        //User Settings
 
         public void SetUserId(string id)
         {
@@ -521,36 +482,6 @@ namespace AppodealStack.Monetization.Platforms.Android
         public string GetUserId()
         {
             return GetAppodealClass().CallStatic<string>("getUserId");
-        }
-
-        public void setUserAge(int age)
-        {
-            GetAppodealClass().CallStatic("setUserAge", age);
-        }
-
-        public void setUserGender(AppodealUserGender gender)
-        {
-            var genderEnum = new AndroidJavaClass("com.appodeal.ads.UserSettings$Gender");
-            switch (gender)
-            {
-                case AppodealUserGender.Other:
-                {
-                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("OTHER"));
-                    break;
-                }
-                case AppodealUserGender.Male:
-                {
-                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("MALE"));
-                    break;
-                }
-                case AppodealUserGender.Female:
-                {
-                    GetAppodealClass().CallStatic("setUserGender", genderEnum.GetStatic<AndroidJavaObject>("FEMALE"));
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gender), gender, null);
-            }
         }
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
@@ -625,11 +556,6 @@ namespace AppodealStack.Monetization.Platforms.Android
         }
 
         public void SetLocationTracking(bool value)
-        {
-            Debug.Log("Not supported on Android platform");
-        }
-
-        public void disableLocationPermissionCheck()
         {
             Debug.Log("Not supported on Android platform");
         }

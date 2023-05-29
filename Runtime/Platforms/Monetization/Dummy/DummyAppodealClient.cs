@@ -54,10 +54,10 @@ namespace AppodealStack.Monetization.Platforms.Dummy
     {
         #region Variables
 
-        private const string    HorizontalInterstitialAssetName = "InterstitialH";
-        private const string    VerticalInterstitialAssetName = "InterstitialV";
-        private const string    HorizontalVideoAssetName = "VideoH";
-        private const string    VerticalVideoAssetName = "VideoV";
+        private const string    HorizontalInterstitialAssetName = "ApdInterstitialH";
+        private const string    VerticalInterstitialAssetName = "ApdInterstitialV";
+        private const string    HorizontalVideoAssetName = "ApdVideoH";
+        private const string    VerticalVideoAssetName = "ApdVideoV";
 
         private const string    FailedToLoad = "FailedToLoad";
         private const string    Closed = "Closed";
@@ -77,17 +77,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private const int       BannerRight = 256;
 
         private readonly Dictionary<int,string> _bannerPositions = new Dictionary<int,string> {
-            { BannerBottom, "BannerBottomAd" },
-            { BannerTop, "BannerTopAd" },
-            { BannerLeft, "BannerLeftAd" },
-            { BannerRight, "BannerRightAd" },
-            { BannerView, "BannerViewAd" } };
+            { BannerBottom, "ApdBannerBottomAd" },
+            { BannerTop, "ApdBannerTopAd" },
+            { BannerLeft, "ApdBannerLeftAd" },
+            { BannerRight, "ApdBannerRightAd" },
+            { BannerView, "ApdBannerViewAd" } };
 
         private readonly Dictionary<int,EditorAd> _ads = new Dictionary<int,EditorAd> {
-            {Interstitial, new EditorAd(Interstitial, null, "InterstitialAd", "Interstitial", Vector2.zero)},
-            {Banner, new EditorAd(Banner, null, "BannerBottomAd", "Banner", new Vector2(600, 95))},
-            {RewardedVideo, new EditorAd(RewardedVideo, null, "RewardedAd", "RewardedVideo", Vector2.zero)},
-            {Mrec, new EditorAd(Mrec, null, "MrecAd", "Mrec", new Vector2(420, 350))} };
+            {Interstitial, new EditorAd(Interstitial, null, "ApdInterstitialAd", "Interstitial", Vector2.zero)},
+            {Banner, new EditorAd(Banner, null, "ApdBannerBottomAd", "Banner", new Vector2(320, 50))},
+            {RewardedVideo, new EditorAd(RewardedVideo, null, "ApdRewardedAd", "RewardedVideo", Vector2.zero)},
+            {Mrec, new EditorAd(Mrec, null, "ApdMrecAd", "Mrec", new Vector2(300, 250))} };
 
         private IInterstitialAdListener     _interstitialAdListener;
         private IBannerAdListener           _bannerAdListener;
@@ -101,7 +101,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private bool            IsLoggingEnabled { get; set; }
         private bool            IsSDKInitialized { get; set; }
-        private bool            HasConsentGiven { get; set; }
         private bool            ShouldReward { get; set; }
 
         #endregion
@@ -215,8 +214,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                 return;
             }
 
-            var defaultPath = Path.Combine(AppodealEditorConstants.PackagePath, "Editor/EditorAds/", prefabName, ".prefab");
-            var assetGuids = AssetDatabase.FindAssets(prefabName);
+            string defaultPath = $"{AppodealEditorConstants.PackagePath}/{AppodealEditorConstants.EditorAdPrefabsPath}/{prefabName}.prefab";
+            var assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
             var prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
 
             var adPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
@@ -288,16 +287,16 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             {
                 Vector2 calculatedPos = Vector2.zero;
 
-                if (pos.x == AppodealViewPosition.HorizontalCenter || pos.x == AppodealViewPosition.HorizontalSmart) calculatedPos.x = (Screen.width - ad.Size.x) / 2;
+                if (pos.x == AppodealViewPosition.HorizontalCenter || pos.x == AppodealViewPosition.HorizontalSmart) calculatedPos.x = (Screen.width - ad.Size.x * Screen.dpi / 160) / 2;
                 else if (pos.x == AppodealViewPosition.HorizontalLeft) calculatedPos.x = 0;
-                else if (pos.x == AppodealViewPosition.HorizontalRight) calculatedPos.x = Screen.width - ad.Size.x;
+                else if (pos.x == AppodealViewPosition.HorizontalRight) calculatedPos.x = Screen.width - ad.Size.x * Screen.dpi / 160;
                 else calculatedPos.x = pos.x;
 
-                if (pos.y == AppodealViewPosition.VerticalBottom) calculatedPos.y = ad.Size.y - Screen.height;
+                if (pos.y == AppodealViewPosition.VerticalBottom) calculatedPos.y = ad.Size.y * Screen.dpi / 160 - Screen.height;
                 else if (pos.y == AppodealViewPosition.VerticalTop) calculatedPos.y = 0;
                 else calculatedPos.y = - pos.y;
 
-                if (calculatedPos.x < 0 || calculatedPos.y > 0 || calculatedPos.x > Screen.width - ad.Size.x || calculatedPos.y < ad.Size.y - Screen.height) return false;
+                if (calculatedPos.x < 0 || calculatedPos.y > 0 || calculatedPos.x > Screen.width - ad.Size.x * Screen.dpi / 160 || calculatedPos.y < ad.Size.y * Screen.dpi / 160 - Screen.height) return false;
 
                 var rt = ad.GameObject.transform.Find("Panel").GetComponent<RectTransform>();
                 rt.anchoredPosition = calculatedPos;
@@ -318,6 +317,9 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             EditorAd ad = GetEditorAdObjectByAdType(adType);
 
             switch (ad.Type) {
+                case Mrec:
+                    SetBannerWidth(ad, adType);
+                    break;
                 case Banner:
                     SetBannerPosition(ad, adType);
                     SetBannerWidth(ad, adType);
@@ -327,7 +329,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     var sprite = Screen.height < Screen.width ? Resources.Load<Sprite>(HorizontalInterstitialAssetName) : Resources.Load<Sprite>(VerticalInterstitialAssetName);
                     img.sprite = sprite;
                     break;
-
                 case RewardedVideo:
                     _videoPlayer = ad.GameObject.GetComponentInChildren<VideoPlayer>();
                     var videoClip = Screen.height < Screen.width ? Resources.Load<VideoClip>(HorizontalVideoAssetName) : Resources.Load<VideoClip>(VerticalVideoAssetName);
@@ -362,8 +363,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             if (ad == null) return;
 
-            if (ad.PrefabName == "BannerViewAd" && adType != BannerView) return;
-            else if (ad.PrefabName != "BannerViewAd" && adType == BannerView) return;
+            if (ad.PrefabName == "ApdBannerViewAd" && adType != BannerView) return;
+            else if (ad.PrefabName != "ApdBannerViewAd" && adType == BannerView) return;
 
             ad.GameObject?.SetActive(false);
         }
@@ -474,8 +475,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private void SetBannerWidth(EditorAd ad, int adType)
         {
             var rt = ad.GameObject.transform.Find("Panel").GetComponent<RectTransform>();
-            if (adType == BannerLeft || adType == BannerRight) rt.sizeDelta = new Vector2(ad.Size.y, Mathf.Min(Screen.height, ad.Size.x));
-            else rt.sizeDelta = new Vector2(Mathf.Min(Screen.width, ad.Size.x), ad.Size.y);
+            if (adType == BannerLeft || adType == BannerRight) rt.sizeDelta = new Vector2(ad.Size.y * Screen.dpi / 160, Mathf.Min(Screen.height, ad.Size.x * Screen.dpi / 160));
+            else rt.sizeDelta = new Vector2(Mathf.Min(Screen.width, ad.Size.x * Screen.dpi / 160), ad.Size.y * Screen.dpi / 160);
         }
 
         private string GetBannerPrefabNameByBannerPosition(int adType)
@@ -512,33 +513,14 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
         {
-            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
-            SetCallbacks();
-
-            initialize(appKey, adTypes);
-        }
-
-        public void initialize(string appKey, int adTypes)
-        {
             if (IsSDKInitialized) return;
 
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
             SetCallbacks();
 
             Debug.LogWarning("There is only simplified workflow of Appodeal SDK simulated in Editor. Make sure to test advertising on a real Android/iOS device before publishing.");
             IsSDKInitialized = true;
             SimInitAdTypes(NativeAdTypesForType(adTypes));
-        }
-
-        public void initialize(string appKey, int adTypes, bool hasConsent)
-        {
-            initialize(appKey, adTypes);
-            HasConsentGiven = hasConsent;
-        }
-
-        public void initialize(string appKey, int adTypes, IConsent consent)
-        {
-            initialize(appKey, adTypes);
-            HasConsentGiven = consent?.GetAuthorizationStatus() == ConsentAuthorizationStatus.Authorized;
         }
 
         public bool IsInitialized(int adType)
@@ -708,11 +690,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetChildDirectedTreatment method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void updateConsent(bool value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.updateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void UpdateConsent(IConsent consent)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
@@ -741,11 +718,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetLocationTracking(bool value)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetLocationTracking method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void disableLocationPermissionCheck()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.disableLocationPermissionCheck method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
@@ -811,21 +783,15 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return new List<string>();
         }
 
-        public KeyValuePair<string, double> GetRewardParameters()
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return new KeyValuePair<string, double>("USD", 0);
-        }
-
-        public KeyValuePair<string, double> GetRewardParameters(string placement)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetRewardParameters method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return new KeyValuePair<string, double>("USD", 0);
-        }
-
         public double GetPredictedEcpm(int adType)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetPredictedEcpm method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return 0;
+        }
+
+        public double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetPredictedEcpmForPlacement method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
             return 0;
         }
 
@@ -873,16 +839,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetUserId method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
             return "";
-        }
-
-        public void setUserAge(int age)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetUserAge method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void setUserGender(AppodealUserGender gender)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.setGender method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void LogEvent(string eventName, Dictionary<string, object> eventParams)

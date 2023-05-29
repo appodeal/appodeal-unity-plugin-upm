@@ -59,8 +59,6 @@ namespace AppodealStack.Monetization.Common
         bool CanShow(int adType);
         bool CanShow(int adType, string placement);
         AppodealReward GetReward(string placement);
-        KeyValuePair<string, double> GetRewardParameters();
-        KeyValuePair<string, double> GetRewardParameters(string placement);
         void MuteVideosIfCallsMuted(bool value);
         void ShowTestScreen();
         void SetChildDirectedTreatment(bool value);
@@ -71,20 +69,14 @@ namespace AppodealStack.Monetization.Common
         void SetExtraData(string key, string value);
         void ResetExtraData(string key);
         double GetPredictedEcpm(int adType);
+        double GetPredictedEcpmForPlacement(int adType, string placement);
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
 
         #region Deprecated signatures
 
-        void initialize(string appKey, int adTypes);
-        void initialize(string appKey, int adTypes, bool hasConsent);
-        void initialize(string appKey, int adTypes, IConsent consent);
-        void updateConsent(bool value);
         void setSharedAdsInstanceAcrossActivities(bool value);
-        void disableLocationPermissionCheck();
-        void setUserGender(AppodealUserGender gender);
-        void setUserAge(int age);
 
         #endregion
 

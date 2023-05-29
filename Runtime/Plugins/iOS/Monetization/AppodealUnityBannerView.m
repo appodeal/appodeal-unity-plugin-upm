@@ -33,13 +33,6 @@ UIViewController* RootViewControllerUnityBannerView() {
     self = [super init];
     _tabletBanner = YES;
     [self reinitAppodealBannerView];
-    if(self) {
-        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didReceiveNotification)
-                                                     name:UIApplicationDidChangeStatusBarOrientationNotification
-                                                   object:nil];
-    }
     return self;
 }
 
@@ -53,13 +46,6 @@ UIViewController* RootViewControllerUnityBannerView() {
     CGSize size = tabletOrPhoneSize ? kAPDAdSize728x90 : kAPDAdSize320x50;
     self.bannerView = [[APDBannerView alloc] initWithSize:size];
     self.onScreen = NO;
-}
-
-- (void)didReceiveNotification {
-    if (self.onScreen) {
-        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-        [self.bannerView rotateToOrientation:orientation];
-    }
 }
 
 - (void)setSharedBannerFrame:(CGFloat)XAxis YAxis:(CGFloat)YAxis {

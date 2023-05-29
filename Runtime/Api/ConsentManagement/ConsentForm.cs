@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms;
@@ -76,40 +75,5 @@ namespace AppodealStack.ConsentManagement.Api
         {
             return GetNativeConsentForm().IsShowing();
         }
-
-        #region Deprecated Methods
-
-        [Obsolete("It will be removed in the next release. Use the Show() method instead.", false)]
-        public void showAsActivity()
-        {
-            GetNativeConsentForm().Show();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the Show() method instead.", false)]
-        public void showAsDialog()
-        {
-            GetNativeConsentForm().Show();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (Load) of this method instead.", false)]
-        public void load()
-        {
-            GetNativeConsentForm().Load();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (IsLoaded) of this method instead.", false)]
-        public bool isLoaded()
-        {
-            return GetNativeConsentForm().IsLoaded();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (IsShowing) of this method instead.", false)]
-        public bool isShowing()
-        {
-            return GetNativeConsentForm().IsShowing();
-        }
-
-        #endregion
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
 using AppodealStack.ConsentManagement.Platforms;
 
@@ -147,76 +146,5 @@ namespace AppodealStack.ConsentManagement.Api
         {
             return GetNativeConsentManager().GetConsent();
         }
-
-        #region Deprecated Methods
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetInstance) of this method instead.", false)]
-        public static ConsentManager getInstance()
-        {
-            return new ConsentManager();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (RequestConsentInfoUpdate) of this method instead.", false)]
-        public void requestConsentInfoUpdate(string appodealAppKey, IConsentInfoUpdateListener listener)
-        {
-            GetNativeConsentManager().RequestConsentInfoUpdate(appodealAppKey, listener);
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (DisableAppTrackingTransparencyRequest) of this method instead.", false)]
-        public void disableAppTrackingTransparencyRequest()
-        {
-            GetNativeConsentManager().DisableAppTrackingTransparencyRequest();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (SetCustomVendor) of this method instead.", false)]
-        public void setCustomVendor(Vendor customVendor)
-        {
-            GetNativeConsentManager().SetCustomVendor(customVendor);
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetCustomVendor) of this method instead.", false)]
-        public Vendor getCustomVendor(string bundle)
-        {
-            return new Vendor(GetNativeConsentManager().GetCustomVendor(bundle));
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetStorage) of this method instead.", false)]
-        public ConsentManagerStorage getStorage()
-        {
-            return GetNativeConsentManager().GetStorage();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (ShouldShowConsentDialog) of this method instead.", false)]
-        public ConsentShouldShow shouldShowConsentDialog()
-        {
-            return GetNativeConsentManager().ShouldShowConsentDialog();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (SetStorage) of this method instead.", false)]
-        public void setStorage(ConsentManagerStorage iabStorage)
-        {
-            GetNativeConsentManager().SetStorage(iabStorage);
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetConsentZone) of this method instead.", false)]
-        public ConsentZone getConsentZone()
-        {
-            return GetNativeConsentManager().GetConsentZone();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetConsentStatus) of this method instead.", false)]
-        public ConsentStatus getConsentStatus()
-        {
-            return GetNativeConsentManager().GetConsentStatus();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetConsent) of this method instead.", false)]
-        public IConsent getConsent()
-        {
-            return GetNativeConsentManager().GetConsent();
-        }
-
-        #endregion
-
     }
 }

@@ -1,9 +1,9 @@
 using AOT;
-using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 using AppodealStack.ConsentManagement.Common;
 
@@ -496,27 +496,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
                 $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
-        public void initialize(string appKey, int adTypes)
-        {
-            initialize(appKey, adTypes, true);
-        }
-
-        public void initialize(string appKey, int adTypes, bool hasConsent)
-        {
-            SetCallbacks();
-
-            AppodealObjCBridge.AppodealInitializeOld(appKey, NativeAdTypesForType(adTypes), hasConsent,
-                $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-        }
-
-        public void initialize(string appKey, int adTypes, IConsent consent)
-        {
-            SetCallbacks();
-
-            AppodealObjCBridge.AppodealInitializeWithConsent(appKey, NativeAdTypesForType(adTypes),
-                $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
-        }
-
         public bool IsInitialized(int adType)
         {
             return AppodealObjCBridge.AppodealIsInitialized(NativeAdTypesForType(adType));
@@ -639,11 +618,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetChildDirectedTreatment(value);
         }
 
-        public void updateConsent(bool value)
-        {
-            AppodealObjCBridge.AppodealUpdateConsent(value);
-        }
-
         public void UpdateConsent(IConsent consent)
         {
             AppodealObjCBridge.AppodealUpdateConsentReport();
@@ -720,11 +694,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetLocationTracking(value);
         }
 
-        public void disableLocationPermissionCheck()
-        {
-            AppodealObjCBridge.AppodealDisableLocationPermissionCheck();
-        }
-
         public string GetVersion()
         {
             return AppodealObjCBridge.AppodealGetVersion();
@@ -756,24 +725,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
             };
         }
 
-        public KeyValuePair<string, double> GetRewardParameters()
-        {
-            string currency = AppodealObjCBridge.AppodealGetRewardCurrency("default");
-            double amount = AppodealObjCBridge.AppodealGetRewardAmount("default");
-            return new KeyValuePair<string, double>(currency, amount);
-        }
-
-        public KeyValuePair<string, double> GetRewardParameters(string placement)
-        {
-            string currency = AppodealObjCBridge.AppodealGetRewardCurrency(placement);
-            double amount = AppodealObjCBridge.AppodealGetRewardAmount(placement);
-            return new KeyValuePair<string, double>(currency, amount);
-        }
-
         public double GetPredictedEcpm(int adType)
         {
             return AppodealObjCBridge.AppodealGetPredictedEcpm(NativeAdTypesForType(adType));
         }
+
+		public double GetPredictedEcpmForPlacement(int adType, string placement)
+		{
+			if (String.IsNullOrEmpty(placement)) placement = "default";
+			return AppodealObjCBridge.AppodealGetPredictedEcpmForPlacement(NativeAdTypesForType(adType), placement);
+		}
 
         public void SetCustomFilter(string name, bool value)
         {
@@ -886,8 +847,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             Debug.Log("Not Supported by iOS SDK");
         }
 
-        #region User Settings
-
         public void SetUserId(string id)
         {
             AppodealObjCBridge.AppodealSetUserId(id);
@@ -897,37 +856,5 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             return AppodealObjCBridge.AppodealGetUserId();
         }
-
-        public void setUserAge(int age)
-        {
-            AppodealObjCBridge.AppodealSetUserAge(age);
-        }
-
-        public void setUserGender(AppodealUserGender gender)
-        {
-            switch (gender)
-            {
-                case AppodealUserGender.Other:
-                {
-                    AppodealObjCBridge.AppodealSetUserGender(0);
-                    break;
-                }
-                case AppodealUserGender.Male:
-                {
-                    AppodealObjCBridge.AppodealSetUserGender(1);
-                    break;
-                }
-                case AppodealUserGender.Female:
-                {
-                    AppodealObjCBridge.AppodealSetUserGender(2);
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gender), gender, null);
-            }
-        }
-
-        #endregion
-
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Threading;
+using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
@@ -9,9 +11,13 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealInterstitialCallbacks : UnityEngine.AndroidJavaProxy
+    public class AppodealInterstitialCallbacks : AndroidJavaProxy
     {
         private readonly IInterstitialAdListener _listener;
+        private static SynchronizationContext _unityContext;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealInterstitialCallbacks(IInterstitialAdListener listener) : base("com.appodeal.ads.InterstitialCallbacks")
         {
@@ -20,37 +26,37 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         private void onInterstitialLoaded(bool isPrecache)
         {
-            _listener?.OnInterstitialLoaded(isPrecache);
+            _unityContext?.Post(obj => _listener?.OnInterstitialLoaded(isPrecache), null);
         }
 
         private void onInterstitialFailedToLoad()
         {
-            _listener?.OnInterstitialFailedToLoad();
+            _unityContext?.Post(obj => _listener?.OnInterstitialFailedToLoad(), null);
         }
 
         private void onInterstitialShowFailed()
         {
-            _listener?.OnInterstitialShowFailed();
+            _unityContext?.Post(obj => _listener?.OnInterstitialShowFailed(), null);
         }
 
         private void onInterstitialShown()
         {
-            _listener?.OnInterstitialShown();
+            _unityContext?.Post(obj => _listener?.OnInterstitialShown(), null);
         }
 
         private void onInterstitialClicked()
         {
-            _listener?.OnInterstitialClicked();
+            _unityContext?.Post(obj => _listener?.OnInterstitialClicked(), null);
         }
 
         private void onInterstitialClosed()
         {
-            _listener?.OnInterstitialClosed();
+            _unityContext?.Post(obj => _listener?.OnInterstitialClosed(), null);
         }
 
         private void onInterstitialExpired()
         {
-            _listener?.OnInterstitialExpired();
+            _unityContext?.Post(obj => _listener?.OnInterstitialExpired(), null);
         }
     }
 }

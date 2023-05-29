@@ -41,14 +41,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealInitialize(string apiKey, int types, string pluginVer, string engineVersion);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealInitializeOld(string apiKey, int types, bool hasConsent, string pluginVer,
-            string engineVersion);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealInitializeWithConsent(string apiKey, int types, string pluginVer,
-            string engineVersion);
-
-        [DllImport("__Internal")]
         internal static extern bool AppodealIsInitialized(int type);
 
         [DllImport("__Internal")]
@@ -106,9 +98,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetChildDirectedTreatment(bool value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealUpdateConsent(bool value);
-
-        [DllImport("__Internal")]
         internal static extern void AppodealUpdateConsentReport();
 
         [DllImport("__Internal")]
@@ -133,9 +122,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetLocationTracking(bool value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealDisableLocationPermissionCheck();
-
-        [DllImport("__Internal")]
         internal static extern string AppodealGetVersion();
 
         [DllImport("__Internal")]
@@ -155,6 +141,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern double AppodealGetPredictedEcpm(int adType);
+
+		[DllImport("__Internal")]
+		internal static extern double AppodealGetPredictedEcpmForPlacement(int adType, string placement);
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterBool(string name, bool value);
@@ -194,12 +183,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         [DllImport("__Internal")]
         internal static extern string AppodealGetUserId();
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealSetUserAge(int age);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealSetUserGender(int gender);
 
         [DllImport("__Internal")]
         internal static extern bool AppodealIsPrecacheAd(int adType);

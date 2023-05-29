@@ -1,4 +1,6 @@
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
 // ReSharper Disable CheckNamespace
@@ -9,18 +11,22 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealAdRevenueCallback : UnityEngine.AndroidJavaProxy
+    public class AppodealAdRevenueCallback : AndroidJavaProxy
     {
         private readonly IAdRevenueListener _listener;
+        private static SynchronizationContext _unityContext;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealAdRevenueCallback(IAdRevenueListener listener) : base("com.appodeal.ads.revenue.AdRevenueCallbacks")
         {
             _listener = listener;
         }
 
-        private void onAdRevenueReceive(UnityEngine.AndroidJavaObject ad)
+        private void onAdRevenueReceive(AndroidJavaObject ad)
         {
-            _listener?.OnAdRevenueReceived(
+            _unityContext?.Post(obj => _listener?.OnAdRevenueReceived(
                 new AppodealAdRevenue
                 {
                     AdType = ad.Call<string>("getAdTypeString"),
@@ -32,7 +38,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                     Currency = ad.Call<string>("getCurrency"),
                     RevenuePrecision = ad.Call<string>("getRevenuePrecision")
                 }
-            );
+            ), null);
         }
     }
 }

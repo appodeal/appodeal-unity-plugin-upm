@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.ConsentManagement.Common;
@@ -90,46 +89,6 @@ namespace AppodealStack.ConsentManagement.Api
             return NativeVendor.GetLegitimateInterestPurposeIds();
         }
 
-        #region Deprecated Methods
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetName) of this method instead.", false)]
-        public string getName()
-        {
-            return NativeVendor.GetName();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetBundle) of this method instead.", false)]
-        public string getBundle()
-        {
-            return NativeVendor.GetBundle();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPolicyUrl) of this method instead.", false)]
-        public string getPolicyUrl()
-        {
-            return NativeVendor.GetPolicyUrl();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetPurposeIds) of this method instead.", false)]
-        public List<int> getPurposeIds()
-        {
-            return NativeVendor.GetPurposeIds();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetFeatureIds) of this method instead.", false)]
-        public List<int> getFeatureIds()
-        {
-            return NativeVendor.GetFeatureIds();
-        }
-
-        [Obsolete("It will be removed in the next release. Use the capitalized version (GetLegitimateInterestPurposeIds) of this method instead.", false)]
-        public List<int> getLegitimateInterestPurposeIds()
-        {
-            return NativeVendor.GetLegitimateInterestPurposeIds();
-        }
-
-        #endregion
-
         /// <summary>
         /// Builder class is responsible for creating an object of the <see langword="Vendor"/> class.
         /// </summary>
@@ -197,38 +156,6 @@ namespace AppodealStack.ConsentManagement.Api
                 GetNativeVendorBuilder().SetLegitimateInterestPurposeIds(legitimateInterestPurposeIds);
                 return this;
             }
-
-            #region Deprecated Methods
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (Build) of this method instead.", false)]
-            public Vendor build()
-            {
-                return new Vendor(GetNativeVendorBuilder().Build());
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (SetPurposeIds) of this method instead.", false)]
-            public Builder setPurposeIds(IEnumerable<int> purposeIds)
-            {
-                GetNativeVendorBuilder().SetPurposeIds(purposeIds);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (SetFeatureId) of this method instead.", false)]
-            public Builder setFeatureId(IEnumerable<int> featureIds)
-            {
-                GetNativeVendorBuilder().SetFeatureIds(featureIds);
-                return this;
-            }
-
-            [Obsolete("It will be removed in the next release. Use the capitalized version (SetLegitimateInterestPurposeIds) of this method instead.", false)]
-            public Builder setLegitimateInterestPurposeIds(IEnumerable<int> legitimateInterestPurposeIds)
-            {
-                GetNativeVendorBuilder().SetLegitimateInterestPurposeIds(legitimateInterestPurposeIds);
-                return this;
-            }
-
-            #endregion
-
         }
     }
 }
