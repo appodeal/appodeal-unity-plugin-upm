@@ -17,12 +17,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         private AndroidJavaObject GetConsentManagerJavaObject()
         {
-            return _consentManager ?? (_consentManager = new AndroidJavaObject("com.appodeal.consent.ConsentManager"));
+            return _consentManager ??= new AndroidJavaObject("com.appodeal.consent.ConsentManager");
         }
 
         private AndroidJavaObject GetActivity()
         {
-            return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
+            return _activity ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
         }
 
         private ConsentInfoUpdateCallbacks GetConsentInfoCallback(IConsentInfoUpdateListener listener)
@@ -51,19 +51,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public ConsentManagerStorage GetStorage()
         {
-            var storage = ConsentManagerStorage.None;
-
-            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getStorage").Call<string>("name"))
+            return GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getStorage").Call<string>("name") switch
             {
-                case "NONE":
-                    storage = ConsentManagerStorage.None;
-                    break;
-                case "SHARED_PREFERENCE":
-                    storage = ConsentManagerStorage.SharedPreference;
-                    break;
-            }
-
-            return storage;
+                "NONE" => ConsentManagerStorage.None,
+                "SHARED_PREFERENCE" => ConsentManagerStorage.SharedPreference,
+                _ => ConsentManagerStorage.None
+            };
         }
 
         public void SetStorage(ConsentManagerStorage iabStorage)
@@ -87,65 +80,35 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public ConsentShouldShow ShouldShowConsentDialog()
         {
-            var shouldShow = ConsentShouldShow.Unknown;
-
-            switch (GetConsentManagerJavaObject().CallStatic<bool>("getShouldShow"))
+            return GetConsentManagerJavaObject().CallStatic<bool>("getShouldShow") switch
             {
-                case true:
-                    shouldShow = ConsentShouldShow.True;
-                    break;
-                case false:
-                    shouldShow = ConsentShouldShow.False;
-                    break;
-            }
-
-            return shouldShow;
+                true => ConsentShouldShow.True,
+                false => ConsentShouldShow.False
+            };
         }
 
         public ConsentZone GetConsentZone()
         {
-            var zone = ConsentZone.Unknown;
-
-            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentZone").Call<string>("name"))
+            return GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentZone").Call<string>("name") switch
             {
-                case "UNKNOWN":
-                    zone = ConsentZone.Unknown;
-                    break;
-                case "NONE":
-                    zone = ConsentZone.None;
-                    break;
-                case "GDPR":
-                    zone = ConsentZone.Gdpr;
-                    break;
-                case "CCPA":
-                    zone = ConsentZone.Ccpa;
-                    break;
-            }
-
-            return zone;
+                "UNKNOWN" => ConsentZone.Unknown,
+                "NONE" => ConsentZone.None,
+                "GDPR" => ConsentZone.Gdpr,
+                "CCPA" => ConsentZone.Ccpa,
+                _ => ConsentZone.Unknown
+            };
         }
 
         public ConsentStatus GetConsentStatus()
         {
-            var status = ConsentStatus.Unknown;
-
-            switch (GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentStatus").Call<string>("name"))
+            return GetConsentManagerJavaObject().CallStatic<AndroidJavaObject>("getConsentStatus").Call<string>("name") switch
             {
-                case "UNKNOWN":
-                    status = ConsentStatus.Unknown;
-                    break;
-                case "PERSONALIZED":
-                    status = ConsentStatus.Personalized;
-                    break;
-                case "NON_PERSONALIZED":
-                    status = ConsentStatus.NonPersonalized;
-                    break;
-                case "PARTLY_PERSONALIZED":
-                    status = ConsentStatus.PartlyPersonalized;
-                    break;
-            }
-
-            return status;
+                "UNKNOWN" => ConsentStatus.Unknown,
+                "PERSONALIZED" => ConsentStatus.Personalized,
+                "NON_PERSONALIZED" => ConsentStatus.NonPersonalized,
+                "PARTLY_PERSONALIZED" => ConsentStatus.PartlyPersonalized,
+                _ => ConsentStatus.Unknown
+            };
         }
 
         public IConsent GetConsent()

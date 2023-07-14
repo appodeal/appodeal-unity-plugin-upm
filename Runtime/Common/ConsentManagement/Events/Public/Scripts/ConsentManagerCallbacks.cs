@@ -50,7 +50,7 @@ namespace AppodealStack.ConsentManagement.Common
             /// <summary>
             /// Returns an instance of the <see cref="ConsentFormProxyListener"/> class.
             /// </summary>
-            public IConsentFormProxyListener ConsentFormEventsImpl => _consentFormEventsImpl ?? (_consentFormEventsImpl = new ConsentFormProxyListener());
+            public IConsentFormProxyListener ConsentFormEventsImpl => _consentFormEventsImpl ??= new ConsentFormProxyListener();
 
             /// <summary>
             /// Raised when the Consent Form is successfully loaded.
@@ -129,7 +129,7 @@ namespace AppodealStack.ConsentManagement.Common
             /// <summary>
             /// Returns an instance of the <see cref="ConsentInfoProxyListener"/> class.
             /// </summary>
-            public IConsentInfoProxyListener ConsentInfoEventsImpl => _consentInfoEventsImpl ?? (_consentInfoEventsImpl = new ConsentInfoProxyListener());
+            public IConsentInfoProxyListener ConsentInfoEventsImpl => _consentInfoEventsImpl ??= new ConsentInfoProxyListener();
 
             /// <summary>
             /// <para>

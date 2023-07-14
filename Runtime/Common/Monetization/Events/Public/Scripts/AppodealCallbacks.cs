@@ -48,7 +48,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="SdkProxyListener"/> class.
             /// </summary>
-            public ISdkProxyListener SdkEventsImpl => _sdkEventsImpl ?? (_sdkEventsImpl = new SdkProxyListener());
+            public ISdkProxyListener SdkEventsImpl => _sdkEventsImpl ??= new SdkProxyListener();
 
             /// <summary>
             /// <para>
@@ -106,7 +106,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="AdRevenueProxyListener"/> class.
             /// </summary>
-            public IAdRevenueProxyListener AdRevenueEventsImpl => _adRevenueEventsImpl ?? (_adRevenueEventsImpl = new AdRevenueProxyListener());
+            public IAdRevenueProxyListener AdRevenueEventsImpl => _adRevenueEventsImpl ??= new AdRevenueProxyListener();
 
             /// <summary>
             /// <para>
@@ -164,7 +164,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="InAppPurchaseValidationProxyListener"/> class.
             /// </summary>
-            public IInAppPurchaseValidationProxyListener PurchaseEventsImpl => _purchaseEventsImpl ?? (_purchaseEventsImpl = new InAppPurchaseValidationProxyListener());
+            public IInAppPurchaseValidationProxyListener PurchaseEventsImpl => _purchaseEventsImpl ??= new InAppPurchaseValidationProxyListener();
 
             /// <summary>
             /// <para>
@@ -231,7 +231,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="MrecAdProxyListener"/> class.
             /// </summary>
-            public IMrecAdProxyListener MrecAdEventsImpl => _mrecAdEventsImpl ?? (_mrecAdEventsImpl = new MrecAdProxyListener());
+            public IMrecAdProxyListener MrecAdEventsImpl => _mrecAdEventsImpl ??= new MrecAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -319,7 +319,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="BannerAdProxyListener"/> class.
             /// </summary>
-            public IBannerAdProxyListener BannerAdEventsImpl => _bannerAdEventsImpl ?? (_bannerAdEventsImpl = new BannerAdProxyListener());
+            public IBannerAdProxyListener BannerAdEventsImpl => _bannerAdEventsImpl ??= new BannerAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -407,7 +407,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="InterstitialAdProxyListener"/> class.
             /// </summary>
-            public IInterstitialAdProxyListener InterstitialAdEventsImpl => _interstitialAdEventsImpl ?? (_interstitialAdEventsImpl = new InterstitialAdProxyListener());
+            public IInterstitialAdProxyListener InterstitialAdEventsImpl => _interstitialAdEventsImpl ??= new InterstitialAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -501,7 +501,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="RewardedVideoAdProxyListener"/> class.
             /// </summary>
-            public IRewardedVideoAdProxyListener RewardedVideoAdEventsImpl => _rewardedVideoAdEventsImpl ?? (_rewardedVideoAdEventsImpl = new RewardedVideoAdProxyListener());
+            public IRewardedVideoAdProxyListener RewardedVideoAdEventsImpl => _rewardedVideoAdEventsImpl ??= new RewardedVideoAdProxyListener();
 
             /// <summary>
             /// <para>

@@ -28,91 +28,49 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public ConsentZone GetZone()
         {
-            var zone = ConsentZone.Unknown;
-
-            switch (ConsentObjCBridge.GetZone())
+            return ConsentObjCBridge.GetZone() switch
             {
-                case "UNKNOWN":
-                    zone = ConsentZone.Unknown;
-                    break;
-                case "NONE":
-                    zone = ConsentZone.None;
-                    break;
-                case "CCPA":
-                    zone = ConsentZone.Ccpa;
-                    break;
-                case "GDPR":
-                    zone = ConsentZone.Gdpr;
-                    break;
-            }
-
-            return zone;
+                "UNKNOWN" => ConsentZone.Unknown,
+                "NONE" => ConsentZone.None,
+                "CCPA" => ConsentZone.Ccpa,
+                "GDPR" => ConsentZone.Gdpr,
+                _ => ConsentZone.Unknown
+            };
         }
 
         public ConsentStatus GetStatus()
         {
-            var status = ConsentStatus.Unknown;
-
-            switch (ConsentObjCBridge.GetStatus())
+            return ConsentObjCBridge.GetStatus() switch
             {
-                case "UNKNOWN":
-                    status = ConsentStatus.Unknown;
-                    break;
-                case "PERSONALIZED":
-                    status = ConsentStatus.Personalized;
-                    break;
-                case "NON_PERSONALIZED":
-                    status = ConsentStatus.NonPersonalized;
-                    break;
-                case "PARTLY_PERSONALIZED":
-                    status = ConsentStatus.PartlyPersonalized;
-                    break;
-            }
-
-            return status;
+                "UNKNOWN" => ConsentStatus.Unknown,
+                "PERSONALIZED" => ConsentStatus.Personalized,
+                "NON_PERSONALIZED" => ConsentStatus.NonPersonalized,
+                "PARTLY_PERSONALIZED" => ConsentStatus.PartlyPersonalized,
+                _ => ConsentStatus.Unknown
+            };
         }
 
         public ConsentAuthorizationStatus GetAuthorizationStatus()
         {
-            var authorizationStatus = ConsentAuthorizationStatus.NotDetermined;
-
-            switch (ConsentObjCBridge.GetAuthorizationStatus())
+            return ConsentObjCBridge.GetAuthorizationStatus() switch
             {
-                case "NOT_DETERMINED":
-                    authorizationStatus = ConsentAuthorizationStatus.NotDetermined;
-                    break;
-                case "DENIED":
-                    authorizationStatus = ConsentAuthorizationStatus.Denied;
-                    break;
-                case "RESTRICTED":
-                    authorizationStatus = ConsentAuthorizationStatus.Restricted;
-                    break;
-                case "AUTHORIZED":
-                    authorizationStatus = ConsentAuthorizationStatus.Authorized;
-                    break;
-            }
-
-            return authorizationStatus;
+                "NOT_DETERMINED" => ConsentAuthorizationStatus.NotDetermined,
+                "DENIED" => ConsentAuthorizationStatus.Denied,
+                "RESTRICTED" => ConsentAuthorizationStatus.Restricted,
+                "AUTHORIZED" => ConsentAuthorizationStatus.Authorized,
+                _ => ConsentAuthorizationStatus.NotDetermined
+            };
         }
 
         public HasConsent HasConsentForVendor(string bundle)
         {
-            var hasConsent = HasConsent.Unknown;
-
-            switch (ConsentObjCBridge.GetStatus())
+            return ConsentObjCBridge.GetStatus() switch
             {
-                case "UNKNOWN":
-                    hasConsent = HasConsent.Unknown;
-                    break;
-                case "TRUE":
-                    hasConsent = HasConsent.True;
-                    break;
-                case "FALSE":
-                    hasConsent = HasConsent.False;
-                    break;
-            }
-
-            return hasConsent;
+                "UNKNOWN" => HasConsent.Unknown,
+                "TRUE" => HasConsent.True,
+                "FALSE" => HasConsent.False,
+                _ => HasConsent.Unknown
+            };
         }
 
         public string GetIabConsentString()

@@ -17,7 +17,7 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         private AndroidJavaObject GetActivity()
         {
-            return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
+            return _activity ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
         }
 
         private AndroidJavaObject GetConsentFormJavaObject()

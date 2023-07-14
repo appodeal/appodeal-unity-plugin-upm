@@ -26,48 +26,26 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public ConsentZone GetZone()
         {
-            var zone = ConsentZone.Unknown;
-
-            switch (GetConsentJavaObject().Call<AndroidJavaObject>("getZone").Call<string>("name"))
+            return GetConsentJavaObject().Call<AndroidJavaObject>("getZone").Call<string>("name") switch
             {
-                case "UNKNOWN":
-                    zone = ConsentZone.Unknown;
-                    break;
-                case "NONE":
-                    zone = ConsentZone.None;
-                    break;
-                case "GDPR":
-                    zone = ConsentZone.Gdpr;
-                    break;
-                case "CCPA":
-                    zone = ConsentZone.Ccpa;
-                    break;
-            }
-
-            return zone;
+                "UNKNOWN" => ConsentZone.Unknown,
+                "NONE" => ConsentZone.None,
+                "GDPR" => ConsentZone.Gdpr,
+                "CCPA" => ConsentZone.Ccpa,
+                _ => ConsentZone.Unknown
+            };
         }
 
         public ConsentStatus GetStatus()
         {
-            var status = ConsentStatus.Unknown;
-
-            switch (GetConsentJavaObject().Call<AndroidJavaObject>("getStatus").Call<string>("name"))
+            return GetConsentJavaObject().Call<AndroidJavaObject>("getStatus").Call<string>("name") switch
             {
-                case "UNKNOWN":
-                    status = ConsentStatus.Unknown;
-                    break;
-                case "NON_PERSONALIZED":
-                    status = ConsentStatus.NonPersonalized;
-                    break;
-                case "PARTLY_PERSONALIZED":
-                    status = ConsentStatus.PartlyPersonalized;
-                    break;
-                case "PERSONALIZED":
-                    status = ConsentStatus.Personalized;
-                    break;
-            }
-
-            return status;
+                "UNKNOWN" => ConsentStatus.Unknown,
+                "NON_PERSONALIZED" => ConsentStatus.NonPersonalized,
+                "PARTLY_PERSONALIZED" => ConsentStatus.PartlyPersonalized,
+                "PERSONALIZED" => ConsentStatus.Personalized,
+                _ => ConsentStatus.Unknown
+            };
         }
 
         public ConsentAuthorizationStatus GetAuthorizationStatus()
@@ -78,19 +56,11 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
 
         public HasConsent HasConsentForVendor(string bundle)
         {
-            var hasConsent = HasConsent.Unknown;
-
-            switch (GetConsentJavaObject().Call<bool>("hasConsentForVendor", Helper.GetJavaObject(bundle)))
+            return GetConsentJavaObject().Call<bool>("hasConsentForVendor", Helper.GetJavaObject(bundle)) switch
             {
-                case true:
-                    hasConsent = HasConsent.True;
-                    break;
-                case false:
-                    hasConsent = HasConsent.False;
-                    break;
-            }
-
-            return hasConsent;
+                true => HasConsent.True,
+                false => HasConsent.False
+            };
         }
 
         public string GetIabConsentString()

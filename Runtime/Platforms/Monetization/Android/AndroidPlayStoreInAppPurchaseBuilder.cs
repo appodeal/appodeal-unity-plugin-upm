@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
@@ -14,15 +15,12 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public AndroidPlayStoreInAppPurchaseBuilder(PlayStorePurchaseType purchaseType)
         {
-            switch (purchaseType)
+            _inAppPurchaseBuilder = purchaseType switch
             {
-                case PlayStorePurchaseType.Subs:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder");
-                    break;
-                case PlayStorePurchaseType.InApp:
-                    _inAppPurchaseBuilder = new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder");
-                    break;
-            }
+                PlayStorePurchaseType.Subs => new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder"),
+                PlayStorePurchaseType.InApp => new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder"),
+                _ => throw new ArgumentOutOfRangeException(nameof(purchaseType), purchaseType, null)
+            };
         }
 
         private AndroidJavaObject GetBuilder()

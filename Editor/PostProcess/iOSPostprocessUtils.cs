@@ -93,12 +93,9 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static bool CheckContainsKey(string path, string key)
         {
-            string contentString;
-            using (var reader = new StreamReader(path))
-            {
-                contentString = reader.ReadToEnd();
-                reader.Close();
-            }
+            using var reader = new StreamReader(path);
+            string contentString = reader.ReadToEnd();
+            reader.Close();
 
             return contentString.Contains(key);
         }

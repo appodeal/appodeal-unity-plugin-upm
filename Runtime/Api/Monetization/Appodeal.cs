@@ -23,7 +23,7 @@ namespace AppodealStack.Monetization.Api
 
         private static IAppodealAdsClient GetInstance()
         {
-            return _client ?? (_client = AppodealAdsClientFactory.GetAppodealAdsClient());
+            return _client ??= AppodealAdsClientFactory.GetAppodealAdsClient();
         }
 
         /// <summary>
