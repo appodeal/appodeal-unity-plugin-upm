@@ -25,7 +25,7 @@ namespace AppodealStack.UnityEditor.PluginRemover
     public static class RemoveHelper
     {
         private const string RemoveList = "Editor/PluginRemover/remove_list.xml";
-        private const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
+        private const string PackagePath = "Packages/com.appodeal.mediation";
 
         private static IEnumerable<ItemToRemove> ReadXML()
         {
