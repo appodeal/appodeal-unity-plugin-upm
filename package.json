@@ -5,7 +5,8 @@
   "description": "Monetize more with less hassle. Our one ad mediation SDK includes it all: 70+ ad demand sources, all ad formats, in-app bidding algorithm, full-controls, a/b testing plus much more.",
   "documentationUrl": "https://wiki.appodeal.com/en/unity/get-started",
   "changelogUrl": "https://wiki.appodeal.com/en/unity/get-started/advanced/changelog",
-  "unity": "2019.4",
+  "unity": "2020.3",
+  "unityRelease": "16f1",
   "dependencies": {
     "com.google.external-dependency-manager": "1.2.175"
   },

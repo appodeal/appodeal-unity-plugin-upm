@@ -46,12 +46,10 @@ namespace AppodealStack.UnityEditor.SDKManager
             var document = new XmlDocument();
             document.Load(inputXml);
 
-            using (var writer = new XmlTextWriter(inputXml, Encoding.UTF8))
-            {
-                writer.Formatting = Formatting.Indented;
-                writer.Indentation = 4;
-                document.Save(writer);
-            }
+            using var writer = new XmlTextWriter(inputXml, Encoding.UTF8);
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 4;
+            document.Save(writer);
         }
 
         public static string GetConfigName(string value)

@@ -65,10 +65,8 @@ namespace AppodealStack.ConsentManagement.Platforms.Android
             {
                 for (var i = 0; i < joList.Call<int>("size"); i++)
                 {
-                    using (var joElement = joList.Call<AndroidJavaObject>("get", i))
-                    {
-                        csList.Add(joElement.Call<int>("intValue"));
-                    }
+                    using var joElement = joList.Call<AndroidJavaObject>("get", i);
+                    csList.Add(joElement.Call<int>("intValue"));
                 }
             }
             AndroidJNI.PopLocalFrame(IntPtr.Zero);

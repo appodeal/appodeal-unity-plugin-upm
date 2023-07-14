@@ -108,22 +108,22 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         private AndroidJavaClass GetAppodealClass()
         {
-            return _appodealClass ?? (_appodealClass = new AndroidJavaClass("com.appodeal.ads.Appodeal"));
+            return _appodealClass ??= new AndroidJavaClass("com.appodeal.ads.Appodeal");
         }
 
         public AndroidJavaClass GetAppodealUnityClass()
         {
-            return _appodealUnityClass ?? (_appodealUnityClass = new AndroidJavaClass("com.appodeal.unity.AppodealUnity"));
+            return _appodealUnityClass ??= new AndroidJavaClass("com.appodeal.unity.AppodealUnity");
         }
 
         private AndroidJavaObject GetAppodealBannerInstance()
         {
-            return _appodealBannerInstance ?? (_appodealBannerInstance = new AndroidJavaClass("com.appodeal.ads.AppodealUnityBannerView").CallStatic<AndroidJavaObject>("getInstance"));
+            return _appodealBannerInstance ??= new AndroidJavaClass("com.appodeal.ads.AppodealUnityBannerView").CallStatic<AndroidJavaObject>("getInstance");
         }
 
         private AndroidJavaObject GetActivity()
         {
-            return _activity ?? (_activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"));
+            return _activity ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
         }
 
         private void SetCallbacks()

@@ -63,19 +63,12 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public ConsentManagerStorage GetStorage()
         {
-            var storage = ConsentManagerStorage.None;
-
-            switch (GetConsentManagerObjCBridge().GetStorage())
+            return GetConsentManagerObjCBridge().GetStorage() switch
             {
-                case "NONE":
-                    storage = ConsentManagerStorage.None;
-                    break;
-                case "SHARED_PREFERENCE":
-                    storage = ConsentManagerStorage.SharedPreference;
-                    break;
-            }
-
-            return storage;
+                "NONE" => ConsentManagerStorage.None,
+                "SHARED_PREFERENCE" => ConsentManagerStorage.SharedPreference,
+                _ => ConsentManagerStorage.None
+            };
         }
 
         public void SetStorage(ConsentManagerStorage iabStorage)
@@ -90,68 +83,37 @@ namespace AppodealStack.ConsentManagement.Platforms.Ios
 
         public ConsentShouldShow ShouldShowConsentDialog()
         {
-            var shouldShow = ConsentShouldShow.Unknown;
-
-            switch (GetConsentManagerObjCBridge().ShouldShowConsentDialog())
+            return GetConsentManagerObjCBridge().ShouldShowConsentDialog() switch
             {
-                case "UNKNOWN":
-                    shouldShow = ConsentShouldShow.Unknown;
-                    break;
-                case "TRUE":
-                    shouldShow = ConsentShouldShow.True;
-                    break;
-                case "FALSE":
-                    shouldShow = ConsentShouldShow.False;
-                    break;
-            }
-
-            return shouldShow;
+                "UNKNOWN" => ConsentShouldShow.Unknown,
+                "TRUE" => ConsentShouldShow.True,
+                "FALSE" => ConsentShouldShow.False,
+                _ => ConsentShouldShow.Unknown
+            };
         }
 
         public ConsentZone GetConsentZone()
         {
-            var zone = ConsentZone.Unknown;
-
-            switch (GetConsentManagerObjCBridge().GetConsentZone())
+            return GetConsentManagerObjCBridge().GetConsentZone() switch
             {
-                case "UNKNOWN":
-                    zone = ConsentZone.Unknown;
-                    break;
-                case "CCPA":
-                    zone = ConsentZone.Ccpa;
-                    break;
-                case "GDPR":
-                    zone = ConsentZone.Gdpr;
-                    break;
-                case "NONE":
-                    zone = ConsentZone.None;
-                    break;
-            }
-
-            return zone;
+                "UNKNOWN" => ConsentZone.Unknown,
+                "CCPA" => ConsentZone.Ccpa,
+                "GDPR" => ConsentZone.Gdpr,
+                "NONE" => ConsentZone.None,
+                _ => ConsentZone.Unknown
+            };
         }
 
         public ConsentStatus GetConsentStatus()
         {
-            var status = ConsentStatus.Unknown;
-
-            switch (GetConsentManagerObjCBridge().GetConsentStatus())
+            return GetConsentManagerObjCBridge().GetConsentStatus() switch
             {
-                case "UNKNOWN":
-                    status = ConsentStatus.Unknown;
-                    break;
-                case "PERSONALIZED":
-                    status = ConsentStatus.Personalized;
-                    break;
-                case "NON_PERSONALIZED":
-                    status = ConsentStatus.NonPersonalized;
-                    break;
-                case "PARTLY_PERSONALIZED":
-                    status = ConsentStatus.PartlyPersonalized;
-                    break;
-            }
-
-            return status;
+                "UNKNOWN" => ConsentStatus.Unknown,
+                "PERSONALIZED" => ConsentStatus.Personalized,
+                "NON_PERSONALIZED" => ConsentStatus.NonPersonalized,
+                "PARTLY_PERSONALIZED" => ConsentStatus.PartlyPersonalized,
+                _ => ConsentStatus.Unknown
+            };
         }
 
         public IConsent GetConsent()

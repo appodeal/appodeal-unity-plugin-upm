@@ -26,12 +26,12 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             string type = GetInAppPurchase().Call<AndroidJavaObject>("getType").Call<string>("toString");
 
-            switch (type)
+            return type switch
             {
-                case "Subs": return PlayStorePurchaseType.Subs;
-                case "InApp": return PlayStorePurchaseType.InApp;
-                default: throw new ArgumentOutOfRangeException(nameof(PlayStorePurchaseType), type, null);
-            }
+                "Subs" => PlayStorePurchaseType.Subs,
+                "InApp" => PlayStorePurchaseType.InApp,
+                _ => throw new ArgumentOutOfRangeException(nameof(PlayStorePurchaseType), type, null)
+            };
         }
 
         public string GetPublicKey()

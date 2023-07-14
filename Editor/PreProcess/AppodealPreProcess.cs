@@ -237,11 +237,9 @@ namespace AppodealStack.UnityEditor.PreProcess
             contentString = Regex.Replace(contentString, GradleImplementation + GradleMultidexDependency,
                 String.Empty);
 
-            using (var writer = new StreamWriter(GetDefaultGradleTemplate()))
-            {
-                writer.Write(contentString);
-                writer.Close();
-            }
+            using var writer = new StreamWriter(GetDefaultGradleTemplate());
+            writer.Write(contentString);
+            writer.Close();
         }
 
         private static string GetDefaultGradleTemplate()
@@ -262,12 +260,9 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private static string GetContentString(string path)
         {
-            string contentString;
-            using (var reader = new StreamReader(path))
-            {
-                contentString = reader.ReadToEnd();
-                reader.Close();
-            }
+            using var reader = new StreamReader(path);
+            string contentString = reader.ReadToEnd();
+            reader.Close();
 
             return contentString;
         }
@@ -310,11 +305,9 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private void SaveAs(string path)
         {
-            using (var writer = new XmlTextWriter(path, new UTF8Encoding(false)))
-            {
-                writer.Formatting = Formatting.Indented;
-                Save(writer);
-            }
+            using var writer = new XmlTextWriter(path, new UTF8Encoding(false));
+            writer.Formatting = Formatting.Indented;
+            Save(writer);
         }
     }
 
