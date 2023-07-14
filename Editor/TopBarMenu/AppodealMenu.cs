@@ -40,7 +40,7 @@ namespace AppodealStack.UnityEditor.TopBarMenu
             bool decision = RemoveHelper.RemovePlugin();
             if (decision)
             {
-                Client.Remove("com.appodeal.appodeal-unity-plugin-upm");
+                Client.Remove("com.appodeal.mediation");
             }
         }
     }

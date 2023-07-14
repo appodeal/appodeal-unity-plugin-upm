@@ -9,7 +9,7 @@ namespace AppodealStack.UnityEditor.Utils
         public const string PluginRequest = "https://mw-backend.appodeal.com/v2.1/unity";
         public const string AdaptersRequest = "https://mw-backend.appodeal.com/v2.1/unity/config/";
         public const string GitRepoAddress = "https://github.com/appodeal/appodeal-unity-plugin-upm.git";
-        public const string PackagePath = "Packages/com.appodeal.appodeal-unity-plugin-upm";
+        public const string PackagePath = "Packages/com.appodeal.mediation";
         public const string PluginPath = "Assets/Appodeal";
         public const string DependenciesPath = "Editor/Dependencies";
         public const string EditorAdPrefabsPath = "Editor/EditorAds/Prefabs";
