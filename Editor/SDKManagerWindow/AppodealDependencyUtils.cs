@@ -245,7 +245,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static AppodealDependency GetAppodealDependency(SortedDictionary<string, AppodealDependency> dependencies)
         {
-            return dependencies.First(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).Value;
+            return dependencies.FirstOrDefault(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).Value;
         }
     }
 }

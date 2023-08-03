@@ -4,6 +4,14 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://wiki.appodeal.com/en/unity/get-started/advanced/changelog).*
 
+### 3.2.0-alpha.1 (August 1, 2023)
++ Updated Appodeal Android SDK to v3.2.0-alpha.2
++ Updated Appodeal iOS SDK to v3.2.0-alpha.1
++ Changed Android dependencies distribution type
++ Updated ad networks in `AppodealNetworks` class
++ Updated minimal supported Unity version to v2020.3.16
++ Changed package name to `com.appodeal.mediation`
+
 ### 3.1.3-beta.2 (June 28, 2023)
 
 + Updated Appodeal Android SDK to v3.1.3-beta.2
@@ -18,7 +26,7 @@
 + Bumped minimal EDM version to v1.2.175
 + Made editor ads improvements & fixes
 + Removed deprecated methods & classes
-+ Added <code>Appodeal.GetPredictedEcpmForPlacement</code> method
++ Added `Appodeal.GetPredictedEcpmForPlacement` method
 + Minor improvements
 
 ### 3.0.2 (January 17, 2023)
@@ -34,11 +42,11 @@
 + Updated Appodeal Android SDK to 3.0.1
 + Updated Appodeal iOS SDK to 3.0.1
 + Updated EDM Unity Plugin to 1.2.174
-+ Removed Dummy.swift file as the new version of EDM plugin creates it by default
++ Removed `Dummy.swift` file as the new version of EDM plugin creates it by default
 + Changed Xcode project settings: bitcode is now off by default as Apple deprecated it
 + Implemented Events
-+ Implemented GetReward method
-+ Implemented OnAdRevenueReceived callback
++ Implemented `GetReward` method
++ Implemented `OnAdRevenueReceived` callback
 + Fixed a bug with Dependency Manager on Windows
 + Fixed a bug with re-importing plugin data when rebuilding Library dir
 + Minor improvements
@@ -52,7 +60,7 @@
 + Reworked API for better usability
 + Added XML comments for API
 + Fixed a few bugs
-+ Removed NonSkippable ad type
-+ Removed UserSettings, Consent, ConsentFormBuilder, ConsentManageException classes
++ Removed `NonSkippable` ad type
++ Removed `UserSettings`, `Consent`, `ConsentFormBuilder`, `ConsentManageException` classes
 + Removed setBannerBackground method
-+ Replaced showAsActivity & showAsDialog methods of ConsentForm class with a single Show() method
++ Replaced `showAsActivity` & `showAsDialog` methods of `ConsentForm` class with a single `Show()` method
