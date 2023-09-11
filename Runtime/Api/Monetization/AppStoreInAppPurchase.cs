@@ -8,7 +8,7 @@ namespace AppodealStack.Monetization.Api
 {
     /// <summary>
     /// <para>AppStoreInAppPurchase Unity API for developers, including documentation.</para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -30,7 +30,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets the purchase type.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Type of the purchase as AppStorePurchaseType object.</returns>
         public AppStorePurchaseType GetPurchaseType()
@@ -40,7 +40,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets an id of the purchased product.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Product Id as string.</returns>
         public string GetProductId()
@@ -50,7 +50,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets the transaction id of the purchase.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Id of the transaction as string.</returns>
         public string GetTransactionId()
@@ -60,7 +60,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets the price of the purchase.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Price as string.</returns>
         public string GetPrice()
@@ -70,7 +70,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets the currency of the purchase.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Currency as string.</returns>
         public string GetCurrency()
@@ -80,7 +80,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Gets the additional parameters of the purchase.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <returns>Additional parameters as string.</returns>
         public string GetAdditionalParameters()

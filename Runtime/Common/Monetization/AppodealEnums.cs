@@ -7,7 +7,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing all possible states of Appodeal Log Level.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/logging"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/logging?distribution=upm"/> for more details.
     /// </summary>
     public enum AppodealLogLevel
     {
@@ -20,7 +20,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing genders of the end-users.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm"/> for more details.
     /// </summary>
     public enum AppodealUserGender
     {
@@ -33,7 +33,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing all possible statuses of the Consent for GDPR consent zone.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum GdprUserConsent
     {
@@ -46,7 +46,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing all possible statuses of the Consent for CCPA consent zone.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum CcpaUserConsent
     {
@@ -59,7 +59,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing all supported types of In-App purchases for Google Play Store.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases"/> for more details.
     /// </summary>
     public enum PlayStorePurchaseType
     {
@@ -71,7 +71,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Enumeration containing all supported types of In-App purchases for Apple App Store.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum AppStorePurchaseType

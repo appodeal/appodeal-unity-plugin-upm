@@ -5,7 +5,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing all possible storage types for ConsentManager.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum ConsentManagerStorage
     {
@@ -17,7 +17,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing all possible statuses of the Consent.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum ConsentStatus
     {
@@ -31,7 +31,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing all possible Consent zones.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum ConsentZone
     {
@@ -45,7 +45,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing information on whether or not the Consent has been given.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum HasConsent
     {
@@ -58,7 +58,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing information on whether or not the Consent window should be shown.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum ConsentShouldShow
     {
@@ -71,7 +71,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Enumeration containing all possible states of the Consent Authorization status.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public enum ConsentAuthorizationStatus
     {

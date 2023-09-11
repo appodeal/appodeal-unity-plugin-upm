@@ -2,7 +2,7 @@
 
 ## Changelog
 
-*The full changelog can always be obtained at [Appodeal website](https://wiki.appodeal.com/en/unity/get-started/advanced/changelog).*
+*The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
 ### 3.1.3 (September 07, 2023)
 + Updated Appodeal Android SDK to v3.1.3

@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Appodeal Unity Plugin Documentation
-    url: https://wiki.appodeal.com/en/unity/get-started
+    url: https://docs.appodeal.com/unity/get-started?distribution=upm
     about: The place to get started with Appodeal Unity plugin.
   - name: Appodeal Support
     url: https://faq.appodeal.com/en/articles/96628-technical-support

@@ -8,7 +8,7 @@ namespace AppodealStack.ConsentManagement.Api
 {
     /// <summary>
     /// <para>Vendor Unity API for developers, including documentation.</para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -31,7 +31,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the name of the vendor.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>Name of the vendor as string.</returns>
         public string GetName()
@@ -41,7 +41,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the bundle identifier of the vendor.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>Bundle id as string.</returns>
         public string GetBundle()
@@ -51,7 +51,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the policy URL of the vendor.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>Policy URL as string.</returns>
         public string GetPolicyUrl()
@@ -61,7 +61,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the IAB purpose ids.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>IAB purpose ids as a list of integers.</returns>
         public List<int> GetPurposeIds()
@@ -71,7 +71,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the IAB features ids.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>IAB feature ids as a list of integers.</returns>
         public List<int> GetFeatureIds()
@@ -81,7 +81,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the IAB legitimate interest purpose ids.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>IAB legitimate interest purpose ids as a list of integers.</returns>
         public List<int> GetLegitimateInterestPurposeIds()
