@@ -5,7 +5,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Interface containing method signatures of the <see langword="AppStoreInAppPurchase"/> class.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
     /// </summary>
     public interface IAppStoreInAppPurchase : IInAppPurchaseBase
     {

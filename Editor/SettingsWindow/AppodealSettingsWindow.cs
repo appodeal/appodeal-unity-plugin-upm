@@ -93,8 +93,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
                     fixedHeight = 25
                 }, GUILayout.Width(200)))
                 {
-                    Application.OpenURL(
-                        "https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-2.3Admobconfiguration");
+                    Application.OpenURL("https://docs.appodeal.com/unity/get-started#admob-configuration");
                 }
 
                 GUILayout.Space(2);
@@ -121,7 +120,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             {
                 LabelField("Android Settings");
                 HeaderField("Add optional permissions",
-                    "https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-Configure-AndroidManifest.xml");
+                    "https://docs.appodeal.com/unity/get-started?settings=auto#configure-androidmanifestxml");
 
                 AppodealSettings.Instance.AccessCoarseLocationPermission = KeyRow("ACCESS_COARSE_LOCATION",
                     AppodealSettings.Instance.AccessCoarseLocationPermission);
@@ -147,7 +146,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             {
                 LabelField("iOS Settings");
                 HeaderField("Add keys to info.plist",
-                    "https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-2.2iOSconfiguration");
+                    "https://docs.appodeal.com/unity/get-started?settings=auto#other-feature-usage-descriptions");
 
                 AppodealSettings.Instance.NsUserTrackingUsageDescription = KeyRow("NSUserTrackingUsageDescription",
                     AppodealSettings.Instance.NsUserTrackingUsageDescription);
@@ -221,8 +220,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
                 GUILayout.Space(10);
 
-                HeaderField("Optional Settings",
-                    "https://wiki.appodeal.com/en/unity/get-started");
+                HeaderField("Optional Settings", "https://docs.appodeal.com/unity/services/meta");
 
                 AppodealSettings.Instance.FacebookAutoLogAppEvents = KeyRow("Enable FacebookAutoLogAppEvents",
                     AppodealSettings.Instance.FacebookAutoLogAppEvents);

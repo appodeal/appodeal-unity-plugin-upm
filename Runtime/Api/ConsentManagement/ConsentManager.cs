@@ -7,7 +7,7 @@ namespace AppodealStack.ConsentManagement.Api
 {
     /// <summary>
     /// <para>Consent Manager Unity API for developers, including documentation.</para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -28,7 +28,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets an instance of <see langword="ConsentManager"/> class.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <returns>Object of type <see langword="ConsentManager"/>.</returns>
         public static ConsentManager GetInstance()
@@ -38,7 +38,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Determines the status of user's consent by requesting information from server.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>Once result is obtained, either <see langword="OnConsentInfoUpdated"/> or <see langword="OnFailedToUpdateConsentInfo"/> callback method will be triggered.</remarks>
         /// <param name="appodealAppKey">appodeal app key that was assigned to your app when it was created.</param>
@@ -50,7 +50,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Disables auto displaying of Apple's ATT request window by Consent Manager. (Supported only for <see langword="iOS"/> platform)</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/app-tracking-transparency"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/app-tracking-transparency?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>Should be used before showing the ConsentForm window.</remarks>
         public void DisableAppTrackingTransparencyRequest()
@@ -60,7 +60,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Sets custom vendor to be displayed in the consent form. Allows, for example, to add yourself as a vendor.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>Should be called before using the <see cref="RequestConsentInfoUpdate"/> method.</remarks>
         /// <param name="customVendor">an instance of <see langword="Vendor"/> class.</param>
@@ -71,7 +71,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the vendor object that was previously set via the <see langword="SetCustomVendor"/>method.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <param name="bundle">2nd parameter of your custom vendor constructor.</param>
         /// <returns>Object of type <see langword="Vendor"/> if exists, otherwise null.</returns>
@@ -83,7 +83,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Checks whether or not ConsentManager uses SharedPreference / NSUserDefaults to overwrite iAB keys.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>ConsentManagerStorage.SharedPreference value will be returned only if the <see langword="ConsentManager.SetStorage(ConsentManagerStorage.SharedPreference)"/> method was called before using the <see langword="RequestConsentInfoUpdate"/> method.</remarks>
         /// <returns>Object of type <see langword="ConsentManagerStorage"/>.</returns>
@@ -94,7 +94,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Checks whether or not user is subject to the GDPR and CCPA acts and therefore if the consent window should be shown prior collection of personal data.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>Before getting response on <see cref="RequestConsentInfoUpdate"/> method this parameter is undefined. (Unknown status)</remarks>
         /// <returns>Object of type <see langword="ConsentShouldShow"/>.</returns>
@@ -105,7 +105,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Defines whether or not ConsentManager can use SharedPreference / NSUserDefaults to overwrite iAB keys.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>It is <see langword="ConsentManagerStorage.None"/> by default.</remarks>
         /// <param name="iabStorage">ConsentManagerStorage.SharedPreference - allows data to be stored in preferences, ConsentManagerStorage.None - disallows data to be stored in preferences.</param>
@@ -116,7 +116,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the ConsentZone object that contains information about whether on not the user is subject to either GDPR or CCPA.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>Before getting response on <see cref="RequestConsentInfoUpdate"/> method this parameter is undefined. (Unknown status)</remarks>
         /// <returns>Object of type <see langword="ConsentZone"/>.</returns>
@@ -127,7 +127,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the ConsentStatus object that contains information about whether on not the user has granted consent on collecting personal data.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>Before getting response on <see cref="RequestConsentInfoUpdate"/> method this parameter is undefined. (Unknown status)</remarks>
         /// <returns>Object of type <see langword="ConsentStatus"/>.</returns>
@@ -138,7 +138,7 @@ namespace AppodealStack.ConsentManagement.Api
 
         /// <summary>
         /// <para>Gets the IConsent object that can be further used in <see langword="Appodeal.UpdateConsent"/> method to let Appodeal SDK know whether or not collection of personal data is allowed.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
         /// </summary>
         /// <remarks>It can only be used after the <see langword="OnConsentInfoUpdated"/> callback method was called.</remarks>
         /// <returns>Object of type <see langword="IConsent"/>.</returns>
