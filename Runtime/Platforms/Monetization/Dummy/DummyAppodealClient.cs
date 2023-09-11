@@ -268,7 +268,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     btn.onClick.AddListener(() =>
                     {
                         SimFireCallback(ad.Name, Clicked);
-                        Application.OpenURL("https://wiki.appodeal.com/en/unity/get-started");
+                        Application.OpenURL("https://docs.appodeal.com/unity/get-started");
                     });
                 }
             }

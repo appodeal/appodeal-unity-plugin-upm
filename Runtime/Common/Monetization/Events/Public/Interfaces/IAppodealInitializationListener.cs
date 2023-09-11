@@ -12,7 +12,7 @@ namespace AppodealStack.Monetization.Common
         /// <para>
         /// Raised when Appodeal SDK initialization is finished.
         /// </para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/get-started?distribution=manual#step-3-initialize-sdk"/> for more details.
         /// </summary>
         /// <param name="errors">list of errors, if any. Otherwise - null.</param>
         void OnInitializationFinished(List<string> errors);

@@ -28,10 +28,7 @@ namespace AppodealStack.Monetization.Common
         public string Currency;
 
         /// <summary>
-        /// <para>
         /// Returns ad revenue information as a json-formatted string.
-        /// </para>
-        /// See <see href=""/> for more details.
         /// </summary>
         /// <param name="isPretty">If true, format the output for readability. If false, format the output for minimum size. Default is false.</param>
         public string ToJsonString(bool isPretty = false) => UnityEngine.JsonUtility.ToJson(this, isPretty);

@@ -8,7 +8,9 @@ assignees: DmitriiFeshchenko
 ---
 
 ## Step 0: Is this a new bug?
-Make sure to check our [troubleshooting](https://wiki.appodeal.com/en/faq-troubleshooting/troubleshooting) and [issues](https://github.com/appodeal/appodeal-unity-plugin-upm/issues) pages before submitting your bug report.
+Make sure to check our
+[troubleshooting](https://docs.appodeal.com/faq-and-troubleshooting/troubleshooting/unity-common-issues/65k-reference-limit)
+and [issues](https://github.com/appodeal/appodeal-unity-plugin-upm/issues) pages before submitting your bug report.
 
 *Please delete this section when posting a bug report.*
 
