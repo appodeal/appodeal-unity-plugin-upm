@@ -19,6 +19,7 @@ namespace AppodealStack.Monetization.Common
         public const string AppLovin = "applovin";
         public const string Appodeal = "appodeal";
         public const string BidMachine = "bidmachine";
+        public const string Bidon = "bidon";
         public const string BigoAds = "bigo_ads";
         public const string DTExchange = "dt_exchange";
         public const string Gam = "gam";
