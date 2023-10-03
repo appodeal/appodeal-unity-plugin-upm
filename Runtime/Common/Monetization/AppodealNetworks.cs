@@ -16,6 +16,7 @@ namespace AppodealStack.Monetization.Common
         public const string A4G = "a4g";
         public const string AdColony = "adcolony";
         public const string Admob = "admob";
+        public const string AdmobMediation = "admob_mediation";
         public const string AppLovin = "applovin";
         public const string Appodeal = "appodeal";
         public const string BidMachine = "bidmachine";
@@ -27,7 +28,6 @@ namespace AppodealStack.Monetization.Common
         public const string IronSource = "ironsource";
         public const string Meta = "facebook";
         public const string Mintegral = "mintegral";
-        public const string MobileFuse = "mobilefuse";
         public const string Mraid = "mraid";
         public const string MyTarget = "my_target";
         public const string Notsy = "notsy";
