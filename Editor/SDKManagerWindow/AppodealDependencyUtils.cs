@@ -22,7 +22,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
             var info = new DirectoryInfo(path);
             var fileInfo = info.GetFiles();
-            return fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta")).ToArray();
+            return fileInfo.Length <= 0 ? null : fileInfo.Where(val => val.Name.EndsWith("Dependencies.xml")).ToArray();
         }
 
         public static void ShowInternalErrorDialog(EditorWindow editorWindow, string message, string debugLog)
