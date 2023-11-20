@@ -570,42 +570,22 @@ namespace AppodealStack.Monetization.Platforms.Android
     {
         public static object GetJavaObject(object value)
         {
-            if (value is string)
+            if (!(value is bool) && !(value is char) && !(value is int) && !(value is long) && !(value is float) && !(value is double) && !(value is string))
             {
-                return value;
+                Debug.LogError($"[Appodeal Unity Plugin] Conversion of {value.GetType()} type to java is not implemented");
             }
 
-            if (value is char)
+            return value switch
             {
-                return new AndroidJavaObject("java.lang.Character", value);
-            }
-
-            if (value is bool)
-            {
-                return new AndroidJavaObject("java.lang.Boolean", value);
-            }
-
-            if (value is int)
-            {
-                return new AndroidJavaObject("java.lang.Integer", value);
-            }
-
-            if (value is long)
-            {
-                return new AndroidJavaObject("java.lang.Long", value);
-            }
-
-            if (value is float)
-            {
-                return new AndroidJavaObject("java.lang.Float", value);
-            }
-
-            if (value is double)
-            {
-                return new AndroidJavaObject("java.lang.Float", value);
-            }
-
-            return null;
+                bool _ => new AndroidJavaObject("java.lang.Boolean", value),
+                char _ => new AndroidJavaObject("java.lang.Character", value),
+                int _ => new AndroidJavaObject("java.lang.Integer", value),
+                long _ => new AndroidJavaObject("java.lang.Long", value),
+                float _ => new AndroidJavaObject("java.lang.Float", value),
+                double _ => new AndroidJavaObject("java.lang.Double", value),
+                string _ => value,
+                _ => null
+            };
         }
     }
 }
