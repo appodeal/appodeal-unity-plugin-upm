@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.appodeal.appodeal.unity">
-  <application android:allowBackup="true" android:networkSecurityConfig="@xml/network_security_config">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.appodeal.ads.unity">
+  <application android:networkSecurityConfig="@xml/network_security_config">
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
   </application>
   <uses-permission android:name="android.permission.INTERNET" />
