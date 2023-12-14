@@ -45,11 +45,6 @@ namespace AppodealStack.Monetization.Platforms.Android
             _unityContext?.Post(obj => _listener?.OnRewardedVideoShown(), null);
         }
 
-        private void onRewardedVideoFinished(double amount, AndroidJavaObject currency)
-        {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoFinished(amount, null), null);
-        }
-
         private void onRewardedVideoFinished(double amount, string currency)
         {
             _unityContext?.Post(obj => _listener?.OnRewardedVideoFinished(amount, currency), null);

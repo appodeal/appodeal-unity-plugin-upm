@@ -5,7 +5,7 @@ namespace AppodealStack.Monetization.Common
     /// <para>
     /// Interface containing signatures of Appodeal IAP Validation callback methods.
     /// </para>
-    /// See <see href=""/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=manual#step-2-callbacks"/> for more details.
     /// </summary>
     public interface IInAppPurchaseValidationListener
     {
@@ -13,7 +13,7 @@ namespace AppodealStack.Monetization.Common
         /// <para>
         /// Raised when In-App purchase is successfully validated.
         /// </para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=manual#step-2-callbacks"/> for more details.
         /// </summary>
         /// <param name="json">json-formatted string containing purchase data and errors, if any.</param>
         void OnInAppPurchaseValidationSucceeded(string json);
@@ -22,7 +22,7 @@ namespace AppodealStack.Monetization.Common
         /// <para>
         /// Raised when In-App purchase validation fails.
         /// </para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=manual#step-2-callbacks"/> for more details.
         /// </summary>
         /// <param name="json">json-formatted string containing errors.</param>
         void OnInAppPurchaseValidationFailed(string json);

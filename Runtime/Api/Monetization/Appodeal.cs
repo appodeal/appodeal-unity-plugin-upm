@@ -12,7 +12,7 @@ namespace AppodealStack.Monetization.Api
     /// <para>
     /// Appodeal Unity API for developers, including documentation.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/get-started?distribution=upm"/> for more details.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -23,7 +23,7 @@ namespace AppodealStack.Monetization.Api
 
         private static IAppodealAdsClient GetInstance()
         {
-            return _client ?? (_client = AppodealAdsClientFactory.GetAppodealAdsClient());
+            return _client ??= AppodealAdsClientFactory.GetAppodealAdsClient();
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace AppodealStack.Monetization.Api
         /// <example>To initialize only 300*250 banners use:<code>Appodeal.Initialize(appKey, AppodealAdType.Mrec, this);</code></example>
         /// <example>To initialize multiple ad types use the <see langword="|"/> operator:<code>Appodeal.Initialize(appKey, AppodealAdType.Interstitial | AppodealAdType.Banner, this);</code></example>
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started#UnitySDK.GetStarted-Step3Step3.InitializeSDK"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/get-started?distribution=upm#step-3-initialize-sdk"/> for more details.</remarks>
         /// <param name="appKey">appodeal app key that was assigned to your app when it was created.</param>
         /// <param name="adTypes">type of advertisement you want to initialize.</param>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IAppodealInitializeListener interface.</param>
@@ -62,7 +62,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Updates consent value used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
@@ -73,7 +73,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Updates consent value (GDPR regulation) used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
@@ -84,7 +84,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Updates consent value (CCPA regulation) used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
         /// <param name="consent">user's consent on processing of their personal data. https://oag.ca.gov/privacy/ccpa</param>
@@ -111,9 +111,9 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Sets Interstitial ad type callbacks.
         /// </para>
-        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/interstitial#id-[Development]UnitySDK.Interstitial-InterstitialCallbacks"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/interstitial?distribution=manual#callbacks"/> for more details.</remarks>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IInterstitialAdListener interface.</param>
         public static void SetInterstitialCallbacks(IInterstitialAdListener listener)
         {
@@ -124,9 +124,9 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Sets Rewarded Video ad type callbacks.
         /// </para>
-        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/rewarded-video#id-[Development]UnitySDK.Rewardedvideo-RewardedVideoCallbacks"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/rewarded-video?distribution=manual#callbacks"/> for more details.</remarks>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IRewardedVideoAdListener interface.</param>
         public static void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
         {
@@ -137,9 +137,9 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Sets Banner ad type callbacks.
         /// </para>
-        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-BannerCallbacks"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/banner?distribution=manual#callbacks"/> for more details.</remarks>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IBannerAdListener interface.</param>
         public static void SetBannerCallbacks(IBannerAdListener listener)
         {
@@ -150,9 +150,9 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Sets Mrec ad type callbacks.
         /// </para>
-        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/mrec#id-[Development]UnitySDK.MREC-MRECCallbacks"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/mrec?distribution=manual#callbacks"/> for more details.</remarks>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IMrecAdListener interface.</param>
         public static void SetMrecCallbacks(IMrecAdListener listener)
         {
@@ -163,9 +163,9 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Sets Ad Revenue callback.
         /// </para>
-        /// Read <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/run-callbacks-in-main-unity-thread"/> before implementing callbacks.
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
         /// </summary>
-        /// <remarks>See <see href=""/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/ad-revenue-callback?distribution=manual#callback-implementation"/> for more details.</remarks>
         /// <param name="listener">class which implements AppodealStack.Mediation.Common.IAdRevenueListener interface.</param>
         public static void SetAdRevenueCallback(IAdRevenueListener listener)
         {
@@ -427,7 +427,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Tracks in-app purchase information and sends info to our servers. It can be then used to segment users.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Trackin-apppurchases"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/segments-placements?distribution=upm#bought-in-apps"/> for more details.</remarks>
         /// <param name="amount">amount of purchase.</param>
         /// <param name="currency">currency of purchase.</param>
         public static void TrackInAppPurchase(double amount, string currency)
@@ -486,7 +486,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>Sets user id.</summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#set-user-id"/> for more details.</remarks>
         /// <param name="id">user id.</param>
         public static void SetUserId(string id)
         {
@@ -494,7 +494,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>Gets user id.</summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#set-user-id"/> for more details.</remarks>
         /// <returns>User id as string.</returns>
         public static string GetUserId()
         {
@@ -522,7 +522,7 @@ namespace AppodealStack.Monetization.Api
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/testing#id-[Development]UnitySDK.Testing-Step2:TestYourSDKintegration"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/testing?distribution=upm#enable-test-mode"/> for more details.</remarks>
         /// <param name="test">true if test mode is enabled, otherwise - false.</param>
         public static void SetTesting(bool test)
         {
@@ -649,7 +649,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Displays test screen. (Supported only for <see langword="Android"/> platform)
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/testing#id-[Development]UnitySDK.Testing-UsefulSDKmethods"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/testing?distribution=upm#test-adapters-integration"/> for more details.</remarks>
         public static void ShowTestScreen()
         {
             GetInstance().ShowTestScreen();
@@ -661,7 +661,7 @@ namespace AppodealStack.Monetization.Api
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/coppa"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/data-protection/coppa?distribution=upm"/> for more details.</remarks>
         /// <param name="value">true to disable data collection for kids apps.</param>
         public static void SetChildDirectedTreatment(bool value)
         {
@@ -671,7 +671,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Destroys the cached ad. (Supported only for <see langword="Android"/> platform)
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/ad-types/banner#id-[Development]UnitySDK.Banner-DestroyHiddenBanner"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/banner?distribution=upm#destroy-hidden-banner"/> for more details.</remarks>
         /// <param name="adType">type of advertisement. Currently supported only for AppodealAdType.Banner and AppodealAdType.Mrec</param>
         public static void Destroy(int adType)
         {
@@ -681,7 +681,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Adds a key-value pair to Appodeal Extra Data.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#send-extra-data"/> for more details.</remarks>
         /// <param name="key">unique identifier.</param>
         /// <param name="value">variable that will be added to Extra Data by key.</param>
         public static void SetExtraData(string key, bool value)
@@ -692,7 +692,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Adds a key-value pair to Appodeal Extra Data.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#send-extra-data"/> for more details.</remarks>
         /// <param name="key">unique identifier.</param>
         /// <param name="value">variable that will be added to Extra Data by key.</param>
         public static void SetExtraData(string key, int value)
@@ -703,7 +703,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Adds a key-value pair to Appodeal Extra Data.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#send-extra-data"/> for more details.</remarks>
         /// <param name="key">unique identifier.</param>
         /// <param name="value">variable that will be added to Extra Data by key.</param>
         public static void SetExtraData(string key, double value)
@@ -714,7 +714,7 @@ namespace AppodealStack.Monetization.Api
         /// <summary>
         /// Adds a key-value pair to Appodeal Extra Data.
         /// </summary>
-        /// <remarks>See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.</remarks>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#send-extra-data"/> for more details.</remarks>
         /// <param name="key">unique identifier.</param>
         /// <param name="value">variable that will be added to Extra Data by key.</param>
         public static void SetExtraData(string key, string value)
@@ -726,7 +726,7 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Resets extra data value by the provided key.
         /// </para>
-        /// See <see href="https://wiki.appodeal.com/en/unity/get-started/advanced/set-user-data#id-[Development]UnitySDK.SetUsersData-Sendextradata"/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#send-extra-data"/> for more details.
         /// </summary>
         /// <remarks>Use it to remove an extra data, that was previously set via one of the <see langword="SetExtraData()"/> methods.</remarks>
         /// <param name="key">unique identifier.</param>
@@ -756,7 +756,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>Sends event data to all connected analytic services such as Firebase, Adjust, AppsFlyer and Facebook.</para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/event-tracking?distribution=upm#step-1-how-to-track-in-app-events"/> for more details.
         /// </summary>
         /// <remarks>
         /// <para>Event parameter values must be one of the following types:  <see langword="string"/>, <see langword="double"/>, or <see langword="int"/></para>
@@ -773,7 +773,7 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Validates In-App purchase. (Supported only for <see langword="Android"/> platform)
         /// </para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
         /// <param name="purchase">object of type PlayStoreInAppPurchase, containing all data about the purchase.</param>
@@ -787,7 +787,7 @@ namespace AppodealStack.Monetization.Api
         /// <para>
         /// Validates In-App purchase. (Supported only for <see langword="iOS"/> platform)
         /// </para>
-        /// See <see href=""/> for more details.
+        /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
         /// </summary>
         /// <remarks>If the purchase is valid, this method will also call <see cref="TrackInAppPurchase"/> method under the hood.</remarks>
         /// <param name="purchase">object of type AppStoreInAppPurchase, containing all data about the purchase.</param>

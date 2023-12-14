@@ -43,6 +43,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             if (firebaseStrings == null)
             {
                 Debug.LogError($"[Appodeal] Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
+                RemoveFirebaseXmlDir($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
                 return;
             }
 
@@ -64,28 +65,34 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             string jsonString = new StreamReader(path).ReadToEnd();
             var model = JsonUtility.FromJson<FirebaseJsonModel>(jsonString);
+            var projectInfo = model?.project_info;
 
-            if ((model?.client?.Count ?? 0) <= 0) return null;
+            if (projectInfo?.project_id == null || (model.client?.Count ?? 0) <= 0) return null;
 
             foreach (var client in model.client)
             {
                 var clientInfo = client.client_info;
-                var androidClientInfo = clientInfo.android_client_info;
+                var androidClientInfo = clientInfo?.android_client_info;
 
                 if (androidClientInfo?.package_name != Application.identifier) continue;
 
-                var projectInfo = model.project_info;
-                return new Dictionary<string, string>
+                if ((client.api_key?.Count ?? 0) <= 0 || client.api_key[0].current_key == null) return null;
+                if (clientInfo?.mobilesdk_app_id == null) return null;
+
+                var outputDict = new Dictionary<string, string>
                 {
-                    {"firebase_database_url", projectInfo?.firebase_url},
-                    {"gcm_defaultSenderId", projectInfo?.project_number},
-                    {"google_storage_bucket", projectInfo?.storage_bucket},
-                    {"project_id", projectInfo?.project_id},
-                    {"google_api_key", client.api_key?[0].current_key},
-                    {"google_crash_reporting_api_key", client.api_key?[0].current_key},
+                    {"project_id", projectInfo.project_id},
+                    {"google_api_key", client.api_key[0].current_key},
+                    {"google_crash_reporting_api_key", client.api_key[0].current_key},
                     {"google_app_id", clientInfo.mobilesdk_app_id},
-                    {"default_web_client_id", client.oauth_client?[0].client_id}
                 };
+
+                if (projectInfo.firebase_url != null) outputDict.Add("firebase_database_url", projectInfo.firebase_url);
+                if (projectInfo.project_number != null) outputDict.Add("gcm_defaultSenderId", projectInfo.project_number);
+                if (projectInfo.storage_bucket != null) outputDict.Add("google_storage_bucket", projectInfo.storage_bucket);
+                if ((client.oauth_client?.Count ?? 0) > 0 && client.oauth_client[0].client_id != null) outputDict.Add("default_web_client_id", client.oauth_client[0].client_id);
+
+                return outputDict;
             }
             return null;
         }
@@ -101,7 +108,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             var resourcesElement = xmlDocument.CreateElement("resources");
 
             var attribute = xmlDocument.CreateAttribute("tools", "keep", "http://schemas.android.com/tools");
-            string toolsKeep = "@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id";
+            string toolsKeep = String.Join(",", firebaseStrings.Keys.Select(key => $"@string/{key}").ToArray());
             attribute.Value = toolsKeep;
             resourcesElement.Attributes.Append(attribute);
 

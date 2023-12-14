@@ -13,7 +13,7 @@ namespace AppodealStack.UnityEditor.TopBarMenu
         [MenuItem("Appodeal/Plugin Documentation")]
         public static void OpenDocumentation()
         {
-            Application.OpenURL("https://wiki.appodeal.com/en/unity/get-started");
+            Application.OpenURL("https://docs.appodeal.com/unity/get-started");
         }
 
         [MenuItem("Appodeal/Appodeal Homepage")]
@@ -40,7 +40,7 @@ namespace AppodealStack.UnityEditor.TopBarMenu
             bool decision = RemoveHelper.RemovePlugin();
             if (decision)
             {
-                Client.Remove("com.appodeal.appodeal-unity-plugin-upm");
+                Client.Remove("com.appodeal.mediation");
             }
         }
     }

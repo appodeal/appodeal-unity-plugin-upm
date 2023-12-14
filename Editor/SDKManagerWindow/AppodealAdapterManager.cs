@@ -882,11 +882,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 var pages = AppodealEditorConstants.PluginRequest.Split('/');
                 var page = pages.Length - 1;
 
-#if UNITY_2020_1_OR_NEWER
                 if (webRequest.result == UnityWebRequest.Result.ConnectionError)
-#else
-                if (webRequest.isNetworkError)
-#endif
                 {
                     Debug.Log(pages[page] + ": Error: " + webRequest.error);
                     AppodealDependencyUtils.ShowInternalErrorDialog(this, webRequest.error, string.Empty);
@@ -924,11 +920,7 @@ namespace AppodealStack.UnityEditor.SDKManager
                 var pages = adaptersUri.Split('/');
                 var page = pages.Length - 1;
 
-#if UNITY_2020_1_OR_NEWER
                 if (webRequest.result == UnityWebRequest.Result.ConnectionError)
-#else
-                if (webRequest.isNetworkError)
-#endif
                 {
                     Debug.Log(pages[page] + ": Error: " + webRequest.error);
                     AppodealDependencyUtils.ShowInternalErrorDialog(this, webRequest.error, string.Empty);
@@ -1041,13 +1033,11 @@ namespace AppodealStack.UnityEditor.SDKManager
                         }
                         else
                         {
-                            using (var enumerator = sourcesIos.GetEnumerator())
+                            using var enumerator = sourcesIos.GetEnumerator();
+                            while (enumerator.MoveNext())
                             {
-                                while (enumerator.MoveNext())
-                                {
-                                    var current = enumerator.Current;
-                                    Debug.Log(current);
-                                }
+                                var current = enumerator.Current;
+                                Debug.Log(current);
                             }
                         }
 

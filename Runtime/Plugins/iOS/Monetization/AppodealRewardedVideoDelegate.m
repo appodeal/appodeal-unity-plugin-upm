@@ -21,6 +21,9 @@
 }
 
 -(void) rewardedVideoWillDismissAndWasFullyWatched:(BOOL)wasFullyWatched {
+    extern bool _didResignActive;
+    if(_didResignActive) return;
+
     if(self.rewardedVideoWillDismissCallback) {
         self.rewardedVideoWillDismissCallback(wasFullyWatched);
     }
@@ -38,14 +41,14 @@
     }
 }
 
-- (void)rewardedVideoDidExpired{
-    if(self.rewardedVideoDidExpireCallback){
+- (void)rewardedVideoDidExpired {
+    if(self.rewardedVideoDidExpireCallback) {
         self.rewardedVideoDidExpireCallback();
     }
 }
 
-- (void)rewardedVideoDidClick{
-    if(self.rewardedVideoDidReceiveTapActionCallback){
+- (void)rewardedVideoDidClick {
+    if(self.rewardedVideoDidReceiveTapActionCallback) {
         self.rewardedVideoDidReceiveTapActionCallback();
     }
 }

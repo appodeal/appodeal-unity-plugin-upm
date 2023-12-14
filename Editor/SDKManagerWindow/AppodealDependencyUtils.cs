@@ -22,7 +22,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
             var info = new DirectoryInfo(path);
             var fileInfo = info.GetFiles();
-            return fileInfo.Length <= 0 ? null : fileInfo.Where(val => !val.Name.Contains("meta")).ToArray();
+            return fileInfo.Length <= 0 ? null : fileInfo.Where(val => val.Name.EndsWith("Dependencies.xml")).ToArray();
         }
 
         public static void ShowInternalErrorDialog(EditorWindow editorWindow, string message, string debugLog)
@@ -46,12 +46,10 @@ namespace AppodealStack.UnityEditor.SDKManager
             var document = new XmlDocument();
             document.Load(inputXml);
 
-            using (var writer = new XmlTextWriter(inputXml, Encoding.UTF8))
-            {
-                writer.Formatting = Formatting.Indented;
-                writer.Indentation = 4;
-                document.Save(writer);
-            }
+            using var writer = new XmlTextWriter(inputXml, Encoding.UTF8);
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 4;
+            document.Save(writer);
         }
 
         public static string GetConfigName(string value)
@@ -247,7 +245,7 @@ namespace AppodealStack.UnityEditor.SDKManager
 
         public static AppodealDependency GetAppodealDependency(SortedDictionary<string, AppodealDependency> dependencies)
         {
-            return dependencies.First(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).Value;
+            return dependencies.FirstOrDefault(dep => dep.Key.Contains(AppodealEditorConstants.Appodeal) && dep.Value != null).Value;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace AppodealStack.ConsentManagement.Common
     /// <para>
     /// Interface containing method signatures of the <see langword="VendorBuilder"/> class.
     /// </para>
-    /// See <see href="https://wiki.appodeal.com/en/unity/get-started/data-protection/gdpr-and-ccpa"/> for more details.
+    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
     /// </summary>
     public interface IVendorBuilder
     {
