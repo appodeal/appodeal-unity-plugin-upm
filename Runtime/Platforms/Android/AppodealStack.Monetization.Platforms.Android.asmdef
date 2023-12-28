@@ -1,0 +1,17 @@
+{
+    "name": "AppodealStack.Monetization.Platforms.Android",
+    "references": [
+        "AppodealStack.Monetization.Common"
+    ],
+    "includePlatforms": [
+        "Android"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,17 @@
+{
+    "name": "AppodealStack.Monetization.Platforms.Ios",
+    "references": [
+        "AppodealStack.Monetization.Common"
+    ],
+    "includePlatforms": [
+        "iOS"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
