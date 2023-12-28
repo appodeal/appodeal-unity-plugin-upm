@@ -1,8 +1,7 @@
 {
     "name": "AppodealStack.Monetization.Platforms.Ios",
     "references": [
-        "AppodealStack.Monetization.Common",
-        "AppodealStack.ConsentManagement.Common"
+        "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
         "iOS"

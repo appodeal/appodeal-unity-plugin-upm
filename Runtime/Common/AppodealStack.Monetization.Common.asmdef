@@ -1,8 +1,7 @@
 {
     "name": "AppodealStack.Monetization.Common",
-    "references": [
-        "AppodealStack.ConsentManagement.Common"
-    ],
+    "rootNamespace": "",
+    "references": [],
     "includePlatforms": [
         "Android",
         "Editor",

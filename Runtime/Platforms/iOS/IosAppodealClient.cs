@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using AppodealStack.Monetization.Common;
-using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
@@ -616,11 +615,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         public void SetChildDirectedTreatment(bool value)
         {
             AppodealObjCBridge.AppodealSetChildDirectedTreatment(value);
-        }
-
-        public void UpdateConsent(IConsent consent)
-        {
-            AppodealObjCBridge.AppodealUpdateConsentReport();
         }
 
         public void UpdateGdprConsent(GdprUserConsent consent)

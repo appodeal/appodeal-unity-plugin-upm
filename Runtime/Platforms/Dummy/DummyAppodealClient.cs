@@ -9,7 +9,6 @@ using UnityEngine.Video;
 using UnityEngine.EventSystems;
 using AppodealStack.Monetization.Common;
 using AppodealStack.UnityEditor.Utils;
-using AppodealStack.ConsentManagement.Common;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Dummy
@@ -688,11 +687,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetChildDirectedTreatment(bool value)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetChildDirectedTreatment method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void UpdateConsent(IConsent consent)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
         public void UpdateGdprConsent(GdprUserConsent consent)

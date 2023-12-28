@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
-using AppodealStack.ConsentManagement.Common;
 
 // ReSharper disable CheckNamespace
 namespace AppodealStack.Monetization.Api
@@ -58,17 +57,6 @@ namespace AppodealStack.Monetization.Api
         public static bool IsInitialized(int adType)
         {
             return GetInstance().IsInitialized(adType);
-        }
-
-        /// <summary>
-        /// <para>Updates consent value used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
-        /// </summary>
-        /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
-        /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
-        public static void UpdateConsent(IConsent consent)
-        {
-            GetInstance().UpdateConsent(consent);
         }
 
         /// <summary>

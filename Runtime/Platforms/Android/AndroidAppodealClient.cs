@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using AppodealStack.Monetization.Common;
-using AppodealStack.ConsentManagement.Common;
-using AppodealStack.ConsentManagement.Platforms.Android;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
@@ -273,13 +271,6 @@ namespace AppodealStack.Monetization.Platforms.Android
         public void SetChildDirectedTreatment(bool value)
         {
             GetAppodealClass().CallStatic("setChildDirectedTreatment", Helper.GetJavaObject(value));
-        }
-
-        public void UpdateConsent(IConsent consent)
-        {
-            var androidConsent = consent.NativeConsent as AndroidConsent;
-            if (androidConsent == null) return;
-            GetAppodealClass().CallStatic("updateConsent", androidConsent.GetConsentJavaObject());
         }
 
         public void UpdateGdprConsent(GdprUserConsent consent)

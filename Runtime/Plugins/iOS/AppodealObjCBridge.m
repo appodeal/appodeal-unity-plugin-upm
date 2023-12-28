@@ -5,7 +5,6 @@
 #endif
 
 #import <Appodeal/Appodeal.h>
-#import <StackConsentManager/StackConsentManager.h>
 
 #import "AppodealUnityMrecView.h"
 #import "AppodealUnityBannerView.h"
@@ -183,10 +182,6 @@ void AppodealSetTestingEnabled(BOOL testingEnabled) {
 
 void AppodealSetChildDirectedTreatment(BOOL value) {
     [Appodeal setChildDirectedTreatment:value];
-}
-
-void AppodealUpdateConsentReport() {
-    [Appodeal updateConsentReport:STKConsentManager.sharedManager.consent];
 }
 
 void AppodealUpdateGdprConsent(int consent) {

@@ -2,8 +2,7 @@
     "name": "AppodealStack.Monetization.Platforms.Dummy",
     "references": [
         "AppodealStack.UnityEditor.Utils",
-        "AppodealStack.Monetization.Common",
-        "AppodealStack.ConsentManagement.Common"
+        "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
         "Editor"
