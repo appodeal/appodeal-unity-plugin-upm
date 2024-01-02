@@ -60,28 +60,6 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// <para>Updates consent value (GDPR regulation) used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
-        /// </summary>
-        /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
-        /// <param name="consent">user's consent on processing of their personal data. https://www.eugdpr.org</param>
-        public static void UpdateGdprConsent(GdprUserConsent consent)
-        {
-            GetInstance().UpdateGdprConsent(consent);
-        }
-
-        /// <summary>
-        /// <para>Updates consent value (CCPA regulation) used by ad networks and services of Appodeal SDK.</para>
-        /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.
-        /// </summary>
-        /// <remarks>Calling this method before SDK initialization will result in disabling Consent Manager window showing. However, Consent Manager still will be synchronized using the consent object passed in this method.</remarks>
-        /// <param name="consent">user's consent on processing of their personal data. https://oag.ca.gov/privacy/ccpa</param>
-        public static void UpdateCcpaConsent(CcpaUserConsent consent)
-        {
-            GetInstance().UpdateCcpaConsent(consent);
-        }
-
-        /// <summary>
         /// <para>Checks whether or not auto cache is enabled for the specified ad type.</para>
         /// <example>To check interstitials use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial);</code></example>
         /// <example>To check banners use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Banner);</code></example>
@@ -786,6 +764,18 @@ namespace AppodealStack.Monetization.Api
         }
 
     #region Deprecated methods
+
+        [Obsolete("Will be removed in the next release.", false)]
+        public static void UpdateGdprConsent(GdprUserConsent consent)
+        {
+            GetInstance().UpdateGdprConsent(consent);
+        }
+
+        [Obsolete("Will be removed in the next release.", false)]
+        public static void UpdateCcpaConsent(CcpaUserConsent consent)
+        {
+            GetInstance().UpdateCcpaConsent(consent);
+        }
 
         [Obsolete("Will be changed in a future release.", false)]
         public static void setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities)
