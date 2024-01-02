@@ -102,7 +102,9 @@ namespace AppodealStack.UnityEditor.PreProcess
                 return;
             }
 
-            if (String.IsNullOrEmpty(AppodealSettings.Instance.AdMobAndroidAppId))
+            string admobAppId = AppodealSettings.Instance.AdMobAndroidAppId;
+
+            if (String.IsNullOrEmpty(admobAppId))
             {
                 if (CheckContainsAppId(path))
                 {
@@ -114,7 +116,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
             else
             {
-                if (!AppodealSettings.Instance.AdMobAndroidAppId.StartsWith("ca-app-pub-"))
+                if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy")
                 {
                     Debug.LogError(
                         "Incorrect value. The app may crash on startup." +
@@ -123,11 +125,11 @@ namespace AppodealStack.UnityEditor.PreProcess
 
                 if (CheckContainsAppId(path))
                 {
-                    androidManifest.ChangeAdmobAppId(AppodealSettings.Instance.AdMobAndroidAppId);
+                    androidManifest.ChangeAdmobAppId(admobAppId);
                 }
                 else
                 {
-                    androidManifest.AddAdmobAppId(AppodealSettings.Instance.AdMobAndroidAppId);
+                    androidManifest.AddAdmobAppId(admobAppId);
                 }
             }
         }

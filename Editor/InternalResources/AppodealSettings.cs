@@ -49,12 +49,13 @@ namespace AppodealStack.UnityEditor.InternalResources
                 if (_instance) return _instance;
 
                 Directory.CreateDirectory(AppodealSettingsExportPath);
-
                 string settingsFilePath = $"{AppodealSettingsExportPath}/{AppodealSettingsFileName}";
-
                 _instance = AssetDatabase.LoadAssetAtPath<AppodealSettings>(settingsFilePath);
+
                 if (_instance) return _instance;
+
                 _instance = CreateInstance<AppodealSettings>();
+                SetDefaultSettings();
                 AssetDatabase.CreateAsset(_instance, settingsFilePath);
 
                 return _instance;
@@ -199,6 +200,20 @@ namespace AppodealStack.UnityEditor.InternalResources
         public static void SaveAsync()
         {
             EditorUtility.SetDirty(_instance);
+        }
+
+        private static void SetDefaultSettings()
+        {
+            _instance.AdMobAndroidAppId = "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy";
+            _instance.AdMobIosAppId = "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy";
+
+            _instance.WriteExternalStoragePermission = true;
+            _instance.AccessWifiStatePermission = true;
+
+            _instance.IosSkAdNetworkItems = true;
+
+            _instance.FacebookAutoLogAppEvents = true;
+            _instance.FacebookAdvertiserIDCollection = true;
         }
     }
 }
