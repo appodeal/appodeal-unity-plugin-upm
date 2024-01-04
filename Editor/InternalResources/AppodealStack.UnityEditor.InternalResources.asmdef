@@ -1,6 +1,8 @@
 {
     "name": "AppodealStack.UnityEditor.InternalResources",
-    "references": [],
+    "references": [
+        "AppodealStack.UnityEditor.Utils"
+    ],
     "includePlatforms": [
         "Editor"
     ],

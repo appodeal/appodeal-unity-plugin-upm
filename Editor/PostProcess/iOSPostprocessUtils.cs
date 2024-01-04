@@ -123,7 +123,7 @@ namespace AppodealStack.UnityEditor.PostProcess
                 return;
             }
 
-            if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy")
+            if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
             {
                 Debug.LogError("Incorrect value. The app may crash on startup." +
                                "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +

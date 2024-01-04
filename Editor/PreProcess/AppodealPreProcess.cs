@@ -116,7 +116,7 @@ namespace AppodealStack.UnityEditor.PreProcess
             }
             else
             {
-                if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy")
+                if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
                 {
                     Debug.LogError(
                         "Incorrect value. The app may crash on startup." +
