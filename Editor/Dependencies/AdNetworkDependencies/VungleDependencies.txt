@@ -2,9 +2,9 @@
 <dependencies>
     <iosPods>
         <iosPod name="APDVungleAdapter" version="3.3.0.0-alpha.1" minTargetSdk="12.0" />
-        <iosPod name="AppLovinMediationVungleAdapter" />
         <iosPod name="BidMachineVungleAdapter" version="~> 2.4.0" minTargetSdk="12.0" />
         <iosPod name="BidonAdapterVungle" version="~> 0.4.7.2" minTargetSdk="12.0" />
+        <iosPod name="AppLovinMediationVungleAdapter" minTargetSdk="12.0" />
     </iosPods>
     <androidPackages>
         <androidPackage spec="com.appodeal.ads.sdk.networks:vungle:3.3.0.0-alpha.1" />
