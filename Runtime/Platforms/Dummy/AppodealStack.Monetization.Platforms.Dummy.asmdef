@@ -1,7 +1,8 @@
 {
-    "name": "AppodealStack.UnityEditor.InternalResources",
+    "name": "AppodealStack.Monetization.Platforms.Dummy",
     "references": [
-        "AppodealStack.UnityEditor.Utils"
+        "AppodealStack.UnityEditor.Utils",
+        "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
         "Editor"

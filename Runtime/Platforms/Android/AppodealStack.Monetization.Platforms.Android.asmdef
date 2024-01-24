@@ -1,10 +1,10 @@
 {
-    "name": "AppodealStack.UnityEditor.InternalResources",
+    "name": "AppodealStack.Monetization.Platforms.Android",
     "references": [
-        "AppodealStack.UnityEditor.Utils"
+        "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
-        "Editor"
+        "Android"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

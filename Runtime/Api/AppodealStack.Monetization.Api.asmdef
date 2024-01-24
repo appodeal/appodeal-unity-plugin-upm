@@ -1,10 +1,13 @@
 {
-    "name": "AppodealStack.UnityEditor.InternalResources",
+    "name": "AppodealStack.Monetization.Api",
     "references": [
-        "AppodealStack.UnityEditor.Utils"
+        "AppodealStack.Monetization.Common",
+        "AppodealStack.Monetization.Platforms"
     ],
     "includePlatforms": [
-        "Editor"
+        "Android",
+        "Editor",
+        "iOS"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -4,6 +4,21 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.2.1 (January 24, 2024)
+
++ Updated Appodeal Android SDK to v3.2.1
++ Updated Appodeal iOS SDK to v3.2.1
++ Added default Appodeal Settings values
+
+### 3.2.1-beta.1 (January 03, 2024)
+
++ Updated Appodeal Android SDK to v3.2.1-beta.1
++ Updated Appodeal iOS SDK to v3.2.1-beta.1
++ Removed `ConsentManager` API
++ Removed `UpdateConsent()` method
++ Deprecated `UpdateGdprConsent()` method
++ Deprecated `UpdateCcpaConsent()` method
+
 ### 3.2.0 (December 14, 2023)
 
 + Updated Appodeal Android SDK to v3.2.0

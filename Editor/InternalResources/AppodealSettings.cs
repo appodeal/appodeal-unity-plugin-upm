@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using AppodealStack.UnityEditor.Utils;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.InternalResources
@@ -12,12 +13,12 @@ namespace AppodealStack.UnityEditor.InternalResources
         private const string AppodealSettingsExportPath = "Assets/Appodeal/Editor/InternalResources";
         private const string AppodealSettingsFileName = "AppodealSettings.asset";
 
-        [SerializeField] private string adMobAndroidAppId = String.Empty;
-        [SerializeField] private string adMobIosAppId = String.Empty;
+        [SerializeField] private string adMobAndroidAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
+        [SerializeField] private string adMobIosAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
 
         [SerializeField] private bool accessCoarseLocationPermission;
-        [SerializeField] private bool writeExternalStoragePermission;
-        [SerializeField] private bool accessWifiStatePermission;
+        [SerializeField] private bool writeExternalStoragePermission = true;
+        [SerializeField] private bool accessWifiStatePermission = true;
         [SerializeField] private bool vibratePermission;
         [SerializeField] private bool accessFineLocationPermission;
 
@@ -26,7 +27,7 @@ namespace AppodealStack.UnityEditor.InternalResources
         [SerializeField] private bool nSCalendarsUsageDescription;
         [SerializeField] private bool nSAppTransportSecurity;
 
-        [SerializeField] private bool iosSkAdNetworkItems;
+        [SerializeField] private bool iosSkAdNetworkItems = true;
         [SerializeField] private List<string> iosSkAdNetworkItemsList;
 
         [SerializeField] private string facebookAndroidAppId = String.Empty;
@@ -38,8 +39,8 @@ namespace AppodealStack.UnityEditor.InternalResources
         [SerializeField] private bool firebaseAutoConfiguration;
         [SerializeField] private bool facebookAutoConfiguration;
 
-        [SerializeField] private bool facebookAutoLogAppEvents;
-        [SerializeField] private bool facebookAdvertiserIDCollection;
+        [SerializeField] private bool facebookAutoLogAppEvents = true;
+        [SerializeField] private bool facebookAdvertiserIDCollection = true;
 
         private static AppodealSettings _instance;
         public static AppodealSettings Instance
@@ -49,11 +50,11 @@ namespace AppodealStack.UnityEditor.InternalResources
                 if (_instance) return _instance;
 
                 Directory.CreateDirectory(AppodealSettingsExportPath);
-
                 string settingsFilePath = $"{AppodealSettingsExportPath}/{AppodealSettingsFileName}";
-
                 _instance = AssetDatabase.LoadAssetAtPath<AppodealSettings>(settingsFilePath);
+
                 if (_instance) return _instance;
+
                 _instance = CreateInstance<AppodealSettings>();
                 AssetDatabase.CreateAsset(_instance, settingsFilePath);
 
