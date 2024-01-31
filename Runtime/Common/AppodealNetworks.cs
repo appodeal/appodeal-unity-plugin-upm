@@ -14,7 +14,6 @@ namespace AppodealStack.Monetization.Common
     public static class AppodealNetworks
     {
         public const string A4G = "a4g";
-        public const string AdColony = "adcolony";
         public const string Admob = "admob";
         public const string AdmobMediation = "admob_mediation";
         public const string Amazon = "amazon";

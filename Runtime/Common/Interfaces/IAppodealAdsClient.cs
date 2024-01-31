@@ -12,8 +12,6 @@ namespace AppodealStack.Monetization.Common
     {
         void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener);
         bool IsInitialized(int adType);
-        void UpdateGdprConsent(GdprUserConsent consent);
-        void UpdateCcpaConsent(CcpaUserConsent consent);
         bool IsAutoCacheEnabled(int adType);
         void SetInterstitialCallbacks(IInterstitialAdListener listener);
         void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener);

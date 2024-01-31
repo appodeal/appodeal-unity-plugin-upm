@@ -31,32 +31,6 @@ namespace AppodealStack.Monetization.Common
 
     /// <summary>
     /// <para>
-    /// Enumeration containing all possible statuses of the Consent for GDPR consent zone.
-    /// </para>
-    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
-    /// </summary>
-    public enum GdprUserConsent
-    {
-        Unknown,
-        Personalized,
-        NonPersonalized
-    }
-
-    /// <summary>
-    /// <para>
-    /// Enumeration containing all possible statuses of the Consent for CCPA consent zone.
-    /// </para>
-    /// See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa"/> for more details.
-    /// </summary>
-    public enum CcpaUserConsent
-    {
-        Unknown,
-        OptIn,
-        OptOut
-    }
-
-    /// <summary>
-    /// <para>
     /// Enumeration containing all supported types of In-App purchases for Google Play Store.
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases"/> for more details.

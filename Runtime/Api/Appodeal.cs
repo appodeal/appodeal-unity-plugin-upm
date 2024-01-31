@@ -765,18 +765,6 @@ namespace AppodealStack.Monetization.Api
 
     #region Deprecated methods
 
-        [Obsolete("Will be removed in the next release.", false)]
-        public static void UpdateGdprConsent(GdprUserConsent consent)
-        {
-            GetInstance().UpdateGdprConsent(consent);
-        }
-
-        [Obsolete("Will be removed in the next release.", false)]
-        public static void UpdateCcpaConsent(CcpaUserConsent consent)
-        {
-            GetInstance().UpdateCcpaConsent(consent);
-        }
-
         [Obsolete("Will be changed in a future release.", false)]
         public static void setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities)
         {
