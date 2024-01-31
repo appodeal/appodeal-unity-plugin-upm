@@ -617,54 +617,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetChildDirectedTreatment(value);
         }
 
-        public void UpdateGdprConsent(GdprUserConsent consent)
-        {
-            switch (consent)
-            {
-                case GdprUserConsent.Unknown:
-                {
-                    AppodealObjCBridge.AppodealUpdateGdprConsent(0);
-                    break;
-                }
-                case GdprUserConsent.Personalized:
-                {
-                    AppodealObjCBridge.AppodealUpdateGdprConsent(1);
-                    break;
-                }
-                case GdprUserConsent.NonPersonalized:
-                {
-                    AppodealObjCBridge.AppodealUpdateGdprConsent(2);
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(consent), consent, null);
-            }
-        }
-
-        public void UpdateCcpaConsent(CcpaUserConsent consent)
-        {
-            switch (consent)
-            {
-                case CcpaUserConsent.Unknown:
-                {
-                    AppodealObjCBridge.AppodealUpdateCcpaConsent(0);
-                    break;
-                }
-                case CcpaUserConsent.OptIn:
-                {
-                    AppodealObjCBridge.AppodealUpdateCcpaConsent(1);
-                    break;
-                }
-                case CcpaUserConsent.OptOut:
-                {
-                    AppodealObjCBridge.AppodealUpdateCcpaConsent(2);
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(consent), consent, null);
-            }
-        }
-
         public List<string> GetNetworks(int adTypes)
         {
             var networksList = new List<string>();

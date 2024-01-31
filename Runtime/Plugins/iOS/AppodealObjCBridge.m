@@ -184,38 +184,6 @@ void AppodealSetChildDirectedTreatment(BOOL value) {
     [Appodeal setChildDirectedTreatment:value];
 }
 
-void AppodealUpdateGdprConsent(int consent) {
-    switch (consent) {
-        case 0:
-            [Appodeal updateUserConsentGDPR:APDGDPRUserConsentUnknown];
-            break;
-        case 1:
-            [Appodeal updateUserConsentGDPR:APDGDPRUserConsentPersonalized];
-            break;
-        case 2:
-            [Appodeal updateUserConsentGDPR:APDGDPRUserConsentNonPersonalized];
-            break;
-        default:
-            break;
-    }
-}
-
-void AppodealUpdateCcpaConsent(int consent) {
-    switch (consent) {
-        case 0:
-            [Appodeal updateUserConsentCCPA:APDCCPAUserConsentUnknown];
-            break;
-        case 1:
-            [Appodeal updateUserConsentCCPA:APDCCPAUserConsentOptIn];
-            break;
-        case 2:
-            [Appodeal updateUserConsentCCPA:APDCCPAUserConsentOptOut];
-            break;
-        default:
-            break;
-    }
-}
-
 char *AppodealGetNetworks(int types) {
     NSArray<NSString *> *networksArray = [Appodeal registeredNetworkNamesForAdType:types];
     NSString *networks = [[networksArray valueForKey:@"description"] componentsJoinedByString:@","];

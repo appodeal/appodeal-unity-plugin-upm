@@ -273,56 +273,6 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("setChildDirectedTreatment", Helper.GetJavaObject(value));
         }
 
-        public void UpdateGdprConsent(GdprUserConsent consent)
-        {
-            var gdprConsent = new AndroidJavaClass("com.appodeal.ads.regulator.GDPRUserConsent");
-            switch (consent)
-            {
-                case GdprUserConsent.Unknown:
-                {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "Unknown"));
-                    break;
-                }
-                case GdprUserConsent.Personalized:
-                {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "Personalized"));
-                    break;
-                }
-                case GdprUserConsent.NonPersonalized:
-                {
-                    GetAppodealClass().CallStatic("updateGDPRUserConsent", gdprConsent.CallStatic<AndroidJavaObject>("valueOf", "NonPersonalized"));
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(consent), consent, null);
-            }
-        }
-
-        public void UpdateCcpaConsent(CcpaUserConsent consent)
-        {
-            var ccpaConsent = new AndroidJavaClass("com.appodeal.ads.regulator.CCPAUserConsent");
-            switch (consent)
-            {
-                case CcpaUserConsent.Unknown:
-                {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "Unknown"));
-                    break;
-                }
-                case CcpaUserConsent.OptIn:
-                {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "OptIn"));
-                    break;
-                }
-                case CcpaUserConsent.OptOut:
-                {
-                    GetAppodealClass().CallStatic("updateCCPAUserConsent", ccpaConsent.CallStatic<AndroidJavaObject>("valueOf", "OptOut"));
-                    break;
-                }
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(consent), consent, null);
-            }
-        }
-
         public void DisableNetwork(string network)
         {
             GetAppodealClass().CallStatic("disableNetwork", network);
