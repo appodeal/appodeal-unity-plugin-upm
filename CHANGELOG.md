@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.3.0-beta.2 (February 22, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.2
++ Updated Appodeal iOS SDK to v3.3.0-beta.2
++ Disabled Appodeal Dependency Manager tool
+
 ### 3.3.0-beta.1 (January 31, 2024)
 
 + Updated Appodeal Android SDK to v3.3.0-beta.1
