@@ -4,6 +4,13 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.3.0-beta.4 (April 17, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.4
++ Updated Appodeal iOS SDK to v3.3.0-beta.4
++ Added Apple's privacy manifest for Appodeal SDK
++ Fixed iOS bridge RV didFinish callback crash
+
 ### 3.3.0-beta.3 (March 26, 2024)
 
 + Updated Appodeal Android SDK to v3.3.0-beta.3

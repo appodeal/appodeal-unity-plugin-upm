@@ -15,7 +15,7 @@
 }
 
 -(void) rewardedVideoDidFailToPresentWithError:(NSError *)error {
-    if (self.rewardedVideoDidFailToPresentCallback) {
+    if(self.rewardedVideoDidFailToPresentCallback) {
         self.rewardedVideoDidFailToPresentCallback();
     }
 }
@@ -36,7 +36,10 @@
 }
 
 - (void)rewardedVideoDidFinish:(float)rewardAmount name:(NSString *)rewardName {
-    if (self.rewardedVideoDidFinishCallback) {
+    extern bool _didResignActive;
+    if(_didResignActive) return;
+
+    if(self.rewardedVideoDidFinishCallback) {
         self.rewardedVideoDidFinishCallback((double)rewardAmount, [rewardName UTF8String]);
     }
 }
