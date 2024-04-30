@@ -98,12 +98,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealSetChildDirectedTreatment(bool value);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealUpdateGdprConsent(int consent);
-
-        [DllImport("__Internal")]
-        internal static extern void AppodealUpdateCcpaConsent(int consent);
-
-        [DllImport("__Internal")]
         internal static extern string AppodealGetNetworks(int types);
 
         [DllImport("__Internal")]

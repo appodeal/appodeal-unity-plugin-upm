@@ -689,16 +689,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetChildDirectedTreatment method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void UpdateGdprConsent(GdprUserConsent consent)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateGdprConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
-        public void UpdateCcpaConsent(CcpaUserConsent consent)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.UpdateCcpaConsent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void DisableNetwork(string network)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.DisableNetwork method on an unsupported platform. Run your application on either Android or iOS device to test this method.");

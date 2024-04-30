@@ -4,11 +4,53 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.3.0 (April 30, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0
++ Updated Appodeal iOS SDK to v3.3.0
+
+### 3.3.0-beta.5 (April 25, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.5
+
+### 3.3.0-beta.4 (April 17, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.4
++ Updated Appodeal iOS SDK to v3.3.0-beta.4
++ Added Apple's privacy manifest for Appodeal SDK
++ Fixed iOS bridge RV didFinish callback crash
+
+### 3.3.0-beta.3 (March 26, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.3
++ Updated Appodeal iOS SDK to v3.3.0-beta.3
+
+### 3.3.0-beta.2 (February 22, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.2
++ Updated Appodeal iOS SDK to v3.3.0-beta.2
++ Disabled Appodeal Dependency Manager tool
+
+### 3.3.0-beta.1 (January 31, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-beta.1
++ Updated Appodeal iOS SDK to v3.3.0-beta.1
++ Removed `UpdateGdprConsent()` method
++ Removed `UpdateCcpaConsent()` method
++ Removed `GdprUserConsent` enum
++ Removed `CcpaUserConsent` enum
+
 ### 3.2.1 (January 24, 2024)
 
 + Updated Appodeal Android SDK to v3.2.1
 + Updated Appodeal iOS SDK to v3.2.1
 + Added default Appodeal Settings values
+
+### 3.3.0-alpha.1 (January 11, 2024)
+
++ Updated Appodeal Android SDK to v3.3.0-alpha.1
++ Updated Appodeal iOS SDK to v3.3.0-alpha.1
++ Updated ad networks in `AppodealNetworks` class
 
 ### 3.2.1-beta.1 (January 03, 2024)
 
