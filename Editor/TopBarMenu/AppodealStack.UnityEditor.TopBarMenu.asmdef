@@ -1,7 +1,7 @@
 {
     "name": "AppodealStack.UnityEditor.TopBarMenu",
+    "rootNamespace": "",
     "references": [
-        "AppodealStack.UnityEditor.SDKManager",
         "AppodealStack.UnityEditor.PluginRemover",
         "AppodealStack.UnityEditor.SettingsWindow"
     ],

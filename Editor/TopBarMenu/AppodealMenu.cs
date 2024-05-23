@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.PackageManager;
-using AppodealStack.UnityEditor.SDKManager;
 using AppodealStack.UnityEditor.PluginRemover;
 using AppodealStack.UnityEditor.SettingsWindow;
 
@@ -20,12 +19,6 @@ namespace AppodealStack.UnityEditor.TopBarMenu
         public static void OpenAppodealHome()
         {
             Application.OpenURL("https://appodeal.com/");
-        }
-
-        // [MenuItem("Appodeal/Plugin Configuration")]
-        public static void AppodealSdkManager()
-        {
-            AppodealAdapterManager.ShowSdkManager();
         }
 
         [MenuItem("Appodeal/Appodeal Settings")]
