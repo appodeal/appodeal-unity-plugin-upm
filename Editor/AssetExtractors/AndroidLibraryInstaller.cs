@@ -2,41 +2,25 @@
 using UnityEditor;
 using UnityEngine;
 using AppodealStack.UnityEditor.Utils;
-using AppodealStack.UnityEditor.InternalResources;
 
-// ReSharper Disable CheckNamespace
+// ReSharper Disable once CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
     internal static class AndroidLibraryInstaller
     {
         public static bool InstallAndroidLibrary()
         {
-            return !PluginPreferences.Instance.IsAndroidLibraryImported && CopyAndroidLibraryFromPackage();
-        }
+            if (Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir)) return false;
 
-        private static bool CopyAndroidLibraryFromPackage()
-        {
-            string source = $"{AppodealEditorConstants.PackagePath}/Runtime/Plugins/Android/appodeal.androidlib~";
-            string destination = $"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}";
-
+            string source = $"{AppodealEditorConstants.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
             if (!Directory.Exists(source))
             {
-                Debug.LogError($"[Appodeal] Directory not found: '{source}'. Please, contact support@apppodeal.com about this issue.");
+                Debug.LogError($"[Appodeal] Directory was not found: '{source}'. Please, contact support@apppodeal.com about this issue.");
                 return false;
             }
 
             Directory.CreateDirectory("Assets/Plugins/Android");
-
-            if (Directory.Exists(destination))
-            {
-                FileUtil.DeleteFileOrDirectory(destination);
-                FileUtil.DeleteFileOrDirectory($"{destination}.meta");
-            }
-
-            FileUtil.CopyFileOrDirectory(source, destination);
-
-            PluginPreferences.Instance.IsAndroidLibraryImported = true;
-            PluginPreferences.SaveAsync();
+            FileUtil.CopyFileOrDirectory(source, AppodealEditorConstants.AppodealAndroidLibDir);
 
             return true;
         }

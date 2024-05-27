@@ -2,6 +2,7 @@
     "name": "AppodealStack.UnityEditor.TopBarMenu",
     "rootNamespace": "",
     "references": [
+        "AppodealStack.UnityEditor.Utils",
         "AppodealStack.UnityEditor.PluginRemover",
         "AppodealStack.UnityEditor.SettingsWindow"
     ],

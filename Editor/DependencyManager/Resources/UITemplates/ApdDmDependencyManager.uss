@@ -1,0 +1,68 @@
+.unity-scroll-view__content-container {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dm-container {
+    width: 855px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 2px;
+}
+
+.selection-buttons-container {
+    flex-direction: row;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.selection-button {
+    width: 60px;
+}
+
+.section-label {
+    -unity-font-style: bold;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.sdks-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.bottom-row {
+    flex-direction: row;
+    margin-bottom: 20px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.generate-button {
+    width: 200px;
+    height: 25px;
+    margin-left: 10px;
+}
+
+.status-popup {
+    flex-direction: row;
+    margin-left: 15px;
+    align-items: center;
+    display: none;
+}
+
+.status-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.success-status-icon {
+    background-image: resource('Images/apddm_check');
+}
+
+.fail-status-icon {
+    background-image: resource('Images/apddm_cancel');
+}

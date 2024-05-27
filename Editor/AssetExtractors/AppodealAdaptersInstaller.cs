@@ -1,47 +1,37 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using AppodealStack.UnityEditor.Utils;
-using AppodealStack.UnityEditor.InternalResources;
 
-// ReSharper Disable CheckNamespace
+// ReSharper Disable once CheckNamespace
 namespace AppodealStack.UnityEditor.AssetExtractors
 {
     internal static class AppodealAdaptersInstaller
     {
         public static bool InstallAdapters()
         {
-            return !PluginPreferences.Instance.AreAdaptersImported && CopyAdaptersFromPackage();
-        }
+            if (File.Exists(AppodealEditorConstants.DependenciesFilePath)) return false;
 
-        private static bool CopyAdaptersFromPackage()
-        {
-            var depsDir = new DirectoryInfo($"{AppodealEditorConstants.PackagePath}/{AppodealEditorConstants.DependenciesPath}");
-            if (!depsDir.Exists)
+            try
             {
-                Debug.LogError($"[Appodeal] Directory not found: '{depsDir}'. Please, contact support@apppodeal.com about this issue.");
+                var depsFileInfo = new FileInfo(AppodealEditorConstants.BundledDependenciesFilePath);
+                if (!depsFileInfo.Exists)
+                {
+                    Debug.LogError($"[Appodeal] File was not found: '{depsFileInfo.FullName}'. Please, contact support@apppodeal.com about this issue.");
+                    return false;
+                }
+
+                Directory.CreateDirectory(AppodealEditorConstants.DependenciesDir);
+                FileUtil.ReplaceFile(depsFileInfo.FullName, AppodealEditorConstants.DependenciesFilePath);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
                 return false;
             }
-
-            var deps = depsDir.GetFiles("*Dependencies.txt", SearchOption.AllDirectories);
-            if (deps.Length < 1)
-            {
-                Debug.LogError($"[Appodeal] No Adapters were found on path '{depsDir}'. Please, contact support@apppodeal.com about this issue.");
-                return false;
-            }
-
-            string outputDir = $"{AppodealEditorConstants.PluginPath}/{AppodealEditorConstants.DependenciesPath}";
-
-            FileUtil.DeleteFileOrDirectory(outputDir);
-            Directory.CreateDirectory(outputDir);
-
-            deps.ToList().ForEach(dep => FileUtil.ReplaceFile(dep.FullName, $"{outputDir}/{dep.Name.Replace(".txt", ".xml")}"));
-
-            PluginPreferences.Instance.AreAdaptersImported = true;
-            PluginPreferences.SaveAsync();
-
-            return true;
         }
     }
 }
