@@ -200,6 +200,7 @@ namespace AppodealStack.UnityEditor.InternalResources
         public static void SaveAsync()
         {
             EditorUtility.SetDirty(_instance);
+            AssetDatabase.SaveAssetIfDirty(_instance);
         }
     }
 }

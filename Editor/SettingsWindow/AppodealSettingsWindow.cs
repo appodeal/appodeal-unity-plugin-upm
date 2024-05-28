@@ -1,79 +1,71 @@
-﻿#pragma warning disable 612
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using marijnz.EditorCoroutines;
-using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
 
-// ReSharper Disable CheckNamespace
+// ReSharper Disable once CheckNamespace
 namespace AppodealStack.UnityEditor.SettingsWindow
 {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class AppodealSettingsWindow : EditorWindow
     {
-        private static List<string> _skAdNetworkIdentifiers;
-
         public static void ShowAppodealSettingsWindow()
         {
             GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 760), true, "Appodeal Settings");
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
-            this.StartCoroutine(GetSkAdNetworkIds());
+            var ids = await GetSkAdNetworkIds();
+
+            if (ids?.Count > 0 && !ids.SequenceEqual(AppodealSettings.Instance.IosSkAdNetworkItemsList))
+            {
+                AppodealSettings.Instance.IosSkAdNetworkItemsList = ids;
+            }
         }
 
-        private static IEnumerator GetSkAdNetworkIds()
+        private static async Task<List<string>> GetSkAdNetworkIds()
         {
-            _skAdNetworkIdentifiers = new List<string>();
-            var requestSkaNetworkIds = UnityWebRequest.Get("https://mw-backend.appodeal.com/v1/skadnetwork/");
-            yield return requestSkaNetworkIds.SendWebRequest();
-
-            if (requestSkaNetworkIds.result == UnityWebRequest.Result.ConnectionError)
+            try
             {
-                Debug.LogError(requestSkaNetworkIds.error);
+                var request = UnityWebRequest.Get("https://mw-backend-new.appodeal.com/v3/skadn/ids");
+                request.SendWebRequest();
+                while (!request.isDone) await Task.Yield();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    request.Dispose();
+                    return new List<string>();
+                }
+
+                string json = request.downloadHandler.text;
+                request.Dispose();
+
+                if (String.IsNullOrWhiteSpace(json) || !json.StartsWith('[') || !json.EndsWith(']')) return new List<string>();
+
+                string[] ids = JsonHelper.FromJson<string>(JsonHelper.FixJson(json));
+                if ((ids?.Length ?? 0) < 1) return new List<string>();
+
+                var regex = new Regex("^([a-z]|[0-9]){10}.skadnetwork$");
+                return ids!.Where(id => regex.IsMatch(id)).Distinct().OrderBy(id => id).ToList();
             }
-            else
+            catch (Exception e)
             {
-                if (String.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text))
-                {
-                    Debug.LogError("String.IsNullOrEmpty(requestSkaNetworkIds.downloadHandler.text)");
-                }
-
-                if (requestSkaNetworkIds.downloadHandler.text.Contains("error"))
-                {
-                    Debug.LogError(
-                        $"{requestSkaNetworkIds.downloadHandler.text}");
-                    yield break;
-                }
-
-                var skaItems = JsonHelper.FromJson<SkAdNetworkItem>(JsonHelper.FixJson(requestSkaNetworkIds.downloadHandler.text));
-
-                foreach (var skaItem in skaItems)
-                {
-                    foreach (var itemID in skaItem.ids)
-                    {
-                        if (!String.IsNullOrEmpty(itemID))
-                        {
-                            _skAdNetworkIdentifiers.Add(itemID);
-                        }
-                    }
-                }
+                Debug.LogException(e);
+                return new List<string>();
             }
-
-            requestSkaNetworkIds.Dispose();
-            yield return null;
         }
 
         private void OnDestroy()
         {
             AppodealSettings.SaveAsync();
-            AssetDatabase.SaveAssets();
         }
 
         private void OnGUI()
@@ -170,12 +162,6 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
                 AppodealSettings.Instance.IosSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
                     AppodealSettings.Instance.IosSkAdNetworkItems);
-
-                if (_skAdNetworkIdentifiers != null && _skAdNetworkIdentifiers.Count > 0
-                    && AppodealSettings.Instance.IosSkAdNetworkItemsList != _skAdNetworkIdentifiers)
-                {
-                    AppodealSettings.Instance.IosSkAdNetworkItemsList = _skAdNetworkIdentifiers;
-                }
 
                 GUILayout.Space(12);
             }
@@ -278,8 +264,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             GUILayout.Space(2);
         }
 
-        private static string AppIdPlatformRow(string fieldTitle, string text, GUILayoutOption labelWidth,
-            GUILayoutOption textFieldWidthOption = null)
+        private static string AppIdPlatformRow(string fieldTitle, string text, GUILayoutOption labelWidth, GUILayoutOption textFieldWidthOption = null)
         {
             GUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(new GUIContent(fieldTitle), labelWidth);
@@ -293,7 +278,7 @@ namespace AppodealStack.UnityEditor.SettingsWindow
         private static bool KeyRow(string fieldTitle, bool value)
         {
             GUILayout.Space(5);
-            var originalValue = EditorGUIUtility.labelWidth;
+            float originalValue = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 235;
             value = EditorGUILayout.Toggle(fieldTitle, value);
             EditorGUIUtility.labelWidth = originalValue;
@@ -302,9 +287,9 @@ namespace AppodealStack.UnityEditor.SettingsWindow
 
         private static void HorizontalLine()
         {
-            GUIStyle separatorLineStyle = new GUIStyle()
+            var separatorLineStyle = new GUIStyle
             {
-                normal = new GUIStyleState() { background = EditorGUIUtility.whiteTexture },
+                normal = new GUIStyleState { background = EditorGUIUtility.whiteTexture },
                 margin = new RectOffset(0, 0, 10, 5),
                 fixedHeight = 2
             };
@@ -321,23 +306,12 @@ namespace AppodealStack.UnityEditor.SettingsWindow
             {
                 fontSize = 16,
                 fontStyle = FontStyle.Bold,
-                normal = new GUIStyleState() { textColor = new Color(0.7f,0.6f,0.1f) },
+                normal = new GUIStyleState { textColor = new Color(0.7f,0.6f,0.1f) },
                 alignment = TextAnchor.MiddleCenter
 
             }, GUILayout.Height(20));
 
             HorizontalLine();
-        }
-
-        [Serializable]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-        public class SkAdNetworkItem
-        {
-            public string name;
-            public long id;
-            public string[] ids;
-            public string compatible_version;
         }
     }
 }
