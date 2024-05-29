@@ -28,7 +28,7 @@ namespace AppodealStack.UnityEditor.InternalResources
         [SerializeField] private bool nSAppTransportSecurity;
 
         [SerializeField] private bool iosSkAdNetworkItems = true;
-        [SerializeField] private List<string> iosSkAdNetworkItemsList;
+        [SerializeField] private List<string> iosSkAdNetworkItemsList = new();
 
         [SerializeField] private string facebookAndroidAppId = String.Empty;
         [SerializeField] private string facebookIosAppId = String.Empty;
