@@ -1,16 +1,17 @@
 ﻿#if UNITY_IOS
 using System;
-using System.IO;
-using System.Xml.Linq;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
-using UnityEngine;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
-using AppodealStack.UnityEditor.Utils;
+using UnityEngine;
 using AppodealStack.UnityEditor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
 
 #pragma warning disable 618
 
@@ -102,10 +103,9 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static void AddAdMobApplicationIdentifier(string path)
         {
-            if (!File.Exists(Path.Combine(AppodealEditorConstants.PluginPath,
-                AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml")))
+            if (!File.Exists(AppodealEditorConstants.DependenciesFilePath))
             {
-                Debug.LogWarning("Missing Admob config (Assets/Appodeal/Editor/Dependencies/AdNetworkDependencies/GoogleAdMobDependencies.xml).\nAdmob App Id won't be added.");
+                Debug.LogWarning("Missing deps config (Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml).\nAdmob App Id won't be added.");
                 return;
             }
 
@@ -319,12 +319,10 @@ namespace AppodealStack.UnityEditor.PostProcess
 
         private static bool CheckIosAttribute()
         {
-            string adMobConfigPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath, "GoogleAdMobDependencies.xml");
-
             XDocument config;
             try
             {
-                config = XDocument.Load(adMobConfigPath);
+                config = XDocument.Load(AppodealEditorConstants.DependenciesFilePath);
             }
             catch (IOException exception)
             {
@@ -354,25 +352,8 @@ namespace AppodealStack.UnityEditor.PostProcess
                 return false;
             }
 
-            var elementIosPod = elementIosPods.Element("iosPod");
-            if (elementIosPod == null)
-            {
-                return false;
-            }
-
-            if (!elementIosPod.HasAttributes)
-            {
-                return false;
-            }
-
-            var attributeElementIosPod = elementIosPod.Attribute("name");
-
-            if (attributeElementIosPod == null)
-            {
-                return false;
-            }
-
-            return attributeElementIosPod.Value.Equals("APDGoogleAdMobAdapter");
+            var elementsIosPod = elementIosPods.Elements("iosPod");
+            return elementsIosPod.Any(el => el.Attribute("name")?.Value == "APDGoogleAdMobAdapter");
         }
 
         private static bool ContainsSkAdNetworkIdentifier(PlistElementArray skAdNetworkItemsArray, string id)

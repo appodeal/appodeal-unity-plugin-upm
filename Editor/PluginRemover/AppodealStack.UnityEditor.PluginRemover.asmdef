@@ -1,6 +1,8 @@
 {
     "name": "AppodealStack.UnityEditor.PluginRemover",
-    "references": [],
+    "references": [
+        "AppodealStack.UnityEditor.Utils"
+    ],
     "includePlatforms": [
         "Editor"
     ],

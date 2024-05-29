@@ -1,15 +1,15 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Diagnostics.CodeAnalysis;
-using UnityEngine;
+using System.Xml;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using AppodealStack.UnityEditor.Utils;
+using UnityEngine;
 using AppodealStack.UnityEditor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PreProcess
@@ -90,15 +90,14 @@ namespace AppodealStack.UnityEditor.PreProcess
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            string admobDepPath = Path.Combine(AppodealEditorConstants.PluginPath, AppodealEditorConstants.DependenciesPath,
-                                                $"{AppodealEditorConstants.GoogleAdMob}{AppodealEditorConstants.Dependencies}{AppodealEditorConstants.XmlFileExtension}");
-            if (!File.Exists(admobDepPath))
+            string depsFilePath = AppodealEditorConstants.DependenciesFilePath;
+            if (!File.Exists(depsFilePath) || !CheckContainsAdmobAdapter(depsFilePath))
             {
                 if (File.Exists(path) && CheckContainsAppId(path))
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.Log($"Missing Network config at {admobDepPath}. Admob App Id won't be added.");
+                Debug.Log($"Missing Network config at {depsFilePath}. Admob App Id won't be added.");
                 return;
             }
 
@@ -210,6 +209,11 @@ namespace AppodealStack.UnityEditor.PreProcess
                     androidManifest.RemovePermission(AppodealUnityUtils.Vibrate);
                 }
             }
+        }
+
+        private bool CheckContainsAdmobAdapter(string depsFilePath)
+        {
+            return GetContentString(depsFilePath).Contains("com.appodeal.ads.sdk.networks:admob");
         }
 
         private bool CheckContainsAppId(string manifestPath)

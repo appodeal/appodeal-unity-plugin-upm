@@ -213,7 +213,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                 return;
             }
 
-            string defaultPath = $"{AppodealEditorConstants.PackagePath}/{AppodealEditorConstants.EditorAdPrefabsPath}/{prefabName}.prefab";
+            string defaultPath = $"{AppodealEditorConstants.EditorAdPrefabsDir}/{prefabName}.prefab";
             var assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
             var prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
 

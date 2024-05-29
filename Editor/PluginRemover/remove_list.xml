@@ -4,67 +4,68 @@
         <name>Appodeal Settings</name>
         <path>Appodeal/Editor/InternalResources</path>
         <filter>(AppodealSettings\.asset)</filter>
-        <is_confirmation_required>true</is_confirmation_required>
-        <description>This file contains your Appodeal preferences, such as Admob App ID and etc. Choose "NO" if you are just updating the plugin.</description>
+        <is_confirmation_required>false</is_confirmation_required>
+        <perform_only_if_total_remove>true</perform_only_if_total_remove>
     </item>
     <item>
-        <name>Appodeal Plugin Preferences</name>
+        <name>Appodeal Dependency Manager Choices</name>
         <path>Appodeal/Editor/InternalResources</path>
-        <filter>(PluginPreferences\.asset)</filter>
+        <filter>(AppodealDmChoices\.asset)</filter>
         <is_confirmation_required>false</is_confirmation_required>
+        <perform_only_if_total_remove>true</perform_only_if_total_remove>
     </item>
     <item>
         <name>Internal Resources Directory</name>
         <path>Appodeal/Editor/InternalResources</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Appodeal Dependencies Directory</name>
         <path>Appodeal/Editor/Dependencies</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Editor Directory</name>
         <path>Appodeal/Editor</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Appodeal Directory</name>
         <path>Appodeal</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Appodeal Andoid Library Directory</name>
         <path>Plugins/Android/appodeal.androidlib</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Android Plugins Directory</name>
         <path>Plugins/Android</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Plugins Directory</name>
         <path>Plugins</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Appodeal Samples</name>
         <path>Samples/Appodeal</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
         <name>Samples</name>
         <path>Samples</path>
-        <is_confirmation_required>false</is_confirmation_required>
         <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
     </item>
 </items>
