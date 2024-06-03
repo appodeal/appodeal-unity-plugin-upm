@@ -105,11 +105,11 @@
 		<androidPackage id="bidon_mintegral" spec="org.bidon:mintegral-adapter:0.4.29.1" />
 		<androidPackage id="bidon_unity_ads" spec="org.bidon:unityads-adapter:0.4.29.2" />
 		<androidPackage id="bidon_vungle" spec="org.bidon:vungle-adapter:0.4.29.1" />
-		<androidPackage id="max_admob" spec="com.applovin.mediation:google-adapter:+" />
+		<androidPackage id="max_admob" spec="com.applovin.mediation:google-adapter:23.0.0.1" />
 		<androidPackage id="max_amazon" spec="com.applovin.mediation:amazon-tam-adapter:9.9.3.2" />
 		<androidPackage id="max_bidmachine" spec="com.applovin.mediation:bidmachine-adapter:+" />
 		<androidPackage id="max_dt_exchange" spec="com.applovin.mediation:fyber-adapter:+" />
-		<androidPackage id="max_gam" spec="com.applovin.mediation:google-ad-manager-adapter:+" />
+		<androidPackage id="max_gam" spec="com.applovin.mediation:google-ad-manager-adapter:23.0.0.1" />
 		<androidPackage id="max_inmobi" spec="com.applovin.mediation:inmobi-adapter:+" />
 		<androidPackage id="max_ironsource" spec="com.applovin.mediation:ironsource-adapter:7.9.0.0.0" />
 		<androidPackage id="max_meta_audience_network" spec="com.applovin.mediation:facebook-adapter:+" />
