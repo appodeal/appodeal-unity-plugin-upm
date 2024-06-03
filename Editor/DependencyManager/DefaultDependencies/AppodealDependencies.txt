@@ -22,18 +22,14 @@
 		<iosPod id="appodeal_my_target" name="APDMyTargetAdapter" version="3.3.1.0" minTargetSdk="12.4" />
 		<iosPod id="appodeal_pangle" name="APDPangleAdapter" version="3.3.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_sentry" name="APDSentryAdapter" version="3.3.1.0" minTargetSdk="12.0" />
-		<iosPod id="appodeal_smaato" name="APDSmaatoAdapter" version="3.3.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_unity_ads" name="APDUnityAdapter" version="3.3.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_vungle" name="APDVungleAdapter" version="3.3.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_yandex_ads" name="APDYandexAdapter" version="3.3.1.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_amazon" name="BidMachineAmazonAdapter" version="2.6.0.1" minTargetSdk="12.0" />
-		<iosPod id="bidmachine_criteo" name="BidMachineCriteoAdapter" version="2.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_meta_audience_network" name="BidMachineMetaAudienceAdapter" version="2.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_mintegral" name="BidMachineMintegralAdapter" version="2.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_my_target" name="BidMachineMyTargetAdapter" version="2.6.0.0" minTargetSdk="12.4" />
 		<iosPod id="bidmachine_pangle" name="BidMachinePangleAdapter" version="2.6.0.0" minTargetSdk="12.0" />
-		<iosPod id="bidmachine_smaato" name="BidMachineSmaatoAdapter" version="2.6.0.0" minTargetSdk="12.0" />
-		<iosPod id="bidmachine_tapjoy" name="BidMachineTapjoyAdapter" version="2.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_vungle" name="BidMachineVungleAdapter" version="2.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidon_admob" name="BidonAdapterGoogleMobileAds" version="0.4.8.0" minTargetSdk="12.0" />
 		<iosPod id="bidon_amazon" name="BidonAdapterAmazon" version="0.4.8.0" minTargetSdk="12.0" />
@@ -50,18 +46,14 @@
 		<iosPod id="max_admob" name="AppLovinMediationGoogleAdapter" />
 		<iosPod id="max_amazon" name="AppLovinMediationAmazonAdMarketplaceAdapter" />
 		<iosPod id="max_bidmachine" name="AppLovinMediationBidMachineAdapter" />
-		<iosPod id="max_chartboost" name="AppLovinMediationChartboostAdapter" />
-		<iosPod id="max_criteo" name="AppLovinMediationCriteoAdapter" />
 		<iosPod id="max_dt_exchange" name="AppLovinMediationFyberAdapter" />
 		<iosPod id="max_gam" name="AppLovinMediationGoogleAdManagerAdapter" />
 		<iosPod id="max_inmobi" name="AppLovinMediationInMobiAdapter" />
 		<iosPod id="max_ironsource" name="AppLovinMediationIronSourceAdapter" />
 		<iosPod id="max_meta_audience_network" name="AppLovinMediationFacebookAdapter" />
 		<iosPod id="max_mintegral" name="AppLovinMediationMintegralAdapter" version="7.6.1.0.0" minTargetSdk="11.0" />
-		<iosPod id="max_mobilefuse" name="AppLovinMediationMobileFuseAdapter" />
 		<iosPod id="max_my_target" name="AppLovinMediationMyTargetAdapter" version="5.20.1.1" minTargetSdk="12.4" />
-		<iosPod id="max_smaato" name="AppLovinMediationSmaatoAdapter" version="22.8.2.0" minTargetSdk="11.0" />
-		<iosPod id="max_tapjoy" name="AppLovinMediationTapjoyAdapter" />
+		<iosPod id="max_pangle" name="AppLovinMediationByteDanceAdapter" />
 		<iosPod id="max_unity_ads" name="AppLovinMediationUnityAdsAdapter" />
 		<iosPod id="max_vungle" name="AppLovinMediationVungleAdapter" version="7.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="max_yandex_ads" name="AppLovinMediationYandexAdapter" version="5.2.1.0" minTargetSdk="10.0" />
@@ -96,12 +88,10 @@
 		<androidPackage id="appodeal_vungle" spec="com.appodeal.ads.sdk.networks:vungle:3.3.1.0" />
 		<androidPackage id="appodeal_yandex_ads" spec="com.appodeal.ads.sdk.networks:yandex:3.3.1.0" />
 		<androidPackage id="bidmachine_amazon" spec="io.bidmachine:ads.networks.amazon:2.6.0.13" />
-		<androidPackage id="bidmachine_criteo" spec="io.bidmachine:ads.networks.criteo:2.6.0.12" />
 		<androidPackage id="bidmachine_meta_audience_network" spec="io.bidmachine:ads.networks.meta_audience:2.6.0.15" />
 		<androidPackage id="bidmachine_mintegral" spec="io.bidmachine:ads.networks.mintegral:2.6.0.7" />
 		<androidPackage id="bidmachine_my_target" spec="io.bidmachine:ads.networks.my_target:2.6.0.15" />
 		<androidPackage id="bidmachine_pangle" spec="io.bidmachine:ads.networks.pangle:2.6.0.7" />
-		<androidPackage id="bidmachine_tapjoy" spec="io.bidmachine:ads.networks.tapjoy:2.6.0.10" />
 		<androidPackage id="bidmachine_vungle" spec="io.bidmachine:ads.networks.vungle:2.6.0.5" />
 		<androidPackage id="bidon_admob" spec="org.bidon:admob-adapter:0.4.29.1" />
 		<androidPackage id="bidon_amazon" spec="org.bidon:amazon-adapter:0.4.29.1" />
@@ -113,22 +103,19 @@
 		<androidPackage id="bidon_inmobi" spec="org.bidon:inmobi-adapter:0.4.29.1" />
 		<androidPackage id="bidon_meta_audience_network" spec="org.bidon:meta-adapter:0.4.29.1" />
 		<androidPackage id="bidon_mintegral" spec="org.bidon:mintegral-adapter:0.4.29.1" />
-		<androidPackage id="bidon_mobilefuse" spec="org.bidon:mobilefuse-adapter:0.4.29.0" />
 		<androidPackage id="bidon_unity_ads" spec="org.bidon:unityads-adapter:0.4.29.2" />
 		<androidPackage id="bidon_vungle" spec="org.bidon:vungle-adapter:0.4.29.1" />
 		<androidPackage id="max_admob" spec="com.applovin.mediation:google-adapter:+" />
 		<androidPackage id="max_amazon" spec="com.applovin.mediation:amazon-tam-adapter:9.9.3.2" />
 		<androidPackage id="max_bidmachine" spec="com.applovin.mediation:bidmachine-adapter:+" />
-		<androidPackage id="max_chartboost" spec="com.applovin.mediation:chartboost-adapter:+" />
 		<androidPackage id="max_dt_exchange" spec="com.applovin.mediation:fyber-adapter:+" />
 		<androidPackage id="max_gam" spec="com.applovin.mediation:google-ad-manager-adapter:+" />
 		<androidPackage id="max_inmobi" spec="com.applovin.mediation:inmobi-adapter:+" />
 		<androidPackage id="max_ironsource" spec="com.applovin.mediation:ironsource-adapter:7.9.0.0.0" />
 		<androidPackage id="max_meta_audience_network" spec="com.applovin.mediation:facebook-adapter:+" />
 		<androidPackage id="max_mintegral" spec="com.applovin.mediation:mintegral-adapter:+" />
-		<androidPackage id="max_mobilefuse" spec="com.applovin.mediation:mobilefuse-adapter:+" />
 		<androidPackage id="max_my_target" spec="com.applovin.mediation:mytarget-adapter:+" />
-		<androidPackage id="max_smaato" spec="com.applovin.mediation:smaato-adapter:+" />
+		<androidPackage id="max_pangle" spec="com.applovin.mediation:bytedance-adapter:+" />
 		<androidPackage id="max_unity_ads" spec="com.applovin.mediation:unityads-adapter:+" />
 		<androidPackage id="max_vungle" spec="com.applovin.mediation:vungle-adapter:+" />
 		<androidPackage id="max_yandex_ads" spec="com.applovin.mediation:yandex-adapter:+" />
