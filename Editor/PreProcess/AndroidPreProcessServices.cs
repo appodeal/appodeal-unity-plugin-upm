@@ -1,12 +1,12 @@
 using System;
-using System.IO;
-using System.Xml;
-using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
 using UnityEditor;
 using UnityEngine;
-using AppodealStack.UnityEditor.Utils;
 using AppodealStack.UnityEditor.InternalResources;
+using AppodealStack.UnityEditor.Utils;
 
 // ReSharper Disable CheckNamespace
 namespace AppodealStack.UnityEditor.PreProcess
@@ -20,13 +20,13 @@ namespace AppodealStack.UnityEditor.PreProcess
         {
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration)
             {
-                RemoveFirebaseXmlDir($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
+                RemoveFirebaseXmlDir($"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
                 return;
             }
 
-            if (!Directory.Exists($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}"))
+            if (!Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir))
             {
-                Debug.LogError($"[Appodeal] Android Library was not found on path '{AppodealEditorConstants.AppodealAndroidLibPath}'. Please, contact support@apppodeal.com about this issue.");
+                Debug.LogError($"[Appodeal] Android Library was not found on path '{AppodealEditorConstants.AppodealAndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
                 return;
             }
 
@@ -43,20 +43,15 @@ namespace AppodealStack.UnityEditor.PreProcess
             if (firebaseStrings == null)
             {
                 Debug.LogError($"[Appodeal] Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
-                RemoveFirebaseXmlDir($"Assets/{AppodealEditorConstants.AppodealAndroidLibPath}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
+                RemoveFirebaseXmlDir($"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
                 return;
             }
 
-            string valuesDir = Path.Combine(Application.dataPath,
-                                            AppodealEditorConstants.AppodealAndroidLibPath,
-                                            AppodealEditorConstants.FirebaseAndroidConfigPath);
+            string valuesDir = $"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}";
 
             Directory.CreateDirectory(valuesDir);
 
-            string xmlFilePath = Path.Combine(Application.dataPath,
-                                              AppodealEditorConstants.AppodealAndroidLibPath,
-                                              AppodealEditorConstants.FirebaseAndroidConfigPath,
-                                              AppodealEditorConstants.FirebaseAndroidConfigFile);
+            string xmlFilePath = $"{valuesDir}/{AppodealEditorConstants.FirebaseAndroidConfigFile}";
 
             CreateOrReplaceFirebaseXml(xmlFilePath, firebaseStrings);
         }
@@ -143,9 +138,7 @@ namespace AppodealStack.UnityEditor.PreProcess
     #region Facebook
         public static void SetupManifestForFacebook()
         {
-            string path = Path.Combine(Application.dataPath,
-                                       AppodealEditorConstants.AppodealAndroidLibPath,
-                                       AppodealEditorConstants.AndroidManifestFile);
+            string path = $"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.AndroidManifestFile}";
 
             if (!File.Exists(path))
             {

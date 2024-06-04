@@ -1,0 +1,54 @@
+.sdk {
+}
+
+.sdk-id {
+    display: none;
+}
+
+.horizontal-layout {
+    flex-direction: row;
+}
+
+.horizontal-layout-reversed {
+    flex-direction: row-reverse;
+}
+
+.sdk-versions {
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 5px;
+}
+
+.platform-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 4px;
+}
+
+.android-platform-icon {
+    background-image: resource('Images/apddm_android');
+}
+
+.ios-platform-icon {
+    background-image: resource('Images/apddm_apple');
+}
+
+.unity-toggle {
+    align-items: center;
+}
+
+.unity-toggle__checkmark {
+    width: 25px;
+    height: 25px;
+}
+
+.info-icon {
+    width: 20px;
+    height: 20px;
+    background-image: resource('Images/apddm_info');
+}
+
+.info-icon:hover {
+    background-image: resource('Images/apddm_infoHovered');
+    cursor: link;
+}

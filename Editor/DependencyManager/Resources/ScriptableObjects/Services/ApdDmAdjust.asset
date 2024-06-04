@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d9100e77f349db85176519d9793e69, type: 3}
+  m_Name: ApdDmAdjust
+  m_EditorClassIdentifier: 
+  id: adjust
+  description: Sync without cost your UA data with Adjust. Get LTV forecasts of your
+    UA campaigns. Discover which ads delivered the best users, what are your most
+    effective channels & campaigns, and avoid wasting your ad budget.
+  texture: {fileID: 2800000, guid: 1da0a7c00fecf48ca8ec5b4e62620605, type: 3}

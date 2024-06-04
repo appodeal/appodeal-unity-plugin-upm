@@ -1,0 +1,63 @@
+.tooltip {
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 380px;
+    border-top-width: 1.5px;
+    border-right-width: 1.5px;
+    border-bottom-width: 1.5px;
+    border-left-width: 1.5px;
+    border-left-color: rgb(125, 125, 125);
+    border-right-color: rgb(125, 125, 125);
+    border-top-color: rgb(125, 125, 125);
+    border-bottom-color: rgb(125, 125, 125);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.tooltip__sdk-id {
+    display: none;
+}
+
+.tooltip__top-row {
+    flex-direction: row;
+    padding-right: 7px;
+    padding-left: 7px;
+    padding-top: 5px;
+    padding-bottom: 0;
+    min-height: 25px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tooltip__sdk-name {
+    -unity-font-style: bold;
+    font-size: 14px;
+    overflow: hidden;
+    margin-right: 10px;
+    max-width: 250px;
+    -unity-text-align: middle-left;
+}
+
+.tooltip__sdk-req-status {
+    font-size: 10px;
+    overflow: hidden;
+    margin-left: 10px;
+    -unity-text-align: middle-right;
+    max-width: 70px;
+}
+
+.tooltip__sdk-description {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}

@@ -4,6 +4,14 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.3.1 (June 04, 2024)
+
++ Updated Appodeal Android SDK to v3.3.1
++ Updated Appodeal iOS SDK to v3.3.1
++ Implemented Dependency Manager tool
++ Changed skadnetwork ids parsing logic
++ Bumped minimal supported Unity version to v2021.3
+
 ### 3.3.0 (April 30, 2024)
 
 + Updated Appodeal Android SDK to v3.3.0

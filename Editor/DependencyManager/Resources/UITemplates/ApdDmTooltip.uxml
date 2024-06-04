@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.appodeal.mediation/Editor/DependencyManager/Resources/UITemplates/ApdDmTooltip.uss?fileID=7433441132597879392&amp;guid=d1cad1273ac6f45d1b2115f663b6a6b8&amp;type=3#ApdDmTooltip" />
+    <ui:VisualElement name="Tooltip" class="tooltip">
+        <ui:Label name="SdkId" text="bidon" class="tooltip__sdk-id" />
+        <ui:VisualElement name="TopRow" class="tooltip__top-row">
+            <ui:Label text="Bidon" name="SdkName" class="tooltip__sdk-name" />
+            <ui:Label text="Required" name="SdkRequirementStatus" class="tooltip__sdk-req-status" />
+        </ui:VisualElement>
+        <ui:Label text="An open-source mediation solution aimed at maximizing fill rates and revenue potential by combining classical waterfalls and real-time bidding." name="SdkDescription" class="tooltip__sdk-description" />
+    </ui:VisualElement>
+</ui:UXML>
