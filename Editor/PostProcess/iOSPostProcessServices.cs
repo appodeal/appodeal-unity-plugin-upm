@@ -1,13 +1,14 @@
 ﻿#if UNITY_IOS
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.IO;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS.Xcode;
-using AppodealStack.UnityEditor.InternalResources;
+using UnityEngine;
+using AppodealInc.Mediation.PluginSettings.Editor;
 
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.PostProcess
+namespace AppodealInc.Mediation.PostProcess.Editor
 {
     public static class IosPostProcessServices
     {
@@ -113,4 +114,5 @@ namespace AppodealStack.UnityEditor.PostProcess
         }
     }
 }
+
 #endif

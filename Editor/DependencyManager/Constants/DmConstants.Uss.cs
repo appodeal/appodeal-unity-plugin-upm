@@ -1,4 +1,5 @@
-// ReSharper disable once CheckNamespace
+// ReSharper disable CheckNamespace
+
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     public static partial class DmConstants

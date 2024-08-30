@@ -1,68 +1,71 @@
-using System.Threading;
+// ReSharper Disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IRewardedVideoAdListener"/> interface.
+    /// Android implementation of the <see langword="IRewardedVideoAdListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-    public class AppodealRewardedVideoCallbacks : AndroidJavaProxy
+    internal class AppodealRewardedVideoCallbacks : AndroidJavaProxy
     {
         private readonly IRewardedVideoAdListener _listener;
-        private static SynchronizationContext _unityContext;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealRewardedVideoCallbacks(IRewardedVideoAdListener listener) : base("com.appodeal.ads.RewardedVideoCallbacks")
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onRewardedVideoLoaded(bool isPrecache)
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoLoaded(isPrecache), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoLoaded(isPrecache));
         }
 
+        [Preserve]
         private void onRewardedVideoFailedToLoad()
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoFailedToLoad(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoFailedToLoad());
         }
 
+        [Preserve]
         private void onRewardedVideoShowFailed()
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoShowFailed(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoShowFailed());
         }
 
+        [Preserve]
         private void onRewardedVideoShown()
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoShown(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoShown());
         }
 
+        [Preserve]
         private void onRewardedVideoFinished(double amount, string currency)
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoFinished(amount, currency), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoFinished(amount, currency));
         }
 
+        [Preserve]
         private void onRewardedVideoClosed(bool finished)
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoClosed(finished), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoClosed(finished));
         }
 
+        [Preserve]
         private void onRewardedVideoExpired()
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoExpired(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoExpired());
         }
 
+        [Preserve]
         private void onRewardedVideoClicked()
         {
-            _unityContext?.Post(obj => _listener?.OnRewardedVideoClicked(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnRewardedVideoClicked());
         }
     }
 }

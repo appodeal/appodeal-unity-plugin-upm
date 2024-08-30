@@ -1,25 +1,26 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// ReSharper Disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 using AppodealStack.Monetization.Platforms.Android;
-#elif UNITY_IPHONE && !UNITY_EDITOR
+#elif UNITY_IOS && !UNITY_EDITOR
 using AppodealStack.Monetization.Platforms.Ios;
 #else
 using AppodealStack.Monetization.Platforms.Dummy;
 #endif
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms
 {
     [SuppressMessage("ReSharper", "UnusedParameter.Global")]
-    public static class AppodealAdsClientFactory
+    internal static class AppodealAdsClientFactory
     {
         public static IAppodealAdsClient GetAppodealAdsClient()
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             return new AndroidAppodealClient();
-#elif UNITY_IPHONE && !UNITY_EDITOR
+#elif UNITY_IOS && !UNITY_EDITOR
             return new IosAppodealClient();
 #else
             return new DummyAppodealClient();
@@ -30,7 +31,7 @@ namespace AppodealStack.Monetization.Platforms
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             return new AndroidPlayStoreInAppPurchaseBuilder(purchaseType);
-#elif UNITY_IPHONE && !UNITY_EDITOR
+#elif UNITY_IOS && !UNITY_EDITOR
             return null;
 #else
             return new DummyPlayStoreInAppPurchaseBuilder();
@@ -41,7 +42,7 @@ namespace AppodealStack.Monetization.Platforms
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
             return null;
-#elif UNITY_IPHONE && !UNITY_EDITOR
+#elif UNITY_IOS && !UNITY_EDITOR
             return new IosAppStoreInAppPurchaseBuilder(purchaseType);
 #else
             return new DummyAppStoreInAppPurchaseBuilder();

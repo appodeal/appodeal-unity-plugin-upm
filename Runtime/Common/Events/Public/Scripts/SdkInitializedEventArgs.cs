@@ -1,18 +1,21 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
     /// This class is designed to store arguments of
-    /// <see cref="AppodealEvents.OnSdkInitialized">OnSdkInitialized</see> event.
+    /// <see cref="AppodealCallbacks.Sdk.OnInitialized">OnSdkInitialized</see> event.
     /// </summary>
     public class SdkInitializedEventArgs : EventArgs
     {
         /// <summary>
         /// Returns list of initialization errors, if any. Otherwise - null.
         /// </summary>
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
         public List<string> Errors { get; }
 
         /// <summary>

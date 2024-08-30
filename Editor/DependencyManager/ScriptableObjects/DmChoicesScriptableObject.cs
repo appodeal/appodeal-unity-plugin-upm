@@ -1,3 +1,5 @@
+// ReSharper disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,7 +7,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmChoicesScriptableObject : ScriptableObject

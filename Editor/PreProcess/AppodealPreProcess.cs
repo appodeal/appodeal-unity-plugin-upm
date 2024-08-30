@@ -1,3 +1,5 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -8,11 +10,10 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
-using AppodealStack.UnityEditor.InternalResources;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.PreProcess
+namespace AppodealInc.Mediation.PreProcess.Editor
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class AppodealPreProcess : IPreprocessBuildWithReport

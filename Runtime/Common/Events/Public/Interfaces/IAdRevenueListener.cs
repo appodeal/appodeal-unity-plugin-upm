@@ -1,4 +1,5 @@
 // ReSharper Disable CheckNamespace
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>

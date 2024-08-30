@@ -1,57 +1,59 @@
-﻿using System.Threading;
+﻿// ReSharper Disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IBannerAdListener"/> interface.
+    /// Android implementation of the <see langword="IBannerAdListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealBannerCallbacks : AndroidJavaProxy
+    internal class AppodealBannerCallbacks : AndroidJavaProxy
     {
         private readonly IBannerAdListener _listener;
-        private static SynchronizationContext _unityContext;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealBannerCallbacks(IBannerAdListener listener) : base("com.appodeal.ads.BannerCallbacks")
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onBannerLoaded(int height, bool isPrecache)
         {
-            _unityContext?.Post(obj => _listener?.OnBannerLoaded(height, isPrecache), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerLoaded(height, isPrecache));
         }
 
+        [Preserve]
         private void onBannerFailedToLoad()
         {
-            _unityContext?.Post(obj => _listener?.OnBannerFailedToLoad(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerFailedToLoad());
         }
 
+        [Preserve]
         private void onBannerShown()
         {
-            _unityContext?.Post(obj => _listener?.OnBannerShown(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerShown());
         }
 
+        [Preserve]
         private void onBannerShowFailed()
         {
-            _unityContext?.Post(obj => _listener?.OnBannerShowFailed(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerShowFailed());
         }
 
+        [Preserve]
         private void onBannerClicked()
         {
-            _unityContext?.Post(obj => _listener?.OnBannerClicked(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerClicked());
         }
 
+        [Preserve]
         private void onBannerExpired()
         {
-            _unityContext?.Post(obj => _listener?.OnBannerExpired(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnBannerExpired());
         }
     }
 }

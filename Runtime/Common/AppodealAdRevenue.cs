@@ -1,4 +1,7 @@
 // ReSharper Disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -7,6 +10,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/ad-revenue-callback"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "NotAccessedField.Global")]
     public class AppodealAdRevenue
     {
         /// <summary>
@@ -81,6 +85,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns ad revenue information as a json-formatted string.
         /// </summary>
         /// <param name="isPretty">If true, format the output for readability. If false, format the output for minimum size. Default is false.</param>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         public string ToJsonString(bool isPretty = false) => UnityEngine.JsonUtility.ToJson(this, isPretty);
     }
 }

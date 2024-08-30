@@ -1,9 +1,10 @@
+// ReSharper disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
 	[Serializable]

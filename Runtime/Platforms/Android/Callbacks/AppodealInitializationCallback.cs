@@ -1,35 +1,32 @@
-using System.Threading;
+// ReSharper Disable CheckNamespace
+
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IAppodealInitializationListener"/> interface.
+    /// Android implementation of the <see langword="IAppodealInitializationListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealInitializationCallback : AndroidJavaProxy
+    internal class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;
-        private static SynchronizationContext _unityContext;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
 
         internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base("com.appodeal.ads.initializing.ApdInitializationCallback")
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onInitializationFinished(AndroidJavaObject errors)
         {
             if (errors == null)
             {
-                _unityContext?.Post(obj => _listener?.OnInitializationFinished(null), null);
+                UnityMainThreadDispatcher.Post(_ => _listener?.OnInitializationFinished(null));
                 return;
             }
 
@@ -41,7 +38,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
             }
 
-            _unityContext?.Post(obj => _listener?.OnInitializationFinished(errorsList), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnInitializationFinished(errorsList));
         }
     }
 }

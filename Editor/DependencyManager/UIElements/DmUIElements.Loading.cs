@@ -1,7 +1,8 @@
+// ReSharper disable CheckNamespace
+
 using UnityEditor;
 using UnityEngine.UIElements;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static partial class DmUIElements

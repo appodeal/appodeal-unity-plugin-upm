@@ -1,6 +1,7 @@
+// ReSharper Disable CheckNamespace
+
 using System.Collections.Generic;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>

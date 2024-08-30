@@ -1,11 +1,12 @@
-﻿using System;
+﻿// ReSharper Disable CheckNamespace
+
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.AssetExtractors
+namespace AppodealInc.Mediation.AssetExtractors.Editor
 {
     internal static class AppodealAdaptersInstaller
     {

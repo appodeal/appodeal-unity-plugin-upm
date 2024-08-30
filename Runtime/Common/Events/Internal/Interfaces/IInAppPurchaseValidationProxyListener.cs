@@ -1,9 +1,10 @@
-﻿using System;
+﻿// ReSharper Disable CheckNamespace
 
-// ReSharper Disable CheckNamespace
+using System;
+
 namespace AppodealStack.Monetization.Common
 {
-    public interface IInAppPurchaseValidationProxyListener : IInAppPurchaseValidationListener
+    internal interface IInAppPurchaseValidationProxyListener : IInAppPurchaseValidationListener
     {
         IInAppPurchaseValidationListener Listener { get; set; }
         event EventHandler<InAppPurchaseEventArgs> OnValidationSucceeded;

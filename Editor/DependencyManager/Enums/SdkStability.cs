@@ -1,6 +1,7 @@
+// ReSharper disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]

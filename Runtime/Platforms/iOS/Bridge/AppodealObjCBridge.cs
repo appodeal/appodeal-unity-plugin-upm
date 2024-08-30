@@ -1,6 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿// ReSharper Disable CheckNamespace
 
-// ReSharper Disable CheckNamespace
+using System.Runtime.InteropServices;
+
 namespace AppodealStack.Monetization.Platforms.Ios
 {
     internal delegate void AppodealInitializationCallback();

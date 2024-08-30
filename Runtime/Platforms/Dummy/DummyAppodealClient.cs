@@ -1,112 +1,113 @@
-using System.IO;
-using System.Linq;
+// ReSharper Disable CheckNamespace
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using UnityEngine.EventSystems;
 using AppodealStack.Monetization.Common;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Dummy
 {
     #region EditorAdClass
 
     internal class EditorAd
     {
-        public bool             IsAutoCacheEnabled = true;
-        public bool             IsInitialized;
-        public bool             IsPrecache = false;
-        public string           PrefabName;
-        public GameObject       GameObject;
-        public readonly int     Type;
-        public readonly string  Name;
+        public bool IsAutoCacheEnabled = true;
+        public bool IsInitialized;
+        public readonly bool IsPrecache = false;
+        public string PrefabName;
+        public GameObject GameObject;
+        public readonly int Type;
+        public readonly string Name;
         public readonly Vector2 Size;
 
         public EditorAd(int type, GameObject gameObject, string prefabName, string name, Vector2 size)
         {
-            this.Type = type;
-            this.GameObject = gameObject;
-            this.PrefabName = prefabName;
-            this.Name = name;
-            this.Size = size;
+            Type = type;
+            GameObject = gameObject;
+            PrefabName = prefabName;
+            Name = name;
+            Size = size;
         }
     }
 
     #endregion
 
     /// <summary>
-    /// Unity Editor implementation of <see langword="IAppodealAdsClient"/> interface.
+    /// Unity Editor implementation of the <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-    [SuppressMessage("ReSharper", "RedundantTypeArgumentsOfMethod")]
-    [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
+    [SuppressMessage("ReSharper", "MergeIntoPattern")]
     [SuppressMessage("ReSharper", "MergeSequentialChecks")]
     [SuppressMessage("ReSharper", "MergeCastWithTypeCheck")]
     [SuppressMessage("ReSharper", "SimplifyConditionalTernaryExpression")]
-    [SuppressMessage("ReSharper", "ConvertClosureToMethodGroup")]
-    public class DummyAppodealClient : IAppodealAdsClient
+    internal class DummyAppodealClient : IAppodealAdsClient
     {
         #region Variables
 
-        private const string    HorizontalInterstitialAssetName = "ApdInterstitialH";
-        private const string    VerticalInterstitialAssetName = "ApdInterstitialV";
-        private const string    HorizontalVideoAssetName = "ApdVideoH";
-        private const string    VerticalVideoAssetName = "ApdVideoV";
+        private const string HorizontalInterstitialAssetName = "ApdInterstitialH";
+        private const string VerticalInterstitialAssetName = "ApdInterstitialV";
+        private const string HorizontalVideoAssetName = "ApdVideoH";
+        private const string VerticalVideoAssetName = "ApdVideoV";
 
-        private const string    FailedToLoad = "FailedToLoad";
-        private const string    Closed = "Closed";
-        private const string    Shown = "Shown";
-        private const string    Loaded = "Loaded";
-        private const string    Clicked = "Clicked";
-        private const string    Finished = "Finished";
+        private const string FailedToLoad = "FailedToLoad";
+        private const string Closed = "Closed";
+        private const string Shown = "Shown";
+        private const string Loaded = "Loaded";
+        private const string Clicked = "Clicked";
+        private const string Finished = "Finished";
 
-        private const int       Interstitial = 1;
-        private const int       RewardedVideo = 2;
-        private const int       Mrec = 4;
-        private const int       Banner = 8;
-        private const int       BannerView = 16;
-        private const int       BannerBottom = 32;
-        private const int       BannerTop = 64;
-        private const int       BannerLeft = 128;
-        private const int       BannerRight = 256;
+        private const int Interstitial = 1;
+        private const int RewardedVideo = 2;
+        private const int Mrec = 4;
+        private const int Banner = 8;
+        private const int BannerView = 16;
+        private const int BannerBottom = 32;
+        private const int BannerTop = 64;
+        private const int BannerLeft = 128;
+        private const int BannerRight = 256;
 
-        private readonly Dictionary<int,string> _bannerPositions = new Dictionary<int,string> {
+        private readonly Dictionary<int, string> _bannerPositions = new()
+        {
             { BannerBottom, "ApdBannerBottomAd" },
             { BannerTop, "ApdBannerTopAd" },
             { BannerLeft, "ApdBannerLeftAd" },
             { BannerRight, "ApdBannerRightAd" },
-            { BannerView, "ApdBannerViewAd" } };
+            { BannerView, "ApdBannerViewAd" }
+        };
 
-        private readonly Dictionary<int,EditorAd> _ads = new Dictionary<int,EditorAd> {
-            {Interstitial, new EditorAd(Interstitial, null, "ApdInterstitialAd", "Interstitial", Vector2.zero)},
-            {Banner, new EditorAd(Banner, null, "ApdBannerBottomAd", "Banner", new Vector2(320, 50))},
-            {RewardedVideo, new EditorAd(RewardedVideo, null, "ApdRewardedAd", "RewardedVideo", Vector2.zero)},
-            {Mrec, new EditorAd(Mrec, null, "ApdMrecAd", "Mrec", new Vector2(300, 250))} };
+        private readonly Dictionary<int,EditorAd> _ads = new()
+        {
+            { Interstitial, new EditorAd(Interstitial, null, "ApdInterstitialAd", "Interstitial", Vector2.zero) },
+            { Banner, new EditorAd(Banner, null, "ApdBannerBottomAd", "Banner", new Vector2(320, 50)) },
+            { RewardedVideo, new EditorAd(RewardedVideo, null, "ApdRewardedAd", "RewardedVideo", Vector2.zero) },
+            { Mrec, new EditorAd(Mrec, null, "ApdMrecAd", "Mrec", new Vector2(300, 250)) }
+        };
 
-        private IInterstitialAdListener     _interstitialAdListener;
-        private IBannerAdListener           _bannerAdListener;
-        private IRewardedVideoAdListener    _rewardedVideoAdListener;
-        private IMrecAdListener             _mrecAdListener;
-        private IAdRevenueListener          _adRevenueListener;
+        private IInterstitialAdListener _interstitialAdListener;
+        private IBannerAdListener _bannerAdListener;
+        private IRewardedVideoAdListener _rewardedVideoAdListener;
+        private IMrecAdListener _mrecAdListener;
+        private IAdRevenueListener _adRevenueListener;
         private IAppodealInitializationListener _appodealInitializationListener;
 
-        private VideoPlayer     _videoPlayer;
-        private Toggle          _loggingToggle;
+        private VideoPlayer _videoPlayer;
+        private Toggle _loggingToggle;
 
-        private bool            IsLoggingEnabled { get; set; }
-        private bool            IsSDKInitialized { get; set; }
-        private bool            ShouldReward { get; set; }
+        private bool IsLoggingEnabled { get; set; }
+        private bool IsSDKInitialized { get; set; }
+        private bool ShouldReward { get; set; }
 
         #endregion
 
         private static int NativeAdTypesForType(int adTypes)
         {
-            var nativeAdTypes = 0;
+            int nativeAdTypes = 0;
 
             if ((adTypes & AppodealAdType.Interstitial) > 0)
             {
@@ -176,25 +177,23 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private void SimInitAdTypes(int adTypes)
         {
             _ads.Keys.Where(key => (adTypes & key) > 0).ToList().ForEach(key => _ads[key].IsInitialized = true);
-            _ads.Keys.Where(key => _ads[key].IsAutoCacheEnabled && _ads[key].IsInitialized).ToList().ForEach(key => SimCacheAd(key));
+            _ads.Keys.Where(key => _ads[key].IsAutoCacheEnabled && _ads[key].IsInitialized).ToList().ForEach(SimCacheAd);
 
-            if (_appodealInitializationListener != null) _appodealInitializationListener.OnInitializationFinished(null);
+            _appodealInitializationListener?.OnInitializationFinished(null);
         }
 
         private bool SimCheckIfSDKInitialized(string methodName)
         {
-            if (!IsSDKInitialized)
-            {
-                Debug.LogError($"Initialize Appodeal SDK before calling {methodName} method");
-                return false;
-            }
+            if (IsSDKInitialized) return true;
 
-            return true;
+            Debug.LogError($"Initialize Appodeal SDK before calling {methodName} method");
+            return false;
         }
 
         private bool SimCheckIfAdTypeInitialized(int adType)
         {
-            return GetEditorAdObjectByAdType(adType) == null ? false : GetEditorAdObjectByAdType(adType).IsInitialized;
+            var ad = GetEditorAdObjectByAdType(adType);
+            return ad?.IsInitialized ?? false;
         }
 
         private bool SimCheckIfAdTypeIsLoaded(int adType)
@@ -204,21 +203,21 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SimCacheAd(int adType)
         {
-            EditorAd ad = GetEditorAdObjectByAdType(adType);
+            var ad = GetEditorAdObjectByAdType(adType);
             string prefabName = ad?.PrefabName;
 
-            if (string.IsNullOrEmpty(prefabName))
+            if (String.IsNullOrEmpty(prefabName))
             {
                 SimFireCallback(ad?.Name, FailedToLoad);
                 return;
             }
 
             string defaultPath = $"{AppodealEditorConstants.EditorAdPrefabsDir}/{prefabName}.prefab";
-            var assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
-            var prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
+            string[] assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
+            string prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
 
             var adPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            var adGameObject = Object.Instantiate<GameObject>(adPrefab, Vector3.zero, Quaternion.identity);
+            var adGameObject = UnityEngine.Object.Instantiate(adPrefab, Vector3.zero, Quaternion.identity);
 
             if (adGameObject == null)
             {
@@ -228,17 +227,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             adGameObject.SetActive(false);
 
-            if (Object.FindObjectsOfType<EventSystem>().Length < 1)
+            if (UnityEngine.Object.FindObjectsByType(typeof(EventSystem), FindObjectsSortMode.None).Length < 1)
             {
                 adGameObject.transform.Find("EventSystem")?.gameObject.SetActive(true);
             }
 
-            Object.DontDestroyOnLoad(adGameObject);
+            UnityEngine.Object.DontDestroyOnLoad(adGameObject);
 
             var buttons = adGameObject.GetComponentsInChildren<Button>(true);
             var toggle = adGameObject.GetComponentInChildren<Toggle>();
 
-            foreach (Button btn in buttons)
+            foreach (var btn in buttons)
             {
                 if (btn.gameObject.name == "CloseButton")
                 {
@@ -246,7 +245,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     {
                         ShouldReward = toggle?.isOn ?? false;
 
-                        Object.Destroy(adGameObject);
+                        UnityEngine.Object.Destroy(adGameObject);
 
                         if (ad.Type == Interstitial) SimFireCallback(ad.Name, Closed);
                         else if (ad.Type == RewardedVideo) SimFireCallback(ad.Name, Closed, ShouldReward);
@@ -280,19 +279,19 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private bool SimShowAdAtPos(int adType, Vector2 pos)
         {
-            EditorAd ad = GetEditorAdObjectByAdType(adType);
+            var ad = GetEditorAdObjectByAdType(adType);
 
             if (SimShowAd(adType))
             {
-                Vector2 calculatedPos = Vector2.zero;
+                var calculatedPos = Vector2.zero;
 
-                if (pos.x == AppodealViewPosition.HorizontalCenter || pos.x == AppodealViewPosition.HorizontalSmart) calculatedPos.x = (Screen.width - ad.Size.x * Screen.dpi / 160) / 2;
-                else if (pos.x == AppodealViewPosition.HorizontalLeft) calculatedPos.x = 0;
-                else if (pos.x == AppodealViewPosition.HorizontalRight) calculatedPos.x = Screen.width - ad.Size.x * Screen.dpi / 160;
+                if (Mathf.Approximately(pos.x, AppodealViewPosition.HorizontalCenter) || Mathf.Approximately(pos.x, AppodealViewPosition.HorizontalSmart)) calculatedPos.x = (Screen.width - ad.Size.x * Screen.dpi / 160) / 2;
+                else if (Mathf.Approximately(pos.x, AppodealViewPosition.HorizontalLeft)) calculatedPos.x = 0;
+                else if (Mathf.Approximately(pos.x, AppodealViewPosition.HorizontalRight)) calculatedPos.x = Screen.width - ad.Size.x * Screen.dpi / 160;
                 else calculatedPos.x = pos.x;
 
-                if (pos.y == AppodealViewPosition.VerticalBottom) calculatedPos.y = ad.Size.y * Screen.dpi / 160 - Screen.height;
-                else if (pos.y == AppodealViewPosition.VerticalTop) calculatedPos.y = 0;
+                if (Mathf.Approximately(pos.y, AppodealViewPosition.VerticalBottom)) calculatedPos.y = ad.Size.y * Screen.dpi / 160 - Screen.height;
+                else if (Mathf.Approximately(pos.y, AppodealViewPosition.VerticalTop)) calculatedPos.y = 0;
                 else calculatedPos.y = - pos.y;
 
                 if (calculatedPos.x < 0 || calculatedPos.y > 0 || calculatedPos.x > Screen.width - ad.Size.x * Screen.dpi / 160 || calculatedPos.y < ad.Size.y * Screen.dpi / 160 - Screen.height) return false;
@@ -313,7 +312,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             if (!SimCheckIfAdTypeIsLoaded(adType)) return false;
 
-            EditorAd ad = GetEditorAdObjectByAdType(adType);
+            var ad = GetEditorAdObjectByAdType(adType);
 
             switch (ad.Type) {
                 case Mrec:
@@ -358,12 +357,12 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private void SimHideAd(int adType)
         {
-            EditorAd ad = GetEditorAdObjectByAdType(adType);
+            var ad = GetEditorAdObjectByAdType(adType);
 
             if (ad == null) return;
 
             if (ad.PrefabName == "ApdBannerViewAd" && adType != BannerView) return;
-            else if (ad.PrefabName != "ApdBannerViewAd" && adType == BannerView) return;
+            if (ad.PrefabName != "ApdBannerViewAd" && adType == BannerView) return;
 
             ad.GameObject?.SetActive(false);
         }
@@ -460,27 +459,27 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private void SetBannerPosition(EditorAd ad, int adType)
         {
             string newPrefabName = GetBannerPrefabNameByBannerPosition(adType);
-            if (string.IsNullOrEmpty(newPrefabName)) return;
+            if (String.IsNullOrEmpty(newPrefabName)) return;
 
-            if (ad.PrefabName != newPrefabName)
-            {
-                ad.PrefabName = newPrefabName;
-                Object.Destroy(ad.GameObject);
-                ad.GameObject = null;
-                SimCacheAd(adType);
-            }
+            if (ad.PrefabName == newPrefabName) return;
+
+            ad.PrefabName = newPrefabName;
+            UnityEngine.Object.Destroy(ad.GameObject);
+            ad.GameObject = null;
+            SimCacheAd(adType);
         }
 
         private void SetBannerWidth(EditorAd ad, int adType)
         {
             var rt = ad.GameObject.transform.Find("Panel").GetComponent<RectTransform>();
-            if (adType == BannerLeft || adType == BannerRight) rt.sizeDelta = new Vector2(ad.Size.y * Screen.dpi / 160, Mathf.Min(Screen.height, ad.Size.x * Screen.dpi / 160));
-            else rt.sizeDelta = new Vector2(Mathf.Min(Screen.width, ad.Size.x * Screen.dpi / 160), ad.Size.y * Screen.dpi / 160);
+            rt.sizeDelta = adType is BannerLeft or BannerRight
+                ? new Vector2(ad.Size.y * Screen.dpi / 160, Mathf.Min(Screen.height, ad.Size.x * Screen.dpi / 160))
+                : new Vector2(Mathf.Min(Screen.width, ad.Size.x * Screen.dpi / 160), ad.Size.y * Screen.dpi / 160);
         }
 
         private string GetBannerPrefabNameByBannerPosition(int adType)
         {
-            _bannerPositions.TryGetValue(adType, out var prefabName);
+            _bannerPositions.TryGetValue(adType, out string prefabName);
 
             return prefabName;
         }
@@ -722,7 +721,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public string GetVersion()
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetVersion method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return string.Empty;
+            return String.Empty;
         }
 
         public long GetSegmentId()
@@ -822,7 +821,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public string GetUserId()
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetUserId method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-            return "";
+            return String.Empty;
         }
 
         public void LogEvent(string eventName, Dictionary<string, object> eventParams)

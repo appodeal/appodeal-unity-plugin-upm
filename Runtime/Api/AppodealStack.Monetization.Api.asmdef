@@ -1,5 +1,6 @@
 {
     "name": "AppodealStack.Monetization.Api",
+    "rootNamespace": "AppodealStack.Monetization.Api",
     "references": [
         "AppodealStack.Monetization.Common",
         "AppodealStack.Monetization.Platforms"

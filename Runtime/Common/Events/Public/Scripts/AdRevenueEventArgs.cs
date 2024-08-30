@@ -1,17 +1,20 @@
-using System;
-
 // ReSharper Disable CheckNamespace
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
     /// This class is designed to store arguments of
-    /// <see cref="AppodealEvents.AdRevenue.OnReceived">AdRevenue.OnReceived</see> event.
+    /// <see cref="AppodealCallbacks.AdRevenue.OnReceived">AdRevenue.OnReceived</see> event.
     /// </summary>
     public class AdRevenueEventArgs : EventArgs
     {
         /// <summary>
         /// Returns object of type <see cref="AppodealAdRevenue"/> containing data about the last ad impression.
         /// </summary>
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
         public AppodealAdRevenue Ad { get; }
 
         /// <summary>
