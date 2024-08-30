@@ -19,6 +19,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         [SuppressMessage("ReSharper", "Unity.IncorrectMethodSignature")]
         private static async void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
         {
+            return;
             if (deletedAssets.Any(asset => asset.Contains($"Packages/{DmConstants.AppodealPackageName}"))) return;
 
             if (!DmChoicesScriptableObject.Instance.CheckPeriodicallyForPluginUpdates

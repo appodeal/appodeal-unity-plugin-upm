@@ -16,6 +16,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public override async void OnActivate(string searchContext, VisualElement rootElement)
         {
+            return;
             LogHelper.Log($"{nameof(OnActivate)}() method is called");
 
             if (!DmUIElements.AreAllDmAssetsLoadable())
@@ -61,7 +62,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _dmConfig = null;
         }
 
-        [SettingsProvider]
+        // [SettingsProvider]
         public static SettingsProvider CreateDmSettingsProvider()
         {
             var provider = new DmSettingsProvider($"Project/{DmConstants.SettingsProviderWindowName}", SettingsScope.Project)

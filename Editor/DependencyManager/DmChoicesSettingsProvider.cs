@@ -11,6 +11,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
+            return;
             LogHelper.Log($"{nameof(OnActivate)}() method is called");
 
             if (!DmUIElements.IsSettingsAssetLoadable())
@@ -30,7 +31,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             DmChoicesScriptableObject.SaveAsync();
         }
 
-        [SettingsProvider]
+        // [SettingsProvider]
         public static SettingsProvider CreateDmChoicesSettingsProvider()
         {
             return new DmChoicesSettingsProvider($"Project/{DmConstants.SettingsProviderWindowName}/Settings", SettingsScope.Project) { label = "Settings" };
