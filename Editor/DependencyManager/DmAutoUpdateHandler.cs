@@ -1,3 +1,5 @@
+// ReSharper disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,7 +10,6 @@ using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmAutoUpdateHandler : AssetPostprocessor

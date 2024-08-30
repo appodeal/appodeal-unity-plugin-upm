@@ -1,3 +1,5 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,11 +7,10 @@ using System.Linq;
 using System.Xml;
 using UnityEditor;
 using UnityEngine;
-using AppodealStack.UnityEditor.InternalResources;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.PreProcess
+namespace AppodealInc.Mediation.PreProcess.Editor
 {
     public static class AndroidPreProcessServices
     {
@@ -207,10 +208,8 @@ namespace AppodealStack.UnityEditor.PreProcess
                 NewLineHandling = NewLineHandling.Replace
             };
 
-            using(var w = XmlWriter.Create(fullPath, settings))
-            {
-                xmlDocument.Save(w);
-            }
+            using var w = XmlWriter.Create(fullPath, settings);
+            xmlDocument.Save(w);
         }
 
         private static XmlNode FindChildNode(XmlNode parent, string name)

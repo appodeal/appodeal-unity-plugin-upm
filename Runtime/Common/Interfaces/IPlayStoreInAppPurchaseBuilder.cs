@@ -1,4 +1,7 @@
 // ReSharper Disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -7,6 +10,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases?distribution=upm"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
     public interface IPlayStoreInAppPurchaseBuilder : IInAppPurchaseBaseBuilder
     {
         void WithSku(string sku);

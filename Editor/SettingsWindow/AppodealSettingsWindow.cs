@@ -1,19 +1,18 @@
-﻿using System;
+﻿// ReSharper Disable CheckNamespace
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using AppodealStack.UnityEditor.InternalResources;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.SettingsWindow
+namespace AppodealInc.Mediation.SettingsWindow.Editor
 {
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class AppodealSettingsWindow : EditorWindow
     {
         public static void ShowAppodealSettingsWindow()

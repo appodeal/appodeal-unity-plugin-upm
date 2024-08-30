@@ -1,10 +1,11 @@
+// ReSharper Disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEditor;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.AssetExtractors
+namespace AppodealInc.Mediation.AssetExtractors.Editor
 {
     internal class ApdAssetPostprocessor : AssetPostprocessor
     {

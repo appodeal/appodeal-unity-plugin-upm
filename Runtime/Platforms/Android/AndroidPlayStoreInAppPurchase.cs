@@ -1,17 +1,18 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using UnityEngine;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
-    public class AndroidPlayStoreInAppPurchase : IPlayStoreInAppPurchase
+    internal class AndroidPlayStoreInAppPurchase : IPlayStoreInAppPurchase
     {
         public IPlayStoreInAppPurchase NativeInAppPurchase { get; }
 
         private readonly AndroidJavaObject _inAppPurchase;
 
-        public AndroidPlayStoreInAppPurchase (AndroidJavaObject inAppPurchase)
+        internal AndroidPlayStoreInAppPurchase(AndroidJavaObject inAppPurchase)
         {
             _inAppPurchase = inAppPurchase;
             NativeInAppPurchase = this;

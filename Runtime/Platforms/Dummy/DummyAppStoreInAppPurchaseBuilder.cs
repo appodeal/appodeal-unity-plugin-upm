@@ -1,14 +1,15 @@
-using UnityEngine;
+// ReSharper Disable CheckNamespace
+
 using System.Collections.Generic;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Dummy
 {
     /// <summary>
-    /// Unity Editor implementation of <see langword="IAppStoreInAppPurchaseBuilder"/> interface.
+    /// Unity Editor implementation of the <see langword="IAppStoreInAppPurchaseBuilder"/> interface.
     /// </summary>
-    public class DummyAppStoreInAppPurchaseBuilder : IAppStoreInAppPurchaseBuilder
+    internal class DummyAppStoreInAppPurchaseBuilder : IAppStoreInAppPurchaseBuilder
     {
         private const string DummyMessage = " To test in-app purchases, install your application on the Android/iOS device.";
 

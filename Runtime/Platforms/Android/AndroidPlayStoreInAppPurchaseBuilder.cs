@@ -1,24 +1,26 @@
-using UnityEngine;
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     [SuppressMessage("ReSharper", "UnusedType.Global")]
-    public class AndroidPlayStoreInAppPurchaseBuilder : IPlayStoreInAppPurchaseBuilder
+    internal class AndroidPlayStoreInAppPurchaseBuilder : IPlayStoreInAppPurchaseBuilder
     {
         private readonly AndroidJavaObject _inAppPurchaseBuilder;
         private AndroidJavaObject _inAppPurchase;
 
-        public AndroidPlayStoreInAppPurchaseBuilder(PlayStorePurchaseType purchaseType)
+        internal AndroidPlayStoreInAppPurchaseBuilder(PlayStorePurchaseType purchaseType)
         {
+            using var inAppPurchaseJavaClass = new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase");
             _inAppPurchaseBuilder = purchaseType switch
             {
-                PlayStorePurchaseType.Subs => new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newSubscriptionBuilder"),
-                PlayStorePurchaseType.InApp => new AndroidJavaClass("com.appodeal.ads.inapp.InAppPurchase").CallStatic<AndroidJavaObject>("newInAppBuilder"),
+                PlayStorePurchaseType.Subs => inAppPurchaseJavaClass.CallStatic<AndroidJavaObject>("newSubscriptionBuilder"),
+                PlayStorePurchaseType.InApp => inAppPurchaseJavaClass.CallStatic<AndroidJavaObject>("newInAppBuilder"),
                 _ => throw new ArgumentOutOfRangeException(nameof(purchaseType), purchaseType, null)
             };
         }
@@ -86,10 +88,10 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void WithAdditionalParameters(Dictionary<string, string> additionalParameters)
         {
-            var map = new AndroidJavaObject("java.util.HashMap");
+            using var map = new AndroidJavaObject("java.util.HashMap");
             foreach (var entry in additionalParameters)
             {
-                map.Call<AndroidJavaObject>("put", entry.Key, Helper.GetJavaObject(entry.Value));
+                map.Call<AndroidJavaObject>("put", entry.Key, entry.Value);
             }
 
             GetBuilder().Call<AndroidJavaObject>("withAdditionalParams", map);

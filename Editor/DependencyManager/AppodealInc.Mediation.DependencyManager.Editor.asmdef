@@ -1,8 +1,8 @@
 {
     "name": "AppodealInc.Mediation.DependencyManager.Editor",
-    "rootNamespace": "AppodealInc.Mediation.DependencyManager",
+    "rootNamespace": "AppodealInc.Mediation.DependencyManager.Editor",
     "references": [
-        "AppodealStack.UnityEditor.Utils"
+        "AppodealInc.Mediation.Utils.Editor"
     ],
     "includePlatforms": [
         "Editor"

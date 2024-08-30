@@ -1,4 +1,6 @@
 ﻿#if UNITY_IOS
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,21 +12,17 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
-using AppodealStack.UnityEditor.InternalResources;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Utils.Editor;
 
-#pragma warning disable 618
-
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.PostProcess
+namespace AppodealInc.Mediation.PostProcess.Editor
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public class IosPostprocessUtils : MonoBehaviour
     {
         private const string Suffix = ".framework";
 
-        [PostProcessBuildAttribute(41)]
+        [PostProcessBuild(41)]
         public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
             if (buildTarget.ToString() != "iOS") return;

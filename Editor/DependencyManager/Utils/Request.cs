@@ -1,7 +1,8 @@
+// ReSharper disable CheckNamespace
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-// ReSharper disable once CheckNamespace
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class Error

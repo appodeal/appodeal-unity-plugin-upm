@@ -1,9 +1,10 @@
-﻿using System;
+﻿// ReSharper Disable CheckNamespace
 
-// ReSharper Disable CheckNamespace
+using System;
+
 namespace AppodealStack.Monetization.Common
 {
-    public interface IAdRevenueProxyListener : IAdRevenueListener
+    internal interface IAdRevenueProxyListener : IAdRevenueListener
     {
         IAdRevenueListener Listener { get; set; }
         event EventHandler<AdRevenueEventArgs> OnReceived;

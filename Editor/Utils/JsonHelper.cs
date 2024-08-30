@@ -1,9 +1,10 @@
-﻿using System;
+﻿// ReSharper Disable CheckNamespace
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.Utils
+namespace AppodealInc.Mediation.Utils.Editor
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class JsonHelper

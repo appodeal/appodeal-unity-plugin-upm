@@ -1,19 +1,19 @@
+// ReSharper Disable CheckNamespace
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using UnityEngine;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IAppodealAdsClient"/> interface.
+    /// Android implementation of the <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedType.Global")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class AndroidAppodealClient : IAppodealAdsClient
+    internal class AndroidAppodealClient : IAppodealAdsClient
     {
         private const int AppodealAdTypeInterstitial = 3;
         private const int AppodealAdTypeBanner = 4;
@@ -28,23 +28,23 @@ namespace AppodealStack.Monetization.Platforms.Android
         private const int AppodealShowStyleBannerRight = 2048;
 
         private AndroidJavaClass _appodealClass;
-        private AndroidJavaClass _appodealUnityClass;
 
         private AndroidJavaObject _activity;
         private AndroidJavaObject _appodealBannerInstance;
 
         private static int NativeYAxisPosForUnityViewPos(int viewPos)
         {
-            if (viewPos == AppodealViewPosition.VerticalBottom) return AppodealShowStyleBannerBottom;
-
-            if (viewPos == AppodealViewPosition.VerticalTop) return AppodealShowStyleBannerTop;
-
-            return viewPos;
+            return viewPos switch
+            {
+                AppodealViewPosition.VerticalBottom => AppodealShowStyleBannerBottom,
+                AppodealViewPosition.VerticalTop => AppodealShowStyleBannerTop,
+                _ => viewPos
+            };
         }
 
         private static int NativeAdTypesForType(int adTypes)
         {
-            var nativeAdTypes = 0;
+            int nativeAdTypes = 0;
 
             if ((adTypes & AppodealAdType.Interstitial) > 0)
             {
@@ -104,24 +104,35 @@ namespace AppodealStack.Monetization.Platforms.Android
             return 0;
         }
 
+        private static AppodealInitializationCallback GetInitCallback(IAppodealInitializationListener listener)
+        {
+            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
+            return new AppodealInitializationCallback(AppodealCallbacks.Sdk.Instance.SdkEventsImpl);
+        }
+
+        private static InAppPurchaseValidationCallbacks GetPurchaseCallback(IInAppPurchaseValidationListener listener)
+        {
+            AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
+            return new InAppPurchaseValidationCallbacks(AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl);
+        }
+
         private AndroidJavaClass GetAppodealClass()
         {
             return _appodealClass ??= new AndroidJavaClass("com.appodeal.ads.Appodeal");
         }
 
-        public AndroidJavaClass GetAppodealUnityClass()
-        {
-            return _appodealUnityClass ??= new AndroidJavaClass("com.appodeal.unity.AppodealUnity");
-        }
-
         private AndroidJavaObject GetAppodealBannerInstance()
         {
-            return _appodealBannerInstance ??= new AndroidJavaClass("com.appodeal.ads.AppodealUnityBannerView").CallStatic<AndroidJavaObject>("getInstance");
+            if (_appodealBannerInstance != null) return _appodealBannerInstance;
+            using var appodealBannerViewJavaClass = new AndroidJavaClass("com.appodeal.ads.AppodealUnityBannerView");
+            return _appodealBannerInstance = appodealBannerViewJavaClass.CallStatic<AndroidJavaObject>("getInstance");
         }
 
         private AndroidJavaObject GetActivity()
         {
-            return _activity ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+            if (_activity != null) return _activity;
+            using var unityPlayerJavaClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            return _activity = unityPlayerJavaClass.GetStatic<AndroidJavaObject>("currentActivity");
         }
 
         private void SetCallbacks()
@@ -131,18 +142,6 @@ namespace AppodealStack.Monetization.Platforms.Android
             GetAppodealClass().CallStatic("setInterstitialCallbacks", new AppodealInterstitialCallbacks(AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl));
             GetAppodealClass().CallStatic("setRewardedVideoCallbacks", new AppodealRewardedVideoCallbacks(AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
             GetAppodealClass().CallStatic("setAdRevenueCallbacks", new AppodealAdRevenueCallback(AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl));
-        }
-
-        private AppodealInitializationCallback GetInitCallback(IAppodealInitializationListener listener)
-        {
-            AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
-            return new AppodealInitializationCallback(AppodealCallbacks.Sdk.Instance.SdkEventsImpl);
-        }
-
-        private InAppPurchaseValidationCallbacks GetPurchaseCallback(IInAppPurchaseValidationListener listener)
-        {
-            AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
-            return new InAppPurchaseValidationCallbacks(AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl);
         }
 
         public void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener)
@@ -245,7 +244,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public void SetLogLevel(AppodealLogLevel logging)
         {
-            var logLevel = new AndroidJavaClass("com.appodeal.ads.utils.Log$LogLevel");
+            using var logLevel = new AndroidJavaClass("com.appodeal.ads.utils.Log$LogLevel");
             switch (logging)
             {
                 case AppodealLogLevel.None:
@@ -375,7 +374,7 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public List<string> GetNetworks(int adTypes)
         {
-            var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", NativeAdTypesForType(adTypes));
+            using var networks = GetAppodealClass().CallStatic<AndroidJavaObject>("getNetworks", NativeAdTypesForType(adTypes));
             int countOfNetworks = networks.Call<int>("size");
             var networksList = new List<string>();
             for(int i = 0; i < countOfNetworks; i++)
@@ -387,11 +386,11 @@ namespace AppodealStack.Monetization.Platforms.Android
 
         public AppodealReward GetReward(string placement)
         {
-            var reward = String.IsNullOrEmpty(placement)
+            using var reward = String.IsNullOrEmpty(placement)
                 ? GetAppodealClass().CallStatic<AndroidJavaObject>("getReward")
                 : GetAppodealClass().CallStatic<AndroidJavaObject>("getReward", placement);
 
-            return new AppodealReward()
+            return new AppodealReward
             {
                 Amount = reward.Call<double>("getAmount"),
                 Currency = reward.Call<string>("getCurrency")
@@ -478,7 +477,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 eventParams.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
                     .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
-                var map = new AndroidJavaObject("java.util.HashMap");
+                using var map = new AndroidJavaObject("java.util.HashMap");
 
                 foreach (var entry in paramsFiltered)
                 {
@@ -507,24 +506,24 @@ namespace AppodealStack.Monetization.Platforms.Android
         }
     }
 
-    public static class Helper
+    internal static class Helper
     {
         public static object GetJavaObject(object value)
         {
-            if (!(value is bool) && !(value is char) && !(value is int) && !(value is long) && !(value is float) && !(value is double) && !(value is string))
+            if (value is not bool && value is not char && value is not int && value is not long && value is not float && value is not double && value is not string)
             {
                 Debug.LogError($"[Appodeal Unity Plugin] Conversion of {value.GetType()} type to java is not implemented");
             }
 
             return value switch
             {
-                bool _ => new AndroidJavaObject("java.lang.Boolean", value),
-                char _ => new AndroidJavaObject("java.lang.Character", value),
-                int _ => new AndroidJavaObject("java.lang.Integer", value),
-                long _ => new AndroidJavaObject("java.lang.Long", value),
-                float _ => new AndroidJavaObject("java.lang.Float", value),
-                double _ => new AndroidJavaObject("java.lang.Double", value),
-                string _ => value,
+                bool => new AndroidJavaObject("java.lang.Boolean", value),
+                char => new AndroidJavaObject("java.lang.Character", value),
+                int => new AndroidJavaObject("java.lang.Integer", value),
+                long => new AndroidJavaObject("java.lang.Long", value),
+                float => new AndroidJavaObject("java.lang.Float", value),
+                double => new AndroidJavaObject("java.lang.Double", value),
+                string => value,
                 _ => null
             };
         }

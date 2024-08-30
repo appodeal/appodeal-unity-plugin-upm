@@ -1,11 +1,15 @@
-using System;
-
 // ReSharper Disable CheckNamespace
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
     /// Class containing monetization events.
     /// </summary>
+    [SuppressMessage("ReSharper", "ArrangeAccessorOwnerBody")]
+    [SuppressMessage("ReSharper", "EventNeverSubscribedTo.Global")]
     public static class AppodealCallbacks
     {
         public sealed class Sdk
@@ -16,7 +20,7 @@ namespace AppodealStack.Monetization.Common
 
             private static Sdk _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.Sdk"/> class.
@@ -48,7 +52,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="SdkProxyListener"/> class.
             /// </summary>
-            public ISdkProxyListener SdkEventsImpl => _sdkEventsImpl ??= new SdkProxyListener();
+            internal ISdkProxyListener SdkEventsImpl => _sdkEventsImpl ??= new SdkProxyListener();
 
             /// <summary>
             /// <para>
@@ -60,7 +64,7 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                SdkEventsImpl.OnInitialized += (sender, args) => OnInitialized?.Invoke(this, args);
+                SdkEventsImpl.OnInitialized += (_, args) => OnInitialized?.Invoke(this, args);
             }
         }
 
@@ -75,7 +79,7 @@ namespace AppodealStack.Monetization.Common
 
             private static AdRevenue _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.AdRevenue"/> class.
@@ -106,7 +110,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="AdRevenueProxyListener"/> class.
             /// </summary>
-            public IAdRevenueProxyListener AdRevenueEventsImpl => _adRevenueEventsImpl ??= new AdRevenueProxyListener();
+            internal IAdRevenueProxyListener AdRevenueEventsImpl => _adRevenueEventsImpl ??= new AdRevenueProxyListener();
 
             /// <summary>
             /// <para>
@@ -118,7 +122,7 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                AdRevenueEventsImpl.OnReceived += (sender, args) => OnReceived?.Invoke(this, args);
+                AdRevenueEventsImpl.OnReceived += (_, args) => OnReceived?.Invoke(this, args);
             }
         }
 
@@ -133,7 +137,7 @@ namespace AppodealStack.Monetization.Common
 
             private static InAppPurchase _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.InAppPurchase"/> class.
@@ -164,7 +168,8 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="InAppPurchaseValidationProxyListener"/> class.
             /// </summary>
-            public IInAppPurchaseValidationProxyListener PurchaseEventsImpl => _purchaseEventsImpl ??= new InAppPurchaseValidationProxyListener();
+            [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+            internal IInAppPurchaseValidationProxyListener PurchaseEventsImpl => _purchaseEventsImpl ??= new InAppPurchaseValidationProxyListener();
 
             /// <summary>
             /// <para>
@@ -184,8 +189,8 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                PurchaseEventsImpl.OnValidationSucceeded += (sender, args) => OnValidationSucceeded?.Invoke(this, args);
-                PurchaseEventsImpl.OnValidationFailed += (sender, args) => OnValidationFailed?.Invoke(this, args);
+                PurchaseEventsImpl.OnValidationSucceeded += (_, args) => OnValidationSucceeded?.Invoke(this, args);
+                PurchaseEventsImpl.OnValidationFailed += (_, args) => OnValidationFailed?.Invoke(this, args);
             }
         }
 
@@ -200,7 +205,7 @@ namespace AppodealStack.Monetization.Common
 
             private static Mrec _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.Mrec"/> class.
@@ -231,7 +236,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="MrecAdProxyListener"/> class.
             /// </summary>
-            public IMrecAdProxyListener MrecAdEventsImpl => _mrecAdEventsImpl ??= new MrecAdProxyListener();
+            internal IMrecAdProxyListener MrecAdEventsImpl => _mrecAdEventsImpl ??= new MrecAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -268,12 +273,12 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                MrecAdEventsImpl.OnLoaded += (sender, args) => OnLoaded?.Invoke(this, args);
-                MrecAdEventsImpl.OnFailedToLoad += (sender, args) => OnFailedToLoad?.Invoke(this, args);
-                MrecAdEventsImpl.OnShown += (sender, args) => OnShown?.Invoke(this, args);
-                MrecAdEventsImpl.OnShowFailed += (sender, args) => OnShowFailed?.Invoke(this, args);
-                MrecAdEventsImpl.OnClicked += (sender, args) => OnClicked?.Invoke(this, args);
-                MrecAdEventsImpl.OnExpired += (sender, args) => OnExpired?.Invoke(this, args);
+                MrecAdEventsImpl.OnLoaded += (_, args) => OnLoaded?.Invoke(this, args);
+                MrecAdEventsImpl.OnFailedToLoad += (_, args) => OnFailedToLoad?.Invoke(this, args);
+                MrecAdEventsImpl.OnShown += (_, args) => OnShown?.Invoke(this, args);
+                MrecAdEventsImpl.OnShowFailed += (_, args) => OnShowFailed?.Invoke(this, args);
+                MrecAdEventsImpl.OnClicked += (_, args) => OnClicked?.Invoke(this, args);
+                MrecAdEventsImpl.OnExpired += (_, args) => OnExpired?.Invoke(this, args);
             }
         }
 
@@ -288,7 +293,7 @@ namespace AppodealStack.Monetization.Common
 
             private static Banner _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.Banner"/> class.
@@ -319,7 +324,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="BannerAdProxyListener"/> class.
             /// </summary>
-            public IBannerAdProxyListener BannerAdEventsImpl => _bannerAdEventsImpl ??= new BannerAdProxyListener();
+            internal IBannerAdProxyListener BannerAdEventsImpl => _bannerAdEventsImpl ??= new BannerAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -356,12 +361,12 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                BannerAdEventsImpl.OnLoaded += (sender, args) => OnLoaded?.Invoke(this, args);
-                BannerAdEventsImpl.OnFailedToLoad += (sender, args) => OnFailedToLoad?.Invoke(this, args);
-                BannerAdEventsImpl.OnShown += (sender, args) => OnShown?.Invoke(this, args);
-                BannerAdEventsImpl.OnShowFailed += (sender, args) => OnShowFailed?.Invoke(this, args);
-                BannerAdEventsImpl.OnClicked += (sender, args) => OnClicked?.Invoke(this, args);
-                BannerAdEventsImpl.OnExpired += (sender, args) => OnExpired?.Invoke(this, args);
+                BannerAdEventsImpl.OnLoaded += (_, args) => OnLoaded?.Invoke(this, args);
+                BannerAdEventsImpl.OnFailedToLoad += (_, args) => OnFailedToLoad?.Invoke(this, args);
+                BannerAdEventsImpl.OnShown += (_, args) => OnShown?.Invoke(this, args);
+                BannerAdEventsImpl.OnShowFailed += (_, args) => OnShowFailed?.Invoke(this, args);
+                BannerAdEventsImpl.OnClicked += (_, args) => OnClicked?.Invoke(this, args);
+                BannerAdEventsImpl.OnExpired += (_, args) => OnExpired?.Invoke(this, args);
             }
         }
 
@@ -376,7 +381,7 @@ namespace AppodealStack.Monetization.Common
 
             private static Interstitial _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.Interstitial"/> class.
@@ -407,7 +412,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="InterstitialAdProxyListener"/> class.
             /// </summary>
-            public IInterstitialAdProxyListener InterstitialAdEventsImpl => _interstitialAdEventsImpl ??= new InterstitialAdProxyListener();
+            internal IInterstitialAdProxyListener InterstitialAdEventsImpl => _interstitialAdEventsImpl ??= new InterstitialAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -449,13 +454,13 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                InterstitialAdEventsImpl.OnLoaded += (sender, args) => OnLoaded?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnFailedToLoad += (sender, args) => OnFailedToLoad?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnShown += (sender, args) => OnShown?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnShowFailed += (sender, args) => OnShowFailed?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnClosed += (sender, args) => OnClosed?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnClicked += (sender, args) => OnClicked?.Invoke(this, args);
-                InterstitialAdEventsImpl.OnExpired += (sender, args) => OnExpired?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnLoaded += (_, args) => OnLoaded?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnFailedToLoad += (_, args) => OnFailedToLoad?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnShown += (_, args) => OnShown?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnShowFailed += (_, args) => OnShowFailed?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnClosed += (_, args) => OnClosed?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnClicked += (_, args) => OnClicked?.Invoke(this, args);
+                InterstitialAdEventsImpl.OnExpired += (_, args) => OnExpired?.Invoke(this, args);
             }
         }
 
@@ -470,7 +475,7 @@ namespace AppodealStack.Monetization.Common
 
             private static RewardedVideo _instance;
 
-            private static readonly object Lock = new object();
+            private static readonly object Lock = new();
 
             /// <summary>
             /// Returns an instance of the <see cref="AppodealCallbacks.RewardedVideo"/> class.
@@ -501,7 +506,7 @@ namespace AppodealStack.Monetization.Common
             /// <summary>
             /// Returns an instance of the <see cref="RewardedVideoAdProxyListener"/> class.
             /// </summary>
-            public IRewardedVideoAdProxyListener RewardedVideoAdEventsImpl => _rewardedVideoAdEventsImpl ??= new RewardedVideoAdProxyListener();
+            internal IRewardedVideoAdProxyListener RewardedVideoAdEventsImpl => _rewardedVideoAdEventsImpl ??= new RewardedVideoAdProxyListener();
 
             /// <summary>
             /// <para>
@@ -554,14 +559,14 @@ namespace AppodealStack.Monetization.Common
 
             private void InitializeCallbacks()
             {
-                RewardedVideoAdEventsImpl.OnLoaded += (sender, args) => OnLoaded?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnFailedToLoad += (sender, args) => OnFailedToLoad?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnShown += (sender, args) => OnShown?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnShowFailed += (sender, args) => OnShowFailed?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnClosed += (sender, args) => OnClosed?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnFinished += (sender, args) => OnFinished?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnClicked += (sender, args) => OnClicked?.Invoke(this, args);
-                RewardedVideoAdEventsImpl.OnExpired += (sender, args) => OnExpired?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnLoaded += (_, args) => OnLoaded?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnFailedToLoad += (_, args) => OnFailedToLoad?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnShown += (_, args) => OnShown?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnShowFailed += (_, args) => OnShowFailed?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnClosed += (_, args) => OnClosed?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnFinished += (_, args) => OnFinished?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnClicked += (_, args) => OnClicked?.Invoke(this, args);
+                RewardedVideoAdEventsImpl.OnExpired += (_, args) => OnExpired?.Invoke(this, args);
             }
         }
     }

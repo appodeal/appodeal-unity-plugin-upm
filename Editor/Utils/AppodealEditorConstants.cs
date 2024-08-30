@@ -1,5 +1,6 @@
-﻿// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.Utils
+﻿// ReSharper Disable CheckNamespace
+
+namespace AppodealInc.Mediation.Utils.Editor
 {
     public static class AppodealEditorConstants
     {
