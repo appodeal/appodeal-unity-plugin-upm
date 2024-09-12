@@ -8,14 +8,14 @@ using AppodealStack.Monetization.Common;
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of the <see langword="IMrecAdListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IMrecAdListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class AppodealMrecCallbacks : AndroidJavaProxy
     {
         private readonly IMrecAdListener _listener;
 
-        internal AppodealMrecCallbacks(IMrecAdListener listener) : base("com.appodeal.ads.MrecCallbacks")
+        internal AppodealMrecCallbacks(IMrecAdListener listener) : base(AndroidConstants.JavaInterfaceName.MrecCallbacks)
         {
             _listener = listener;
         }
