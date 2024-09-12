@@ -8,14 +8,14 @@ using AppodealStack.Monetization.Common;
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of the <see langword="IRewardedVideoAdListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IRewardedVideoAdListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class AppodealRewardedVideoCallbacks : AndroidJavaProxy
     {
         private readonly IRewardedVideoAdListener _listener;
 
-        internal AppodealRewardedVideoCallbacks(IRewardedVideoAdListener listener) : base("com.appodeal.ads.RewardedVideoCallbacks")
+        internal AppodealRewardedVideoCallbacks(IRewardedVideoAdListener listener) : base(AndroidConstants.JavaInterfaceName.RewardedVideoCallbacks)
         {
             _listener = listener;
         }
