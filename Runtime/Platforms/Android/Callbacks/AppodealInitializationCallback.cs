@@ -1,5 +1,6 @@
 // ReSharper Disable CheckNamespace
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
@@ -9,14 +10,14 @@ using AppodealStack.Monetization.Common;
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of the <see langword="IAppodealInitializationListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IAppodealInitializationListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;
 
-        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base("com.appodeal.ads.initializing.ApdInitializationCallback")
+        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base(AndroidConstants.JavaInterfaceName.InitializationCallback)
         {
             _listener = listener;
         }
@@ -32,10 +33,17 @@ namespace AppodealStack.Monetization.Platforms.Android
 
             var errorsList = new List<string>();
 
-            int countOfErrors = errors.Call<int>("size");
-            for (int i = 0; i < countOfErrors; i++)
+            try
             {
-                errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
+                int countOfErrors = errors.Call<int>("size");
+                for (int i = 0; i < countOfErrors; i++)
+                {
+                    errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
+                }
+            }
+            catch (Exception e)
+            {
+                AndroidAppodealHelper.LogIntegrationError(e.Message);
             }
 
             UnityMainThreadDispatcher.Post(_ => _listener?.OnInitializationFinished(errorsList));

@@ -10,14 +10,14 @@ using AppodealStack.Monetization.Common;
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of the <see langword="IInAppPurchaseValidationListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IInAppPurchaseValidationListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class InAppPurchaseValidationCallbacks : AndroidJavaProxy
     {
         private readonly IInAppPurchaseValidationListener _listener;
 
-        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base("com.appodeal.ads.inapp.InAppPurchaseValidateCallback")
+        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base(AndroidConstants.JavaInterfaceName.InAppPurchaseCallbacks)
         {
             _listener = listener;
         }
@@ -54,13 +54,20 @@ namespace AppodealStack.Monetization.Platforms.Android
             string responseError = "\"Errors\":[";
             if (errors != null)
             {
-                var errorsList = new List<string>();
-                int countOfErrors = errors.Call<int>("size");
-                for (int i = 0; i < countOfErrors; i++)
+                try
                 {
-                    errorsList.Add($"\"{errors.Call<AndroidJavaObject>("get", i).Call<string>("toString")}\"");
+                    var errorsList = new List<string>();
+                    int countOfErrors = errors.Call<int>("size");
+                    for (int i = 0; i < countOfErrors; i++)
+                    {
+                        errorsList.Add($"\"{errors.Call<AndroidJavaObject>("get", i).Call<string>("toString")}\"");
+                    }
+                    responseError += String.Join(",", errorsList);
                 }
-                responseError += String.Join(",", errorsList);
+                catch (Exception e)
+                {
+                    AndroidAppodealHelper.LogIntegrationError(e.Message);
+                }
             }
             responseError += ']';
 
