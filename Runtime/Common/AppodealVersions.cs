@@ -12,7 +12,7 @@ namespace AppodealStack.Monetization.Common
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealVersions
     {
-        private const string AppodealPluginVersion = "3.4.0-alpha.3";
+        private const string AppodealPluginVersion = "3.4.0-beta.1";
 
         /// <summary>
         /// Gets the current version of the Appodeal Unity Plugin.
