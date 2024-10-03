@@ -131,10 +131,9 @@
 		<androidPackage id="max_vungle" spec="com.applovin.mediation:vungle-adapter:7.4.0.0" />
 		<androidPackage id="max_yandex_ads" spec="com.applovin.mediation:yandex-adapter:7.4.0.0" />
 		<repositories>
-			<repository>https://artifactory.appodeal.com/appodeal</repository>
-			<repository>https://artifactory.appodeal.com/appodeal-beta</repository>
+			<repository>https://artifactory.appodeal.com/appodeal-beta-public</repository>
 			<repository>https://artifactory.bidmachine.io/bidmachine</repository>
-			<repository>https://artifactory.bidon.org/artifactory/bidon</repository>
+			<repository>https://artifactory.bidon.org/bidon</repository>
 			<repository>https://repo1.maven.org/maven2</repository>
 		</repositories>
 	</androidPackages>
