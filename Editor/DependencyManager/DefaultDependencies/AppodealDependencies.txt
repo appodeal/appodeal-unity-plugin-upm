@@ -34,7 +34,6 @@
 		<iosPod id="bidmachine_smaato" name="BidMachineSmaatoAdapter" version="3.0.1.0" minTargetSdk="12.0" />
 		<iosPod id="bidmachine_vungle" name="BidMachineVungleAdapter" version="3.0.1.0" minTargetSdk="12.0" />
 		<iosPod id="bidon_admob" name="BidonAdapterGoogleMobileAds" version="0.7.0.0-beta.1" minTargetSdk="12.0" />
-		<iosPod id="bidon_amazon" name="BidonAdapterAmazon" version="0.7.0.0-beta.1" minTargetSdk="12.0" />
 		<iosPod id="bidon_applovin" name="BidonAdapterAppLovin" version="0.7.0.0-beta.1" minTargetSdk="12.0" />
 		<iosPod id="bidon_bidmachine" name="BidonAdapterBidMachine" version="0.7.0.0-beta.1" minTargetSdk="12.0" />
 		<iosPod id="bidon_bigo_ads" name="BidonAdapterBigoAds" version="0.7.0.0-beta.1" minTargetSdk="12.0" />
