@@ -4,13 +4,49 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.4.0 (November 20, 2024)
+
++ Updated Appodeal Android SDK to v3.4.0
++ Updated Appodeal iOS SDK to v3.4.0
+
 ### 3.3.4 (October 18, 2024)
 
 + Updated Appodeal iOS SDK to v3.3.3
 
+### 3.4.0-beta.2 (October 11, 2024)
+
++ Updated Appodeal iOS SDK to v3.4.0-beta.2
+
+### 3.4.0-beta.1 (October 04, 2024)
+
++ Updated Appodeal Android SDK to v3.4.0-beta.1
++ Updated Appodeal iOS SDK to v3.4.0-beta.1
+
+### 3.4.0-alpha.3 (September 20, 2024)
+
++ Updated Appodeal Android SDK to v3.4.0-alpha.3
++ Updated Appodeal iOS SDK to v3.4.0-alpha.2
+
 ### 3.3.3 (September 17, 2024)
 
 + Updated Appodeal Android SDK to v3.3.3
+
+### 3.4.0-alpha.2 (September 13, 2024)
+
++ Updated Appodeal Android SDK to v3.4.0-alpha.2
++ Improved Android bridge
+
+### 3.4.0-alpha.1 (September 06, 2024)
+
++ Updated Appodeal Android SDK to v3.4.0-alpha.1
++ Updated Appodeal iOS SDK to v3.4.0-alpha.1
++ Improved Android bridge
++ Changed internal scripts accessibility
++ Renamed some assemblies
++ Updated assemblies settings
++ Tuned up suppressions
++ Reloaded some .meta files
++ Changed deprecated entities
 
 ### 3.3.2 (July 30, 2024)
 

@@ -1,6 +1,6 @@
 {
     "name": "AppodealStack.Monetization.Common",
-    "rootNamespace": "",
+    "rootNamespace": "AppodealStack.Monetization.Common",
     "references": [],
     "includePlatforms": [
         "Android",

@@ -1,12 +1,13 @@
+// ReSharper Disable CheckNamespace
+
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
-using AppodealStack.UnityEditor.PluginRemover;
-using AppodealStack.UnityEditor.SettingsWindow;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.PluginRemover.Editor;
+using AppodealInc.Mediation.SettingsWindow.Editor;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.TopBarMenu
+namespace AppodealInc.Mediation.TopBarMenu.Editor
 {
     public class AppodealMenu : ScriptableObject
     {

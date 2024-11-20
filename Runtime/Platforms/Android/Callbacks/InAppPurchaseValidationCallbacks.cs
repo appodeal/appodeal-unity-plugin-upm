@@ -1,42 +1,40 @@
+// ReSharper Disable CheckNamespace
+
 using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IInAppPurchaseValidationListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IInAppPurchaseValidationListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class InAppPurchaseValidationCallbacks : AndroidJavaProxy
+    internal class InAppPurchaseValidationCallbacks : AndroidJavaProxy
     {
         private readonly IInAppPurchaseValidationListener _listener;
-        private static SynchronizationContext _unityContext;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
-
-        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base("com.appodeal.ads.inapp.InAppPurchaseValidateCallback")
+        internal InAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener) : base(AndroidConstants.JavaInterfaceName.InAppPurchaseCallbacks)
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onInAppPurchaseValidateSuccess(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
-            _unityContext?.Post(obj => _listener?.OnInAppPurchaseValidationSucceeded(CreateResponse(purchase, errors)), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnInAppPurchaseValidationSucceeded(CreateResponse(purchase, errors)));
         }
 
+        [Preserve]
         private void onInAppPurchaseValidateFail(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
-            _unityContext?.Post(obj => _listener?.OnInAppPurchaseValidationFailed(CreateResponse(purchase, errors)), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnInAppPurchaseValidationFailed(CreateResponse(purchase, errors)));
         }
 
-        private string CreateResponse(AndroidJavaObject purchase, AndroidJavaObject errors)
+        private static string CreateResponse(AndroidJavaObject purchase, AndroidJavaObject errors)
         {
             var androidPurchase = new AndroidPlayStoreInAppPurchase(purchase);
 
@@ -56,13 +54,20 @@ namespace AppodealStack.Monetization.Platforms.Android
             string responseError = "\"Errors\":[";
             if (errors != null)
             {
-                var errorsList = new List<string>();
-                int countOfErrors = errors.Call<int>("size");
-                for (int i = 0; i < countOfErrors; i++)
+                try
                 {
-                    errorsList.Add($"\"{errors.Call<AndroidJavaObject>("get", i).Call<string>("toString")}\"");
+                    var errorsList = new List<string>();
+                    int countOfErrors = errors.Call<int>("size");
+                    for (int i = 0; i < countOfErrors; i++)
+                    {
+                        errorsList.Add($"\"{errors.Call<AndroidJavaObject>("get", i).Call<string>("toString")}\"");
+                    }
+                    responseError += String.Join(",", errorsList);
                 }
-                responseError += String.Join(",", errorsList);
+                catch (Exception e)
+                {
+                    AndroidAppodealHelper.LogIntegrationError(e.Message);
+                }
             }
             responseError += ']';
 

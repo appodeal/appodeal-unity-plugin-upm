@@ -1,4 +1,7 @@
 // ReSharper Disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -8,6 +11,7 @@ namespace AppodealStack.Monetization.Common
     /// See <see href="https://faq.appodeal.com/en/articles/1133435-reward-setting"/> for more details.
     /// </summary>
     /// <remarks>Amount and Currency are set via app settings on Appodeal website and can be obtained at runtime via <see cref="IRewardedVideoAdListener.OnRewardedVideoFinished"/> callback.</remarks>
+    [SuppressMessage("ReSharper", "NotAccessedField.Global")]
     public class AppodealReward
     {
         /// <summary>
@@ -31,6 +35,7 @@ namespace AppodealStack.Monetization.Common
         /// Returns ad revenue information as a json-formatted string.
         /// </summary>
         /// <param name="isPretty">If true, format the output for readability. If false, format the output for minimum size. Default is false.</param>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         public string ToJsonString(bool isPretty = false) => UnityEngine.JsonUtility.ToJson(this, isPretty);
     }
 }

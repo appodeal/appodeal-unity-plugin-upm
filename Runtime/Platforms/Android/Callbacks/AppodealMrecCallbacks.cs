@@ -1,57 +1,59 @@
-﻿using System.Threading;
+﻿// ReSharper Disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IMrecAdListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IMrecAdListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealMrecCallbacks : AndroidJavaProxy
+    internal class AppodealMrecCallbacks : AndroidJavaProxy
     {
         private readonly IMrecAdListener _listener;
-        private static SynchronizationContext _unityContext;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
-
-        internal AppodealMrecCallbacks(IMrecAdListener listener) : base("com.appodeal.ads.MrecCallbacks")
+        internal AppodealMrecCallbacks(IMrecAdListener listener) : base(AndroidConstants.JavaInterfaceName.MrecCallbacks)
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onMrecLoaded(bool isPrecache)
         {
-            _unityContext?.Post(obj => _listener?.OnMrecLoaded(isPrecache), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecLoaded(isPrecache));
         }
 
+        [Preserve]
         private void onMrecFailedToLoad()
         {
-            _unityContext?.Post(obj => _listener?.OnMrecFailedToLoad(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecFailedToLoad());
         }
 
+        [Preserve]
         private void onMrecShown()
         {
-            _unityContext?.Post(obj => _listener?.OnMrecShown(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecShown());
         }
 
+        [Preserve]
         private void onMrecShowFailed()
         {
-            _unityContext?.Post(obj => _listener?.OnMrecShowFailed(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecShowFailed());
         }
 
+        [Preserve]
         private void onMrecClicked()
         {
-            _unityContext?.Post(obj => _listener?.OnMrecClicked(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecClicked());
         }
 
+        [Preserve]
         private void onMrecExpired()
         {
-            _unityContext?.Post(obj => _listener?.OnMrecExpired(), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnMrecExpired());
         }
     }
 }

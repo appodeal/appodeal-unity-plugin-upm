@@ -1,3 +1,5 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,10 +9,9 @@ using System.Xml;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
-using AppodealStack.UnityEditor.Utils;
+using AppodealInc.Mediation.Utils.Editor;
 
-// ReSharper Disable once CheckNamespace
-namespace AppodealStack.UnityEditor.PluginRemover
+namespace AppodealInc.Mediation.PluginRemover.Editor
 {
     [Serializable]
     internal class ItemToRemove

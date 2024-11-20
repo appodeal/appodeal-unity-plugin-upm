@@ -1,9 +1,10 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
-    public class RewardedVideoAdProxyListener : IRewardedVideoAdProxyListener
+    internal class RewardedVideoAdProxyListener : IRewardedVideoAdProxyListener
     {
         public IRewardedVideoAdListener Listener { get; set; }
 

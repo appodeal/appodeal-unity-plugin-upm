@@ -1,6 +1,7 @@
+// ReSharper Disable CheckNamespace
+
 using System.Diagnostics.CodeAnalysis;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
@@ -9,6 +10,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/logging?distribution=upm"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum AppodealLogLevel
     {
         None,
@@ -22,6 +24,8 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum AppodealUserGender
     {
         Other,
@@ -35,6 +39,7 @@ namespace AppodealStack.Monetization.Common
     /// </para>
     /// See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases"/> for more details.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PlayStorePurchaseType
     {
         Subs,

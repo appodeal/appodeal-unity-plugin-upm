@@ -1,10 +1,11 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
 
-// ReSharper disable CheckNamespace
 namespace AppodealStack.Monetization.Api
 {
     /// <summary>
@@ -46,7 +47,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// <para>Checks whether or not ad type is initialized.</para>
+        /// <para>Checks whether ad type is initialized.</para>
         /// <example>To check interstitials use:<code>Appodeal.IsInitialized(AppodealAdType.Interstitial);</code></example>
         /// <example>To check banners use:<code>Appodeal.IsInitialized(AppodealAdType.Banner);</code></example>
         /// <example>To check rewarded video use:<code>Appodeal.IsInitialized(AppodealAdType.RewardedVideo);</code></example>
@@ -60,7 +61,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// <para>Checks whether or not auto cache is enabled for the specified ad type.</para>
+        /// <para>Checks whether auto cache is enabled for the specified ad type.</para>
         /// <example>To check interstitials use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Interstitial);</code></example>
         /// <example>To check banners use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.Banner);</code></example>
         /// <example>To check rewarded video use:<code>Appodeal.IsAutoCacheEnabled(AppodealAdType.RewardedVideo);</code></example>
@@ -262,7 +263,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not auto cache is enabled for specified ad types (It is <see langword="true"/> for all ad types by default).
+        /// Defines whether auto cache is enabled for specified ad types (It is <see langword="true"/> for all ad types by default).
         /// </para>
         /// <para>
         /// Call before the SDK initialization.
@@ -279,7 +280,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not <see langword="On[AdType]Loaded"/> callback should be fired if precache is loaded.
+        /// Defines whether <see langword="On[AdType]Loaded"/> callback should be fired if precache is loaded.
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
@@ -293,7 +294,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Checks whether or not an ad of a specified ad type is loaded.
+        /// Checks whether an ad of a specified ad type is loaded.
         /// </para>
         /// <example>To check if interstitial is loaded use:<code>Appodeal.IsLoaded(AppodealAdType.Interstitial);</code></example>
         /// <example>To check if rewarded video is loaded use:<code>Appodeal.IsLoaded(AppodealAdType.RewardedVideo);</code></example>
@@ -309,7 +310,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Checks whether or not currently loaded ad is precache.
+        /// Checks whether currently loaded ad is precache.
         /// </para>
         /// <example>To check if interstitial is precache use:<code>Appodeal.IsPrecache(AppodealAdType.Interstitial);</code></example>
         /// </summary>
@@ -322,7 +323,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not smart banners should be used (It is <see langword="true"/> by default).
+        /// Defines whether smart banners should be used (It is <see langword="true"/> by default).
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
@@ -335,7 +336,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Checks whether or not smart banners feature is enabled. (It is <see langword="true"/> by default).
+        /// Checks whether smart banners feature is enabled. (It is <see langword="true"/> by default).
         /// </para>
         /// It is usually used along with the <see cref="SetSmartBanners"/> method.
         /// </summary>
@@ -348,7 +349,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not 728*90 banners should be used (It is <see langword="false"/> by default).
+        /// Defines whether 728*90 banners should be used (It is <see langword="false"/> by default).
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
@@ -361,7 +362,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not banner animation should be used (It is <see langword="true"/> by default).
+        /// Defines whether banner animation should be used (It is <see langword="true"/> by default).
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
@@ -382,7 +383,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Defines whether or not safe area of the screen can be used. (Supported only for <see langword="Android"/> platform)
+        /// Defines whether safe area of the screen can be used. (Supported only for <see langword="Android"/> platform)
         /// </summary>
         /// <param name="value">true to enable usage of safe area, false to disable.</param>
         public static void SetUseSafeArea(bool value)
@@ -442,7 +443,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Defines whether or not location tracking is allowed. (Supported only for <see langword="iOS"/> platform)
+        /// Defines whether location tracking is allowed. (Supported only for <see langword="iOS"/> platform)
         /// </summary>
         /// <remarks>On android location tracking is always enabled if the corresponding permission was given.</remarks>
         /// <param name="value">true to enable location tracking, false to disable.</param>
@@ -484,7 +485,7 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
-        /// Defines whether or not test mode should be enabled.
+        /// Defines whether test mode should be enabled.
         /// </para>
         /// Call before the SDK initialization.
         /// </summary>
@@ -566,7 +567,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Checks whether or not advertisement can be shown within <see langword="default"/> placement.
+        /// Checks whether advertisement can be shown within <see langword="default"/> placement.
         /// </summary>
         /// <remarks>See <see href="https://faq.appodeal.com/en/collections/107523-placements"/> for more details.</remarks>
         /// <param name="adType">type of advertisement.</param>
@@ -577,7 +578,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Checks whether or not advertisement can be shown within <see langword="specified"/> placement.
+        /// Checks whether advertisement can be shown within <see langword="specified"/> placement.
         /// </summary>
         /// <remarks>See <see href="https://faq.appodeal.com/en/collections/107523-placements"/> for more details.</remarks>
         /// <param name="adType">type of advertisement.</param>
@@ -603,7 +604,7 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// Defines whether or not videos should be muted if call volume is set to 0. (Supported only for <see langword="Android"/> platform)
+        /// Defines whether videos should be muted if call volume is set to 0. (Supported only for <see langword="Android"/> platform)
         /// </summary>
         /// <remarks>It is <see langword="false"/> by default.</remarks>
         /// <param name="value">true - mute videos if calls are muted, false - do not mute videos.</param>

@@ -1,10 +1,11 @@
+// ReSharper Disable CheckNamespace
+
 using System;
 using System.Collections.Generic;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
-    public class SdkProxyListener : ISdkProxyListener
+    internal class SdkProxyListener : ISdkProxyListener
     {
         public IAppodealInitializationListener InitListener { get; set; }
 

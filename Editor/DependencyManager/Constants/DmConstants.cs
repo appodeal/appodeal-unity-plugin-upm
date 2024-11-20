@@ -1,7 +1,8 @@
-using UnityEngine;
-using AppodealStack.UnityEditor.Utils;
+// ReSharper disable CheckNamespace
 
-// ReSharper disable once CheckNamespace
+using UnityEngine;
+using AppodealInc.Mediation.Utils.Editor;
+
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     public static partial class DmConstants

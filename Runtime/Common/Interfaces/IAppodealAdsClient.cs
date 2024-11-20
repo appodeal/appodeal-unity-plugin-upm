@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿// ReSharper Disable CheckNamespace
+
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Common
 {
     /// <summary>
     /// Interface containing all <see langword="Appodeal"/> API methods' signatures.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
     public interface IAppodealAdsClient
     {
         void Initialize(string appKey, int adTypes, IAppodealInitializationListener listener);

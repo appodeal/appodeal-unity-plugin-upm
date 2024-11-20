@@ -1,21 +1,20 @@
-using AOT;
+// ReSharper Disable CheckNamespace
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using AOT;
 using UnityEngine;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
 {
     /// <summary>
-    /// iOS implementation of <see langword="IAppodealAdsClient"/> interface.
+    /// Ios implementation of the <see langword="IAppodealAdsClient"/> interface.
     /// </summary>
-    // [SuppressMessage("ReSharper", "InconsistentNaming")]
-    // [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-    public class IosAppodealClient : IAppodealAdsClient
+    internal class IosAppodealClient : IAppodealAdsClient
     {
         private const int AppodealAdTypeInterstitial = 1 << 0;
         private const int AppodealAdTypeBanner = 1 << 2;
@@ -29,13 +28,13 @@ namespace AppodealStack.Monetization.Platforms.Ios
         private const int AppodealShowStyleBannerLeft = 1 << 6;
         private const int AppodealShowStyleBannerRight = 1 << 7;
 
-        private static IMrecAdListener                      _mrecListener;
-        private static IBannerAdListener                    _bannerListener;
-        private static IAdRevenueListener                   _revenueListener;
-        private static IInterstitialAdListener              _interstitialListener;
-        private static IRewardedVideoAdListener             _rewardedVideoListener;
-        private static IAppodealInitializationListener      _initializationListener;
-        private static IInAppPurchaseValidationListener     _inAppPurchaseValidationListener;
+        private static IMrecAdListener _mrecListener;
+        private static IBannerAdListener _bannerListener;
+        private static IAdRevenueListener _revenueListener;
+        private static IInterstitialAdListener _interstitialListener;
+        private static IRewardedVideoAdListener _rewardedVideoListener;
+        private static IAppodealInitializationListener _initializationListener;
+        private static IInAppPurchaseValidationListener _inAppPurchaseValidationListener;
 
         #region AppodealInitialization delegate
 
@@ -45,7 +44,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             _initializationListener?.OnInitializationFinished(null);
         }
 
-        private void SetAppodealInitializationCallback(IAppodealInitializationListener listener)
+        private static void SetAppodealInitializationCallback(IAppodealInitializationListener listener)
         {
             AppodealCallbacks.Sdk.Instance.SdkEventsImpl.InitListener = listener;
         }
@@ -327,7 +326,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             _inAppPurchaseValidationListener?.OnInAppPurchaseValidationFailed(error);
         }
 
-        private void SetInAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener)
+        private static void SetInAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener)
         {
             AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl.Listener = listener;
         }
@@ -336,7 +335,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private static int NativeAdTypesForType(int adTypes)
         {
-            var nativeAdTypes = 0;
+            int nativeAdTypes = 0;
 
             if ((adTypes & AppodealAdType.Interstitial) > 0)
             {
@@ -418,7 +417,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private static string DictionaryToString(Dictionary <string, object> dictionary)
         {
-            var dictionaryString = dictionary.Aggregate("", (current, keyValues)
+            string dictionaryString = dictionary.Aggregate("", (current, keyValues)
                 => current + (keyValues.Key + "=" + keyValues.Value.GetType() + ":" + keyValues.Value + ","));
             return dictionaryString.TrimEnd(',');
         }
@@ -491,8 +490,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             SetAppodealInitializationCallback(listener);
             SetCallbacks();
 
-            AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes),
-                $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
+            AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes), $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
         }
 
         public bool IsInitialized(int adType)
@@ -620,7 +618,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         public List<string> GetNetworks(int adTypes)
         {
             var networksList = new List<string>();
-            string [] splitNetworkStrings = AppodealObjCBridge.AppodealGetNetworks(NativeAdTypesForType(adTypes)).Split(',');
+            string[] splitNetworkStrings = AppodealObjCBridge.AppodealGetNetworks(NativeAdTypesForType(adTypes)).Split(',');
             splitNetworkStrings.ToList().ForEach(network => networksList.Add(network));
             return networksList;
         }
@@ -664,7 +662,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             string placementName = String.IsNullOrEmpty(placement) ? "default" : placement;
 
-            return new AppodealReward()
+            return new AppodealReward
             {
                 Amount = AppodealObjCBridge.AppodealGetRewardAmount(placementName),
                 Currency = AppodealObjCBridge.AppodealGetRewardCurrency(placementName)

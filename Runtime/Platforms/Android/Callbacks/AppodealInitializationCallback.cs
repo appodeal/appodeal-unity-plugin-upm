@@ -1,47 +1,52 @@
-using System.Threading;
+// ReSharper Disable CheckNamespace
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Android
 {
     /// <summary>
-    /// Android implementation of <see langword="IAppodealInitializationListener"/> interface.
+    /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IAppodealInitializationListener"/> interface.
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class AppodealInitializationCallback : AndroidJavaProxy
+    internal class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;
-        private static SynchronizationContext _unityContext;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void GetContext() => _unityContext = SynchronizationContext.Current;
-
-        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base("com.appodeal.ads.initializing.ApdInitializationCallback")
+        internal AppodealInitializationCallback(IAppodealInitializationListener listener) : base(AndroidConstants.JavaInterfaceName.InitializationCallback)
         {
             _listener = listener;
         }
 
+        [Preserve]
         private void onInitializationFinished(AndroidJavaObject errors)
         {
             if (errors == null)
             {
-                _unityContext?.Post(obj => _listener?.OnInitializationFinished(null), null);
+                UnityMainThreadDispatcher.Post(_ => _listener?.OnInitializationFinished(null));
                 return;
             }
 
             var errorsList = new List<string>();
 
-            int countOfErrors = errors.Call<int>("size");
-            for (int i = 0; i < countOfErrors; i++)
+            try
             {
-                errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
+                int countOfErrors = errors.Call<int>("size");
+                for (int i = 0; i < countOfErrors; i++)
+                {
+                    errorsList.Add(errors.Call<AndroidJavaObject>("get", i).Call<string>("toString"));
+                }
+            }
+            catch (Exception e)
+            {
+                AndroidAppodealHelper.LogIntegrationError(e.Message);
             }
 
-            _unityContext?.Post(obj => _listener?.OnInitializationFinished(errorsList), null);
+            UnityMainThreadDispatcher.Post(_ => _listener?.OnInitializationFinished(errorsList));
         }
     }
 }

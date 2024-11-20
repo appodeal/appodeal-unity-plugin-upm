@@ -1,0 +1,20 @@
+{
+    "name": "AppodealInc.Mediation.TopBarMenu.Editor",
+    "rootNamespace": "AppodealInc.Mediation.TopBarMenu.Editor",
+    "references": [
+        "AppodealInc.Mediation.PluginRemover.Editor",
+        "AppodealInc.Mediation.SettingsWindow.Editor",
+        "AppodealInc.Mediation.Utils.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

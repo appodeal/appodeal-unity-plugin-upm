@@ -1,9 +1,10 @@
+// ReSharper Disable CheckNamespace
+
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AppodealStack.Monetization.Common;
 using AppodealStack.Monetization.Platforms;
 
-// ReSharper disable CheckNamespace
 namespace AppodealStack.Monetization.Api
 {
     /// <summary>

@@ -1,21 +1,20 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿// ReSharper Disable CheckNamespace
+
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Xml;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using System.Xml;
+using UnityEditor;
+using UnityEngine;
 
-// ReSharper Disable CheckNamespace
-namespace AppodealStack.UnityEditor.Utils
+namespace AppodealInc.Mediation.Utils.Editor
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
     [SuppressMessage("ReSharper", "InlineOutVariableDeclaration")]
-    [SuppressMessage("ReSharper", "IdentifierTypo")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealUnityUtils
     {
@@ -41,7 +40,6 @@ namespace AppodealStack.UnityEditor.Utils
 
         [Flags]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "IdentifierTypo")]
         public enum AndroidArchitecture
         {
             Invalid = 0,

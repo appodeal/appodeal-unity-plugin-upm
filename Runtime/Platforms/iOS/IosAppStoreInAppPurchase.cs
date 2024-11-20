@@ -1,12 +1,13 @@
+// ReSharper Disable CheckNamespace
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using AppodealStack.Monetization.Common;
 
-// ReSharper Disable CheckNamespace
 namespace AppodealStack.Monetization.Platforms.Ios
 {
-    public class IosAppStoreInAppPurchase : IAppStoreInAppPurchase
+    internal class IosAppStoreInAppPurchase : IAppStoreInAppPurchase
     {
         public IAppStoreInAppPurchase NativeInAppPurchase { get; }
         private AppStorePurchaseType PurchaseType { get; }
