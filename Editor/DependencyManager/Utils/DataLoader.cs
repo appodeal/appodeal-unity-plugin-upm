@@ -106,7 +106,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private static async Task<UnityWebRequest> SendWebRequestAsync(string url)
         {
             var request = UnityWebRequest.Get(url);
-            request.SendWebRequest();
+            _ = request.SendWebRequest();
             while (!request.isDone) await Task.Yield();
             return request;
         }
