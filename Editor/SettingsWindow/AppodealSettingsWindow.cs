@@ -35,7 +35,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             try
             {
                 var request = UnityWebRequest.Get("https://mw-backend-new.appodeal.com/v3/skadn/ids");
-                request.SendWebRequest();
+                _ = request.SendWebRequest();
                 while (!request.isDone) await Task.Yield();
 
                 if (request.result != UnityWebRequest.Result.Success)
