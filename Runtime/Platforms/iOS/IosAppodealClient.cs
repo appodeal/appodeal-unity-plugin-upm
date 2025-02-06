@@ -761,6 +761,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 
+        public void SetBidonEndpoint(string baseUrl)
+        {
+            AppodealObjCBridge.AppodealSetBidonEndpoint(baseUrl);
+        }
+
+        public string GetBidonEndpoint()
+        {
+            return AppodealObjCBridge.AppodealGetBidonEndpoint();
+        }
+
         public void Destroy(int adType)
         {
             Debug.Log("Not Supported by iOS SDK");

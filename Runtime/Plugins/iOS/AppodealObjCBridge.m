@@ -355,6 +355,16 @@ void AppodealValidateInAppPurchase(const char *productIdentifier,
     }];
 }
 
+void AppodealSetBidonEndpoint(const char* baseUrl) {
+    if (baseUrl == NULL) return;
+    [Appodeal setBidonEndpoint:[NSString stringWithUTF8String:baseUrl]];
+}
+
+char* AppodealGetBidonEndpoint() {
+    NSString* baseUrlNSString = [Appodeal getBidonEndpoint];
+    return baseUrlNSString ? strdup([baseUrlNSString UTF8String]) : NULL;
+}
+
 static AppodealAdRevenueDelegate *AppodealAdRevenueDelegateInstance;
 void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
 

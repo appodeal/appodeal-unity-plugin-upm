@@ -71,6 +71,8 @@ namespace AppodealStack.Monetization.Common
         void LogEvent(string eventName, Dictionary<string, object> eventParams);
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
+        void SetBidonEndpoint(string baseUrl);
+        string GetBidonEndpoint();
 
         #region Deprecated signatures
 
