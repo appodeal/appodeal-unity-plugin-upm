@@ -52,6 +52,8 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string StartTestActivity = "startTestActivity";
                 public const string TrackInAppPurchase = "trackInAppPurchase";
                 public const string ValidateInAppPurchase = "validateInAppPurchase";
+                public const string SetBidonEndpoint = "setBidonEndpoint";
+                public const string GetBidonEndpoint = "getBidonEndpoint";
             }
         }
     }
