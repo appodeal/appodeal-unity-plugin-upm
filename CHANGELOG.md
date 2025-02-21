@@ -4,6 +4,11 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.4.2 (February 21, 2025)
+
++ Updated Appodeal Android SDK to v3.4.2
++ Updated Appodeal iOS SDK to v3.4.2
+
 ### 3.4.1 (December 23, 2024)
 
 + Updated Appodeal Android SDK to v3.4.1
