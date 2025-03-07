@@ -4,6 +4,15 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.5.0 (March 11, 2025)
+
++ Updated Appodeal Android SDK to v3.5.0
++ Updated Appodeal iOS SDK to v3.5.0
++ Implemented `SetBidonEndpoint` and `GetBidonEndpoint` public API methods
++ Replaced certain SDK logos in Plugin's Dependency Manager
++ Added mediation engines ordering in Plugin's Dependency Manager
++ Added descriptions for new adapters in Plugin's Dependency Manager
+
 ### 3.4.2 (February 21, 2025)
 
 + Updated Appodeal Android SDK to v3.4.2
