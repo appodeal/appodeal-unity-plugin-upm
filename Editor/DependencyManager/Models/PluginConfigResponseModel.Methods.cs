@@ -97,7 +97,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                     .Where(sdk => sdk.category == SdkCategory.Mediation && mediationIds.Contains(sdk.status)));
             }
 
-            return output.GroupBy(sdk => sdk.status).Select(gr => gr.First()).ToList();
+            return output.GroupBy(sdk => sdk.status).Select(gr => gr.First()).OrderByDescending(sdk => sdk.name).ToList();
         }
     }
 }
