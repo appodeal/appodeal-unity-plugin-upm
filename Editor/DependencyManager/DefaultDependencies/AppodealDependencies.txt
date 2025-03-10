@@ -82,7 +82,6 @@
 		<iosPod id="max_my_target" name="AppLovinMediationMyTargetAdapter" version="5.25.1.0" minTargetSdk="12.4" />
 		<iosPod id="max_ogury" name="AppLovinMediationOguryPresageAdapter" version="5.0.2.0" minTargetSdk="12.0" />
 		<iosPod id="max_pangle" name="AppLovinMediationByteDanceAdapter" version="6.4.1.2.0" minTargetSdk="12.0" />
-		<iosPod id="max_pubmatic" name="AppLovinMediationPubMaticAdapter" version="4.4.0.0" minTargetSdk="12.0" />
 		<iosPod id="max_smaato" name="AppLovinMediationSmaatoAdapter" version="22.9.2.0" minTargetSdk="12.0" />
 		<iosPod id="max_unity_ads" name="AppLovinMediationUnityAdsAdapter" version="4.13.1.0" minTargetSdk="12.0" />
 		<iosPod id="max_verve" name="AppLovinMediationVerveAdapter" version="3.1.4.0" minTargetSdk="12.0" />
