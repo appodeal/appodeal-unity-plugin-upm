@@ -197,6 +197,12 @@ namespace AppodealStack.Monetization.Platforms.Ios
             InAppPurchaseValidationFailedCallback failure);
 
         [DllImport("__Internal")]
+        internal static extern void AppodealSetBidonEndpoint(string baseUrl);
+
+        [DllImport("__Internal")]
+        internal static extern string AppodealGetBidonEndpoint();
+
+        [DllImport("__Internal")]
         internal static extern void AppodealSetInitializationDelegate(
             AppodealInitializationCallback appodealSDKDidInitialize
         );

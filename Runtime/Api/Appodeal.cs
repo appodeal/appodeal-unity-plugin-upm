@@ -764,6 +764,25 @@ namespace AppodealStack.Monetization.Api
             GetInstance().ValidateAppStoreInAppPurchase(purchase, listener);
         }
 
+        /// <summary>
+        /// Sets the custom Bidon endpoint.
+        /// </summary>
+        /// <param name="baseUrl">Non-null custom Bidon endpoint URL.</param>
+        /// <remarks>Call before the SDK <see cref="Initialize"/> method.</remarks>
+        public static void SetBidonEndpoint(string baseUrl)
+        {
+            GetInstance().SetBidonEndpoint(baseUrl);
+        }
+
+        /// <summary>
+        /// Retrieves the currently set Bidon endpoint.
+        /// </summary>
+        /// <returns>Endpoint URL or default value if not overriden.</returns>
+        public static string GetBidonEndpoint()
+        {
+            return GetInstance().GetBidonEndpoint();
+        }
+
     #region Deprecated methods
 
         [Obsolete("Will be changed in a future release.", false)]

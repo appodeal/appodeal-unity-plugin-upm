@@ -470,6 +470,17 @@ namespace AppodealStack.Monetization.Platforms.Android
             AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.ValidateInAppPurchase, UnityActivityJavaObject, androidPurchase.GetInAppPurchase(), purchaseCallback);
         }
 
+        public void SetBidonEndpoint(string baseUrl)
+        {
+            if (baseUrl == null) return;
+            AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetBidonEndpoint, baseUrl);
+        }
+
+        public string GetBidonEndpoint()
+        {
+            return AppodealJavaClass?.CallStatic<string>(AndroidConstants.JavaMethodName.Appodeal.GetBidonEndpoint) ?? String.Empty;
+        }
+
         public void SetLocationTracking(bool isEnabled)
         {
             AndroidAppodealHelper.LogMethodNotSupported();
