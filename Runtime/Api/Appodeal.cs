@@ -783,6 +783,19 @@ namespace AppodealStack.Monetization.Api
             return GetInstance().GetBidonEndpoint();
         }
 
+        /// <summary>
+        /// <para>
+        /// Displays a mediation debugger window.
+        /// </para>
+        /// See <see href="https://docs.appodeal.com/unity/advanced/testing?distribution=upm"/> for more details.
+        /// </summary>
+        /// <param name="provider">One of the predefined mediation debugger window providers.</param>
+        /// <returns>true if the chosen mediation debugger window was found and displayed, otherwise - false.</returns>
+        public static bool ShowMediationDebugger(MediationDebuggerProvider provider = MediationDebuggerProvider.AppLovinSdk)
+        {
+            return GetInstance().ShowMediationDebugger(provider);
+        }
+
     #region Deprecated methods
 
         [Obsolete("Will be changed in a future release.", false)]

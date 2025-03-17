@@ -60,4 +60,15 @@ namespace AppodealStack.Monetization.Common
         AutoRenewableSubscription,
         NonRenewingSubscription
     }
+
+    /// <summary>
+    /// <para>
+    /// Enumeration containing all supported providers of mediation debugging tools.
+    /// </para>
+    /// See <see href="https://docs.appodeal.com/unity/advanced/testing?distribution=upm"/> for more details.
+    /// </summary>
+    public enum MediationDebuggerProvider
+    {
+        AppLovinSdk,
+    }
 }
