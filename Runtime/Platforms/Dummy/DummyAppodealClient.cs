@@ -850,6 +850,12 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return String.Empty;
         }
 
+        public bool ShowMediationDebugger(MediationDebuggerProvider provider)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ShowMediationDebugger method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return false;
+        }
+
         #endregion
     }
 }

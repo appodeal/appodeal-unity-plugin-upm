@@ -771,6 +771,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return AppodealObjCBridge.AppodealGetBidonEndpoint();
         }
 
+        public bool ShowMediationDebugger(MediationDebuggerProvider provider)
+        {
+            return AppodealObjCBridge.AppodealShowMediationDebugger();
+        }
+
         public void Destroy(int adType)
         {
             Debug.Log("Not Supported by iOS SDK");

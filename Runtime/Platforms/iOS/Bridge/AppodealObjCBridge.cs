@@ -203,6 +203,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern string AppodealGetBidonEndpoint();
 
         [DllImport("__Internal")]
+        internal static extern bool AppodealShowMediationDebugger();
+
+        [DllImport("__Internal")]
         internal static extern void AppodealSetInitializationDelegate(
             AppodealInitializationCallback appodealSDKDidInitialize
         );

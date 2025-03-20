@@ -73,6 +73,7 @@ namespace AppodealStack.Monetization.Common
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void SetBidonEndpoint(string baseUrl);
         string GetBidonEndpoint();
+        bool ShowMediationDebugger(MediationDebuggerProvider provider);
 
         #region Deprecated signatures
 

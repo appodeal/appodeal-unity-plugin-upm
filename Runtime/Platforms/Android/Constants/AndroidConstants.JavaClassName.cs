@@ -11,6 +11,8 @@ namespace AppodealStack.Monetization.Platforms.Android
             public const string AppodealInAppPurchase = "com.appodeal.ads.inapp.InAppPurchase";
             public const string AppodealLogLevel = "com.appodeal.ads.utils.Log$LogLevel";
 
+            public const string AppLovinSdk = "com.applovin.sdk.AppLovinSdk";
+
             public const string UnityPlayer = "com.unity3d.player.UnityPlayer";
 
             public const string Boolean = "java.lang.Boolean";
