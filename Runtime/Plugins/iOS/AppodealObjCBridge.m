@@ -312,8 +312,8 @@ char *AppodealGetUserId() {
     return strncpy(cStringCopy, cString, [[Appodeal userId] length]);
 }
 
-void AppodealLogEvent(const char *eventName, const char *eventParams) {
-    [Appodeal trackEvent:NSStringFromUTF8String(eventName) customParameters:NSDictionaryFromUTF8String(eventParams)];
+void AppodealLogEvent(const char *eventName, const char *eventParams, int services) {
+    [Appodeal trackEvent:NSStringFromUTF8String(eventName) customParameters:NSDictionaryFromUTF8String(eventParams) analytics:services];
 }
 
 void AppodealValidateInAppPurchase(const char *productIdentifier,

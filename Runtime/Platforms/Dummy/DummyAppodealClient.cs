@@ -824,7 +824,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             return String.Empty;
         }
 
-        public void LogEvent(string eventName, Dictionary<string, object> eventParams)
+        public void LogEvent(string eventName, Dictionary<string, object> eventParams, AppodealService services)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.LogEvent method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }

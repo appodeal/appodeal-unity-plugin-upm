@@ -722,18 +722,23 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
-        /// <para>Sends event data to all connected analytic services such as Firebase, Adjust, AppsFlyer and Facebook.</para>
+        /// Sends event data to selected analytic services such as Adjust, AppsFlyer, Facebook, or Firebase.<br/>
         /// See <see href="https://docs.appodeal.com/unity/advanced/event-tracking?distribution=upm#step-1-how-to-track-in-app-events"/> for more details.
         /// </summary>
+        /// <param name="eventName">the name of the event.</param>
+        /// <param name="eventParams">optional parameters associated with the event.</param>
+        /// <param name="services">target services to send the event to. Defaults to all connected services.</param>
         /// <remarks>
-        /// <para>Event parameter values must be one of the following types:  <see langword="string"/>, <see langword="double"/>, or <see langword="int"/></para>
-        /// If event has no params, call the shorten version of this method by passing only name of the event.
+        /// For the <c>eventParams</c> argument, every dictionary value should be either a <c>string</c>, <c>double</c>, or <c>int</c>.<br/>
+        /// Use the named argument <c>services:</c> if you want to specify target services while omitting the second optional argument.
         /// </remarks>
-        /// <param name="eventName">name of the event.</param>
-        /// <param name="eventParams">parameters of the event if any.</param>
-        public static void LogEvent(string eventName, Dictionary<string, object> eventParams = null)
+        /// <example>Send event to all connected services w/o params:<code>Appodeal.LogEvent("eventName");</code></example>
+        /// <example>Send event to all connected services w/ params:<code>Appodeal.LogEvent("eventName", eventParams);</code></example>
+        /// <example>Send event to a group of services w/o params:<code>Appodeal.LogEvent("eventName", services:AppodealService.AppsFlyer | AppodealService.Facebook);</code></example>
+        /// <example>Send event to a specific service w/ params:<code>Appodeal.LogEvent("eventName", eventParams, AppodealService.Adjust);</code></example>
+        public static void LogEvent(string eventName, Dictionary<string, object> eventParams = null, AppodealService services = AppodealService.All)
         {
-            GetInstance().LogEvent(eventName, eventParams);
+            GetInstance().LogEvent(eventName, eventParams, services);
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace AppodealStack.Monetization.Common
         void ResetExtraData(string key);
         double GetPredictedEcpm(int adType);
         double GetPredictedEcpmForPlacement(int adType, string placement);
-        void LogEvent(string eventName, Dictionary<string, object> eventParams);
+        void LogEvent(string eventName, Dictionary<string, object> eventParams, AppodealService services);
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void SetBidonEndpoint(string baseUrl);
