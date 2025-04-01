@@ -22,7 +22,6 @@
 		<iosPod id="appodeal_mintegral" name="APDMintegralAdapter" version="3.5.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_my_target" name="APDMyTargetAdapter" version="3.5.1.0" minTargetSdk="12.4" />
 		<iosPod id="appodeal_pangle" name="APDPangleAdapter" version="3.5.1.0" minTargetSdk="12.0" />
-		<iosPod id="appodeal_sentry" name="APDSentryAdapter" version="3.5.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_smaato" name="APDSmaatoAdapter" version="3.5.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_unity_ads" name="APDUnityAdapter" version="3.5.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_vungle" name="APDVungleAdapter" version="3.5.1.0" minTargetSdk="12.0" />
