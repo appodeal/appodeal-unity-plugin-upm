@@ -481,6 +481,46 @@ namespace AppodealStack.Monetization.Platforms.Android
             return AppodealJavaClass?.CallStatic<string>(AndroidConstants.JavaMethodName.Appodeal.GetBidonEndpoint) ?? String.Empty;
         }
 
+        public bool ShowMediationDebugger(MediationDebuggerProvider provider)
+        {
+            try
+            {
+                var sdkClassPtr = AndroidJNI.FindClass(AndroidConstants.JavaClassName.AppLovinSdk.Replace('.', '/'));
+                if (sdkClassPtr == IntPtr.Zero) return false;
+
+                var getInstancesMethodPtr = AndroidJNI.GetStaticMethodID(sdkClassPtr, AndroidConstants.JavaMethodName.AppLovinSdk.GetInstances, "()Ljava/util/Collection;");
+                if (getInstancesMethodPtr == IntPtr.Zero)
+                {
+                    AndroidJNI.DeleteLocalRef(sdkClassPtr);
+                    return false;
+                }
+
+                var showDebuggerMethodPtr = AndroidJNI.GetMethodID(sdkClassPtr, AndroidConstants.JavaMethodName.AppLovinSdk.ShowMediationDebugger, "()V");
+                if (showDebuggerMethodPtr == IntPtr.Zero)
+                {
+                    AndroidJNI.DeleteLocalRef(sdkClassPtr);
+                    return false;
+                }
+
+                AndroidJNI.DeleteLocalRef(sdkClassPtr);
+
+                using var sdkClass = new AndroidJavaClass(AndroidConstants.JavaClassName.AppLovinSdk);
+                using var sdkInstances = sdkClass.CallStatic<AndroidJavaObject>(AndroidConstants.JavaMethodName.AppLovinSdk.GetInstances);
+                using var iterator = sdkInstances?.Call<AndroidJavaObject>("iterator");
+                if (iterator == null || !iterator.Call<bool>("hasNext")) return false;
+                using var sdkInstance = iterator.Call<AndroidJavaObject>("next");
+                if (sdkInstance == null) return false;
+                sdkInstance.Call(AndroidConstants.JavaMethodName.AppLovinSdk.ShowMediationDebugger);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                AndroidAppodealHelper.LogIntegrationError(e.Message);
+                return false;
+            }
+        }
+
         public void SetLocationTracking(bool isEnabled)
         {
             AndroidAppodealHelper.LogMethodNotSupported();

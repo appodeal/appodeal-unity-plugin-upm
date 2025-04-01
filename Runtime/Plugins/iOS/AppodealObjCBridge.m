@@ -1,3 +1,6 @@
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+
 #if defined(__has_include) && __has_include("UnityAppController.h")
 #import "UnityAppController.h"
 #else
@@ -363,6 +366,30 @@ void AppodealSetBidonEndpoint(const char* baseUrl) {
 char* AppodealGetBidonEndpoint() {
     NSString* baseUrlNSString = [Appodeal getBidonEndpoint];
     return baseUrlNSString ? strdup([baseUrlNSString UTF8String]) : NULL;
+}
+
+BOOL AppodealShowMediationDebugger() {
+    Class sdkClass = objc_getClass("ALSdk");
+    if (!sdkClass) return false;
+
+    SEL sharedSelector = NSSelectorFromString(@"shared");
+    if (![sdkClass respondsToSelector:sharedSelector]) return false;
+
+    IMP sharedImp = [sdkClass methodForSelector:sharedSelector];
+    if (!sharedImp) return false;
+    id (*sharedFunc)(id, SEL) = (id (*)(id, SEL))sharedImp;
+    id sharedInstance = sharedFunc(sdkClass, sharedSelector);
+    if (!sharedInstance) return false;
+
+    SEL showMediationDebuggerSelector = NSSelectorFromString(@"showMediationDebugger");
+    if (![sharedInstance respondsToSelector:showMediationDebuggerSelector]) return false;
+
+    IMP debuggerImp = [sharedInstance methodForSelector:showMediationDebuggerSelector];
+    if (!debuggerImp) return false;
+    void (*debuggerFunc)(id, SEL) = (void (*)(id, SEL))debuggerImp;
+    debuggerFunc(sharedInstance, showMediationDebuggerSelector);
+
+    return true;
 }
 
 static AppodealAdRevenueDelegate *AppodealAdRevenueDelegateInstance;
