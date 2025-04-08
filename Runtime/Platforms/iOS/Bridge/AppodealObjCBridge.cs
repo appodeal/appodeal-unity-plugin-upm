@@ -183,7 +183,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern bool AppodealIsAutoCacheEnabled(int adType);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealLogEvent(string eventName, string eventParams);
+        internal static extern void AppodealLogEvent(string eventName, string eventParams, int services);
 
         [DllImport("__Internal")]
         internal static extern void AppodealValidateInAppPurchase(
