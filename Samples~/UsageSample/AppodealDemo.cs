@@ -444,6 +444,8 @@ namespace AppodealSample
             Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Mrec: {output}");
 
             pluginVersionText.text = $"Appodeal Unity Plugin v{ AppodealVersions.GetPluginVersion() } & SDK v{ Appodeal.GetNativeSDKVersion() }";
+
+            Appodeal.ShowMediationDebugger();
         }
 
         #endregion
