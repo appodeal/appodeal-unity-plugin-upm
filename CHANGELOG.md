@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.5.2 (April 15, 2025)
+
++ Updated Appodeal Android SDK to v3.5.2
++ Updated Appodeal iOS SDK to v3.5.2
++ Implemented selective dispatch for `LogEvent` public API method
+
 ### 3.5.1 (April 01, 2025)
 
 + Updated Appodeal Android SDK to v3.5.1
