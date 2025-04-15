@@ -430,11 +430,11 @@ namespace AppodealStack.Monetization.Platforms.Android
             return AppodealJavaClass?.CallStatic<bool>(AndroidConstants.JavaMethodName.Appodeal.IsAutoCacheEnabled, AndroidAppodealHelper.GetJavaAdTypes(adType)) ?? false;
         }
 
-        public void LogEvent(string eventName, Dictionary<string, object> eventParams)
+        public void LogEvent(string eventName, Dictionary<string, object> eventParams, AppodealService services)
         {
             if (eventParams == null)
             {
-                AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.LogEvent, eventName, null);
+                AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.LogEvent, eventName, null, (int)services);
                 return;
             }
 
@@ -451,7 +451,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                     map.Call<AndroidJavaObject>("put", entry.Key, AndroidAppodealHelper.GetJavaObject(entry.Value));
                 }
 
-                AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.LogEvent, eventName, map);
+                AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.LogEvent, eventName, map, (int)services);
             }
             catch (Exception e)
             {

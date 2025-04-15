@@ -745,14 +745,14 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealTrackInAppPurchase(amount, currency);
         }
 
-        public void LogEvent(string eventName, Dictionary<string, object> eventParams)
+        public void LogEvent(string eventName, Dictionary<string, object> eventParams, AppodealService services)
         {
             var paramsFiltered = new Dictionary<string, object>();
 
             eventParams?.Keys.Where(key => eventParams[key] is int || eventParams[key] is double || eventParams[key] is string)
                 .ToList().ForEach(key => paramsFiltered.Add(key, eventParams[key]));
 
-            AppodealObjCBridge.AppodealLogEvent(eventName, DictionaryToString(paramsFiltered));
+            AppodealObjCBridge.AppodealLogEvent(eventName, DictionaryToString(paramsFiltered), (int)services);
         }
 
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)

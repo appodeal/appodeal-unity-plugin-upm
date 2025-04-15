@@ -1,5 +1,6 @@
 // ReSharper Disable CheckNamespace
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AppodealStack.Monetization.Common
@@ -70,5 +71,15 @@ namespace AppodealStack.Monetization.Common
     public enum MediationDebuggerProvider
     {
         AppLovinSdk,
+    }
+
+    [Flags]
+    public enum AppodealService
+    {
+        Adjust = 1 << 0,
+        AppsFlyer = 1 << 1,
+        Facebook = 1 << 2,
+        Firebase = 1 << 3,
+        All = Adjust | AppsFlyer | Facebook | Firebase
     }
 }
