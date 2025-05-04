@@ -14,22 +14,35 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         private const string AppodealSettingsExportPath = "Assets/Appodeal/Editor/InternalResources";
         private const string AppodealSettingsFileName = "AppodealSettings.asset";
 
+        private const int SpaceHeight = 5;
+
+        [Header("AdMob App IDs")]
         [SerializeField] private string adMobAndroidAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
         [SerializeField] private string adMobIosAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
 
+        [Space(SpaceHeight)]
+        [Header("Android Permissions")]
         [SerializeField] private bool accessCoarseLocationPermission;
         [SerializeField] private bool writeExternalStoragePermission = true;
         [SerializeField] private bool accessWifiStatePermission = true;
         [SerializeField] private bool vibratePermission;
         [SerializeField] private bool accessFineLocationPermission;
 
+        [Space(SpaceHeight)]
+        [Header("iOS Permissions")]
         [SerializeField] private bool nSUserTrackingUsageDescription;
         [SerializeField] private bool nSLocationWhenInUseUsageDescription;
         [SerializeField] private bool nSCalendarsUsageDescription;
         [SerializeField] private bool nSAppTransportSecurity;
 
+        [Space(SpaceHeight)]
+        [Header("iOS SKAdNetwork Items")]
         [SerializeField] private bool iosSkAdNetworkItems = true;
         [SerializeField] private List<string> iosSkAdNetworkItemsList = new();
+
+        [Space(SpaceHeight)]
+        [Header("Facebook Service")]
+        [SerializeField] private bool facebookAutoConfiguration;
 
         [SerializeField] private string facebookAndroidAppId = String.Empty;
         [SerializeField] private string facebookIosAppId = String.Empty;
@@ -37,11 +50,17 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         [SerializeField] private string facebookAndroidClientToken = String.Empty;
         [SerializeField] private string facebookIosClientToken = String.Empty;
 
-        [SerializeField] private bool firebaseAutoConfiguration;
-        [SerializeField] private bool facebookAutoConfiguration;
-
         [SerializeField] private bool facebookAutoLogAppEvents = true;
         [SerializeField] private bool facebookAdvertiserIDCollection = true;
+
+        [Space(SpaceHeight)]
+        [Header("Firebase Service")]
+        [SerializeField] private bool firebaseAutoConfiguration;
+
+        [Space(SpaceHeight)]
+        [Header("MAX AdReview")]
+        [SerializeField] private bool isMaxAdReviewEnabled;
+        [SerializeField] private string maxSdkKey;
 
         private static AppodealSettings _instance;
         public static AppodealSettings Instance
@@ -196,6 +215,18 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         {
             get => facebookAdvertiserIDCollection;
             set => facebookAdvertiserIDCollection = value;
+        }
+
+        public bool IsMaxAdReviewEnabled
+        {
+            get => isMaxAdReviewEnabled;
+            set => isMaxAdReviewEnabled = value;
+        }
+
+        public string MaxSdkKey
+        {
+            get => maxSdkKey;
+            set => maxSdkKey = value.Trim();
         }
 
         public static void SaveAsync()
