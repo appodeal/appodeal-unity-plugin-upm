@@ -1,4 +1,4 @@
-#if UNITY_IOS
+#if UNITY_IOS || APPODEAL_DEV
 // ReSharper disable CheckNamespace
 
 using System;

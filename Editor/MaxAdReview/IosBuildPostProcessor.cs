@@ -1,4 +1,4 @@
-﻿#if UNITY_IOS
+﻿#if UNITY_IOS || APPODEAL_DEV
 // ReSharper disable CheckNamespace
 
 using System;
@@ -7,13 +7,16 @@ using System.Net;
 using System.Text;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     internal static class IosBuildPostProcessor
     {
+        private const string MaxPod = "APDAppLovinMAXAdapter";
+        private const string ScriptName = "AppLovinQualityServiceSetup.rb";
+        private const string IosSetupUrl = "https://api2.safedk.com/v1/build/ios_setup2";
+
         [PostProcessBuild(Int32.MaxValue)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
@@ -24,9 +27,30 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
         private static void SetupMaxAdReview(string buildOutputPath)
         {
             if (!AppodealSettings.Instance.IsMaxAdReviewEnabled) return;
-            if (String.IsNullOrWhiteSpace(AppodealSettings.Instance.MaxSdkKey)) return;
 
-            string setupScriptPath = Path.Combine(buildOutputPath, "AppLovinQualityServiceSetup.rb");
+            if (String.IsNullOrWhiteSpace(AppodealSettings.Instance.MaxSdkKey))
+            {
+                AdReviewHelper.LogWarning("SDK key is missing --> Ad Review installation skipped");
+                return;
+            }
+
+            string podfilePath = Path.GetFullPath(Path.Combine(buildOutputPath, "Podfile"));
+            try
+            {
+                string podfileContents = File.ReadAllText(podfilePath);
+                if (!podfileContents.Contains(MaxPod))
+                {
+                    AdReviewHelper.LogWarning("AppLovin MAX dependency not found --> Ad Review installation skipped");
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                AdReviewHelper.LogError($"Failed to read '{podfilePath}' to check for AppLovin MAX dependency presence --> Ad Review installation skipped. Error: '{e.Message}'");
+                return;
+            }
+
+            string setupScriptPath = Path.GetFullPath(Path.Combine(buildOutputPath, ScriptName));
             if (File.Exists(setupScriptPath)) return;
 
             if (!DownloadIosSetupScript(setupScriptPath)) return;
@@ -34,31 +58,29 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             (int exitCode, _, _) = ShellUtil.RunInBash("ruby", "--version", buildOutputPath);
             if (exitCode != 0)
             {
-                Debug.LogError("[IosBuildPostProcessor] AppLovin MAX Ad Review installation requires Ruby. Please install Ruby, export it to your system PATH and re-export the project");
+                AdReviewHelper.LogError("iOS installation requires Ruby. Please install Ruby, export it to your system PATH and re-export the project");
                 return;
             }
 
             (int setupScriptExitCode, string output, string error) = ShellUtil.RunInBash("ruby", setupScriptPath, buildOutputPath);
             if (setupScriptExitCode != 0)
             {
-                Debug.LogError($"[IosBuildPostProcessor] AppLovin MAX Ad Review installation failed: {error}");
+                AdReviewHelper.LogError($"Installation of Ad Review failed. Error: '{error}'");
             }
             else
             {
-                Debug.Log($"AppLovin MAX Ad Review installation succeeded: {output}");
+                AdReviewHelper.Log($"Ad Review was successfully installed. Output: '{output}'");
             }
         }
 
         private static bool DownloadIosSetupScript(string setupScriptPath)
         {
-            const string url = "https://api2.safedk.com/v1/build/ios_setup2";
-
             string postJson = $"{{\"sdk_key\":\"{AppodealSettings.Instance.MaxSdkKey}\"}}";
             byte[] bodyRaw = Encoding.UTF8.GetBytes(postJson);
 
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
+                var request = (HttpWebRequest)WebRequest.Create(IosSetupUrl);
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 request.ContentLength = bodyRaw.Length;
@@ -72,7 +94,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 using var response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    Debug.LogError($"[IosBuildPostProcessor] Download failed: {response.StatusCode}");
+                    AdReviewHelper.LogError($"Setup script downloading failed --> Ad Review installation skipped. StatusCode: '{response.StatusCode}'");
                     return false;
                 }
 
@@ -84,7 +106,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                Debug.LogError($"[IosBuildPostProcessor] Failed to download the setup script: {e.Message}");
+                AdReviewHelper.LogError($"Failed to download the setup script --> Ad Review installation skipped. Error: '{e.Message}'");
                 return false;
             }
         }
