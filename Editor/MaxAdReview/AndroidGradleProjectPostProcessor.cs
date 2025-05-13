@@ -38,7 +38,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 action = PatchAction.Remove;
             }
 
-			if (action == PatchAction.Add)
+            if (action == PatchAction.Add)
             {
                 string unityLibBuildGradleFilePath = Path.GetFullPath(Path.Combine(path, "build.gradle"));
                 try
