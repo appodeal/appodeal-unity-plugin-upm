@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.6.0-alpha.1 (May 14, 2025)
+
++ Updated Appodeal Android SDK to v3.6.0-alpha.1
++ Updated Appodeal iOS SDK to v3.6.0-alpha.1
++ Implemented AppLovin MAX Ad Review feature support
+
 ### 3.5.2 (April 15, 2025)
 
 + Updated Appodeal Android SDK to v3.5.2
