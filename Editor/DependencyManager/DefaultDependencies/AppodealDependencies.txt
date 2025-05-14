@@ -70,6 +70,7 @@
 		<iosPod id="max_admob" name="AppLovinMediationGoogleAdapter" version="12.2.0.0" minTargetSdk="12.0" />
 		<iosPod id="max_amazon" name="AppLovinMediationAmazonAdMarketplaceAdapter" version="5.0.1.0" minTargetSdk="12.0" />
 		<iosPod id="max_bidmachine" name="AppLovinMediationBidMachineAdapter" version="3.2.0.0.0" minTargetSdk="12.0" />
+		<iosPod id="max_bidon" name="AppLovinMediationBidonAdapter" version="3.6.0.0-alpha.1" minTargetSdk="12.0" />
 		<iosPod id="max_bigo_ads" name="AppLovinMediationBigoAdsAdapter" version="4.6.0.0" minTargetSdk="12.0" />
 		<iosPod id="max_chartboost" name="AppLovinMediationChartboostAdapter" version="9.8.0.0" minTargetSdk="11.0" />
 		<iosPod id="max_dt_exchange" name="AppLovinMediationFyberAdapter" version="8.3.5.0" minTargetSdk="12.0" />
