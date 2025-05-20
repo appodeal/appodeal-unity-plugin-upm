@@ -441,6 +441,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
         }
 
+        private void SimSetPurchaseCallback(IPurchaseListener listener)
+        {
+            AppodealCallbacks.Purchase.Instance.PurchaseEventsImpl.Listener = listener;
+        }
+
         private EditorAd GetEditorAdObjectByAdType(int adType)
         {
             EditorAd ad;
@@ -646,6 +651,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
             SimSetAdRevenueCallback(listener);
+        }
+
+        public void SetPurchaseCallbacks(IPurchaseListener listener)
+        {
+            SimSetPurchaseCallback(listener);
         }
 
         #endregion
