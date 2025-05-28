@@ -20,6 +20,7 @@ namespace AppodealStack.Monetization.Common
         void SetBannerCallbacks(IBannerAdListener listener);
         void SetMrecCallbacks(IMrecAdListener listener);
         void SetAdRevenueCallback(IAdRevenueListener listener);
+        void SetPurchaseCallbacks(IPurchaseListener listener);
         void Cache(int adType);
         bool Show(int adType);
         bool Show(int adType, string placement);

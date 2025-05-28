@@ -18,6 +18,7 @@
 #import "AppodealInterstitialDelegate.h"
 #import "AppodealRewardedVideoDelegate.h"
 
+#import "AppodealPurchaseDelegate.h"
 #import "AppodealAdRevenueDelegate.h"
 #import "AppodealIAPValidationDelegate.h"
 #import "AppodealInitializationDelegate.h"
@@ -400,6 +401,17 @@ void AppodealSetAdRevenueDelegate(AppodealAdRevenueCallback adRevenueReceived) {
     AppodealAdRevenueDelegateInstance.adRevenueReceivedCallback = adRevenueReceived;
 
     [Appodeal setAdRevenueDelegate:AppodealAdRevenueDelegateInstance];
+}
+
+static AppodealPurchaseDelegate* AppodealPurchaseDelegateInstance;
+void AppodealSetPurchaseDelegate(PurchaseValidationSucceededCallback succeeded,
+                                 PurchaseValidationFailedCallback failed) {
+
+    AppodealPurchaseDelegateInstance = [AppodealPurchaseDelegate new];
+    AppodealPurchaseDelegateInstance.purchaseValidationSucceededCallback = succeeded;
+    AppodealPurchaseDelegateInstance.purchaseValidationFailedCallback = failed;
+
+    [Appodeal setPurchaseDelegate:AppodealPurchaseDelegateInstance];
 }
 
 static AppodealInitializationDelegate *AppodealInitializationDelegateInstance;
