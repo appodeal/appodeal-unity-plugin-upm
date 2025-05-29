@@ -90,7 +90,6 @@
 		<iosPod id="max_yandex_ads" name="AppLovinMediationYandexAdapter" version="5.2.1.0" minTargetSdk="10.0" />
 		<sources>
 			<source>https://github.com/appodeal/CocoaPods.git</source>
-			<source>https://github.com/bidmachine/CocoaPods-Specs.git</source>
 			<source>https://github.com/bidon-io/CocoaPods_Specs.git</source>
 		</sources>
 	</iosPods>
