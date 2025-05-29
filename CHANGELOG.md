@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.6.0 (May 30, 2025)
+
++ Updated Appodeal Android SDK to v3.6.0
++ Updated Appodeal iOS SDK to v3.6.0
++ Implemented AF ROI360 feature support
+
 ### 3.6.0-alpha.1 (May 14, 2025)
 
 + Updated Appodeal Android SDK to v3.6.0-alpha.1
