@@ -12,6 +12,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string CanShow = "canShow";
                 public const string Destroy = "destroy";
                 public const string DisableNetwork = "disableNetwork";
+                public const string GetBidonEndpoint = "getBidonEndpoint";
                 public const string GetNetworks = "getNetworks";
                 public const string GetPredictedEcpm = "getPredictedEcpm";
                 public const string GetPredictedEcpmByPlacement = "getPredictedEcpmByPlacement";
@@ -33,6 +34,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string SetBannerAnimation = "setBannerAnimation";
                 public const string SetBannerCallbacks = "setBannerCallbacks";
                 public const string SetBannerRotation = "setBannerRotation";
+                public const string SetBidonEndpoint = "setBidonEndpoint";
                 public const string SetChildDirectedTreatment = "setChildDirectedTreatment";
                 public const string SetCustomFilter = "setCustomFilter";
                 public const string SetExtraData = "setExtraData";
@@ -40,6 +42,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string SetInterstitialCallbacks = "setInterstitialCallbacks";
                 public const string SetLogLevel = "setLogLevel";
                 public const string SetMrecCallbacks = "setMrecCallbacks";
+                public const string SetPurchaseListener = "setPurchaseListener";
                 public const string SetRewardedVideoCallbacks = "setRewardedVideoCallbacks";
                 public const string SetSharedAdsInstanceAcrossActivities = "setSharedAdsInstanceAcrossActivities";
                 public const string SetSmartBanners = "setSmartBanners";
@@ -52,8 +55,6 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string StartTestActivity = "startTestActivity";
                 public const string TrackInAppPurchase = "trackInAppPurchase";
                 public const string ValidateInAppPurchase = "validateInAppPurchase";
-                public const string SetBidonEndpoint = "setBidonEndpoint";
-                public const string GetBidonEndpoint = "getBidonEndpoint";
             }
         }
     }

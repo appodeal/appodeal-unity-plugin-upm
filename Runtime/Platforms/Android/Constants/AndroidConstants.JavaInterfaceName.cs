@@ -13,6 +13,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             public const string MrecCallbacks = "com.appodeal.ads.MrecCallbacks";
             public const string RewardedVideoCallbacks = "com.appodeal.ads.RewardedVideoCallbacks";
             public const string InAppPurchaseCallbacks = "com.appodeal.ads.inapp.InAppPurchaseValidateCallback";
+            public const string PurchaseCallbacks = "com.appodeal.ads.inapp.AppodealPurchaseListener";
         }
     }
 }

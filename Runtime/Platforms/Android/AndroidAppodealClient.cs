@@ -95,6 +95,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetInterstitialCallbacks, new AppodealInterstitialCallbacks(AppodealCallbacks.Interstitial.Instance.InterstitialAdEventsImpl));
             AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetRewardedVideoCallbacks, new AppodealRewardedVideoCallbacks(AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl));
             AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetAdRevenueCallbacks, new AppodealAdRevenueCallback(AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl));
+            AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetPurchaseListener, new AppodealPurchaseCallbacks(AppodealCallbacks.Purchase.Instance.PurchaseEventsImpl));
 
             int javaAdTypes = AndroidAppodealHelper.GetJavaAdTypes(adTypes);
             var initCallback = new AppodealInitializationCallback(AppodealCallbacks.Sdk.Instance.SdkEventsImpl);
@@ -413,6 +414,11 @@ namespace AppodealStack.Monetization.Platforms.Android
         public void SetAdRevenueCallback(IAdRevenueListener listener)
         {
             AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl.Listener = listener;
+        }
+
+        public void SetPurchaseCallbacks(IPurchaseListener listener)
+        {
+            AppodealCallbacks.Purchase.Instance.PurchaseEventsImpl.Listener = listener;
         }
 
         public void setSharedAdsInstanceAcrossActivities(bool isEnabled)

@@ -21,6 +21,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             public const string Float = "java.lang.Float";
             public const string HashMap = "java.util.HashMap";
             public const string Integer = "java.lang.Integer";
+            public const string JsonObject = "org.json.JSONObject";
             public const string Long = "java.lang.Long";
         }
     }

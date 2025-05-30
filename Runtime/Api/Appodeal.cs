@@ -141,6 +141,23 @@ namespace AppodealStack.Monetization.Api
 
         /// <summary>
         /// <para>
+        /// Registers a listener to receive callbacks when purchase validation succeeds or fails.
+        /// </para>
+        /// Read <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks?distribution=upm"/> before implementing callbacks.
+        /// </summary>
+        /// <param name="listener">
+        /// The object that will be notified of purchase-validation results. Pass an implementation of <see cref="IPurchaseListener"/> whose
+        /// <see cref="IPurchaseListener.OnPurchaseValidationSucceeded(IEnumerable{string})"/> and
+        /// <see cref="IPurchaseListener.OnPurchaseValidationFailed(string, IEnumerable{string})"/> methods will be invoked.
+        /// </param>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/in-app-purchases"/> for more details.</remarks>
+        public static void SetPurchaseCallbacks(IPurchaseListener listener)
+        {
+            GetInstance().SetPurchaseCallbacks(listener);
+        }
+
+        /// <summary>
+        /// <para>
         /// Caches ads in a manual mode.
         /// Use it only if <see cref="IsAutoCacheEnabled"/> is set to false.
         /// </para>

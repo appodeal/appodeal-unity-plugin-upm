@@ -30,6 +30,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         private static IMrecAdListener _mrecListener;
         private static IBannerAdListener _bannerListener;
+        private static IPurchaseListener _purchaseListener;
         private static IAdRevenueListener _revenueListener;
         private static IInterstitialAdListener _interstitialListener;
         private static IRewardedVideoAdListener _rewardedVideoListener;
@@ -312,6 +313,33 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         #endregion
 
+        #region Purchase delegate
+
+        [MonoPInvokeCallback(typeof(PurchaseValidationSucceededCallback))]
+        private static void PurchaseValidationSucceeded(string purchaseJson)
+        {
+            if (String.IsNullOrWhiteSpace(purchaseJson))
+            {
+                _purchaseListener?.OnPurchaseValidationSucceeded(Array.Empty<string>());
+                return;
+            }
+
+            _purchaseListener?.OnPurchaseValidationSucceeded(new[] { purchaseJson });
+        }
+
+        [MonoPInvokeCallback(typeof(PurchaseValidationFailedCallback))]
+        private static void PurchaseValidationFailed(string reason)
+        {
+            _purchaseListener?.OnPurchaseValidationFailed(reason, Array.Empty<string>());
+        }
+
+        public void SetPurchaseCallbacks(IPurchaseListener listener)
+        {
+            AppodealCallbacks.Purchase.Instance.PurchaseEventsImpl.Listener = listener;
+        }
+
+        #endregion
+
         #region In-App Purchase Validation delegate
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationSucceededCallback))]
@@ -425,6 +453,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         private static void SetCallbacks()
         {
             _revenueListener = AppodealCallbacks.AdRevenue.Instance.AdRevenueEventsImpl;
+            _purchaseListener = AppodealCallbacks.Purchase.Instance.PurchaseEventsImpl;
             _initializationListener = AppodealCallbacks.Sdk.Instance.SdkEventsImpl;
             _inAppPurchaseValidationListener = AppodealCallbacks.InAppPurchase.Instance.PurchaseEventsImpl;
             _mrecListener = AppodealCallbacks.Mrec.Instance.MrecAdEventsImpl;
@@ -433,6 +462,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
             _rewardedVideoListener = AppodealCallbacks.RewardedVideo.Instance.RewardedVideoAdEventsImpl;
 
             AppodealObjCBridge.AppodealSetAdRevenueDelegate(AppodealSdkDidReceiveRevenue);
+
+            AppodealObjCBridge.AppodealSetPurchaseDelegate(PurchaseValidationSucceeded, PurchaseValidationFailed);
 
             AppodealObjCBridge.AppodealSetInitializationDelegate(AppodealSdkDidInitialize);
 

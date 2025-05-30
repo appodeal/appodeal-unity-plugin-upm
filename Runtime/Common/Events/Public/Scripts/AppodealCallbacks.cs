@@ -127,6 +127,74 @@ namespace AppodealStack.Monetization.Common
         }
 
         /// <summary>
+        /// Class containing purchase-validation events for AF ROI360 feature.
+        /// </summary>
+        public sealed class Purchase
+        {
+            #region Purchase Singleton
+
+            private Purchase() { }
+
+            private static Purchase _instance;
+
+            private static readonly object Lock = new();
+
+            /// <summary>
+            /// Returns an instance of the <see cref="AppodealCallbacks.Purchase"/> class.
+            /// </summary>
+            public static Purchase Instance
+            {
+                get
+                {
+                    if (_instance == null)
+                    {
+                        lock (Lock)
+                        {
+                            if (_instance == null)
+                            {
+                                _instance = new Purchase();
+                                _instance.InitializeCallbacks();
+                            }
+                        }
+                    }
+                    return _instance;
+                }
+            }
+
+            #endregion
+
+            private PurchaseProxyListener _purchaseEventsImpl;
+
+            /// <summary>
+            /// Returns an instance of the <see cref="PurchaseProxyListener"/> class.
+            /// </summary>
+            [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+            internal PurchaseProxyListener PurchaseEventsImpl => _purchaseEventsImpl ??= new PurchaseProxyListener();
+
+            /// <summary>
+            /// <para>
+            /// Raised when purchases have been successfully validated and tracked.
+            /// </para>
+            /// Arguments are of a type <see cref="PurchaseValidatedEventArgs"/>.
+            /// </summary>
+            public static event EventHandler<PurchaseValidatedEventArgs> OnValidationSucceeded;
+
+            /// <summary>
+            /// <para>
+            /// Raised when purchase validation fails.
+            /// </para>
+            /// Arguments are of a type <see cref="PurchaseValidationFailedEventArgs"/>.
+            /// </summary>
+            public static event EventHandler<PurchaseValidationFailedEventArgs> OnValidationFailed;
+
+            private void InitializeCallbacks()
+            {
+                PurchaseEventsImpl.OnValidationSucceeded += (_, args) => OnValidationSucceeded?.Invoke(this, args);
+                PurchaseEventsImpl.OnValidationFailed += (_, args) => OnValidationFailed?.Invoke(this, args);
+            }
+        }
+
+        /// <summary>
         /// Class containing InAppPurchase validation events.
         /// </summary>
         public sealed class InAppPurchase
