@@ -494,8 +494,8 @@ namespace AppodealStack.Monetization.Platforms.Android
                 var sdkClassPtr = AndroidJNI.FindClass(AndroidConstants.JavaClassName.AppLovinSdk.Replace('.', '/'));
                 if (sdkClassPtr == IntPtr.Zero) return false;
 
-                var getInstancesMethodPtr = AndroidJNI.GetStaticMethodID(sdkClassPtr, AndroidConstants.JavaMethodName.AppLovinSdk.GetInstances, "()Ljava/util/Collection;");
-                if (getInstancesMethodPtr == IntPtr.Zero)
+                var getInstanceMethodPtr = AndroidJNI.GetStaticMethodID(sdkClassPtr, AndroidConstants.JavaMethodName.AppLovinSdk.GetInstance, "(Landroid/content/Context;)Lcom/applovin/sdk/AppLovinSdk;");
+                if (getInstanceMethodPtr == IntPtr.Zero)
                 {
                     AndroidJNI.DeleteLocalRef(sdkClassPtr);
                     return false;
@@ -511,10 +511,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 AndroidJNI.DeleteLocalRef(sdkClassPtr);
 
                 using var sdkClass = new AndroidJavaClass(AndroidConstants.JavaClassName.AppLovinSdk);
-                using var sdkInstances = sdkClass.CallStatic<AndroidJavaObject>(AndroidConstants.JavaMethodName.AppLovinSdk.GetInstances);
-                using var iterator = sdkInstances?.Call<AndroidJavaObject>("iterator");
-                if (iterator == null || !iterator.Call<bool>("hasNext")) return false;
-                using var sdkInstance = iterator.Call<AndroidJavaObject>("next");
+                using var sdkInstance = sdkClass.CallStatic<AndroidJavaObject>(AndroidConstants.JavaMethodName.AppLovinSdk.GetInstance, UnityActivityJavaObject);
                 if (sdkInstance == null) return false;
                 sdkInstance.Call(AndroidConstants.JavaMethodName.AppLovinSdk.ShowMediationDebugger);
 
