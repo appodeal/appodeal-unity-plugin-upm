@@ -8,7 +8,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             internal static class AppLovinSdk
             {
-                public const string GetInstances = "getInstances";
+                public const string GetInstance = "getInstance";
                 public const string ShowMediationDebugger = "showMediationDebugger";
             }
         }

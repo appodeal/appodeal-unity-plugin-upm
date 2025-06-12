@@ -4,6 +4,12 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.7.0 (June 12, 2025)
+
++ Updated Appodeal Android SDK to v3.7.0
++ Updated Appodeal iOS SDK to v3.7.0
++ Reworked Android implementation of `showMediationDebugger` method
+
 ### 3.6.0 (May 30, 2025)
 
 + Updated Appodeal Android SDK to v3.6.0
