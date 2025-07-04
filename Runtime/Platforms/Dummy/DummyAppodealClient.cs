@@ -558,7 +558,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public void Cache(int adTypes)
         {
-            if (!SimCheckIfSDKInitialized(nameof(Show))) return;
+            if (!SimCheckIfSDKInitialized(nameof(Cache))) return;
 
             if (!IsInitialized(adTypes))
             {
