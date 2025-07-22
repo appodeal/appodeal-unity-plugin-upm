@@ -4,6 +4,11 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
+### 3.8.0-mmp (July 22, 2025)
+
++ Updated Appodeal Android SDK to v3.8.0-mmp
++ Removed Appodeal iOS SDK
+
 ### 3.8.0 (July 04, 2025)
 
 + Updated Appodeal Android SDK to v3.8.0
