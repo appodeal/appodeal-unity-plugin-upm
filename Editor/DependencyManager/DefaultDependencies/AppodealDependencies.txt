@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <dependencies>
 	<iosPods>
-		<iosPod id="appodeal" name="Appodeal" version="3.8.1" minTargetSdk="42.0" />
-		<iosPod id="appodeal_adjust" name="APDAdjustAdapter_Test" version="3.8.1.0" minTargetSdk="12.0" />
+		<iosPod id="appodeal" name="Appodeal" version="3.8.1" minTargetSdk="12.0" />
+		<iosPod id="appodeal_adjust" name="APDAdjustAdapter" version="3.8.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_admob" name="APDGoogleAdMobAdapter" version="3.8.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_amazon" name="APDAmazonAdapter" version="3.8.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_applovin" name="APDAppLovinAdapter" version="3.8.1.0" minTargetSdk="12.0" />
