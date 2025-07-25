@@ -1,0 +1,37 @@
+# .github/workflows/validate-ios-pods.yml
+name: Validate iOS Pod SDK versions
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - 'release/**'
+    paths:
+      - 'Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt'
+
+jobs:
+  validate-ios-pods:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run validation script
+        run: python3 .ci/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
+
+      - name: Comment report
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-file: pod_sdk_report.md
