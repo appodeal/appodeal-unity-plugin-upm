@@ -1,0 +1,19 @@
+{
+    "name": "AppodealInc.Mediation.Analytics.Editor",
+    "rootNamespace": "AppodealInc.Mediation.Analytics.Editor",
+    "references": [
+        "AppodealInc.Mediation.PluginSettings.Editor",
+        "AppodealStack.Monetization.Common"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
