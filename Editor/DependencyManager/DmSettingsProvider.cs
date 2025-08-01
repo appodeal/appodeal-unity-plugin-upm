@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Analytics.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -16,6 +17,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public override async void OnActivate(string searchContext, VisualElement rootElement)
         {
+            AnalyticsService.TrackClickEvent(ActionType.OpenDependencyManager);
             LogHelper.Log($"{nameof(OnActivate)}() method is called");
 
             if (!DmUIElements.AreAllDmAssetsLoadable())
@@ -55,6 +57,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public override void OnDeactivate()
         {
+            AnalyticsService.TrackClickEvent(ActionType.CloseDependencyManager);
             LogHelper.Log($"{nameof(OnDeactivate)}() method is called");
 
             _sessionId = Guid.Empty;

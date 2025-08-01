@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using AppodealInc.Mediation.Analytics.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -60,6 +61,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             bool shouldUpdate = ShowUpdateDialog($"Appodeal Unity Plugin v{latestPluginVersionRequest.Value.version} is available. Do you want to update now?");
             if (!shouldUpdate) return false;
+
+            AnalyticsService.TrackClickEvent(ActionType.UpdatePlugin);
 
             var (_, configRequest) = await DataLoader.GetConfigAsync(Guid.Empty, latestPluginVersionRequest.Value.version);
             if (!configRequest.IsSuccess) return false;
@@ -132,6 +135,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             {
                 bool shouldUpdateAdapters = ShowUpdateDialog("Some SDK adapters are outdated. Do you want to update them now?");
                 if (!shouldUpdateAdapters) return;
+
+                AnalyticsService.TrackClickEvent(ActionType.UpdateDependencies);
 
                 bool areAdaptersUpdated = XmlHandler.UpdateDependencies(xmlRequest.Value);
                 if (areAdaptersUpdated)
