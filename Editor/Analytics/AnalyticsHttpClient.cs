@@ -19,7 +19,12 @@ namespace AppodealInc.Mediation.Analytics.Editor
 #if UNITY_2022_3_OR_NEWER
                 request = UnityWebRequest.Post(url, json, "application/json");
 #else
-                request = UnityWebRequest.Post(url, json);
+                byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
+                request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST)
+                {
+                    uploadHandler = new UploadHandlerRaw(jsonBytes),
+                    downloadHandler = new DownloadHandlerBuffer()
+                };
                 request.SetRequestHeader("Content-Type", "application/json");
 #endif
                 request.timeout = WebRequestTimeoutMs / 1_000;
