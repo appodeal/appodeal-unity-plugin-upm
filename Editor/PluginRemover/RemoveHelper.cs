@@ -40,7 +40,7 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
                 "Yes",
                 "No");
 
-            AnalyticsService.TrackClickEvent(ActionType.RemovePlugin);
+            AnalyticsService.TrackClickEvent(ActionType.RemovePlugin, true);
 
             var items = ReadXML();
             foreach (var item in items)

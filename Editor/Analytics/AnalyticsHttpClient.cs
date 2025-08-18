@@ -1,8 +1,11 @@
 // ReSharper disable CheckNamespace
 
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
-using UnityEngine.Networking;
+using UnityEngine;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
@@ -12,35 +15,42 @@ namespace AppodealInc.Mediation.Analytics.Editor
 
         public static async Task<bool> PostAsync(string url, string json)
         {
-            UnityWebRequest request = null;
-
             try
             {
-#if UNITY_2022_3_OR_NEWER
-                request = UnityWebRequest.Post(url, json, "application/json");
-#else
-                byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
-                request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST)
-                {
-                    uploadHandler = new UploadHandlerRaw(jsonBytes),
-                    downloadHandler = new DownloadHandlerBuffer()
-                };
-                request.SetRequestHeader("Content-Type", "application/json");
-#endif
-                request.timeout = WebRequestTimeoutMs / 1_000;
+                // var handler = new HttpClientHandler
+                // {
+                //     UseProxy = true,
+                //     Proxy = new System.Net.WebProxy("127.0.0.1", 8888) // Charles default proxy
+                // };
+                //
+                // using var client = new HttpClient(handler);
 
-                _ = request.SendWebRequest();
-                while (!request.isDone) await Task.Yield();
-                return request.result == UnityWebRequest.Result.Success;
+                using var client = new HttpClient();
+                client.Timeout = TimeSpan.FromMilliseconds(WebRequestTimeoutMs);
+
+                client.DefaultRequestHeaders.UserAgent.Clear();
+                client.DefaultRequestHeaders.UserAgent.ParseAdd($"UnityPlayer/{Application.unityVersion}");
+
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.ParseAdd("*/*");
+
+                client.DefaultRequestHeaders.AcceptEncoding.Clear();
+                client.DefaultRequestHeaders.AcceptEncoding.ParseAdd("deflate, gzip");
+
+                using var content = new StringContent(json, Encoding.UTF8);
+
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                content.Headers.Add("X-Unity-Version", Application.unityVersion);
+
+                var uri = new Uri(url);
+                var response = await client.PostAsync(uri, content).ConfigureAwait(false);
+                // string httpResponseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return response.IsSuccessStatusCode;
             }
             catch (Exception e)
             {
                 Logger.Log($"Error sending analytics data to {url}: {e.Message}");
                 return false;
-            }
-            finally
-            {
-                request?.Dispose();
             }
         }
     }

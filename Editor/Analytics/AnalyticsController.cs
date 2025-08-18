@@ -13,7 +13,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
     [InitializeOnLoad]
     internal class AnalyticsController : IPreprocessBuildWithReport
     {
-        private const int BuildCompletionTimeoutMs = 3_600_000;
+        private const int MaxBuildPollingTimeMs = 3_600_000;
+        private const int MaxEditorQuittingBlockTimeMs = 1_200;
 
         private const string UserIdKey = "Appodeal.Analytics.UserId";
         private const string SessionIdKey = "Appodeal.Analytics.SessionId";
@@ -55,7 +56,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
         private static void OnEditorQuitting()
         {
             var sessionEndRequestModel = new SessionEndRequestModel();
-            _ = AnalyticsService.SendEvent(sessionEndRequestModel);
+            var sendTask = AnalyticsService.SendEvent(sessionEndRequestModel);
+            sendTask.Wait(TimeSpan.FromMilliseconds(MaxEditorQuittingBlockTimeMs));
         }
 
         public void OnPreprocessBuild(BuildReport report)
@@ -64,9 +66,12 @@ namespace AppodealInc.Mediation.Analytics.Editor
             _ = HandleBuildEventAsync(report);
         }
 
+        // WARNING: Do NOT call this method with .Wait() or .Result from the main thread - it will cause a deadlock!
+        // This method must be called with fire-and-forget pattern: _ = HandleBuildEventAsync(report)
+        // We cannot use ConfigureAwait(false) here because Unity APIs (BuildPipeline) must be accessed from main thread
         private static async Task HandleBuildEventAsync(BuildReport report)
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(BuildCompletionTimeoutMs));
+            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(MaxBuildPollingTimeMs));
             try
             {
                 while ((BuildPipeline.isBuildingPlayer || report.summary.result == BuildResult.Unknown) && !cts.Token.IsCancellationRequested)
@@ -85,7 +90,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (TaskCanceledException)
             {
-                Logger.Log($"Build polling canceled after waiting {BuildCompletionTimeoutMs / 60_000} minutes for {report.summary.platform}");
+                Logger.Log($"Build polling canceled after waiting {MaxBuildPollingTimeMs / 60_000} minutes for {report.summary.platform}");
             }
             catch (Exception e)
             {
