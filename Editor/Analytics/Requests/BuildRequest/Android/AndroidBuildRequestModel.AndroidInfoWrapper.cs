@@ -39,7 +39,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 try
                 {
                     string path = $"{Application.dataPath}/{AndroidPluginsDir}/{fileName}";
-                    return File.Exists(path) ? File.ReadAllText(path).CompressAndConvertToBase64() : null;
+                    return File.Exists(path) ? File.ReadAllText(path).SanitizeGradleContent().CompressAndConvertToBase64() : null;
                 }
                 catch (Exception e)
                 {

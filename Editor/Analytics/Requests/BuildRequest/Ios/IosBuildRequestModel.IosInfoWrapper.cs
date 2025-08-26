@@ -31,7 +31,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             {
                 try
                 {
-                    return File.Exists(path) ? File.ReadAllText(path).CompressAndConvertToBase64() : null;
+                    return File.Exists(path) ? File.ReadAllText(path).SanitizePodfileContent().CompressAndConvertToBase64() : null;
                 }
                 catch (Exception e)
                 {
