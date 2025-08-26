@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using UnityEngine;
+using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
@@ -38,6 +39,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
             {
                 try
                 {
+                    if (!AppodealSettings.Instance?.IsAnalyticsConfigFileTransmissionEnabled ?? false) return null;
+
                     string path = $"{Application.dataPath}/{AndroidPluginsDir}/{fileName}";
                     return File.Exists(path) ? File.ReadAllText(path).SanitizeGradleContent().CompressAndConvertToBase64() : null;
                 }

@@ -19,6 +19,7 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         [Header("Appodeal Analytics")]
         [SerializeField] private bool analyticsEnabled = true;
         [SerializeField] private bool analyticsLoggingEnabled;
+        [SerializeField] private bool analyticsConfigFileTransmissionEnabled = true;
 
         [Space(SpaceHeight)]
         [Header("AdMob App IDs")]
@@ -97,6 +98,12 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         {
             get => analyticsLoggingEnabled;
             set => analyticsLoggingEnabled = value;
+        }
+
+        public bool IsAnalyticsConfigFileTransmissionEnabled
+        {
+            get => analyticsConfigFileTransmissionEnabled;
+            set => analyticsConfigFileTransmissionEnabled = value;
         }
 
         public string AdMobAndroidAppId

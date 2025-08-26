@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using UnityEditor.Build.Reporting;
+using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
@@ -27,15 +28,17 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 podfileContent = LoadFileAsCompressedBase64(podfilePath);
             }
 
-            private string LoadFileAsCompressedBase64(string path)
+            private string LoadFileAsCompressedBase64(string filePath)
             {
                 try
                 {
-                    return File.Exists(path) ? File.ReadAllText(path).SanitizePodfileContent().CompressAndConvertToBase64() : null;
+                    if (!AppodealSettings.Instance?.IsAnalyticsConfigFileTransmissionEnabled ?? false) return null;
+
+                    return File.Exists(filePath) ? File.ReadAllText(filePath).SanitizePodfileContent().CompressAndConvertToBase64() : null;
                 }
                 catch (Exception e)
                 {
-                    Logger.Log($"Error loading Podfile from path '{path}': {e.Message}");
+                    Logger.Log($"Error loading Podfile from path '{filePath}': {e.Message}");
                     return null;
                 }
             }
