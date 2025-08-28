@@ -65,7 +65,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             StandardOptions, RegexTimeout);
 
         private static readonly Regex GenericCredentialPattern = new(
-            @"\b(username|password|user|pass)\s*[=:]\s*(?:(?<quotes>['""])(?<value>[^'"";\s\n]+)\k<quotes>|(?<value>[^'"";\s\n]+))",
+            @"\b(username|password|user|pass)\s*(?:[=:]|\s+)\s*(?:(?<quotes>['""])(?<value>[^'"";\s\n]+)\k<quotes>|(?<value>[^'"";\s\n]+))",
             StandardOptions, RegexTimeout);
 
         private static readonly Regex RepositoryCredentialPattern = new(
