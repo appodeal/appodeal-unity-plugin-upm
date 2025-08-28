@@ -55,14 +55,16 @@ namespace AppodealSample
         #region Appodeal Application Key
 
 #if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_IOS
-        private const string AppKey = "";
+        private const string DefaultAppKey = "";
 #elif UNITY_ANDROID
-        private const string AppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
+        private const string DefaultAppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
 #elif UNITY_IOS
-        private const string AppKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+        private const string DefaultAppKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
 #else
-	    private const string AppKey = "";
+        private const string DefaultAppKey = "";
 #endif
+
+        private static string AppKey => PlayerPrefs.GetString(AppodealConstants.AppKeyPlayerPrefsKey, DefaultAppKey);
 
         #endregion
 
@@ -236,6 +238,11 @@ namespace AppodealSample
                           (rewardedVideoInitializationToggle.isOn ? AppodealAdType.RewardedVideo : 0);
 
             Appodeal.Initialize(AppKey, adTypes);
+        }
+
+        public void ShowMediationDebugger()
+        {
+            Appodeal.ShowMediationDebugger();
         }
 
         public void ShowInterstitial()
@@ -444,8 +451,6 @@ namespace AppodealSample
             Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Mrec: {output}");
 
             pluginVersionText.text = $"Appodeal Unity Plugin v{ AppodealVersions.GetPluginVersion() } & SDK v{ Appodeal.GetNativeSDKVersion() }";
-
-            Appodeal.ShowMediationDebugger();
         }
 
         #endregion
