@@ -16,6 +16,12 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
         private const int SpaceHeight = 5;
 
+        [Header("Appodeal Analytics")]
+        [SerializeField] private bool analyticsEnabled = true;
+        [SerializeField] private bool analyticsLoggingEnabled;
+        [SerializeField] private bool analyticsConfigFileTransmissionEnabled = true;
+
+        [Space(SpaceHeight)]
         [Header("AdMob App IDs")]
         [SerializeField] private string adMobAndroidAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
         [SerializeField] private string adMobIosAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
@@ -80,6 +86,24 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
                 return _instance;
             }
+        }
+
+        public bool IsAnalyticsEnabled
+        {
+            get => analyticsEnabled;
+            set => analyticsEnabled = value;
+        }
+
+        public bool IsAnalyticsLoggingEnabled
+        {
+            get => analyticsLoggingEnabled;
+            set => analyticsLoggingEnabled = value;
+        }
+
+        public bool IsAnalyticsConfigFileTransmissionEnabled
+        {
+            get => analyticsConfigFileTransmissionEnabled;
+            set => analyticsConfigFileTransmissionEnabled = value;
         }
 
         public string AdMobAndroidAppId

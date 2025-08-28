@@ -1,9 +1,9 @@
 {
-    "name": "AppodealInc.Mediation.DependencyManager.Editor",
-    "rootNamespace": "AppodealInc.Mediation.DependencyManager.Editor",
+    "name": "AppodealInc.Mediation.Analytics.Editor",
+    "rootNamespace": "AppodealInc.Mediation.Analytics.Editor",
     "references": [
-        "AppodealInc.Mediation.Analytics.Editor",
-        "AppodealInc.Mediation.Utils.Editor"
+        "AppodealInc.Mediation.PluginSettings.Editor",
+        "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
         "Editor"

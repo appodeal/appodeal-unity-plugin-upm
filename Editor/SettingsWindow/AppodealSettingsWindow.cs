@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Utils.Editor;
 
@@ -17,6 +18,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
     {
         public static void ShowAppodealSettingsWindow()
         {
+            AnalyticsService.TrackClickEvent(ActionType.OpenAppodealSettings);
             GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 760), true, "Appodeal Settings");
         }
 
@@ -64,6 +66,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
 
         private void OnDestroy()
         {
+            AnalyticsService.TrackClickEvent(ActionType.CloseAppodealSettings);
             AppodealSettings.SaveAsync();
         }
 
