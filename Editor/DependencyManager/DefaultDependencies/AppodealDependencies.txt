@@ -185,7 +185,7 @@
 		<androidPackage id="max_pubmatic" spec="com.applovin.mediation:pubmatic-adapter:4.8.0.0" />
 		<androidPackage id="max_smaato" spec="com.applovin.mediation:smaato-adapter:22.7.2.1" />
 		<androidPackage id="max_unity_ads" spec="com.applovin.mediation:unityads-adapter:4.16.0.0" />
-		<androidPackage id="max_verve" spec="com.applovin.mediation:verve-adapter:3.6.2.0" />
+		<androidPackage id="max_verve" spec="com.applovin.mediation:verve-adapter:3.6.1.0" />
 		<androidPackage id="max_vungle" spec="com.applovin.mediation:vungle-adapter:7.5.0.3" />
 		<androidPackage id="max_yandex_ads" spec="com.applovin.mediation:yandex-adapter:7.15.0.0" />
 		<repositories>
