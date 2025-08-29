@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Analytics.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -53,6 +54,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             dm.Q<Button>(DmConstants.Uxml.Dm.GenerateButton).clicked += async () =>
             {
+                AnalyticsService.TrackClickEvent(ActionType.UpdateDependencies);
                 LogHelper.Log($"{DmConstants.Uxml.Dm.GenerateButton}() is clicked");
 
                 SaveSdkSelectionStates(rootElement);

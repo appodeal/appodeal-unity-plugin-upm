@@ -3,6 +3,7 @@
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.PluginRemover.Editor;
 using AppodealInc.Mediation.SettingsWindow.Editor;
 using AppodealInc.Mediation.Utils.Editor;
@@ -15,13 +16,14 @@ namespace AppodealInc.Mediation.TopBarMenu.Editor
         [MenuItem("Appodeal/Create Tarball", false, 0)]
         public static void CreateTarball()
         {
-            Client.Pack($"{Application.dataPath}/appodeal-unity-plugin-upm", "/Users/fdn/Downloads/Appodeal/");
+            Client.Pack($"{Application.dataPath}/com.appodeal.mediation", "/Users/fdn/Downloads/Appodeal/");
         }
 #endif
 
         [MenuItem("Appodeal/Plugin Documentation", false, 1)]
         public static void OpenDocumentation()
         {
+            AnalyticsService.TrackClickEvent(ActionType.OpenDocumentation);
             Application.OpenURL("https://docs.appodeal.com/unity/get-started");
         }
 

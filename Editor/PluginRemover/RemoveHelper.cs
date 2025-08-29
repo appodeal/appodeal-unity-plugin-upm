@@ -9,6 +9,7 @@ using System.Xml;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.PluginRemover.Editor
@@ -38,6 +39,8 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
                 "Do you want to keep the settings for further use?",
                 "Yes",
                 "No");
+
+            AnalyticsService.TrackClickEvent(ActionType.RemovePlugin, true);
 
             var items = ReadXML();
             foreach (var item in items)
