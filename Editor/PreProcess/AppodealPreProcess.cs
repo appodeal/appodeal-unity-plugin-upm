@@ -111,7 +111,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                     androidManifest.RemoveAdmobAppId();
                 }
                 Debug.LogError(
-                    $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
+                    "AdMob App ID is not set via the 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
             }
             else
@@ -119,7 +119,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
                 {
                     Debug.LogError(
-                        "Incorrect value. The app may crash on startup." +
+                        $"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                         "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                 }
 

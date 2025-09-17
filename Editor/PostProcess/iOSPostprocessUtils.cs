@@ -1,4 +1,4 @@
-﻿#if UNITY_IOS
+#if UNITY_IOS
 // ReSharper Disable CheckNamespace
 
 using System;
@@ -117,14 +117,14 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (String.IsNullOrEmpty(admobAppId))
             {
-                Debug.LogError("Admob App ID is not set via 'Appodeal/Appodeal Settings' tool.\nThe app may crash on startup!");
+                Debug.LogError("AdMob App ID is not set via the 'Appodeal/Appodeal Settings' tool.\nThe app may crash on startup!");
                 return;
             }
 
             if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
             {
-                Debug.LogError("Incorrect value. The app may crash on startup." +
-                               "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
+                Debug.LogError($"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
+                               "\nPlease enter a valid AdMob App ID via the 'Appodeal/Appodeal Settings' tool." +
                                "\nAlternatively, change the value manually in Info.plist file.");
             }
 
