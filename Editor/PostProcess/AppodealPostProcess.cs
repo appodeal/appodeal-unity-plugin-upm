@@ -1,5 +1,4 @@
-﻿#if UNITY_IOS
-// ReSharper Disable CheckNamespace
+﻿// ReSharper Disable CheckNamespace
 
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -18,5 +17,3 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         }
     }
 }
-
-#endif
