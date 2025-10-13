@@ -27,12 +27,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public const string AndroidLibDir = AppodealEditorConstants.AppodealAndroidLibDir;
 
-#if APPODEAL_DEV
-        private const string ProjectRootDir = "Assets/appodeal-unity-plugin-upm";
-        private const string DmRootDir = ProjectRootDir + "/Editor/DependencyManager";
-#else
         private const string DmRootDir = AppodealEditorConstants.PackageDir + "/Editor/DependencyManager";
-#endif
 
         private const string ResourcesDir = DmRootDir + "/Resources";
         private const string UITemplatesDir = ResourcesDir + "/UITemplates";
