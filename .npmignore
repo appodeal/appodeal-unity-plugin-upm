@@ -1,0 +1,8 @@
+# VCS
+
+.gitattributes
+/.github
+
+# CI/CD
+
+/.ci
