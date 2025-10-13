@@ -1,4 +1,4 @@
-﻿// ReSharper Disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 
 using System;
 using System.IO;
