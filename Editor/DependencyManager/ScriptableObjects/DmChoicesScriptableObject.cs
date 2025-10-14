@@ -29,11 +29,17 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             {
                 if (_instance) return _instance;
 
-                Directory.CreateDirectory(DmConstants.ScriptableObjectsDir);
-                _instance = AssetDatabase.LoadAssetAtPath<DmChoicesScriptableObject>(DmConstants.DmChoicesSoFilePath);
+                _instance = Resources.Load<DmChoicesScriptableObject>(DmConstants.DmChoicesResourcePath);
 
                 if (_instance) return _instance;
 
+                if (File.Exists(DmConstants.DmChoicesSoFilePath))
+                {
+                    Debug.LogError($"[Appodeal] Failed to load existing asset from '{DmConstants.DmChoicesSoFilePath}'");
+                    return null;
+                }
+
+                Directory.CreateDirectory(DmConstants.EditorResourcesDir);
                 _instance = CreateInstance<DmChoicesScriptableObject>();
                 AssetDatabase.CreateAsset(_instance, DmConstants.DmChoicesSoFilePath);
 
