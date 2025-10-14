@@ -1,4 +1,4 @@
-﻿// ReSharper Disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 
 namespace AppodealInc.Mediation.Utils.Editor
 {
