@@ -60,6 +60,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         public void OnPreprocessBuild(BuildReport report)
         {
             if (report.summary.platform.ToString() != "Android") return;
+            if (AppodealSettings.Instance == null) return;
 
             var manifestPath = Path.Combine(Application.dataPath, AppodealAndroidLibDirPath, ManifestTemplateName);
 

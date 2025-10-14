@@ -13,6 +13,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             LogHelper.Log($"{nameof(OnActivate)}() method is called");
 
+            if (DmChoicesScriptableObject.Instance == null)
+            {
+                LogHelper.LogError("DM Settings window cannot be displayed as its data asset failed to load.");
+                return;
+            }
+
             if (!DmUIElements.IsSettingsAssetLoadable())
             {
                 LogHelper.LogError("DM Settings window cannot be displayed as its visual asset failed to load.");

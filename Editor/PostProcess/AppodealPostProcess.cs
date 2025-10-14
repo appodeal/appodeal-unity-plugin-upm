@@ -3,6 +3,7 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
@@ -12,6 +13,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
             if (target.ToString() != "iOS") return;
+            if (AppodealSettings.Instance == null) return;
 
             IosPostprocessUtils.PrepareProject(path);
         }

@@ -23,6 +23,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             if (deletedAssets.Any(asset => asset.Contains($"Packages/{DmConstants.AppodealPackageName}"))) return;
             if (movedAssets.Any(asset => asset.Contains(DmConstants.DmChoicesFileName))) return;
 
+            if (DmChoicesScriptableObject.Instance == null) return;
+
             if (!DmChoicesScriptableObject.Instance.CheckPeriodicallyForPluginUpdates
                 && !DmChoicesScriptableObject.Instance.CheckPeriodicallyForAdapterUpdates) return;
 

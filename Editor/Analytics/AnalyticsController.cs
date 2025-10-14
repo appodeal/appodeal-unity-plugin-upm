@@ -40,7 +40,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
 
         private static void Initialize()
         {
-            if (!AppodealSettings.Instance.IsAnalyticsEnabled) return;
+            if (!(AppodealSettings.Instance?.IsAnalyticsEnabled ?? false)) return;
 
             // We should subscribe to the quitting event every time the scripts are recompiled
             EditorApplication.quitting -= OnEditorQuitting;

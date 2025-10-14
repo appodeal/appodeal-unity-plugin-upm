@@ -7,10 +7,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class LogHelper
     {
-        private static bool IsVerbose
-        {
-            get => DmChoicesScriptableObject.Instance.EnableVerboseLogging;
-        }
+        private static bool IsVerbose => DmChoicesScriptableObject.Instance?.EnableVerboseLogging ?? false;
 
         public static void Log(string message)
         {

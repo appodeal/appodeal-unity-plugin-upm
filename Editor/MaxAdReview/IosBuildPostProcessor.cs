@@ -21,6 +21,8 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
             if (target != BuildTarget.iOS) return;
+            if (AppodealSettings.Instance == null) return;
+
             SetupMaxAdReview(path);
         }
 
