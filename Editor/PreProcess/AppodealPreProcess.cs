@@ -26,7 +26,6 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
 
         //Paths without leading Assets folder
-        public const string AppodealTemplatesPath = "Appodeal/InternalResources";
 
         private const string AndroidPluginsPath = "Plugins/Android";
         private const string GradleTemplateName = "mainTemplate.gradle";
