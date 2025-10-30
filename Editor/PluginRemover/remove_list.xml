@@ -63,8 +63,14 @@
         <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
-        <name>Appodeal Samples</name>
+        <name>Appodeal Samples (Old)</name>
         <path>Samples/Appodeal</path>
+        <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+    </item>
+    <item>
+        <name>Appodeal Samples (New)</name>
+        <path>Samples/Appodeal Mediation</path>
         <check_if_empty>false</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
     </item>
