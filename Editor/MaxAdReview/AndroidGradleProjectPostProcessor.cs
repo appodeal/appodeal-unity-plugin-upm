@@ -30,6 +30,8 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
         private void SetupMaxAdReview(string path)
         {
+            if (AppodealSettings.Instance == null) return;
+
             var action = AppodealSettings.Instance.IsMaxAdReviewEnabled ? PatchAction.Add : PatchAction.Remove;
 
             if (action == PatchAction.Add && String.IsNullOrWhiteSpace(AppodealSettings.Instance.MaxSdkKey))

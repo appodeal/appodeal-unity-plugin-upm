@@ -21,6 +21,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private static async void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
         {
             if (deletedAssets.Any(asset => asset.Contains($"Packages/{DmConstants.AppodealPackageName}"))) return;
+            if (movedAssets.Any(asset => asset.Contains(DmConstants.DmChoicesFileName))) return;
+
+            if (DmChoicesScriptableObject.Instance == null) return;
 
             if (!DmChoicesScriptableObject.Instance.CheckPeriodicallyForPluginUpdates
                 && !DmChoicesScriptableObject.Instance.CheckPeriodicallyForAdapterUpdates) return;

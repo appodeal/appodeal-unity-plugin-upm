@@ -2,21 +2,27 @@
 <items>
     <item>
         <name>Appodeal Settings</name>
-        <path>Appodeal/Editor/InternalResources</path>
+        <path>Appodeal/Editor/Resources/Appodeal</path>
         <filter>(AppodealSettings\.asset)</filter>
         <is_confirmation_required>false</is_confirmation_required>
         <perform_only_if_total_remove>true</perform_only_if_total_remove>
     </item>
     <item>
         <name>Appodeal Dependency Manager Choices</name>
-        <path>Appodeal/Editor/InternalResources</path>
+        <path>Appodeal/Editor/Resources/Appodeal</path>
         <filter>(AppodealDmChoices\.asset)</filter>
         <is_confirmation_required>false</is_confirmation_required>
         <perform_only_if_total_remove>true</perform_only_if_total_remove>
     </item>
     <item>
-        <name>Internal Resources Directory</name>
-        <path>Appodeal/Editor/InternalResources</path>
+        <name>Editor Resources Directory</name>
+        <path>Appodeal/Editor/Resources/Appodeal</path>
+        <check_if_empty>true</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+    </item>
+    <item>
+        <name>Editor Resources Root Directory</name>
+        <path>Appodeal/Editor/Resources</path>
         <check_if_empty>true</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
     </item>
@@ -57,8 +63,14 @@
         <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
-        <name>Appodeal Samples</name>
+        <name>Appodeal Samples (Old)</name>
         <path>Samples/Appodeal</path>
+        <check_if_empty>false</check_if_empty>
+        <is_confirmation_required>false</is_confirmation_required>
+    </item>
+    <item>
+        <name>Appodeal Samples (New)</name>
+        <path>Samples/Appodeal Mediation</path>
         <check_if_empty>false</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>
     </item>

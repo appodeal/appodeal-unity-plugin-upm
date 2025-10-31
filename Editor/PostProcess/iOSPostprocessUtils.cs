@@ -25,6 +25,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
             if (buildTarget.ToString() != "iOS") return;
+            if (AppodealSettings.Instance == null) return;
 
             string path = Path.Combine(buildPath, "Info.plist");
 

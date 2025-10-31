@@ -41,6 +41,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 pluginVersion = AnalyticsContextProvider.PluginVersion;
 
                 var settings = AppodealSettings.Instance;
+                if (settings == null) return;
 
                 adMobIosAppId = settings.AdMobIosAppId;
                 adMobAndroidAppId = settings.AdMobAndroidAppId;
