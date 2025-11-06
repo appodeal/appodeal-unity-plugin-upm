@@ -5,14 +5,17 @@
         "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [
-        "Android"
+        "Android",
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_ANDROID || APPODEAL_DEV"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

@@ -20,6 +20,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             AnalyticsService.TrackClickEvent(ActionType.OpenDependencyManager);
             LogHelper.Log($"{nameof(OnActivate)}() method is called");
 
+            if (DmChoicesScriptableObject.Instance == null)
+            {
+                LogHelper.LogError("DM window cannot be displayed as its data asset failed to load.");
+                return;
+            }
+
             if (!DmUIElements.AreAllDmAssetsLoadable())
             {
                 LogHelper.LogError("DM window cannot be displayed as some of the visual assets failed to load.");

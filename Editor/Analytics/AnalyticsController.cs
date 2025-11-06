@@ -33,10 +33,14 @@ namespace AppodealInc.Mediation.Analytics.Editor
 
         public int callbackOrder => 0;
 
-        // Triggered every time the scripts are recompiled thanks to the InitializeOnLoad attribute
-        static AnalyticsController()
+        // Triggered every time the scripts are recompiled thanks to the `[InitializeOnLoad]` attribute on the class.
+        // We use `delayCall` because the static constructor runs before the AssetDatabase is ready during asset importing
+        // Without this workaround, `AppodealSettings.Instance` cannot load the existing asset, preventing access to settings needed for initialization
+        static AnalyticsController() => EditorApplication.delayCall += Initialize;
+
+        private static void Initialize()
         {
-            if (!AppodealSettings.Instance.IsAnalyticsEnabled) return;
+            if (!(AppodealSettings.Instance?.IsAnalyticsEnabled ?? false)) return;
 
             // We should subscribe to the quitting event every time the scripts are recompiled
             EditorApplication.quitting -= OnEditorQuitting;

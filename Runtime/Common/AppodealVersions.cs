@@ -1,4 +1,4 @@
-// ReSharper Disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace AppodealStack.Monetization.Common
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class AppodealVersions
     {
-        private const string AppodealPluginVersion = "3.10.0";
+        private const string AppodealPluginVersion = "3.11.0";
 
         /// <summary>
         /// Gets the current version of the Appodeal Unity Plugin.

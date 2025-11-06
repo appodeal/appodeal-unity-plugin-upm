@@ -1,4 +1,4 @@
-﻿// ReSharper Disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 
 using System;
 using System.Collections.Generic;
@@ -19,12 +19,17 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
         public static void ShowAppodealSettingsWindow()
         {
             AnalyticsService.TrackClickEvent(ActionType.OpenAppodealSettings);
+
+            if (AppodealSettings.Instance == null) return;
+
             GetWindowWithRect(typeof(AppodealSettingsWindow), new Rect(0, 0, 650, 760), true, "Appodeal Settings");
         }
 
         private async void OnEnable()
         {
             var ids = await GetSkAdNetworkIds();
+
+            if (AppodealSettings.Instance == null) return;
 
             if (ids?.Count > 0 && !ids.SequenceEqual(AppodealSettings.Instance.IosSkAdNetworkItemsList))
             {
@@ -72,6 +77,8 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
 
         private void OnGUI()
         {
+            if (AppodealSettings.Instance == null) return;
+
             LabelHeaderField("Mediation Settings");
 
             #region Admob App Id Setting

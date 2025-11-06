@@ -1,4 +1,4 @@
-// ReSharper Disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -14,9 +14,6 @@ namespace AppodealInc.Mediation.AssetExtractors.Editor
         [SuppressMessage("ReSharper", "Unity.IncorrectMethodSignature")]
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
         {
-#if APPODEAL_DEV
-            return;
-#endif
             if (deletedAssets.Any(asset => asset.Contains(AppodealEditorConstants.PackageDir))) return;
 
             if (AndroidLibraryInstaller.InstallAndroidLibrary() | AppodealAdaptersInstaller.InstallAdapters())

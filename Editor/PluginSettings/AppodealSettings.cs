@@ -1,4 +1,4 @@
-// ReSharper Disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,6 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 {
     public class AppodealSettings : ScriptableObject
     {
-        private const string AppodealSettingsExportPath = "Assets/Appodeal/Editor/InternalResources";
-        private const string AppodealSettingsFileName = "AppodealSettings.asset";
-
         private const int SpaceHeight = 5;
 
         [Header("Appodeal Analytics")]
@@ -69,20 +66,26 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         [SerializeField] private string maxSdkKey;
 
         private static AppodealSettings _instance;
+
         public static AppodealSettings Instance
         {
             get
             {
                 if (_instance) return _instance;
 
-                Directory.CreateDirectory(AppodealSettingsExportPath);
-                string settingsFilePath = $"{AppodealSettingsExportPath}/{AppodealSettingsFileName}";
-                _instance = AssetDatabase.LoadAssetAtPath<AppodealSettings>(settingsFilePath);
+                _instance = Resources.Load<AppodealSettings>(AppodealEditorConstants.AppodealSettingsResourcePath);
 
                 if (_instance) return _instance;
 
+                if (File.Exists(AppodealEditorConstants.AppodealSettingsFilePath))
+                {
+                    Debug.LogError($"[Appodeal] Failed to load existing asset from '{AppodealEditorConstants.AppodealSettingsFilePath}'");
+                    return null;
+                }
+
+                Directory.CreateDirectory(AppodealEditorConstants.EditorResourcesDir);
                 _instance = CreateInstance<AppodealSettings>();
-                AssetDatabase.CreateAsset(_instance, settingsFilePath);
+                AssetDatabase.CreateAsset(_instance, AppodealEditorConstants.AppodealSettingsFilePath);
 
                 return _instance;
             }
@@ -255,6 +258,7 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
         public static void SaveAsync()
         {
+            if (_instance == null) return;
             EditorUtility.SetDirty(_instance);
             AssetDatabase.SaveAssetIfDirty(_instance);
         }

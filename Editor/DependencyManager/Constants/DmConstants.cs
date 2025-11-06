@@ -22,17 +22,15 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         public const string DependenciesDir = AppodealEditorConstants.DependenciesDir;
         public const string DependenciesFilePath = AppodealEditorConstants.DependenciesFilePath;
 
-        public const string ScriptableObjectsDir = AppodealEditorConstants.InternalResourcesDir;
-        public const string DmChoicesSoFilePath = ScriptableObjectsDir + "/AppodealDmChoices.asset";
+        private const string DmChoicesResourceName = "AppodealDmChoices";
+        public const string DmChoicesFileName = DmChoicesResourceName + ".asset";
+        public const string EditorResourcesDir = AppodealEditorConstants.EditorResourcesDir;
+        public const string DmChoicesSoFilePath = EditorResourcesDir + "/" + DmChoicesFileName;
+        public const string DmChoicesResourcePath = AppodealEditorConstants.ResourcesSubPath + "/" + DmChoicesResourceName;
 
         public const string AndroidLibDir = AppodealEditorConstants.AppodealAndroidLibDir;
 
-#if APPODEAL_DEV
-        private const string ProjectRootDir = "Assets/appodeal-unity-plugin-upm";
-        private const string DmRootDir = ProjectRootDir + "/Editor/DependencyManager";
-#else
         private const string DmRootDir = AppodealEditorConstants.PackageDir + "/Editor/DependencyManager";
-#endif
 
         private const string ResourcesDir = DmRootDir + "/Resources";
         private const string UITemplatesDir = ResourcesDir + "/UITemplates";

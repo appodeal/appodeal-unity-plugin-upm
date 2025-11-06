@@ -1,4 +1,4 @@
-// ReSharper Disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -26,7 +26,6 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         private const string GradleDefaultTemplatePath = "PlaybackEngines/AndroidPlayer/Tools/GradleTemplates";
 
         //Paths without leading Assets folder
-        public const string AppodealTemplatesPath = "Appodeal/InternalResources";
 
         private const string AndroidPluginsPath = "Plugins/Android";
         private const string GradleTemplateName = "mainTemplate.gradle";
@@ -60,6 +59,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         public void OnPreprocessBuild(BuildReport report)
         {
             if (report.summary.platform.ToString() != "Android") return;
+            if (AppodealSettings.Instance == null) return;
 
             var manifestPath = Path.Combine(Application.dataPath, AppodealAndroidLibDirPath, ManifestTemplateName);
 
