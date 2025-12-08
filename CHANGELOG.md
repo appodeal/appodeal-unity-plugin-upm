@@ -4,7 +4,13 @@
 
 *The full changelog can always be obtained at [Appodeal website](https://docs.appodeal.com/unity/changelog).*
 
-### 3.11.0 (November 6, 2025)
+### 3.12.0 (December 08, 2025)
+
++ Updated Appodeal Android SDK to v3.12.0
++ Updated Appodeal iOS SDK to v3.12.0
++ Worked around Unity AssetDatabase issue on iOS CI builds
+
+### 3.11.0 (November 06, 2025)
 
 + Updated Appodeal Android SDK to v3.11.0
 + Updated Appodeal iOS SDK to v3.11.0
