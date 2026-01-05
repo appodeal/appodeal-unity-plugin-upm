@@ -349,6 +349,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             if (sender is ISdkCardController { HasAnyVersions: false }) return;
 
             _selectionManager.SetMode(SdkSelectionMode.Custom, notify: false);
+            _view.SetSelectionMode(SdkSelectionMode.Custom);
+
             HandleCardStateChange(sender);
         }
 
