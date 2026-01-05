@@ -1,5 +1,8 @@
-#if APPODEAL_DEV_TESTS
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("AppodealInc.Mediation.AssetExtractors.Editor")]
+[assembly: InternalsVisibleTo("AppodealInc.Mediation.TopBarMenu.Editor")]
+
+#if APPODEAL_DEV_TESTS
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.DependencyManager.Editor.Tests")]
 #endif

@@ -1,24 +1,48 @@
 // ReSharper disable CheckNamespace
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.AssetExtractors.Editor
 {
     internal class ApdAssetPostprocessor : AssetPostprocessor
     {
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        [SuppressMessage("ReSharper", "Unity.IncorrectMethodSignature")]
-        private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
-        {
-            if (deletedAssets.Any(asset => asset.Contains(AppodealEditorConstants.PackageDir))) return;
+        private static readonly object InstallLock = new();
+        private static bool _isInstalling;
 
-            if (AndroidLibraryInstaller.InstallAndroidLibrary() | AppodealAdaptersInstaller.InstallAdapters())
+        private static async void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+        {
+            try
             {
-                AssetDatabase.Refresh();
+                if (deletedAssets.Any(asset => asset.Contains(AppodealEditorConstants.PackageDir))) return;
+
+                lock (InstallLock)
+                {
+                    if (_isInstalling) return;
+                    _isInstalling = true;
+                }
+
+                bool adaptersInstalled = await AppodealAdaptersInstaller.InstallAdapters();
+                bool androidLibInstalled = AndroidLibraryInstaller.InstallAndroidLibrary(forceReinstall: adaptersInstalled);
+
+                if (androidLibInstalled || adaptersInstalled)
+                {
+                    AssetDatabase.Refresh();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+            finally
+            {
+                lock (InstallLock)
+                {
+                    _isInstalling = false;
+                }
             }
         }
     }

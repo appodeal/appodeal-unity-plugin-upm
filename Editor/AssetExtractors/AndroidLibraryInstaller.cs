@@ -9,14 +9,18 @@ namespace AppodealInc.Mediation.AssetExtractors.Editor
 {
     internal static class AndroidLibraryInstaller
     {
-        public static bool InstallAndroidLibrary()
+        public static bool InstallAndroidLibrary(bool forceReinstall = false)
         {
-            if (Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir)) return false;
+            if (Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir))
+            {
+                if (!forceReinstall) return false;
+                FileUtil.DeleteFileOrDirectory(AppodealEditorConstants.AppodealAndroidLibDir);
+            }
 
             string source = $"{AppodealEditorConstants.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
             if (!Directory.Exists(source))
             {
-                Debug.LogError($"[Appodeal] Directory was not found: '{source}'. Please, contact support@apppodeal.com about this issue.");
+                Debug.LogError($"[Appodeal] Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
                 return false;
             }
 

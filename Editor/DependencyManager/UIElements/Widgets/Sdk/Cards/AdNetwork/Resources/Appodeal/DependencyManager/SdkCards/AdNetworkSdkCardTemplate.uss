@@ -1,0 +1,72 @@
+.ad-network-sdk-card-body {
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+
+.ad-network-sdk-card-body__ad-types-container {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    margin-bottom: 4px;
+}
+
+.ad-network-sdk-card-body__ad-type-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 32px;
+    margin-right: 6px;
+}
+
+.ad-network-sdk-card-body__banner-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/banner');
+}
+
+.ad-network-sdk-card-body__mrec-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/mrec');
+}
+
+.ad-network-sdk-card-body__interstitial-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/interstitial');
+}
+
+.ad-network-sdk-card-body__rewarded-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/rewarded');
+}
+
+.ad-network-sdk-card-body__mediations {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+}
+
+.ad-network-sdk-card-body__mediations-container {
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    max-width: 50%;
+}
+
+.ad-network-sdk-card-body__mediations-container--reverse {
+    flex-direction: row-reverse;
+}
+
+.ad-network-sdk-card-body__mediation-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+    background-image: resource('Appodeal/DependencyManager/SdkCatalog/Mediations/Appodeal/appodeal');
+}
+
+.ad-network-sdk-card-body__mediations-container--reverse .ad-network-sdk-card-body__mediation-icon {
+    margin-right: 0;
+    margin-left: 4px;
+}

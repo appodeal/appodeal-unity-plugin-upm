@@ -2,24 +2,32 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using AppodealInc.Mediation.DependencyManager.Editor;
 using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.AssetExtractors.Editor
 {
     internal static class AppodealAdaptersInstaller
     {
-        public static bool InstallAdapters()
+        internal static async Task<bool> InstallAdapters()
         {
-            if (File.Exists(AppodealEditorConstants.DependenciesFilePath)) return false;
-
             try
             {
+                if (File.Exists(AppodealEditorConstants.DependenciesFilePath))
+                {
+                    if (AppodealUnityUtils.IsDevModeEnabled) return false;
+
+                    bool versionMatches = await VersionComparer.IsLocalDependenciesVersionMatchingPackageVersionAsync();
+                    if (versionMatches) return false;
+                }
+
                 var depsFileInfo = new FileInfo(AppodealEditorConstants.BundledDependenciesFilePath);
                 if (!depsFileInfo.Exists)
                 {
-                    Debug.LogError($"[Appodeal] File was not found: '{depsFileInfo.FullName}'. Please, contact support@apppodeal.com about this issue.");
+                    Debug.LogError($"[Appodeal] File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
                     return false;
                 }
 

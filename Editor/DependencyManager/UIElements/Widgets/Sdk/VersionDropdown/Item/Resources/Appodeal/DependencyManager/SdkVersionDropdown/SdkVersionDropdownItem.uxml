@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SdkVersionDropdownItem.uss?fileID=7433441132597879392&amp;guid=f618ae27f1e7143f997ae9aef23fd51f&amp;type=3#SdkVersionDropdownItem" />
+    <ui:VisualElement name="DropdownItem" class="dropdown-item">
+        <ui:VisualElement name="LeftGroup" class="dropdown-item__left-group">
+            <ui:VisualElement name="SelectionToggle" class="dropdown-item__selection-toggle" />
+            <ui:Label name="VersionLabel" text="99.99.99" class="dropdown-item__version-label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BadgesContainer" class="dropdown-item__badges-container">
+            <ui:VisualElement tooltip="New" name="BadgeNew" class="dropdown-item__badge dropdown-item__badge--new" />
+            <ui:VisualElement tooltip="Recommended" name="BadgeRecommended" class="dropdown-item__badge dropdown-item__badge--recommended" />
+            <ui:VisualElement tooltip="Deprecated" name="BadgeDeprecated" class="dropdown-item__badge dropdown-item__badge--deprecated" />
+            <ui:VisualElement tooltip="Unstable" name="BadgeUnstable" class="dropdown-item__badge dropdown-item__badge--unstable" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

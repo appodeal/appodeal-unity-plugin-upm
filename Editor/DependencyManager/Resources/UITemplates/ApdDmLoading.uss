@@ -1,8 +1,0 @@
-.loading-label {
-    -unity-text-align: middle-center;
-    -unity-font-style: bold-and-italic;
-    white-space: nowrap;
-    top: 10px;
-    overflow: hidden;
-    font-size: 20px;
-}
