@@ -7,7 +7,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         private const string CommonStyleSheetPath = "Appodeal/DependencyManager/SdkCards/SdkCardsCommon";
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public new class UxmlFactory : UxmlFactory<SdkCardShell> { }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public SdkCardShellView View { get; }
 

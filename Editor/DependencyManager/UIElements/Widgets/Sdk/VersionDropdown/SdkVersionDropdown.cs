@@ -7,7 +7,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class SdkVersionDropdown : VisualElement, IDisposable
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         public new class UxmlFactory : UxmlFactory<SdkVersionDropdown> { }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         private readonly DropdownButtonController _buttonController;
         private readonly DropdownPopupController _popupController;
