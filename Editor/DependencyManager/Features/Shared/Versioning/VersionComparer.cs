@@ -23,6 +23,11 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
 
             var localDeps = depsReadOutcome.Value;
+            if (String.IsNullOrWhiteSpace(localDeps.PluginVersion))
+            {
+                LogHelper.Log("Local dependencies file has no plugin version specified");
+                return false;
+            }
 
             var packageVersionLookupOutcome = await PackageVersionProvider.TryLookupVersionAsync();
             if (!packageVersionLookupOutcome.IsSuccess)
