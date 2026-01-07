@@ -39,7 +39,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 {
                     EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, $"Validation failed: {validationOutcome.Failure.Message}", "OK");
                 }
-                return true;
+                return false;
             }
 
             var validationResponse = validationOutcome.Value;

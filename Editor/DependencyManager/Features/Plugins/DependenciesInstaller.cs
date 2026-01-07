@@ -4,15 +4,13 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
-using UnityEngine;
-using AppodealInc.Mediation.DependencyManager.Editor;
 using AppodealInc.Mediation.Utils.Editor;
 
-namespace AppodealInc.Mediation.AssetExtractors.Editor
+namespace AppodealInc.Mediation.DependencyManager.Editor
 {
-    internal static class AppodealAdaptersInstaller
+    internal static class DependenciesInstaller
     {
-        internal static async Task<bool> InstallAdapters()
+        internal static async Task<bool> EnsureDependenciesXmlFileAsync()
         {
             try
             {
@@ -27,7 +25,7 @@ namespace AppodealInc.Mediation.AssetExtractors.Editor
                 var depsFileInfo = new FileInfo(AppodealEditorConstants.BundledDependenciesFilePath);
                 if (!depsFileInfo.Exists)
                 {
-                    Debug.LogError($"[Appodeal] File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
+                    LogHelper.LogError($"File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
                     return false;
                 }
 
@@ -36,9 +34,9 @@ namespace AppodealInc.Mediation.AssetExtractors.Editor
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.LogException(e);
+                LogHelper.LogException(ex);
                 return false;
             }
         }

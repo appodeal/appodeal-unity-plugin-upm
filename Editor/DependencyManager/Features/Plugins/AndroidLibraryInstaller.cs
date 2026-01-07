@@ -2,14 +2,13 @@
 
 using System.IO;
 using UnityEditor;
-using UnityEngine;
 using AppodealInc.Mediation.Utils.Editor;
 
-namespace AppodealInc.Mediation.AssetExtractors.Editor
+namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class AndroidLibraryInstaller
     {
-        public static bool InstallAndroidLibrary(bool forceReinstall = false)
+        public static bool EnsureAndroidLibraryDirectory(bool forceReinstall = false)
         {
             if (Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir))
             {
@@ -20,7 +19,7 @@ namespace AppodealInc.Mediation.AssetExtractors.Editor
             string source = $"{AppodealEditorConstants.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
             if (!Directory.Exists(source))
             {
-                Debug.LogError($"[Appodeal] Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
+                LogHelper.LogError($"Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
                 return false;
             }
 

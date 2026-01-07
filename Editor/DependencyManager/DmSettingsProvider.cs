@@ -82,7 +82,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogError($"Dependency Manager window initialization failed with exception: {ex.Message}");
+                LogHelper.LogError("Dependency Manager window initialization failed");
                 LogHelper.LogException(ex);
 
                 if (!_cts?.Token.IsCancellationRequested ?? false)
