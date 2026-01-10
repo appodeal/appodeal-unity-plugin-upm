@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="./SdkTooltipPopup.uss?fileID=7433441132597879392&amp;guid=544c1b12d92da492ea548acee3ea0e6e&amp;type=3#SdkTooltip" />
+    <Style src="./SdkTooltipPopup.uss?fileID=7433441132597879392&amp;guid=544c1b12d92da492ea548acee3ea0e6e&amp;type=3#SdkTooltipPopup" />
     <ui:VisualElement name="SdkTooltip" class="sdk-tooltip">
         <ui:VisualElement name="Background" class="sdk-tooltip__background" />
         <ui:VisualElement name="TopRow" class="sdk-tooltip__top-row">
