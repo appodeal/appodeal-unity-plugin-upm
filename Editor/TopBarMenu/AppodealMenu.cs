@@ -18,7 +18,7 @@ namespace AppodealInc.Mediation.TopBarMenu.Editor
         [MenuItem("Appodeal/Create Tarball", false, 0)]
         public static void CreateTarball()
         {
-            Client.Pack($"{Application.dataPath}/com.appodeal.mediation", "/Users/fdn/Downloads/Appodeal/");
+            Client.Pack("Packages/com.appodeal.mediation", "~/Downloads/Appodeal/");
         }
 #endif
 

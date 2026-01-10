@@ -40,7 +40,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (localDeps.PluginVersion == currentPluginVersion) return true;
 
-            LogHelper.LogWarning($"Plugin version mismatch: config has '{localDeps.PluginVersion}', current plugin is '{currentPluginVersion}'");
+            LogHelper.Log($"Plugin version mismatch: config has '{localDeps.PluginVersion}', current plugin is '{currentPluginVersion}'");
             return false;
         }
 
