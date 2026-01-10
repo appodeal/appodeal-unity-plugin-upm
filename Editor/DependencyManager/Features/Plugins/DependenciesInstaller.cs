@@ -16,8 +16,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             {
                 if (File.Exists(AppodealEditorConstants.DependenciesFilePath))
                 {
-                    if (AppodealUnityUtils.IsDevModeEnabled) return false;
-
                     bool versionMatches = await VersionComparer.IsLocalDependenciesVersionMatchingPackageVersionAsync();
                     if (versionMatches) return false;
                 }

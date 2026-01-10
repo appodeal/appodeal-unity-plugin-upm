@@ -8,6 +8,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             public const string PackageName = AppodealEditorConstants.PackageName;
             public const string PackageGitUrl = AppodealEditorConstants.GitRepoAddress;
+            public const string PostUpdatePendingKey = "ApdDmPostUpdatePending";
             public const string UpdateCheckPerformedKey = "ApdDmAutoCheckForUpdatesPerformed";
         }
     }

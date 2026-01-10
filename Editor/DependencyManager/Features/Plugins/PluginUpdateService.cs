@@ -11,6 +11,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         public static async Task<bool> CheckAndUpdateAsync()
         {
+            if (!IsPluginAutoUpdateSupported()) return false;
+
             var pluginsFetchOutcome = await DataLoader.FetchAvailablePluginsAsync();
             if (!pluginsFetchOutcome.IsSuccess)
             {
@@ -23,10 +25,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         private static async Task<bool> TryUpdatePluginAsync(List<PluginDto> availablePlugins)
         {
-#if !UNITY_2022_1_OR_NEWER && !APPODEAL_DEV
-            return false;
-#endif
-
             if (!DmChoicesScriptableObject.Instance.CheckPeriodicallyForPluginUpdates) return false;
 
             var packageVersionLookupOutcome = await PackageVersionProvider.TryLookupVersionAsync();
@@ -42,6 +40,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             AnalyticsService.TrackClickEvent(ActionType.UpdatePlugin);
 
+            // string homePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
+            // var request = Client.Add($"file:{homePath}/Downloads/Appodeal/com.appodeal.mediation-{latestPluginSelectOutcome.Value.version}.tgz");
             var request = Client.Add($"{DmConstants.Plugin.PackageGitUrl}#v{latestPluginSelectOutcome.Value.version}");
             while (!request.IsCompleted) await Task.Yield();
             if (request.Status == StatusCode.Failure)
@@ -50,9 +50,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 return false;
             }
 
+            SessionState.SetBool(DmConstants.Plugin.PostUpdatePendingKey, true);
+
             string message = $"{LogHelper.Colorize(Color.green, "Successfully")} updated Appodeal Unity Plugin to v{latestPluginSelectOutcome.Value.version}";
             LogHelper.Log(message);
 
+            EditorUtility.RequestScriptReload();
             return true;
         }
 
@@ -61,6 +64,16 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             bool shouldUpdate = EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, message, "Update", "Cancel");
             LogHelper.Log($"{nameof(ShowUpdateDialog)}({nameof(message)}: {message}) => {shouldUpdate}");
             return shouldUpdate;
+        }
+
+        private static bool IsPluginAutoUpdateSupported()
+        {
+#if UNITY_2022_1_OR_NEWER
+            return true;
+#else
+            LogHelper.LogWarning("Plugin auto-update is disabled on Unity v2021 due to Package Manager instability. Please update manually via Package Manager");
+            return false;
+#endif
         }
     }
 }
