@@ -12,7 +12,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         public string version;
         public string created_at;
         public string updated_at;
-        public Framework framework;
+        public int framework;
 
         public override string ToString() => JsonUtility.ToJson(this);
     }
