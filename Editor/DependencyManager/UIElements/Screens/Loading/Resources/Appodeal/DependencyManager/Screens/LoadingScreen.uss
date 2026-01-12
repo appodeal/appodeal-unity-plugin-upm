@@ -1,0 +1,21 @@
+.loading-screen {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px 10px;
+}
+
+.loading-screen__spinner {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 15px;
+    background-image: resource('Appodeal/DependencyManager/SdkCatalog/Mediations/Appodeal/appodeal');
+}
+
+.loading-screen__label {
+    padding: 0;
+    -unity-font-style: bold-and-italic;
+    font-size: 20px;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}

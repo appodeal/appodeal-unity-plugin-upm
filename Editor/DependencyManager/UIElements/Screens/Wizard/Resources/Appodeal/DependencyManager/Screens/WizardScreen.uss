@@ -1,0 +1,101 @@
+.unity-scroll-view__content-container {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.wizard-screen {
+    flex-shrink: 0;
+    width: 860px;
+    padding: 10px 5px;
+}
+
+.wizard-screen__selection-buttons {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.wizard-screen__selection-button {
+    flex-shrink: 0;
+    width: 60px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+.wizard-screen__selection-button--selected {
+    background-color: var(--unity-colors-highlight-background);
+    color: var(--unity-colors-highlight-text-inactive);
+    -unity-font-style: bold;
+}
+
+.wizard-screen__section-label {
+    flex-shrink: 0;
+    margin-left: 6px;
+    padding: 0;
+    -unity-font-style: bold;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.wizard-screen__sdks-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.wizard-screen__confirm-mediations-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.wizard-screen__confirm-mediations-button {
+    flex-shrink: 0;
+    width: 200px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.wizard-screen__bottom-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.wizard-screen__generate-button {
+    width: 200px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.wizard-screen__status-popup {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.wizard-screen__status-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.wizard-screen__status-icon--success {
+    background-image: resource('Appodeal/DependencyManager/Screens/Images/check');
+}
+
+.wizard-screen__status-icon--fail {
+    background-image: resource('Appodeal/DependencyManager/Screens/Images/cancel');
+}
+
+.wizard-screen--mediations-stage .wizard-screen__components-stage {
+    display: none;
+}

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SettingsScreen.uss?fileID=7433441132597879392&amp;guid=0753cefaa0c034fcdab369c2fec45dbb&amp;type=3#SettingsScreen" />
+    <ui:ScrollView mode="VerticalAndHorizontal">
+        <ui:VisualElement name="SettingsScreen" class="settings-screen">
+            <ui:VisualElement name="AdapterToggles" class="settings-screen__horizontal-layout">
+                <ui:VisualElement name="Elements" class="settings-screen__toggles-container">
+                    <ui:Toggle label="Validate dependencies periodically" name="ValidateDependenciesPeriodically" />
+                    <ui:Toggle label="Check for plugin updates" name="CheckForPluginUpdates" />
+                    <ui:Toggle label="Include plugin beta versions" name="IncludePluginBetaVersions" />
+                    <ui:Toggle label="Enable verbose logging" name="EnableLogging" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="Open DM Documentation" name="OpenDocumentation" class="settings-screen__documentation-button" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d9100e77f349db85176519d9793e69, type: 3}
+  m_Name: Max
+  m_EditorClassIdentifier: 
+  id: max
+  description: AppLovin MAX is a comprehensive in-app monetization solution provided
+    by AppLovin, a mobile advertising platform. MAX combines real-time bidding, ad
+    mediation, and ad serving technologies to optimize ad revenue for mobile app
+    developers.
+  texture: {fileID: 2800000, guid: a18ca45d68fcf4462b1af56e40892c68, type: 3}

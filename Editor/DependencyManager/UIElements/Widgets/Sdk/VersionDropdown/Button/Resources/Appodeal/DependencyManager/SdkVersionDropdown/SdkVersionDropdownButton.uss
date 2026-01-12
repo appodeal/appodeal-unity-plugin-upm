@@ -1,0 +1,72 @@
+.dropdown-button {
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90px;
+    height: 30px;
+    margin: 0;
+    padding: 2px 4px;
+    background-color: var(--unity-colors-dropdown-background);
+    border-color: var(--unity-colors-dropdown-border);
+    border-width: 2px;
+    border-radius: 6px;
+}
+
+.dropdown-button:hover {
+    background-color: var(--unity-colors-dropdown-background-hover);
+}
+
+.dropdown-button:active {
+    background-color: var(--unity-colors-highlight-background-hover);
+}
+
+.dropdown-button:disabled {
+    background-color: var(--unity-colors-error-text);
+}
+
+.dropdown-button--locked:disabled {
+    background-color: var(--unity-colors-button-background-disabled);
+}
+
+.dropdown-button--warning {
+    background-color: rgb(204, 132, 0);
+}
+
+.dropdown-button--warning:hover {
+    background-color: rgb(224, 149, 0);
+}
+
+.dropdown-button--warning:active {
+    background-color: rgb(184, 122, 0);
+}
+
+.dropdown-button__label {
+    overflow: hidden;
+    flex-shrink: 0;
+    max-width: 60px;
+    padding-right: 0;
+    padding-left: 0;
+    -unity-font-style: bold;
+    color: var(--unity-colors-dropdown-text);
+    -unity-text-align: middle-left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dropdown-button__icon {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/arrow');
+    -unity-background-image-tint-color: var(--unity-colors-dropdown-text);
+    rotate: 0;
+    transition-property: rotate;
+    transition-duration: 0.25s;
+}
+
+.dropdown-button__icon--expanded {
+    rotate: 180deg;
+}

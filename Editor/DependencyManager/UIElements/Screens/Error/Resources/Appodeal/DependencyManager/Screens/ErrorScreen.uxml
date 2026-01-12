@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./ErrorScreen.uss?fileID=7433441132597879392&amp;guid=4c60440cb3224c3fb07289c0b29944d5&amp;type=3#ErrorScreen" />
+    <ui:ScrollView mode="VerticalAndHorizontal">
+        <ui:VisualElement name="ErrorScreen" class="error-screen">
+            <ui:VisualElement name="TopRow" class="error-screen__row">
+                <ui:VisualElement name="ErrorImage" class="error-screen__image" />
+                <ui:Label text="Loading failed. Dependency Manager cannot be displayed. See console for more details." class="error-screen__title" />
+            </ui:VisualElement>
+            <ui:VisualElement name="MiddleRow" class="error-screen__row">
+                <ui:Label text="If the issue is unclear from the logs, try reloading this page." class="error-screen__label" />
+                <ui:Button text="Reload" name="ReloadButton" class="error-screen__button" />
+            </ui:VisualElement>
+            <ui:VisualElement name="BottomRow" class="error-screen__row">
+                <ui:Label text="If it didn&apos;t help, grab the logs and contact our support team." class="error-screen__label" />
+                <ui:Button text="Contact Support" name="ContactSupportButton" class="error-screen__button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>

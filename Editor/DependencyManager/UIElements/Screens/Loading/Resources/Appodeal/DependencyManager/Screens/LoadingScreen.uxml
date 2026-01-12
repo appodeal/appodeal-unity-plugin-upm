@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./LoadingScreen.uss?fileID=7433441132597879392&amp;guid=7af5bc65b49c147bda8344a2954f9190&amp;type=3#LoadingScreen" />
+    <ui:VisualElement name="LoadingScreen" class="loading-screen">
+        <ui:VisualElement name="Spinner" class="loading-screen__spinner" />
+        <ui:Label text="Loading... Please, wait." name="Label" class="loading-screen__label" />
+    </ui:VisualElement>
+</ui:UXML>

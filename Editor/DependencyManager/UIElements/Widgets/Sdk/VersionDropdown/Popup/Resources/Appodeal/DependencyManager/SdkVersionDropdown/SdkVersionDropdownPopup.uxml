@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SdkVersionDropdownPopup.uss?fileID=7433441132597879392&amp;guid=a26ddf8d8c02d4ead9486c4f5c043ab4&amp;type=3#SdkVersionDropdownPopup" />
+    <ui:ScrollView name="PopupScrollView" horizontal-scroller-visibility="Hidden" mouse-wheel-scroll-size="25" class="dropdown-popup__scroll-view">
+        <ui:VisualElement name="ItemsContainer" class="dropdown-popup__items-container" />
+    </ui:ScrollView>
+</ui:UXML>

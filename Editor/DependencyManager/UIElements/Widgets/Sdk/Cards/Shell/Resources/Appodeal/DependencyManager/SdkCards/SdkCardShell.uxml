@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:apd="AppodealInc.Mediation.DependencyManager.Editor" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SdkCardShell.uss?fileID=7433441132597879392&amp;guid=99db6983bc04446782fd7323b2694fda&amp;type=3#SdkCardShell" />
+    <ui:VisualElement name="SdkCardShell" class="sdk-card-shell">
+        <ui:VisualElement name="Header" class="sdk-card-shell__header">
+            <ui:VisualElement name="HeaderLeft" class="sdk-card-shell__header-left">
+                <ui:Toggle name="IsCardSelected" value="true" focusable="false" />
+                <ui:Label text="SDK Name" name="SdkName" class="sdk-card-shell__sdk-name" />
+            </ui:VisualElement>
+            <ui:VisualElement name="InfoIcon" class="sdk-card-shell__info-icon" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Body" class="sdk-card-shell__body" />
+        <ui:VisualElement name="Footer" class="sdk-card-shell__footer">
+            <ui:VisualElement name="AndroidSdk" class="sdk-card-shell__platform-row platform-android">
+                <ui:VisualElement name="AndroidSdkIcon" tooltip="Android" class="sdk-card-shell__platform-icon sdk-card-shell__android-icon" />
+                <apd:SdkVersionDropdown name="AndroidVersionDropdown" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Spacer" class="spacer" />
+            <ui:VisualElement name="IosSdk" class="sdk-card-shell__platform-row sdk-card-shell__platform-row--reverse platform-ios">
+                <ui:VisualElement name="IosSdkIcon" tooltip="iOS" class="sdk-card-shell__platform-icon sdk-card-shell__ios-icon" />
+                <apd:SdkVersionDropdown name="IosVersionDropdown" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="DeselectedOverlay" class="sdk-card-shell__deselected-overlay">
+            <ui:VisualElement name="DeselectedOverlayFill" class="sdk-card-shell__deselected-overlay-fill" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

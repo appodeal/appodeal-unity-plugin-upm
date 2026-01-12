@@ -1,0 +1,35 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./WizardScreen.uss?fileID=7433441132597879392&amp;guid=e5f6a7b8c9d0e1f2a3b4c5d6a7b8c9d0&amp;type=3#WizardScreen" />
+    <ui:ScrollView name="WizardScrollView" mode="VerticalAndHorizontal">
+        <ui:VisualElement name="Spacer" />
+        <ui:VisualElement name="Wizard" class="wizard-screen">
+            <ui:VisualElement name="SelectionButtons" class="wizard-screen__selection-buttons">
+                <ui:Button text="Default" name="SelectDefaultButton" tooltip="Use default selection for each SDK" class="wizard-screen__selection-button" />
+                <ui:Button text="Custom" name="SelectCustomButton" tooltip="Remembers your selections between syncs" class="wizard-screen__selection-button" />
+                <ui:Button text="All" name="SelectAllButton" tooltip="Select all SDKs" class="wizard-screen__selection-button" />
+                <ui:Button text="Minimal" name="SelectMinimalButton" tooltip="Select only required SDKs" class="wizard-screen__selection-button" />
+            </ui:VisualElement>
+            <ui:Label text="Mediation Engines" class="wizard-screen__section-label" />
+            <ui:GroupBox name="MediationsContainer" class="wizard-screen__sdks-container" />
+            <ui:VisualElement name="ConfirmMediationsRow" class="wizard-screen__confirm-mediations-row">
+                <ui:Button text="Confirm Mediations" name="ConfirmMediationsButton" class="wizard-screen__confirm-mediations-button" />
+            </ui:VisualElement>
+            <ui:Label text="Ad Networks" name="AdNetworksLabel" class="wizard-screen__section-label wizard-screen__components-stage" />
+            <ui:GroupBox name="AdNetworksContainer" class="wizard-screen__sdks-container wizard-screen__components-stage" />
+            <ui:Label text="Services" name="ServicesLabel" class="wizard-screen__section-label wizard-screen__components-stage" />
+            <ui:GroupBox name="ServicesContainer" class="wizard-screen__sdks-container wizard-screen__components-stage" />
+            <ui:VisualElement name="BottomRow" class="wizard-screen__bottom-row wizard-screen__components-stage">
+                <ui:Button text="Generate" name="GenerateButton" class="wizard-screen__generate-button" />
+                <ui:VisualElement name="SuccessStatusPopup" class="wizard-screen__status-popup">
+                    <ui:VisualElement name="SuccessStatusIcon" class="wizard-screen__status-icon wizard-screen__status-icon--success" />
+                    <ui:Label text="Operation Succeeded" name="SuccessStatusMessage" />
+                </ui:VisualElement>
+                <ui:VisualElement name="FailStatusPopup" class="wizard-screen__status-popup">
+                    <ui:VisualElement name="FailStatusIcon" class="wizard-screen__status-icon wizard-screen__status-icon--fail" />
+                    <ui:Label text="Something went wrong" name="FailStatusMessage" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Spacer" />
+    </ui:ScrollView>
+</ui:UXML>

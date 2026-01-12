@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d9100e77f349db85176519d9793e69, type: 3}
+  m_Name: Nend
+  m_EditorClassIdentifier: 
+  id: nend
+  description: Nend is a mobile advertising platform and ad network based in Japan.
+    It offers solutions for both advertisers and publishers, helping them connect
+    and engage with their target audiences on mobile devices.
+  texture: {fileID: 0}

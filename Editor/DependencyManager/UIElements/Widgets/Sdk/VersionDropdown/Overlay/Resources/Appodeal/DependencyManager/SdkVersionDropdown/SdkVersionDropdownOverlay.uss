@@ -1,0 +1,32 @@
+.dropdown-overlay-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.dropdown-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+.dropdown-overlay--visible {
+    display: flex;
+}
+
+.dropdown-overlay__click-catcher {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.dropdown-overlay__popup-container {
+    position: absolute;
+}
