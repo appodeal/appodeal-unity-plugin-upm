@@ -315,6 +315,12 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
         }
 
+        private static readonly HashSet<string> AdMobAdapterPodNames = new(StringComparer.Ordinal)
+        {
+            "APDGoogleAdMobAdapter",
+            "AppodealGoogleAdMobAdapter",
+        };
+
         private static bool CheckIosAttribute()
         {
             XDocument config;
@@ -351,7 +357,12 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
 
             var elementsIosPod = elementIosPods.Elements("iosPod");
-            return elementsIosPod.Any(el => el.Attribute("name")?.Value == "APDGoogleAdMobAdapter");
+            foreach (var el in elementsIosPod)
+            {
+                string podName = el.Attribute("name")?.Value;
+                if (podName != null && AdMobAdapterPodNames.Contains(podName)) return true;
+            }
+            return false;
         }
 
         private static bool ContainsSkAdNetworkIdentifier(PlistElementArray skAdNetworkItemsArray, string id)
