@@ -214,7 +214,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         private bool CheckContainsAdmobAdapter(string depsFilePath)
         {
-            return GetContentString(depsFilePath).Contains("com.appodeal.ads.sdk.networks:admob");
+            return GetContentString(depsFilePath).Contains("com.appodeal.ads.sdk.adapters:admob");
         }
 
         private bool CheckContainsAppId(string manifestPath)
