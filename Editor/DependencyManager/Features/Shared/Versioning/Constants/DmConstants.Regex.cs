@@ -11,7 +11,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             private const string AllowedNumber = "(0|[1-9][0-9]*)";
             private const string PluginVersionGroup = "(?<" + VersionGroupName + ">" + AllowedNumber + @"\." + AllowedNumber + @"\." + AllowedNumber + ")";
-            private const string AdapterVersionGroup = "(?<" + VersionGroupName + ">" + AllowedNumber + @"\." + AllowedNumber + @"\." + AllowedNumber + @"(\." + AllowedNumber + ")?)";
+            private const string AdapterVersionGroup = "(?<" + VersionGroupName + ">" + AllowedNumber + @"\." + AllowedNumber + @"\." + AllowedNumber + @"(\." + AllowedNumber + ")*)";
             private const string IdentifierGroup = "(?<" + IdentifierGroupName + @">(-beta\." + AllowedNumber + ")?)";
         }
     }

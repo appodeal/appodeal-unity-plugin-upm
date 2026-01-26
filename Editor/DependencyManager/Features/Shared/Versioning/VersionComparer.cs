@@ -121,19 +121,29 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public static VersionComparisonResult CompareAdapterVersionTo(this string adapterAVersion, string adapterBVersion)
         {
-            if (adapterAVersion != null && adapterBVersion != null && adapterAVersion == adapterBVersion) return VersionComparisonResult.Equal;
             if (!IsValidAdapterVersion(adapterAVersion) || !IsValidAdapterVersion(adapterBVersion)) return VersionComparisonResult.WrongInput;
+            if (adapterAVersion == adapterBVersion) return VersionComparisonResult.Equal;
 
             var aMatch = AdapterVersionRegex.Match(adapterAVersion!);
             var bMatch = AdapterVersionRegex.Match(adapterBVersion!);
 
-            var aVersion = new Version(aMatch.Groups[DmConstants.Regex.VersionGroupName].Value);
-            var bVersion = new Version(bMatch.Groups[DmConstants.Regex.VersionGroupName].Value);
+            string aVersionStr = aMatch.Groups[DmConstants.Regex.VersionGroupName].Value;
+            string bVersionStr = bMatch.Groups[DmConstants.Regex.VersionGroupName].Value;
 
-            int res = aVersion.CompareTo(bVersion);
+            string[] aParts = aVersionStr.Split('.');
+            string[] bParts = bVersionStr.Split('.');
 
-            if (res < 0) return VersionComparisonResult.Previous;
-            if (res > 0) return VersionComparisonResult.Subsequent;
+            int minLength = Math.Min(aParts.Length, bParts.Length);
+            for (int i = 0; i < minLength; i++)
+            {
+                if (!Int32.TryParse(aParts[i], out int aNum) || !Int32.TryParse(bParts[i], out int bNum)) return VersionComparisonResult.WrongInput;
+
+                if (aNum < bNum) return VersionComparisonResult.Previous;
+                if (aNum > bNum) return VersionComparisonResult.Subsequent;
+            }
+
+            if (aParts.Length < bParts.Length) return VersionComparisonResult.Previous;
+            if (aParts.Length > bParts.Length) return VersionComparisonResult.Subsequent;
 
             string aIdentifier = aMatch.Groups[DmConstants.Regex.IdentifierGroupName].Value;
             string bIdentifier = bMatch.Groups[DmConstants.Regex.IdentifierGroupName].Value;
