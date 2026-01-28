@@ -1,0 +1,53 @@
+.sdk-tooltip {
+    overflow: hidden;
+    width: 380px;
+    padding: 5px;
+    border-color: var(--unity-colors-toolbar-border);
+    border-width: 1.5px;
+    border-radius: 8px;
+}
+
+.sdk-tooltip__background {
+    opacity: 0.97;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--unity-colors-toolbar-background);
+}
+
+.sdk-tooltip__top-row {
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 25px;
+}
+
+.sdk-tooltip__sdk-name {
+    overflow: hidden;
+    flex-shrink: 1;
+    padding: 0;
+    -unity-font-style: bold;
+    font-size: 14px;
+    -unity-text-align: middle-left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sdk-tooltip__sdk-req-status {
+    flex-shrink: 0;
+    margin-left: 30px;
+    padding: 0;
+    font-size: 10px;
+    -unity-text-align: middle-right;
+}
+
+.sdk-tooltip__sdk-description {
+    margin-top: 10px;
+    padding: 0;
+    font-size: 12px;
+    white-space: normal;
+}

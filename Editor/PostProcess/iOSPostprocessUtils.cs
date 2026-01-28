@@ -103,13 +103,13 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!File.Exists(AppodealEditorConstants.DependenciesFilePath))
             {
-                Debug.LogWarning("Missing deps config (Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml).\nAdmob App Id won't be added.");
+                Debug.LogWarning("Missing deps config (Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml). Ensure that Appodeal Unity plugin is imported correctly");
                 return;
             }
 
             if (!CheckIosAttribute())
             {
-                Debug.LogError("Google Admob Config is invalid. Ensure that Appodeal Unity plugin is imported correctly.");
+                Debug.LogWarning("Google AdMob dependency is not found. Skipping AdMob App ID setup");
                 return;
             }
 
@@ -117,15 +117,15 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (String.IsNullOrEmpty(admobAppId))
             {
-                Debug.LogError("Admob App ID is not set via 'Appodeal/Appodeal Settings' tool.\nThe app may crash on startup!");
+                Debug.LogError("AdMob App ID is not set via 'Appodeal/Appodeal Settings' tool. The app may crash on startup!");
                 return;
             }
 
             if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
             {
-                Debug.LogError("Incorrect value. The app may crash on startup." +
+                Debug.LogError($"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                                "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
-                               "\nAlternatively, change the value manually in Info.plist file.");
+                               "\nAlternatively, change the value manually in Info.plist file");
             }
 
             if (!CheckContainsKey(path, "GADApplicationIdentifier"))
@@ -315,6 +315,12 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
         }
 
+        private static readonly HashSet<string> AdMobAdapterPodNames = new(StringComparer.Ordinal)
+        {
+            "APDGoogleAdMobAdapter",
+            "AppodealGoogleAdMobAdapter",
+        };
+
         private static bool CheckIosAttribute()
         {
             XDocument config;
@@ -351,7 +357,12 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
 
             var elementsIosPod = elementIosPods.Elements("iosPod");
-            return elementsIosPod.Any(el => el.Attribute("name")?.Value == "APDGoogleAdMobAdapter");
+            foreach (var el in elementsIosPod)
+            {
+                string podName = el.Attribute("name")?.Value;
+                if (podName != null && AdMobAdapterPodNames.Contains(podName)) return true;
+            }
+            return false;
         }
 
         private static bool ContainsSkAdNetworkIdentifier(PlistElementArray skAdNetworkItemsArray, string id)

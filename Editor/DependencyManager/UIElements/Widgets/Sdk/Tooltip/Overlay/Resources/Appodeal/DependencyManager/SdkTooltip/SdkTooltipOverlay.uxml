@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SdkTooltipOverlay.uss?fileID=7433441132597879392&amp;guid=a767196d9b604ed1af91eb1bd6c122da&amp;type=3#SdkTooltipOverlay" />
+    <ui:VisualElement name="SdkTooltipOverlay" class="sdk-tooltip-overlay" />
+</ui:UXML>

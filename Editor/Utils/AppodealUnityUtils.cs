@@ -48,6 +48,18 @@ namespace AppodealInc.Mediation.Utils.Editor
             X86 = 1 << 2,
         }
 
+        public static bool IsDevModeEnabled
+        {
+            get
+            {
+#if APPODEAL_DEV
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         public static string GetApplicationId()
         {
             var appId = typeof(PlayerSettings).GetProperty("applicationIdentifier", PublicStaticFlags);

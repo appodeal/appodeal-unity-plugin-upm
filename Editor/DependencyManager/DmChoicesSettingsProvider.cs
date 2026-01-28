@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -7,39 +5,48 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmChoicesSettingsProvider : SettingsProvider
     {
-        private DmChoicesSettingsProvider(string path, SettingsScope scope = SettingsScope.User) : base(path, scope) {}
+        private SettingsScreenController _settingsController;
+
+        private VisualElement _rootElement;
+
+        private DmChoicesSettingsProvider(string path, SettingsScope scope = SettingsScope.User) : base(path, scope) { }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            LogHelper.Log($"{nameof(OnActivate)}() method is called");
-
             if (DmChoicesScriptableObject.Instance == null)
             {
-                LogHelper.LogError("DM Settings window cannot be displayed as its data asset failed to load.");
+                LogHelper.LogError("DM Settings window cannot be displayed as its data asset failed to load");
                 return;
             }
 
-            if (!DmUIElements.IsSettingsAssetLoadable())
+            _rootElement = rootElement;
+            _rootElement?.Clear();
+
+            _settingsController = new SettingsScreenController();
+            if (!_settingsController.TryInitialize())
             {
-                LogHelper.LogError("DM Settings window cannot be displayed as its visual asset failed to load.");
+                LogHelper.LogError("DM Settings window cannot be displayed as its visual asset failed to load");
                 return;
             }
 
-            var settings = DmUIElements.CreateSettingsUI();
-            rootElement.Add(settings);
+            _rootElement?.Add(_settingsController?.Root);
         }
 
         public override void OnDeactivate()
         {
-            LogHelper.Log($"{nameof(OnDeactivate)}() method is called");
+            _settingsController?.Dispose();
+            _settingsController = null;
 
-            DmChoicesScriptableObject.SaveAsync();
+            _rootElement?.Clear();
+            _rootElement = null;
+
+            DmChoicesScriptableObject.SaveToDisk();
         }
 
         [SettingsProvider]
         public static SettingsProvider CreateDmChoicesSettingsProvider()
         {
-            return new DmChoicesSettingsProvider($"Project/{DmConstants.SettingsProviderWindowName}/Settings", SettingsScope.Project) { label = "Settings" };
+            return new DmChoicesSettingsProvider($"Project/{DmConstants.UI.WindowName}/Settings", SettingsScope.Project) { label = "Settings" };
         }
     }
 }

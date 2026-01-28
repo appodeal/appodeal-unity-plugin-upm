@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:apd="AppodealInc.Mediation.DependencyManager.Editor" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./AdNetworkSdkCardTemplate.uss?fileID=7433441132597879392&amp;guid=dff7f089bd834e75b8dd907d0d61351f&amp;type=3#AdNetworkSdkCardTemplate" />
+    <apd:SdkCardShell name="AdNetworkSdkCard">
+        <ui:VisualElement name="AdNetworkSdkCardBody" class="ad-network-sdk-card-body">
+            <ui:VisualElement name="SupportedAdTypes" class="ad-network-sdk-card-body__ad-types-container">
+                <ui:VisualElement name="BannerIcon" tooltip="Banner" class="ad-network-sdk-card-body__ad-type-icon ad-network-sdk-card-body__banner-icon" />
+                <ui:VisualElement name="MrecIcon" tooltip="MREC" class="ad-network-sdk-card-body__ad-type-icon ad-network-sdk-card-body__mrec-icon" />
+                <ui:VisualElement name="InterstitialIcon" tooltip="Interstitial" class="ad-network-sdk-card-body__ad-type-icon ad-network-sdk-card-body__interstitial-icon" />
+                <ui:VisualElement name="RewardedIcon" tooltip="Rewarded" class="ad-network-sdk-card-body__ad-type-icon ad-network-sdk-card-body__rewarded-icon" />
+            </ui:VisualElement>
+            <ui:VisualElement name="SupportedMediations" class="ad-network-sdk-card-body__mediations">
+                <ui:VisualElement name="AndroidMediationsContainer" class="ad-network-sdk-card-body__mediations-container platform-android">
+                    <ui:VisualElement name="SampleAndroidMediationIcon" tooltip="Sample Android" class="ad-network-sdk-card-body__mediation-icon" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Spacer" class="spacer" />
+                <ui:VisualElement name="IosMediationsContainer" class="ad-network-sdk-card-body__mediations-container ad-network-sdk-card-body__mediations-container--reverse platform-ios">
+                    <ui:VisualElement name="SampleIosMediationIcon" tooltip="Sample iOS" class="ad-network-sdk-card-body__mediation-icon" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </apd:SdkCardShell>
+</ui:UXML>

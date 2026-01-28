@@ -1,0 +1,45 @@
+.unity-scroll-view__content-container {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.error-screen {
+    flex-shrink: 0;
+    width: 400px;
+    padding: 20px 10px 10px;
+}
+
+.error-screen__row {
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.error-screen__image {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+    background-image: resource('Appodeal/DependencyManager/Screens/Images/cancel');
+}
+
+.error-screen__title {
+    flex-shrink: 0;
+    padding: 0;
+    -unity-font-style: bold;
+    font-size: 14px;
+    -unity-text-align: upper-center;
+    white-space: normal;
+}
+
+.error-screen__label {
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.error-screen__button {
+    flex-shrink: 0;
+    width: 200px;
+    height: 25px;
+    margin: 5px 0 0;
+    padding: 0;
+}

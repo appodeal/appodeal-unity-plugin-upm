@@ -1,0 +1,9 @@
+/* Attached programmatically to SdkCardShell, available to all card types. */
+
+.platform-android {} /* Marker: element hidden when platform model is missing */
+.platform-ios {} /* Marker: element hidden when platform model is missing */
+
+.platform-disabled--android .platform-android { display: none; }
+.platform-disabled--ios .platform-ios { display: none; }
+
+.spacer { flex-grow: 1; }
