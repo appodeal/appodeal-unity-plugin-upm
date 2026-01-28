@@ -123,7 +123,6 @@
 		<androidPackage id="appodeal_vungle" spec="com.appodeal.ads.sdk.adapters:vungle:7.6.1.0" />
 		<androidPackage id="appodeal_yandex_ads" spec="com.appodeal.ads.sdk.adapters:yandex:7.17.0.0" />
 		<androidPackage id="bidmachine_amazon" spec="io.bidmachine:ads.networks.amazon:3.5.0.20" />
-		<androidPackage id="bidmachine_meta_audience_network" spec="io.bidmachine:ads.networks.meta_audience:3.5.0.19" />
 		<androidPackage id="bidmachine_mintegral" spec="io.bidmachine:ads.networks.mintegral:3.5.0.16" />
 		<androidPackage id="bidmachine_my_target" spec="io.bidmachine:ads.networks.my_target:3.5.0.21" />
 		<androidPackage id="bidmachine_pangle" spec="io.bidmachine:ads.networks.pangle:3.5.0.15" />
