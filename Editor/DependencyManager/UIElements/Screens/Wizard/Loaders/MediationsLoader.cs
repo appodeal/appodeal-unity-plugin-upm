@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 }
             }
 
-            return controllers;
+            return controllers.OrderBy(c => c.SdkName).ToList();
         }
     }
 }

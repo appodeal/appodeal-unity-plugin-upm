@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,7 +51,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 }
             }
 
-            return (adNetworkControllers, serviceControllers);
+            return (adNetworkControllers.OrderBy(c => c.SdkName).ToList(), serviceControllers.OrderBy(c => c.SdkName).ToList());
         }
 
         private static AdNetworkSdkCardController CreateAdNetworkController(Sdk androidSdk, Sdk iosSdk)
