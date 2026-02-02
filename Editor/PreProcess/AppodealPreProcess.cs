@@ -98,7 +98,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.Log($"Missing Network config at {depsFilePath}. Admob App Id won't be added.");
+                Debug.Log($"Missing Network config at {depsFilePath}. AdMob App Id won't be added");
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                     androidManifest.RemoveAdmobAppId();
                 }
                 Debug.LogError(
-                    $"Admob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
+                    "AdMob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
             }
             else
@@ -119,7 +119,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
                 {
                     Debug.LogError(
-                        "Incorrect value. The app may crash on startup." +
+                        $"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                         "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                 }
 
@@ -214,7 +214,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         private bool CheckContainsAdmobAdapter(string depsFilePath)
         {
-            return GetContentString(depsFilePath).Contains("com.appodeal.ads.sdk.networks:admob");
+            return GetContentString(depsFilePath).Contains("com.appodeal.ads.sdk.adapters:admob");
         }
 
         private bool CheckContainsAppId(string manifestPath)

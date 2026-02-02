@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./SdkVersionDropdownButton.uss?fileID=7433441132597879392&amp;guid=5a9c92f41ade741699540f2e4f50fbf5&amp;type=3#SdkVersionDropdownButton" />
+    <ui:Button name="DropdownButton" class="dropdown-button">
+        <ui:Label name="Label" text="99.99.99" class="dropdown-button__label" />
+        <ui:VisualElement name="Icon" class="dropdown-button__icon" />
+    </ui:Button>
+</ui:UXML>

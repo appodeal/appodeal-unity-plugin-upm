@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:apd="AppodealInc.Mediation.DependencyManager.Editor" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="./GenericSdkCardTemplate.uss?fileID=7433441132597879392&amp;guid=9a0f217817a248d695af7bd48091a984&amp;type=3#GenericSdkCardTemplate" />
+    <apd:SdkCardShell name="GenericSdkCard">
+        <ui:VisualElement name="GenericSdkCardBody" class="generic-sdk-card-body">
+            <ui:VisualElement name="SdkIcon" class="generic-sdk-card-body__sdk-icon" />
+        </ui:VisualElement>
+    </apd:SdkCardShell>
+</ui:UXML>

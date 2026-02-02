@@ -1,0 +1,70 @@
+.dropdown-item {
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 188px; /* when size changes are made here, also make them in .dropdown-popup__scroll-view class */
+    height: 25px; /* when size changes are made here, also make them in .dropdown-popup__scroll-view class */
+    padding: 2px 4px;
+    background-color: var(--unity-colors-dropdown-background);
+}
+
+.dropdown-item:hover {
+    background-color: var(--unity-colors-highlight-background-hover-lighter);
+}
+
+.dropdown-item__left-group {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100px;
+}
+
+.dropdown-item__selection-toggle {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/check');
+}
+
+.dropdown-item__version-label {
+    overflow: hidden;
+    max-width: 85px;
+    padding: 0;
+    color: var(--unity-colors-dropdown-text);
+    -unity-text-align: middle-left;
+    text-overflow: ellipsis;
+}
+
+.dropdown-item__badges-container {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80px;
+}
+
+.dropdown-item__badge {
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+}
+
+.dropdown-item__badge--new {
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/badge_new');
+}
+
+.dropdown-item__badge--recommended {
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/badge_recommended');
+}
+
+.dropdown-item__badge--deprecated {
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/badge_deprecated');
+}
+
+.dropdown-item__badge--unstable {
+    background-image: resource('Appodeal/DependencyManager/SdkVersionDropdown/Images/badge_unstable');
+}

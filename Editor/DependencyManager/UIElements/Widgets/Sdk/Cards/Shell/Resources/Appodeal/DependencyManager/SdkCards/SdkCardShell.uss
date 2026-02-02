@@ -1,0 +1,127 @@
+.sdk-card-shell {
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: column;
+    width: 275px;
+    height: 150px;
+    margin: 4px;
+    padding: 8px 4px;
+    background-color: var(--unity-colors-helpbox-background);
+    border-color: var(--unity-colors-default-border);
+    border-width: 2px;
+    border-radius: 8px;
+}
+
+.sdk-card-shell__header {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 25px;
+}
+
+.sdk-card-shell__header-left {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sdk-card-shell .unity-toggle {
+    flex-shrink: 0;
+    align-items: center;
+    margin: 0 8px 0 0;
+}
+
+.sdk-card-shell .unity-toggle__checkmark {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.sdk-card-shell__sdk-name {
+    overflow: hidden;
+    flex-shrink: 0;
+    max-width: 200px;
+    -unity-font-style: bold;
+    font-size: 15px;
+}
+
+.sdk-card-shell__info-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/info');
+    transition: scale 0.15s ease-in-out;
+}
+
+.sdk-card-shell__info-icon:hover {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/info_hovered');
+    scale: 1.25;
+}
+
+.sdk-card-shell__body {
+    flex-shrink: 0;
+    flex-grow: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sdk-card-shell__footer {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sdk-card-shell__platform-row {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sdk-card-shell__platform-row--reverse {
+    flex-direction: row-reverse;
+}
+
+.sdk-card-shell__platform-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+.sdk-card-shell__platform-row--reverse .sdk-card-shell__platform-icon {
+    margin-right: 0;
+    margin-left: 4px;
+}
+
+.sdk-card-shell__android-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/android');
+}
+
+.sdk-card-shell__ios-icon {
+    background-image: resource('Appodeal/DependencyManager/SdkCards/Images/apple');
+    -unity-background-image-tint-color: var(--unity-colors-default-text);
+}
+
+.sdk-card-shell__deselected-overlay {
+    opacity: 0.9;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 36px;
+    right: 0;
+    bottom: 0;
+}
+
+.sdk-card-shell__deselected-overlay--visible {
+    display: flex;
+}
+
+.sdk-card-shell__deselected-overlay-fill {
+    flex-shrink: 0;
+    flex-grow: 1;
+    background-color: var(--unity-colors-highlight-background-inactive);
+    border-radius: 8px;
+}

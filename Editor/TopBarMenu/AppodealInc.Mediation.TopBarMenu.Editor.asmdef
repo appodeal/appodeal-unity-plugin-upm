@@ -3,6 +3,7 @@
     "rootNamespace": "AppodealInc.Mediation.TopBarMenu.Editor",
     "references": [
         "AppodealInc.Mediation.Analytics.Editor",
+        "AppodealInc.Mediation.DependencyManager.Editor",
         "AppodealInc.Mediation.PluginRemover.Editor",
         "AppodealInc.Mediation.SettingsWindow.Editor",
         "AppodealInc.Mediation.Utils.Editor"
