@@ -118,6 +118,14 @@ namespace AppodealStack.Monetization.Common
             /// </para>
             /// Arguments are of a type <see cref="AdRevenueEventArgs"/>.
             /// </summary>
+            /// <remarks>
+            /// <para>
+            /// On Android, this event is raised on a background thread to ensure ad revenue data
+            /// is delivered immediately without loss, reducing discrepancies when forwarding to MMPs.
+            /// </para>
+            /// If you need to interact with Unity Engine APIs (e.g., UI updates), make sure to dispatch those calls to the main thread.
+            /// See <see href="https://docs.appodeal.com/unity/advanced/main-thread-callbacks"/> for more details.
+            /// </remarks>
             public static event EventHandler<AdRevenueEventArgs> OnReceived;
 
             private void InitializeCallbacks()
