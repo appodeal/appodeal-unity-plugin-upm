@@ -7,11 +7,23 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - 'release/**'
-    paths:
-      - 'Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt'
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      deps-changed: ${{ steps.filter.outputs.deps }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            deps:
+              - 'Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt'
+
   validate-ios-pods:
+    needs: check-changes
+    if: needs.check-changes.outputs.deps-changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
