@@ -25,7 +25,7 @@ namespace AppodealStack.Monetization.Platforms.Android
         {
             if (ad == null)
             {
-                UnityMainThreadDispatcher.Post(_ => _listener?.OnAdRevenueReceived(null));
+                _listener?.OnAdRevenueReceived(null);
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 RevenuePrecision = ad.Call<string>(AndroidConstants.JavaMethodName.AdRevenue.GetRevenuePrecision)
             };
 
-            UnityMainThreadDispatcher.Post(_ => _listener?.OnAdRevenueReceived(adRevenue));
+            _listener?.OnAdRevenueReceived(adRevenue);
         }
     }
 }
