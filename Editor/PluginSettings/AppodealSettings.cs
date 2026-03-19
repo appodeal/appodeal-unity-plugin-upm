@@ -44,6 +44,11 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         [SerializeField] private List<string> iosSkAdNetworkItemsList = new();
 
         [Space(SpaceHeight)]
+        [Header("iOS AdAttributionKit IDs")]
+        [SerializeField] private bool iosAakIds = true;
+        [SerializeField] private List<string> iosAakIdsList = new();
+
+        [Space(SpaceHeight)]
         [Header("Facebook Service")]
         [SerializeField] private bool facebookAutoConfiguration;
 
@@ -194,6 +199,18 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
         {
             get => iosSkAdNetworkItemsList;
             set => iosSkAdNetworkItemsList = value;
+        }
+
+        public bool IosAakIds
+        {
+            get => iosAakIds;
+            set => iosAakIds = value;
+        }
+
+        public List<string> IosAakIdsList
+        {
+            get => iosAakIdsList;
+            set => iosAakIdsList = value;
         }
 
         public bool FirebaseAutoConfiguration
