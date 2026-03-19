@@ -27,13 +27,25 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
 
         private async void OnEnable()
         {
-            var ids = await GetSkAdNetworkIds();
+            var skAdNetworkTask = GetSkAdNetworkIds();
+            var aakTask = GetAakIds();
+
+            var ids = await skAdNetworkTask;
 
             if (AppodealSettings.Instance == null) return;
 
             if (ids?.Count > 0 && !ids.SequenceEqual(AppodealSettings.Instance.IosSkAdNetworkItemsList))
             {
                 AppodealSettings.Instance.IosSkAdNetworkItemsList = ids;
+            }
+
+            var aakIds = await aakTask;
+
+            if (AppodealSettings.Instance == null) return;
+
+            if (aakIds?.Count > 0 && !aakIds.SequenceEqual(AppodealSettings.Instance.IosAakIdsList))
+            {
+                AppodealSettings.Instance.IosAakIdsList = aakIds;
             }
         }
 
@@ -61,6 +73,43 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
 
                 var regex = new Regex("^([a-z]|[0-9]){10}.skadnetwork$");
                 return ids!.Where(id => regex.IsMatch(id)).Distinct().OrderBy(id => id).ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return new List<string>();
+            }
+        }
+
+        private static async Task<List<string>> GetAakIds()
+        {
+            try
+            {
+                var request = UnityWebRequest.Get("https://neo-mw-backend.appodeal.com/v4/aak/ids");
+                _ = request.SendWebRequest();
+                while (!request.isDone) await Task.Yield();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    request.Dispose();
+                    return new List<string>();
+                }
+
+                string json = request.downloadHandler.text;
+                request.Dispose();
+
+                if (String.IsNullOrWhiteSpace(json) || !json.StartsWith('[') || !json.EndsWith(']')) return new List<string>();
+
+                string[] ids = JsonHelper.FromJson<string>(JsonHelper.FixJson(json));
+                if ((ids?.Length ?? 0) < 1) return new List<string>();
+
+                var regex = new Regex(@"^[a-z0-9]+\.[a-z]+$");
+                return ids!
+                    .Select(id => id?.ToLowerInvariant())
+                    .Where(id => !String.IsNullOrEmpty(id) && regex.IsMatch(id))
+                    .Distinct()
+                    .OrderBy(id => id)
+                    .ToList();
             }
             catch (Exception e)
             {
@@ -158,21 +207,24 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
                 AppodealSettings.Instance.NsAppTransportSecurity = KeyRow("NSAppTransportSecurity",
                     AppodealSettings.Instance.NsAppTransportSecurity);
 
-                GUILayout.Space(35);
-                if (GUILayout.Button("SKAdNetwork", new GUIStyle(EditorStyles.label)
+                GUILayout.Space(15);
+                if (GUILayout.Button("Attribution", new GUIStyle(EditorStyles.label)
                 {
                     fontSize = 12,
                     fontStyle = FontStyle.Bold,
                     fixedHeight = 18
                 }, GUILayout.ExpandWidth(true)))
                 {
-                    Application.OpenURL("https://developer.apple.com/documentation/storekit/skadnetwork");
+                    Application.OpenURL("https://developer.apple.com/documentation/AdAttributionKit/adattributionkit-skadnetwork-interoperability");
                 }
 
                 AppodealSettings.Instance.IosSkAdNetworkItems = KeyRow("Add SKAdNetworkItems",
                     AppodealSettings.Instance.IosSkAdNetworkItems);
 
-                GUILayout.Space(12);
+                AppodealSettings.Instance.IosAakIds = KeyRow("Add AdNetworkIdentifiers",
+                    AppodealSettings.Instance.IosAakIds);
+
+                GUILayout.Space(7);
             }
 
             GUILayout.EndHorizontal();

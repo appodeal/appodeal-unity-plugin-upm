@@ -34,6 +34,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             AddNsLocationWhenInUseUsageDescription(path);
             AddNsCalendarsUsageDescription(path);
             AddSkAdNetworkIds(buildTarget, buildPath);
+            AddAdNetworkIdentifiers(buildTarget, buildPath);
             IosPostProcessServices.AddFacebookKeys(path);
         }
 
@@ -76,6 +77,64 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                     if (ContainsSkAdNetworkIdentifier(array, id)) continue;
                     var added = array.AddDict();
                     added.SetString(AppodealUnityUtils.KeySkAdNetworkID, id);
+                }
+            }
+
+            File.WriteAllText(plistPath, plist.WriteToString());
+        }
+
+        private static void AddAdNetworkIdentifiers(BuildTarget buildTarget, string buildPath)
+        {
+            if (String.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
+
+            if (!AppodealSettings.Instance.IosAakIds || (AppodealSettings.Instance.IosAakIdsList?.Count ?? 0) <= 0) return;
+
+            if (buildTarget != BuildTarget.iOS) return;
+
+            string plistPath = buildPath + "/Info.plist";
+            var plist = new PlistDocument();
+            plist.ReadFromString(File.ReadAllText(plistPath));
+
+            PlistElementArray array = null;
+            if (plist.root.values.ContainsKey(AppodealUnityUtils.KeyAdNetworkIdentifiers))
+            {
+                try
+                {
+                    plist.root.values.TryGetValue(AppodealUnityUtils.KeyAdNetworkIdentifiers, out var element);
+                    if (element != null) array = element.AsArray();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
+                    array = null;
+                }
+            }
+            else
+            {
+                array = plist.root.CreateArray(AppodealUnityUtils.KeyAdNetworkIdentifiers);
+            }
+
+            if (array != null)
+            {
+                var existing = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var elem in array.values)
+                {
+                    try
+                    {
+                        string val = elem.AsString();
+                        if (!String.IsNullOrEmpty(val)) existing.Add(val);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+                }
+
+                foreach (string id in AppodealSettings.Instance.IosAakIdsList)
+                {
+                    if (existing.Contains(id)) continue;
+                    array.AddString(id);
+                    existing.Add(id);
                 }
             }
 
