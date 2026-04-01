@@ -13,6 +13,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string Destroy = "destroy";
                 public const string DisableNetwork = "disableNetwork";
                 public const string GetBidonEndpoint = "getBidonEndpoint";
+                public const string GetEndpoint = "getEndpoint";
                 public const string GetNetworks = "getNetworks";
                 public const string GetPredictedEcpm = "getPredictedEcpm";
                 public const string GetPredictedEcpmByPlacement = "getPredictedEcpmByPlacement";
@@ -35,6 +36,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string SetBannerCallbacks = "setBannerCallbacks";
                 public const string SetBannerRotation = "setBannerRotation";
                 public const string SetBidonEndpoint = "setBidonEndpoint";
+                public const string SetEndpoint = "setEndpoint";
                 public const string SetChildDirectedTreatment = "setChildDirectedTreatment";
                 public const string SetCustomFilter = "setCustomFilter";
                 public const string SetExtraData = "setExtraData";
