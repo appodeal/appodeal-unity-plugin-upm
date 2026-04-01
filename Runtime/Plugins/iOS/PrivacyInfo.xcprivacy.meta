@@ -23,6 +23,7 @@ PluginImporter:
         Exclude Win: 1
         Exclude Win64: 1
         Exclude iOS: 0
+        Exclude tvOS: 1
   - first:
       Android: Android
     second:
@@ -83,7 +84,7 @@ PluginImporter:
   - first:
       tvOS: tvOS
     second:
-      enabled: 1
+      enabled: 0
       settings: {}
   userData: 
   assetBundleName: 
