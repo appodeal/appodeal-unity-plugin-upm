@@ -792,6 +792,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 
+        public void SetEndpoint(string baseUrl)
+        {
+            AppodealObjCBridge.AppodealSetEndpoint(baseUrl);
+        }
+
+        public string GetEndpoint()
+        {
+            return AppodealObjCBridge.AppodealGetEndpoint();
+        }
+
         public void SetBidonEndpoint(string baseUrl)
         {
             AppodealObjCBridge.AppodealSetBidonEndpoint(baseUrl);

@@ -787,6 +787,25 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
+        /// Sets the custom endpoint.
+        /// </summary>
+        /// <param name="baseUrl">Non-null custom endpoint URL.</param>
+        /// <remarks>Call before the SDK <see cref="Initialize"/> method, otherwise it will have no effect.</remarks>
+        public static void SetEndpoint(string baseUrl)
+        {
+            GetInstance().SetEndpoint(baseUrl);
+        }
+
+        /// <summary>
+        /// Retrieves the currently set endpoint.
+        /// </summary>
+        /// <returns>Endpoint URL or default value if not overridden.</returns>
+        public static string GetEndpoint()
+        {
+            return GetInstance().GetEndpoint();
+        }
+
+        /// <summary>
         /// Sets the custom Bidon endpoint.
         /// </summary>
         /// <param name="baseUrl">Non-null custom Bidon endpoint URL.</param>

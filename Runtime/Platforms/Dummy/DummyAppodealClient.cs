@@ -849,6 +849,17 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.ValidateAppStoreInAppPurchase method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
+        public void SetEndpoint(string baseUrl)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetEndpoint method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+        }
+
+        public string GetEndpoint()
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.GetEndpoint method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return String.Empty;
+        }
+
         public void SetBidonEndpoint(string baseUrl)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetBidonEndpoint method on an unsupported platform. Run your application on either Android or iOS device to test this method.");

@@ -476,6 +476,17 @@ namespace AppodealStack.Monetization.Platforms.Android
             AppodealJavaClass.CallStatic(AndroidConstants.JavaMethodName.Appodeal.ValidateInAppPurchase, UnityActivityJavaObject, androidPurchase.GetInAppPurchase(), purchaseCallback);
         }
 
+        public void SetEndpoint(string baseUrl)
+        {
+            if (baseUrl == null) return;
+            AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetEndpoint, baseUrl);
+        }
+
+        public string GetEndpoint()
+        {
+            return AppodealJavaClass?.CallStatic<string>(AndroidConstants.JavaMethodName.Appodeal.GetEndpoint) ?? String.Empty;
+        }
+
         public void SetBidonEndpoint(string baseUrl)
         {
             if (baseUrl == null) return;

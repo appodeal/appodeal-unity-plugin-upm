@@ -72,6 +72,8 @@ namespace AppodealStack.Monetization.Common
         void LogEvent(string eventName, Dictionary<string, object> eventParams, AppodealService services);
         void ValidatePlayStoreInAppPurchase(IPlayStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
         void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener);
+        void SetEndpoint(string baseUrl);
+        string GetEndpoint();
         void SetBidonEndpoint(string baseUrl);
         string GetBidonEndpoint();
         bool ShowMediationDebugger(MediationDebuggerProvider provider);
