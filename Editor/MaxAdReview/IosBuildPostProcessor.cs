@@ -13,7 +13,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     internal static class IosBuildPostProcessor
     {
-        private const string MaxPod = "APDAppLovinMAXAdapter";
+        private const string MaxPod = "AppodealAppLovinMAXAdapter";
         private const string ScriptName = "AppLovinQualityServiceSetup.rb";
         private const string IosSetupUrl = "https://api2.safedk.com/v1/build/ios_setup2";
 

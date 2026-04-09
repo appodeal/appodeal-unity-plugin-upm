@@ -3,13 +3,18 @@ using UnityEngine.UIElements;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
-    internal class SdkCardShell : VisualElement
+#if UNITY_6000_0_OR_NEWER
+    [UxmlElement]
+#else
+    // ReSharper disable once PartialTypeWithSinglePart
+#endif
+    internal partial class SdkCardShell : VisualElement
     {
         private const string CommonStyleSheetPath = "Appodeal/DependencyManager/SdkCards/SdkCardsCommon";
 
-#pragma warning disable CS0618 // Type or member is obsolete
+#if !UNITY_6000_0_OR_NEWER
         public new class UxmlFactory : UxmlFactory<SdkCardShell> { }
-#pragma warning restore CS0618 // Type or member is obsolete
+#endif
 
         public SdkCardShellView View { get; }
 

@@ -5,11 +5,16 @@ using UnityEngine.UIElements;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
-    internal class SdkVersionDropdown : VisualElement, IDisposable
+#if UNITY_6000_0_OR_NEWER
+    [UxmlElement]
+#else
+    // ReSharper disable once PartialTypeWithSinglePart
+#endif
+    internal partial class SdkVersionDropdown : VisualElement, IDisposable
     {
-#pragma warning disable CS0618 // Type or member is obsolete
+#if !UNITY_6000_0_OR_NEWER
         public new class UxmlFactory : UxmlFactory<SdkVersionDropdown> { }
-#pragma warning restore CS0618 // Type or member is obsolete
+#endif
 
         private readonly DropdownButtonController _buttonController;
         private readonly DropdownPopupController _popupController;

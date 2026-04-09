@@ -42,7 +42,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealInitializationCallback))]
         private static void AppodealSdkDidInitialize()
         {
-            _initializationListener?.OnInitializationFinished(null);
+            UnityMainThreadDispatcher.Post(_ => _initializationListener?.OnInitializationFinished(null));
         }
 
         private static void SetAppodealInitializationCallback(IAppodealInitializationListener listener)
@@ -57,43 +57,43 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealInterstitialDidLoadCallback))]
         private static void InterstitialDidLoad(bool isPrecache)
         {
-            _interstitialListener?.OnInterstitialLoaded(isPrecache);
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialLoaded(isPrecache));
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         private static void InterstitialDidFailToLoad()
         {
-            _interstitialListener?.OnInterstitialFailedToLoad();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialFailedToLoad());
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         private static void InterstitialDidFailToPresent()
         {
-            _interstitialListener?.OnInterstitialShowFailed();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialShowFailed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         private static void InterstitialDidClick()
         {
-            _interstitialListener?.OnInterstitialClicked();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialClicked());
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         public static void InterstitialDidDismiss()
         {
-            _interstitialListener?.OnInterstitialClosed();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialClosed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         private static void InterstitialWillPresent()
         {
-            _interstitialListener?.OnInterstitialShown();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialShown());
         }
 
         [MonoPInvokeCallback(typeof(AppodealInterstitialCallbacks))]
         private static void InterstitialDidExpired()
         {
-            _interstitialListener?.OnInterstitialExpired();
+            UnityMainThreadDispatcher.Post(_ => _interstitialListener?.OnInterstitialExpired());
         }
 
         public void SetInterstitialCallbacks(IInterstitialAdListener listener)
@@ -108,49 +108,49 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoDidLoadCallback))]
         private static void RewardedVideoDidLoadAd(bool isPrecache)
         {
-            _rewardedVideoListener?.OnRewardedVideoLoaded(isPrecache);
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoLoaded(isPrecache));
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
         private static void RewardedVideoDidFailToLoadAd()
         {
-            _rewardedVideoListener?.OnRewardedVideoFailedToLoad();
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoFailedToLoad());
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
         private static void RewardedVideoDidFailToPresentWithError()
         {
-            _rewardedVideoListener?.OnRewardedVideoShowFailed();
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoShowFailed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoDidDismissCallback))]
         private static void RewardedVideoWillDismiss(bool isFinished)
         {
-            _rewardedVideoListener?.OnRewardedVideoClosed(isFinished);
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoClosed(isFinished));
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoDidFinishCallback))]
         private static void RewardedVideoDidFinish(double amount, string currency)
         {
-            _rewardedVideoListener?.OnRewardedVideoFinished(amount, currency);
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoFinished(amount, currency));
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
         private static void RewardedVideoDidPresent()
         {
-            _rewardedVideoListener?.OnRewardedVideoShown();
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoShown());
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
         private static void RewardedVideoDidExpired()
         {
-            _rewardedVideoListener?.OnRewardedVideoExpired();
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoExpired());
         }
 
         [MonoPInvokeCallback(typeof(AppodealRewardedVideoCallbacks))]
         private static void RewardedVideoDidReceiveTap()
         {
-            _rewardedVideoListener?.OnRewardedVideoClicked();
+            UnityMainThreadDispatcher.Post(_ => _rewardedVideoListener?.OnRewardedVideoClicked());
         }
 
         public void SetRewardedVideoCallbacks(IRewardedVideoAdListener listener)
@@ -165,73 +165,73 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealBannerDidLoadCallback))]
         private static void BannerDidLoadAd(int height, bool isPrecache)
         {
-            _bannerListener?.OnBannerLoaded(height, isPrecache);
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerLoaded(height, isPrecache));
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerCallbacks))]
         private static void BannerDidFailToLoadAd()
         {
-            _bannerListener?.OnBannerFailedToLoad();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerFailedToLoad());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerCallbacks))]
         private static void BannerDidClick()
         {
-            _bannerListener?.OnBannerClicked();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerClicked());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerCallbacks))]
         private static void BannerDidExpired()
         {
-            _bannerListener?.OnBannerExpired();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerExpired());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerCallbacks))]
         private static void BannerDidShow()
         {
-            _bannerListener?.OnBannerShown();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerShown());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerCallbacks))]
         private static void BannerDidFailToPresent()
         {
-            _bannerListener?.OnBannerShowFailed();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerShowFailed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewDidLoadCallback))]
         private static void BannerViewDidLoadAd(int height, bool isPrecache)
         {
-            _bannerListener?.OnBannerLoaded(height, isPrecache);
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerLoaded(height, isPrecache));
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void BannerViewDidFailToLoadAd()
         {
-            _bannerListener?.OnBannerFailedToLoad();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerFailedToLoad());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void BannerViewDidClick()
         {
-            _bannerListener?.OnBannerClicked();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerClicked());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void BannerViewDidShow()
         {
-            _bannerListener?.OnBannerShown();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerShown());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void BannerViewDidFailToPresent()
         {
-            _bannerListener?.OnBannerShowFailed();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerShowFailed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealBannerViewCallbacks))]
         private static void BannerViewDidExpired()
         {
-            _bannerListener?.OnBannerExpired();
+            UnityMainThreadDispatcher.Post(_ => _bannerListener?.OnBannerExpired());
         }
 
         public void SetBannerCallbacks(IBannerAdListener listener)
@@ -246,37 +246,37 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealMrecViewDidLoadCallback))]
         private static void MrecViewDidLoadAd(bool isPrecache)
         {
-            _mrecListener?.OnMrecLoaded(isPrecache);
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecLoaded(isPrecache));
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void MrecViewDidFailToLoadAd()
         {
-            _mrecListener?.OnMrecFailedToLoad();
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecFailedToLoad());
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void MrecViewDidClick()
         {
-            _mrecListener?.OnMrecClicked();
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecClicked());
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void MrecViewDidShow()
         {
-            _mrecListener?.OnMrecShown();
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecShown());
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void MrecViewDidFailToPresent()
         {
-            _mrecListener?.OnMrecShowFailed();
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecShowFailed());
         }
 
         [MonoPInvokeCallback(typeof(AppodealMrecViewCallbacks))]
         private static void MrecViewDidExpired()
         {
-            _mrecListener?.OnMrecExpired();
+            UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecExpired());
         }
 
         public void SetMrecCallbacks(IMrecAdListener listener)
@@ -320,17 +320,17 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             if (String.IsNullOrWhiteSpace(purchaseJson))
             {
-                _purchaseListener?.OnPurchaseValidationSucceeded(Array.Empty<string>());
+                UnityMainThreadDispatcher.Post(_ => _purchaseListener?.OnPurchaseValidationSucceeded(Array.Empty<string>()));
                 return;
             }
 
-            _purchaseListener?.OnPurchaseValidationSucceeded(new[] { purchaseJson });
+            UnityMainThreadDispatcher.Post(_ => _purchaseListener?.OnPurchaseValidationSucceeded(new[] { purchaseJson }));
         }
 
         [MonoPInvokeCallback(typeof(PurchaseValidationFailedCallback))]
         private static void PurchaseValidationFailed(string reason)
         {
-            _purchaseListener?.OnPurchaseValidationFailed(reason, Array.Empty<string>());
+            UnityMainThreadDispatcher.Post(_ => _purchaseListener?.OnPurchaseValidationFailed(reason, Array.Empty<string>()));
         }
 
         public void SetPurchaseCallbacks(IPurchaseListener listener)
@@ -345,13 +345,13 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationSucceededCallback))]
         private static void InAppPurchaseValidationSucceeded(string json)
         {
-            _inAppPurchaseValidationListener?.OnInAppPurchaseValidationSucceeded(json);
+            UnityMainThreadDispatcher.Post(_ => _inAppPurchaseValidationListener?.OnInAppPurchaseValidationSucceeded(json));
         }
 
         [MonoPInvokeCallback(typeof(InAppPurchaseValidationFailedCallback))]
         private static void InAppPurchaseValidationFailed(string error)
         {
-            _inAppPurchaseValidationListener?.OnInAppPurchaseValidationFailed(error);
+            UnityMainThreadDispatcher.Post(_ => _inAppPurchaseValidationListener?.OnInAppPurchaseValidationFailed(error));
         }
 
         private static void SetInAppPurchaseValidationCallbacks(IInAppPurchaseValidationListener listener)
@@ -790,6 +790,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
         {
             SetInAppPurchaseValidationCallbacks(listener);
             AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
+        }
+
+        public void SetEndpoint(string baseUrl)
+        {
+            AppodealObjCBridge.AppodealSetEndpoint(baseUrl);
+        }
+
+        public string GetEndpoint()
+        {
+            return AppodealObjCBridge.AppodealGetEndpoint();
         }
 
         public void SetBidonEndpoint(string baseUrl)

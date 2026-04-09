@@ -22,6 +22,7 @@ namespace AppodealInc.Mediation.Utils.Editor
         private const BindingFlags PublicStaticFlags = BindingFlags.Public | BindingFlags.Static;
         public const string KeySkAdNetworkItems = "SKAdNetworkItems";
         public const string KeySkAdNetworkID = "SKAdNetworkIdentifier";
+        public const string KeyAdNetworkIdentifiers = "AdNetworkIdentifiers";
         public const string GadApplicationIdentifier = "GADApplicationIdentifier";
         public const string NsUserTrackingUsageDescriptionKey = "NSUserTrackingUsageDescription";
         public const string NsUserTrackingUsageDescription = "This identifier will be used to deliver personalized ads to you";
