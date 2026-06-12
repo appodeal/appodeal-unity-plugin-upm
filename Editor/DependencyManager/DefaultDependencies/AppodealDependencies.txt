@@ -94,7 +94,7 @@
 		<androidPackage id="appodeal_admob" spec="com.appodeal.ads.sdk.adapters:admob:24.7.0.0" />
 		<androidPackage id="appodeal_amazon" spec="com.appodeal.ads.sdk.adapters:amazon:11.3.0.0" />
 		<androidPackage id="appodeal_applovin" spec="com.appodeal.ads.sdk.adapters:applovin:13.5.1.0" />
-		<androidPackage id="appodeal_appsflyer" spec="com.appodeal.ads.sdk.adapters:appsflyer:6.17.3.1" />
+		<androidPackage id="appodeal_appsflyer" spec="com.appodeal.ads.sdk.adapters:appsflyer:6.18.0.1" />
 		<androidPackage id="appodeal_bidmachine" spec="com.appodeal.ads.sdk.adapters:bidmachine:3.7.1.0" />
 		<androidPackage id="appodeal_bidon" spec="com.appodeal.ads.sdk.adapters:bidon:0.13.0.0" />
 		<androidPackage id="appodeal_bigo_ads" spec="com.appodeal.ads.sdk.adapters:bigo_ads:5.6.2.0" />
@@ -113,7 +113,6 @@
 		<androidPackage id="appodeal_moloco" spec="com.appodeal.ads.sdk.adapters:moloco:4.3.1.0" />
 		<androidPackage id="appodeal_my_target" spec="com.appodeal.ads.sdk.adapters:my_target:5.47.1.0" />
 		<androidPackage id="appodeal_ogury" spec="com.appodeal.ads.sdk.adapters:ogury:6.2.0.0" />
-		<androidPackage id="appodeal_pangle" spec="com.appodeal.ads.sdk.adapters:pangle:7.7.0.2.0" />
 		<androidPackage id="appodeal_pubmatic" spec="com.appodeal.ads.sdk.adapters:pubmatic:4.10.0.0" />
 		<androidPackage id="appodeal_sentry" spec="com.appodeal.ads.sdk.adapters:sentry_analytics:8.26.0.0" />
 		<androidPackage id="appodeal_smaato" spec="com.appodeal.ads.sdk.adapters:smaato:22.7.2.0" />
@@ -127,7 +126,6 @@
 		<androidPackage id="bidmachine_meta_audience_network" spec="io.bidmachine:ads.networks.meta_audience:6.21.0.1" />
 		<androidPackage id="bidmachine_mintegral" spec="io.bidmachine:ads.networks.mintegral:17.1.61.1" />
 		<androidPackage id="bidmachine_my_target" spec="io.bidmachine:ads.networks.my_target:5.47.1.2" />
-		<androidPackage id="bidmachine_pangle" spec="io.bidmachine:ads.networks.pangle:7.7.0.2.2" />
 		<androidPackage id="bidmachine_vungle" spec="io.bidmachine:ads.networks.vungle:7.6.1.2" />
 		<androidPackage id="bidon_amazon" spec="org.bidon:amazon-adapter:11.3.0.0" />
 		<androidPackage id="bidon_applovin" spec="org.bidon:applovin-adapter:13.5.1.0" />
@@ -160,7 +158,7 @@
 		<androidPackage id="levelplay_moloco" spec="com.unity3d.ads-mediation:moloco-adapter:5.5.0" />
 		<androidPackage id="levelplay_my_target" spec="com.unity3d.ads-mediation:mytarget-adapter:5.4.0" />
 		<androidPackage id="levelplay_ogury" spec="com.unity3d.ads-mediation:ogury-adapter:5.2.0" />
-		<androidPackage id="levelplay_pangle" spec="com.unity3d.ads-mediation:pangle-adapter:5.3.0" />
+		<androidPackage id="levelplay_pangle" spec="com.unity3d.ads-mediation:pangle-adapter:5.18.0" />
 		<androidPackage id="levelplay_smaato" spec="com.unity3d.ads-mediation:smaato-adapter:5.0.0" />
 		<androidPackage id="levelplay_unity_ads" spec="com.unity3d.ads-mediation:unityads-adapter:5.6.0" />
 		<androidPackage id="levelplay_verve" spec="com.unity3d.ads-mediation:verve-adapter:5.2.0" />
@@ -180,7 +178,7 @@
 		<androidPackage id="max_moloco" spec="com.applovin.mediation:moloco-adapter:4.3.1.0" />
 		<androidPackage id="max_my_target" spec="com.applovin.mediation:mytarget-adapter:5.47.1.0" />
 		<androidPackage id="max_ogury" spec="com.applovin.mediation:ogury-presage-adapter:6.2.0.0" />
-		<androidPackage id="max_pangle" spec="com.applovin.mediation:bytedance-adapter:7.7.0.2.0" />
+		<androidPackage id="max_pangle" spec="com.applovin.mediation:bytedance-adapter:8.1.0.3.0" />
 		<androidPackage id="max_pubmatic" spec="com.applovin.mediation:pubmatic-adapter:4.10.0.0" />
 		<androidPackage id="max_smaato" spec="com.applovin.mediation:smaato-adapter:22.7.2.3" />
 		<androidPackage id="max_unity_ads" spec="com.applovin.mediation:unityads-adapter:4.17.0.0" />
