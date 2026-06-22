@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEditor;
 using AppodealInc.Mediation.Utils.Editor;
 
@@ -10,13 +9,13 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DependenciesInstaller
     {
-        internal static async Task<bool> EnsureDependenciesXmlFileAsync()
+        internal static bool EnsureDependenciesXmlFile()
         {
             try
             {
                 if (File.Exists(AppodealEditorConstants.DependenciesFilePath))
                 {
-                    bool versionMatches = await VersionComparer.IsLocalDependenciesVersionMatchingPackageVersionAsync();
+                    bool versionMatches = VersionComparer.IsLocalDependenciesVersionMatchingPackageVersion();
                     if (versionMatches) return false;
                 }
 

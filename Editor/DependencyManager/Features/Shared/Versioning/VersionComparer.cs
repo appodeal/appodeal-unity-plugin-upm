@@ -13,7 +13,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private static readonly Regex PluginVersionRegex = new(DmConstants.Regex.PluginVersionPattern);
         private static readonly Regex AdapterVersionRegex = new(DmConstants.Regex.AdapterVersionPattern);
 
-        public static async Task<bool> IsLocalDependenciesVersionMatchingPackageVersionAsync()
+        public static bool IsLocalDependenciesVersionMatchingPackageVersion()
         {
             var depsReadOutcome = DataLoader.TryReadLocalDependencies();
             if (!depsReadOutcome.IsSuccess)
@@ -29,7 +29,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 return false;
             }
 
-            var packageVersionLookupOutcome = await PackageVersionProvider.TryLookupVersionAsync();
+            var packageVersionLookupOutcome = PackageVersionProvider.TryLookupVersion();
             if (!packageVersionLookupOutcome.IsSuccess)
             {
                 LogHelper.LogWarning($"Failed to get current plugin version. Reason: '{packageVersionLookupOutcome.Failure.Message}'");
