@@ -101,7 +101,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         private static async Task RunContinuationFlowAsync()
         {
-            bool depsUpdated = await DependenciesInstaller.EnsureDependenciesXmlFileAsync();
+            bool depsUpdated = DependenciesInstaller.EnsureDependenciesXmlFile();
             bool androidLibUpdated = AndroidLibraryInstaller.EnsureAndroidLibraryDirectory(forceReinstall: depsUpdated);
 
             if (ShouldValidateDependencies())
