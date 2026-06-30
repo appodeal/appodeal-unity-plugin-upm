@@ -52,8 +52,8 @@ UIViewController* RootViewControllerUnityBannerView() {
     UIViewAutoresizing mask = UIViewAutoresizingNone;
 
     UIView *superView = RootViewControllerUnityBannerView().view;
-    CGSize  superviewSize = RootViewControllerUnityBannerView().view.bounds.size;
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize  superviewSize = superView.bounds.size;
+    CGFloat screenScale = superView.traitCollection.displayScale;
 
     CGFloat bannerHeight    = self.bannerView.frame.size.height;
     CGFloat bannerWidth     = self.bannerView.frame.size.width;
