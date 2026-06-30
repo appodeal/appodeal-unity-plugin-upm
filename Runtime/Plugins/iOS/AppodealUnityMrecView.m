@@ -44,8 +44,8 @@ UIViewController* RootViewControllerUnityMrec() {
     UIViewAutoresizing mask = UIViewAutoresizingNone;
 
     UIView *superView = RootViewControllerUnityMrec().view;
-    CGSize  superviewSize = RootViewControllerUnityMrec().view.bounds.size;
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize  superviewSize = superView.bounds.size;
+    CGFloat screenScale = superView.traitCollection.displayScale;
 
     CGFloat mrecHeight    = self.mrecView.frame.size.height;
     CGFloat mrecWidth     = self.mrecView.frame.size.width;
