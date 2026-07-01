@@ -28,6 +28,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
         private const int AppodealShowStyleBannerLeft = 1 << 6;
         private const int AppodealShowStyleBannerRight = 1 << 7;
 
+        private static bool _mrecTriggerOnLoadedOnPrecache = false;
+
         private static IMrecAdListener _mrecListener;
         private static IBannerAdListener _bannerListener;
         private static IPurchaseListener _purchaseListener;
@@ -246,6 +248,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [MonoPInvokeCallback(typeof(AppodealMrecViewDidLoadCallback))]
         private static void MrecViewDidLoadAd(bool isPrecache)
         {
+            if (isPrecache && !_mrecTriggerOnLoadedOnPrecache) return;
             UnityMainThreadDispatcher.Post(_ => _mrecListener?.OnMrecLoaded(isPrecache));
         }
 
@@ -522,6 +525,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
             SetCallbacks();
 
             AppodealObjCBridge.AppodealInitialize(appKey, NativeAdTypesForType(adTypes), $"{AppodealVersions.GetPluginVersion()}-upm", AppodealVersions.GetUnityVersion());
+
+            if ((adTypes & AppodealAdType.Mrec) != 0 && AppodealObjCBridge.AppodealIsMrecViewAutoCacheEnabled())
+            {
+                AppodealObjCBridge.AppodealLoadMrecView();
+            }
         }
 
         public bool IsInitialized(int adType)
@@ -551,17 +559,37 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public bool IsLoaded(int adTypes)
         {
-            return AppodealObjCBridge.AppodealIsReadyWithStyle(NativeStyleForIsReady(adTypes));
+            return adTypes == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealIsMrecViewReady()
+                : AppodealObjCBridge.AppodealIsReadyWithStyle(NativeStyleForIsReady(adTypes));
         }
 
         public void Cache(int adTypes)
         {
-            AppodealObjCBridge.AppodealCacheAd(NativeAdTypesForType(adTypes));
+            if ((adTypes & AppodealAdType.Mrec) != 0)
+            {
+                AppodealObjCBridge.AppodealLoadMrecView();
+            }
+
+            int managedAdTypes = adTypes & ~AppodealAdType.Mrec;
+            if (managedAdTypes != 0)
+            {
+                AppodealObjCBridge.AppodealCacheAd(NativeAdTypesForType(managedAdTypes));
+            }
         }
 
         public void SetAutoCache(int adTypes, bool autoCache)
         {
-            AppodealObjCBridge.AppodealSetAutoCache(autoCache, NativeAdTypesForType(adTypes));
+            if ((adTypes & AppodealAdType.Mrec) != 0)
+            {
+                AppodealObjCBridge.AppodealSetMrecViewAutoCache(autoCache);
+            }
+
+            int managedAdTypes = adTypes & ~AppodealAdType.Mrec;
+            if (managedAdTypes != 0)
+            {
+                AppodealObjCBridge.AppodealSetAutoCache(autoCache, NativeAdTypesForType(managedAdTypes));
+            }
         }
 
         public void Hide(int adTypes)
@@ -584,7 +612,9 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public bool IsPrecache(int adTypes)
         {
-            return AppodealObjCBridge.AppodealIsPrecacheAd(NativeAdTypesForType(adTypes));
+            return adTypes == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealIsMrecViewPrecache("default")
+                : AppodealObjCBridge.AppodealIsPrecacheAd(NativeAdTypesForType(adTypes));
         }
 
         public void SetSmartBanners(bool value)
@@ -681,12 +711,16 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public bool CanShow(int adTypes, string placement)
         {
-            return AppodealObjCBridge.AppodealCanShowWithPlacement(NativeAdTypesForType(adTypes), placement);
+            return adTypes == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealCanShowMrecView(placement)
+                : AppodealObjCBridge.AppodealCanShowWithPlacement(NativeAdTypesForType(adTypes), placement);
         }
 
         public bool CanShow(int adTypes)
         {
-            return AppodealObjCBridge.AppodealCanShow(NativeAdTypesForType(adTypes));
+            return adTypes == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealCanShowMrecView("default")
+                : AppodealObjCBridge.AppodealCanShow(NativeAdTypesForType(adTypes));
         }
 
         public AppodealReward GetReward(string placement)
@@ -702,11 +736,17 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public double GetPredictedEcpm(int adType)
         {
-            return AppodealObjCBridge.AppodealGetPredictedEcpm(NativeAdTypesForType(adType));
+            return adType == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealGetMrecViewPredictedEcpm()
+                : AppodealObjCBridge.AppodealGetPredictedEcpm(NativeAdTypesForType(adType));
         }
 
 		public double GetPredictedEcpmForPlacement(int adType, string placement)
 		{
+			if (adType == AppodealAdType.Mrec)
+			{
+				return AppodealObjCBridge.AppodealGetMrecViewPredictedEcpm();
+			}
 			if (String.IsNullOrEmpty(placement)) placement = "default";
 			return AppodealObjCBridge.AppodealGetPredictedEcpmForPlacement(NativeAdTypesForType(adType), placement);
 		}
@@ -763,12 +803,23 @@ namespace AppodealStack.Monetization.Platforms.Ios
 
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
-            AppodealObjCBridge.AppodealSetTriggerPrecacheCallbacks(NativeAdTypesForType(adTypes), onLoadedTriggerBoth);
+            if ((adTypes & AppodealAdType.Mrec) != 0)
+            {
+                _mrecTriggerOnLoadedOnPrecache = onLoadedTriggerBoth;
+            }
+
+            int managedAdTypes = adTypes & ~AppodealAdType.Mrec;
+            if (managedAdTypes != 0)
+            {
+                AppodealObjCBridge.AppodealSetTriggerPrecacheCallbacks(NativeAdTypesForType(managedAdTypes), onLoadedTriggerBoth);
+            }
         }
 
         public bool IsAutoCacheEnabled(int adType)
         {
-            return AppodealObjCBridge.AppodealIsAutoCacheEnabled(NativeAdTypesForType(adType));
+            return adType == AppodealAdType.Mrec
+                ? AppodealObjCBridge.AppodealIsMrecViewAutoCacheEnabled()
+                : AppodealObjCBridge.AppodealIsAutoCacheEnabled(NativeAdTypesForType(adType));
         }
 
         public void TrackInAppPurchase(double amount, string currency)

@@ -26,8 +26,11 @@
 static AppodealUnityMrecView *mrecUnity;
 static AppodealUnityBannerView *bannerUnity;
 
-UIViewController *RootViewController() {
-    return ((UnityAppController *)[UIApplication sharedApplication].delegate).rootViewController;
+static AppodealUnityMrecView *MrecUnity() {
+    if (!mrecUnity) {
+        mrecUnity = [AppodealUnityMrecView sharedInstance];
+    }
+    return mrecUnity;
 }
 
 static NSDateFormatter *DateFormatter() {
@@ -72,6 +75,10 @@ static NSDictionary <NSString *, id> *NSDictionaryFromUTF8String(const char *cSt
     return outputDict;
 }
 
+UIViewController *RootViewController() {
+    return ((UnityAppController *)[UIApplication sharedApplication].delegate).rootViewController;
+}
+
 void AppodealInitialize(const char *apiKey, int types, const char *pluginVer, const char *engineVer) {
     [Appodeal setFramework:APDFrameworkUnity version: [NSString stringWithUTF8String:engineVer]];
     [Appodeal setPluginVersion:[NSString stringWithUTF8String:pluginVer]];
@@ -99,10 +106,7 @@ BOOL AppodealShowBannerAdViewForPlacement(int YAxis, int XAxis, const char *plac
 }
 
 BOOL AppodealShowMrecAdViewForPlacement(int YAxis, int XAxis, const char *placement) {
-    if (!mrecUnity) {
-        mrecUnity = [AppodealUnityMrecView sharedInstance];
-    }
-    [mrecUnity showMrecView:RootViewController() XAxis:XAxis YAxis:YAxis placement:[NSString stringWithUTF8String:placement]];
+    [MrecUnity() showMrecView:RootViewController() XAxis:XAxis YAxis:YAxis placement:[NSString stringWithUTF8String:placement]];
     return false;
 }
 
@@ -112,6 +116,34 @@ BOOL AppodealIsReadyWithStyle(int style) {
 
 void AppodealCacheAd(int types) {
     [Appodeal cacheAd:types];
+}
+
+void AppodealLoadMrecView() {
+    [MrecUnity() loadMrecView];
+}
+
+BOOL AppodealIsMrecViewReady() {
+    return [MrecUnity() isMrecViewReady];
+}
+
+BOOL AppodealCanShowMrecView(const char *placement) {
+    return [MrecUnity() canShowMrecViewForPlacement:[NSString stringWithUTF8String:placement]];
+}
+
+BOOL AppodealIsMrecViewPrecache(const char *placement) {
+    return [MrecUnity() isMrecViewPrecacheForPlacement:[NSString stringWithUTF8String:placement]];
+}
+
+double AppodealGetMrecViewPredictedEcpm() {
+    return [MrecUnity() mrecViewPredictedEcpm];
+}
+
+void AppodealSetMrecViewAutoCache(BOOL autoCache) {
+    [MrecUnity() setMrecViewAutoCache:autoCache];
+}
+
+BOOL AppodealIsMrecViewAutoCacheEnabled() {
+    return [MrecUnity() isMrecViewAutoCacheEnabled];
 }
 
 void AppodealSetAutoCache(BOOL autoCache, int types) {
@@ -516,10 +548,7 @@ void AppodealSetMrecViewDelegate(AppodealMrecViewDidLoadCallback mrecViewDidLoad
     AppodealMrecViewDelegateInstance.mrecViewDidFailToPresentCallback = mrecViewDidFailToPresent;
     AppodealMrecViewDelegateInstance.mrecViewDidExpiredCallback = mrecViewDidExpired;
 
-    if (!mrecUnity) {
-        mrecUnity = [AppodealUnityMrecView sharedInstance];
-    }
-    [mrecUnity.mrecView setDelegate:AppodealMrecViewDelegateInstance];
+    [MrecUnity().mrecView setDelegate:AppodealMrecViewDelegateInstance];
 }
 
 static AppodealRewardedVideoDelegate *AppodealRewardedVideoDelegateInstance;

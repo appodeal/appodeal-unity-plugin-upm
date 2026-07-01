@@ -123,7 +123,6 @@ UIViewController* RootViewControllerUnityMrec() {
     [self setSharedMrecFrame:XAxis YAxis:YAxis];
     [self setupTouchProcessing];
     self.onScreen = YES;
-    [self.mrecView loadAd];
 }
 
 - (void)hideMrecView {
@@ -131,6 +130,35 @@ UIViewController* RootViewControllerUnityMrec() {
         [self.mrecView removeFromSuperview];
         self.onScreen = NO;
     }
+}
+
+- (void)loadMrecView {
+    self.mrecView.rootViewController = RootViewControllerUnityMrec();
+    [self.mrecView loadAd];
+}
+
+- (BOOL)isMrecViewReady {
+    return self.mrecView.isReady;
+}
+
+- (BOOL)canShowMrecViewForPlacement:(NSString*)placement {
+    return [self.mrecView hasReadyAdForPlacement:placement];
+}
+
+- (BOOL)isMrecViewPrecacheForPlacement:(NSString*)placement {
+    return [self.mrecView isPrecacheAdForPlacement:placement];
+}
+
+- (double)mrecViewPredictedEcpm {
+    return self.mrecView.predictedEcpm;
+}
+
+- (void)setMrecViewAutoCache:(BOOL)autoCache {
+    self.mrecView.autocache = autoCache;
+}
+
+- (BOOL)isMrecViewAutoCacheEnabled {
+    return self.mrecView.autocache;
 }
 
 - (void)setupTouchProcessing {

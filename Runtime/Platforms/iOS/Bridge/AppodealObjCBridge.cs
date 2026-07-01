@@ -73,6 +73,27 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealHideMrecView();
 
         [DllImport("__Internal")]
+        internal static extern void AppodealLoadMrecView();
+
+        [DllImport("__Internal")]
+        internal static extern bool AppodealIsMrecViewReady();
+
+        [DllImport("__Internal")]
+        internal static extern bool AppodealCanShowMrecView(string placement);
+
+        [DllImport("__Internal")]
+        internal static extern bool AppodealIsMrecViewPrecache(string placement);
+
+        [DllImport("__Internal")]
+        internal static extern double AppodealGetMrecViewPredictedEcpm();
+
+        [DllImport("__Internal")]
+        internal static extern void AppodealSetMrecViewAutoCache(bool autoCache);
+
+        [DllImport("__Internal")]
+        internal static extern bool AppodealIsMrecViewAutoCacheEnabled();
+
+        [DllImport("__Internal")]
         internal static extern void AppodealCacheAd(int types);
 
         [DllImport("__Internal")]
