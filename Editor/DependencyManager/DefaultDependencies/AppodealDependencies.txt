@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<dependencies pluginVersion="4.2.0">
+<dependencies pluginVersion="4.3.0">
 	<iosPods>
 		<iosPod id="appodeal" name="Appodeal" version="4.3.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_adjust" name="AppodealAdjustAdapter" version="5.7.0.1" minTargetSdk="12.0" />
