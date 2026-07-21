@@ -75,7 +75,6 @@
 		<iosPod id="max_mintegral" name="AppLovinMediationMintegralAdapter" version="8.1.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="max_mobilefuse" name="AppLovinMediationMobileFuseAdapter" version="1.9.3.0" minTargetSdk="12.0" />
 		<iosPod id="max_moloco" name="AppLovinMediationMolocoAdapter" version="4.3.0.0" minTargetSdk="12.0" />
-		<iosPod id="max_my_target" name="AppLovinMediationMyTargetAdapter" version="5.43.0.0" minTargetSdk="14" />
 		<iosPod id="max_ogury" name="AppLovinMediationOguryPresageAdapter" version="5.1.1.0" minTargetSdk="12.0" />
 		<iosPod id="max_pangle" name="AppLovinMediationByteDanceAdapter" version="7.7.0.7.0" minTargetSdk="12.0" />
 		<iosPod id="max_pubmatic" name="AppLovinMediationPubMaticAdapter" version="4.10.0.0" minTargetSdk="12.0" />
@@ -174,7 +173,6 @@
 		<androidPackage id="max_mintegral" spec="com.applovin.mediation:mintegral-adapter:17.1.61.0" />
 		<androidPackage id="max_mobilefuse" spec="com.applovin.mediation:mobilefuse-adapter:1.11.0.0" />
 		<androidPackage id="max_moloco" spec="com.applovin.mediation:moloco-adapter:4.3.1.0" />
-		<androidPackage id="max_my_target" spec="com.applovin.mediation:mytarget-adapter:5.47.1.0" />
 		<androidPackage id="max_ogury" spec="com.applovin.mediation:ogury-presage-adapter:6.2.0.0" />
 		<androidPackage id="max_pangle" spec="com.applovin.mediation:bytedance-adapter:8.1.0.3.0" />
 		<androidPackage id="max_pubmatic" spec="com.applovin.mediation:pubmatic-adapter:4.10.0.0" />
