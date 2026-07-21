@@ -676,6 +676,11 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealSetChildDirectedTreatment(value);
         }
 
+        public void SetNonPersonalized(bool value)
+        {
+            AppodealObjCBridge.AppodealSetNonPersonalized(value);
+        }
+
         public List<string> GetNetworks(int adTypes)
         {
             var networksList = new List<string>();
