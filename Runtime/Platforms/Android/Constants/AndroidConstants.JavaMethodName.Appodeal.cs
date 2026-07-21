@@ -44,6 +44,7 @@ namespace AppodealStack.Monetization.Platforms.Android
                 public const string SetInterstitialCallbacks = "setInterstitialCallbacks";
                 public const string SetLogLevel = "setLogLevel";
                 public const string SetMrecCallbacks = "setMrecCallbacks";
+                public const string SetNonPersonalized = "setNonPersonalized";
                 public const string SetPurchaseListener = "setPurchaseListener";
                 public const string SetRewardedVideoCallbacks = "setRewardedVideoCallbacks";
                 public const string SetSharedAdsInstanceAcrossActivities = "setSharedAdsInstanceAcrossActivities";

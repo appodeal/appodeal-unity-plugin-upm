@@ -220,6 +220,10 @@ void AppodealSetChildDirectedTreatment(BOOL value) {
     [Appodeal setChildDirectedTreatment:value];
 }
 
+void AppodealSetNonPersonalized(BOOL value) {
+    [Appodeal setNonPersonalized:value];
+}
+
 char *AppodealGetNetworks(int types) {
     NSArray<NSString *> *networksArray = [Appodeal registeredNetworkNamesForAdType:types];
     NSString *networks = [[networksArray valueForKey:@"description"] componentsJoinedByString:@","];

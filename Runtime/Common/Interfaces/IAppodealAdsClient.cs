@@ -61,6 +61,7 @@ namespace AppodealStack.Monetization.Common
         void MuteVideosIfCallsMuted(bool value);
         void ShowTestScreen();
         void SetChildDirectedTreatment(bool value);
+        void SetNonPersonalized(bool value);
         void Destroy(int adType);
         void SetExtraData(string key, bool value);
         void SetExtraData(string key, int value);
