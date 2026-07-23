@@ -27,7 +27,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             if (!DmChoicesScriptableObject.Instance.CheckPeriodicallyForPluginUpdates) return false;
 
-            var packageVersionLookupOutcome = await PackageVersionProvider.TryLookupVersionAsync();
+            var packageVersionLookupOutcome = PackageVersionProvider.TryLookupVersion();
             if (!packageVersionLookupOutcome.IsSuccess) return false;
 
             var latestPluginSelectOutcome = VersionComparer.TrySelectLatestPlugin(availablePlugins, DmChoicesScriptableObject.Instance.IncludePluginBetaVersions);

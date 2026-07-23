@@ -698,6 +698,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetChildDirectedTreatment method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
+        public void SetNonPersonalized(bool value)
+        {
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetNonPersonalized method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+        }
+
         public void DisableNetwork(string network)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.DisableNetwork method on an unsupported platform. Run your application on either Android or iOS device to test this method.");

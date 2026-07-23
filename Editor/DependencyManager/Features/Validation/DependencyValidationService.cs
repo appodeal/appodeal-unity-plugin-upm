@@ -10,7 +10,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         public static async Task<bool> ValidateAsync(bool isManual)
         {
-            bool versionMatches = await VersionComparer.IsLocalDependenciesVersionMatchingPackageVersionAsync();
+            bool versionMatches = VersionComparer.IsLocalDependenciesVersionMatchingPackageVersion();
             if (!versionMatches)
             {
                 LogHelper.LogWarning("Skipping validation due to version mismatch or error");

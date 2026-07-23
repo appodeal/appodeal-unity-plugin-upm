@@ -226,6 +226,11 @@ namespace AppodealStack.Monetization.Platforms.Android
             AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetChildDirectedTreatment, AndroidAppodealHelper.GetJavaObject(isEnabled));
         }
 
+        public void SetNonPersonalized(bool value)
+        {
+            AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.SetNonPersonalized, value);
+        }
+
         public void DisableNetwork(string network)
         {
             AppodealJavaClass?.CallStatic(AndroidConstants.JavaMethodName.Appodeal.DisableNetwork, network);

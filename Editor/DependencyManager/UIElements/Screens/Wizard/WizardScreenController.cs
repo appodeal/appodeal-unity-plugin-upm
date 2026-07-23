@@ -48,9 +48,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public async Task<bool> TryInitializeAsync()
         {
-            var packageVersionLookupOutcome = await PackageVersionProvider.TryLookupVersionAsync(_cancellationToken);
-            if (_cancellationToken.IsCancellationRequested) return false;
-
+            var packageVersionLookupOutcome = PackageVersionProvider.TryLookupVersion();
             if (!packageVersionLookupOutcome.IsSuccess)
             {
                 LogHelper.LogError($"Failed to get plugin version: {packageVersionLookupOutcome.Failure.Message}");

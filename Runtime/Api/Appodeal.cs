@@ -653,6 +653,19 @@ namespace AppodealStack.Monetization.Api
         }
 
         /// <summary>
+        /// <para>
+        /// Sets whether ads should be served in a non-personalized manner. The publisher-set value takes precedence over the CMP one.
+        /// </para>
+        /// Call before the SDK initialization.
+        /// </summary>
+        /// <remarks>See <see href="https://docs.appodeal.com/unity/data-protection/gdpr-and-ccpa?distribution=upm"/> for more details.</remarks>
+        /// <param name="value">true to serve only non-personalized ads.</param>
+        public static void SetNonPersonalized(bool value)
+        {
+            GetInstance().SetNonPersonalized(value);
+        }
+
+        /// <summary>
         /// Destroys the cached ad. (Supported only for <see langword="Android"/> platform)
         /// </summary>
         /// <remarks>See <see href="https://docs.appodeal.com/unity/ad-types/banner?distribution=upm#destroy-hidden-banner"/> for more details.</remarks>
