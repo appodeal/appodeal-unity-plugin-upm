@@ -17,9 +17,26 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         private VisualElement _rootElement;
 
+        private EditorApplication.CallbackFunction _pendingActivation;
+
         private DmSettingsProvider(string path, SettingsScope scope = SettingsScope.User) : base(path, scope) { }
 
-        public override async void OnActivate(string searchContext, VisualElement rootElement)
+        // Unity can activate this page twice per opening: from the top bar menu it fires
+        // OnActivate -> OnDeactivate -> OnActivate in a single frame, and two overlapping
+        // activations leave the window blank. Deferring by a tick means only the last one runs.
+        public override void OnActivate(string searchContext, VisualElement rootElement)
+        {
+            CancelPendingActivation();
+
+            _pendingActivation = () =>
+            {
+                _pendingActivation = null;
+                ActivateInternal(rootElement);
+            };
+            EditorApplication.delayCall += _pendingActivation;
+        }
+
+        private async void ActivateInternal(VisualElement rootElement)
         {
             try
             {
@@ -99,7 +116,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             finally
             {
-                _rootElement?.Remove(_loadingView?.Root);
+                _loadingView?.Root?.RemoveFromHierarchy();
                 _loadingView?.Dispose();
                 _loadingView = null;
             }
@@ -107,7 +124,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public override void OnDeactivate()
         {
-            AnalyticsService.TrackClickEvent(ActionType.CloseDependencyManager);
+            if (_pendingActivation == null) AnalyticsService.TrackClickEvent(ActionType.CloseDependencyManager);
+
+            CancelPendingActivation();
 
             _cts?.Cancel();
             _cts?.Dispose();
@@ -128,6 +147,14 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             SdkTooltipOverlay.Cleanup();
             DropdownOverlay.Cleanup();
             WizardScrollViewHelper.Cleanup();
+        }
+
+        private void CancelPendingActivation()
+        {
+            if (_pendingActivation == null) return;
+
+            EditorApplication.delayCall -= _pendingActivation;
+            _pendingActivation = null;
         }
 
         [SettingsProvider]
