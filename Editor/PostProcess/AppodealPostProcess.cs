@@ -16,6 +16,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             if (AppodealSettings.Instance == null) return;
 
             IosPostprocessUtils.PrepareProject(path);
+            IosSwiftPackageEmbedder.Apply(path);
         }
     }
 }
