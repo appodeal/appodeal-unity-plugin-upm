@@ -8,7 +8,7 @@ using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    public static class IosPostProcessServices
+    internal static class IosPostProcessServices
     {
         private const string CfBundleURLTypes = "CFBundleURLTypes";
         private const string CfBundleURLSchemes = "CFBundleURLSchemes";

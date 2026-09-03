@@ -13,7 +13,7 @@ using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    public class IosPostprocessUtils : MonoBehaviour
+    internal static class IosPostProcessUtils
     {
         private const string Suffix = ".framework";
 
