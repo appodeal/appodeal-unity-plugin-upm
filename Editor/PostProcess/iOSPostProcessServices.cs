@@ -82,7 +82,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                     File.Copy(plistFileUnityPath, plistFileXcodePath, overwrite: true);
                     return true;
                 }
-                Debug.LogWarning($"No valid Firebase Plist file was found for {Application.identifier} at {plistFileUnityPath}. This service won't be initialized properly.");
+                Debug.LogWarning($"Firebase Plist file at {plistFileUnityPath} has BUNDLE_ID '{bundle?.AsString()}', expected '{Application.identifier}'. This service won't be initialized properly.");
                 return false;
             }
             Debug.LogWarning($"Firebase Plist file was not found at {plistFileUnityPath}. This service won't be initialized properly.");
