@@ -2,10 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -16,7 +13,6 @@ using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class IosPostprocessUtils : MonoBehaviour
     {
         private const string Suffix = ".framework";
@@ -223,24 +219,6 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
         }
 
-        private static void ReplaceInFile(string filePath, string searchText, string replaceText)
-        {
-            string contentString;
-            using (var reader = new StreamReader(filePath))
-            {
-                contentString = reader.ReadToEnd();
-                reader.Close();
-            }
-
-            contentString = Regex.Replace(contentString, searchText, replaceText);
-
-            using (var writer = new StreamWriter(filePath))
-            {
-                writer.Write(contentString);
-                writer.Close();
-            }
-        }
-
         private static readonly string[] FrameworkList =
         {
             "AdSupport",
@@ -343,34 +321,6 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             {
                 var libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
                 project.AddFileToBuild(target, libGuid);
-            }
-        }
-
-        private static void CopyAndReplaceDirectory(string srcPath, string dstPath)
-        {
-            if (Directory.Exists(dstPath))
-            {
-                Directory.Delete(dstPath);
-            }
-
-            if (File.Exists(dstPath))
-            {
-                File.Delete(dstPath);
-            }
-
-            Directory.CreateDirectory(dstPath);
-
-            foreach (var file in Directory.GetFiles(srcPath))
-            {
-                if (!file.Contains(".meta"))
-                {
-                    File.Copy(file, Path.Combine(dstPath, Path.GetFileName(file)));
-                }
-            }
-
-            foreach (var dir in Directory.GetDirectories(srcPath))
-            {
-                CopyAndReplaceDirectory(dir, Path.Combine(dstPath, Path.GetFileName(dir)));
             }
         }
 
