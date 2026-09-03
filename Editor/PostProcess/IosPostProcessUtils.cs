@@ -2,10 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -16,15 +13,14 @@ using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class IosPostprocessUtils : MonoBehaviour
+    internal static class IosPostProcessUtils
     {
         private const string Suffix = ".framework";
 
         [PostProcessBuild(41)]
         public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
-            if (buildTarget.ToString() != "iOS") return;
+            if (buildTarget != BuildTarget.iOS) return;
             if (AppodealSettings.Instance == null) return;
 
             string path = Path.Combine(buildPath, "Info.plist");
@@ -72,7 +68,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (array != null)
             {
-                foreach (var id in AppodealSettings.Instance.IosSkAdNetworkItemsList)
+                foreach (string id in AppodealSettings.Instance.IosSkAdNetworkItemsList)
                 {
                     if (ContainsSkAdNetworkIdentifier(array, id)) continue;
                     var added = array.AddDict();
@@ -162,7 +158,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!File.Exists(AppodealEditorConstants.DependenciesFilePath))
             {
-                Debug.LogWarning("Missing deps config (Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml). Ensure that Appodeal Unity plugin is imported correctly");
+                Debug.LogWarning($"Missing deps config ({AppodealEditorConstants.DependenciesFilePath}). Ensure that Appodeal Unity plugin is imported correctly");
                 return;
             }
 
@@ -220,24 +216,6 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             {
                 AddKeyToPlist(path, "NSCalendarsUsageDescription",
                     "$(PRODUCT_NAME) needs your calendar to provide personalized advertising experience tailored to you.");
-            }
-        }
-
-        private static void ReplaceInFile(string filePath, string searchText, string replaceText)
-        {
-            string contentString;
-            using (var reader = new StreamReader(filePath))
-            {
-                contentString = reader.ReadToEnd();
-                reader.Close();
-            }
-
-            contentString = Regex.Replace(contentString, searchText, replaceText);
-
-            using (var writer = new StreamWriter(filePath))
-            {
-                writer.Write(contentString);
-                writer.Close();
             }
         }
 
@@ -328,9 +306,9 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         private static void AddProjectFrameworks(IEnumerable<string> frameworks, PBXProject project, string target, bool weak)
         {
-            foreach (var framework in frameworks)
+            foreach (string framework in frameworks)
             {
-                if (!project.ContainsFramework(target, framework))
+                if (!project.ContainsFramework(target, framework + Suffix))
                 {
                     project.AddFrameworkToProject(target, framework + Suffix, weak);
                 }
@@ -339,38 +317,10 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         private static void AddProjectLibs(IEnumerable<string> libs, PBXProject project, string target)
         {
-            foreach (var lib in libs)
+            foreach (string lib in libs)
             {
-                var libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
+                string libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
                 project.AddFileToBuild(target, libGuid);
-            }
-        }
-
-        private static void CopyAndReplaceDirectory(string srcPath, string dstPath)
-        {
-            if (Directory.Exists(dstPath))
-            {
-                Directory.Delete(dstPath);
-            }
-
-            if (File.Exists(dstPath))
-            {
-                File.Delete(dstPath);
-            }
-
-            Directory.CreateDirectory(dstPath);
-
-            foreach (var file in Directory.GetFiles(srcPath))
-            {
-                if (!file.Contains(".meta"))
-                {
-                    File.Copy(file, Path.Combine(dstPath, Path.GetFileName(file)));
-                }
-            }
-
-            foreach (var dir in Directory.GetDirectories(srcPath))
-            {
-                CopyAndReplaceDirectory(dir, Path.Combine(dstPath, Path.GetFileName(dir)));
             }
         }
 
@@ -430,7 +380,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             {
                 try
                 {
-                    var identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
+                    bool identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
 
                     if (identifierExists && value.AsString().Equals(id))
                     {

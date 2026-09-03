@@ -2,20 +2,19 @@
 
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    public class AppodealPostProcess : MonoBehaviour
+    internal static class AppodealPostProcess
     {
         [PostProcessBuild(100)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
-            if (target.ToString() != "iOS") return;
+            if (target != BuildTarget.iOS) return;
             if (AppodealSettings.Instance == null) return;
 
-            IosPostprocessUtils.PrepareProject(path);
+            IosPostProcessUtils.PrepareProject(path);
             IosSwiftPackageEmbedder.Apply(path);
         }
     }
