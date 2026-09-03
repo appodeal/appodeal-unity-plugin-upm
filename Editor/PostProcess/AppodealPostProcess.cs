@@ -11,7 +11,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         [PostProcessBuild(100)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
-            if (target.ToString() != "iOS") return;
+            if (target != BuildTarget.iOS) return;
             if (AppodealSettings.Instance == null) return;
 
             IosPostProcessUtils.PrepareProject(path);

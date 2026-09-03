@@ -20,7 +20,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         [PostProcessBuild(41)]
         public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
-            if (buildTarget.ToString() != "iOS") return;
+            if (buildTarget != BuildTarget.iOS) return;
             if (AppodealSettings.Instance == null) return;
 
             string path = Path.Combine(buildPath, "Info.plist");
@@ -68,7 +68,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (array != null)
             {
-                foreach (var id in AppodealSettings.Instance.IosSkAdNetworkItemsList)
+                foreach (string id in AppodealSettings.Instance.IosSkAdNetworkItemsList)
                 {
                     if (ContainsSkAdNetworkIdentifier(array, id)) continue;
                     var added = array.AddDict();
@@ -158,7 +158,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!File.Exists(AppodealEditorConstants.DependenciesFilePath))
             {
-                Debug.LogWarning("Missing deps config (Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml). Ensure that Appodeal Unity plugin is imported correctly");
+                Debug.LogWarning($"Missing deps config ({AppodealEditorConstants.DependenciesFilePath}). Ensure that Appodeal Unity plugin is imported correctly");
                 return;
             }
 
@@ -306,7 +306,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         private static void AddProjectFrameworks(IEnumerable<string> frameworks, PBXProject project, string target, bool weak)
         {
-            foreach (var framework in frameworks)
+            foreach (string framework in frameworks)
             {
                 if (!project.ContainsFramework(target, framework))
                 {
@@ -317,9 +317,9 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         private static void AddProjectLibs(IEnumerable<string> libs, PBXProject project, string target)
         {
-            foreach (var lib in libs)
+            foreach (string lib in libs)
             {
-                var libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
+                string libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
                 project.AddFileToBuild(target, libGuid);
             }
         }
@@ -380,7 +380,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             {
                 try
                 {
-                    var identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
+                    bool identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
 
                     if (identifierExists && value.AsString().Equals(id))
                     {
