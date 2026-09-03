@@ -308,7 +308,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             foreach (string framework in frameworks)
             {
-                if (!project.ContainsFramework(target, framework))
+                if (!project.ContainsFramework(target, framework + Suffix))
                 {
                     project.AddFrameworkToProject(target, framework + Suffix, weak);
                 }
