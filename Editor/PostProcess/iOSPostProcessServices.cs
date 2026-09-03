@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
@@ -102,7 +101,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 plist.root.values.TryGetValue(BundleIdPlistKey, out var bundle);
                 if (bundle?.AsString() == Application.identifier)
                 {
-                    FileUtil.CopyFileOrDirectory(plistFileUnityPath, plistFileXcodePath);
+                    File.Copy(plistFileUnityPath, plistFileXcodePath, overwrite: true);
                     return true;
                 }
                 Debug.LogWarning($"No valid Firebase Plist file was found for {Application.identifier} at {plistFileUnityPath}. This service won't be initialized properly.");
