@@ -5,8 +5,10 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEditor.iOS.Xcode;
 using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor
@@ -36,11 +38,9 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 return;
             }
 
-            string podfilePath = Path.GetFullPath(Path.Combine(buildOutputPath, "Podfile"));
             try
             {
-                string podfileContents = File.ReadAllText(podfilePath);
-                if (!podfileContents.Contains(MaxPod))
+                if (!IsMaxAdapterLinked(buildOutputPath))
                 {
                     AdReviewHelper.LogWarning("AppLovin MAX dependency not found --> Ad Review installation skipped");
                     return;
@@ -48,7 +48,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Failed to read '{podfilePath}' to check for AppLovin MAX dependency presence --> Ad Review installation skipped. Error: '{e.Message}'");
+                AdReviewHelper.LogError($"Failed to check for AppLovin MAX dependency presence --> Ad Review installation skipped. Error: '{e.Message}'");
                 return;
             }
 
@@ -73,6 +73,15 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             {
                 AdReviewHelper.Log($"Ad Review was successfully installed. Output: '{output}'");
             }
+        }
+
+        private static bool IsMaxAdapterLinked(string buildOutputPath)
+        {
+            string pbxProjectPath = PBXProject.GetPBXProjectPath(buildOutputPath);
+            if (Regex.IsMatch(File.ReadAllText(pbxProjectPath), $@"productName\s*=\s*""?{MaxPod}""?\s*;")) return true;
+
+            string podfilePath = Path.Combine(buildOutputPath, "Podfile");
+            return File.Exists(podfilePath) && Regex.IsMatch(File.ReadAllText(podfilePath), $@"^\s*pod\s+['""]{MaxPod}['""]", RegexOptions.Multiline);
         }
 
         private static bool DownloadIosSetupScript(string setupScriptPath)
