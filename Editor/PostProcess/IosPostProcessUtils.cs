@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -352,6 +353,15 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             if (!elementConfigDependencies.HasElements)
             {
                 return false;
+            }
+
+            foreach (var el in elementConfigDependencies.Descendants("swiftPackage"))
+            {
+                string packageName = el.Attribute("name")?.Value;
+                if (packageName != null && AdMobAdapterPodNames.Contains(packageName)) return true;
+
+                string replacedPods = el.Attribute("replacesPod")?.Value;
+                if (replacedPods != null && replacedPods.Split(',').Any(pod => AdMobAdapterPodNames.Contains(pod.Trim()))) return true;
             }
 
             var elementIosPods = elementConfigDependencies.Element("iosPods");
