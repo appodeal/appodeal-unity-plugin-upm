@@ -80,6 +80,21 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             return specParts[^1];
         }
 
+        public static string DecodeSwiftPackageVersion(string tag)
+        {
+            string[] parts = tag.Split('.');
+            if (parts.Length != 3 || parts[0].Length < 7) return tag;
+
+            string major = parts[0];
+            int headLength = major.Length % 2 == 0 ? 2 : 1;
+            var components = new List<string> { major[..headLength] };
+            for (int i = headLength; i < major.Length; i += 2) components.Add(Int32.Parse(major.Substring(i, 2)).ToString());
+            if (parts[1] != "0") components.Add(parts[1]);
+
+            string version = String.Join(".", components);
+            return parts[2] == "0" ? version : $"{version} (manifest rev {parts[2]})";
+        }
+
         public static bool IsValidPluginVersion(string pluginVersion)
         {
             if (String.IsNullOrEmpty(pluginVersion)) return false;
