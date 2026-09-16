@@ -13,6 +13,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
         internal sealed class EdmSettings
         {
             public string pluginVersion;
+            public bool swiftPackageManagerEnabled;
+            public bool allowEmptyPodfileGeneration;
             public bool podfileGenerationEnabled;
             public string cocoapodsIntegrationMethod;
             public bool addUseFrameworksToPodfile;
@@ -32,6 +34,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 var iosResolverType = Type.GetType("Google.IOSResolver, Google.IOSResolver");
                 if (iosResolverType == null) return;
 
+                swiftPackageManagerEnabled = iosResolverType.GetPropertyValue<bool>("SwiftPackageManagerEnabled", BindingFlags.Static | BindingFlags.Public);
+                allowEmptyPodfileGeneration = iosResolverType.GetPropertyValue<bool>("AllowEmptyPodfileGeneration", BindingFlags.Static | BindingFlags.Public);
                 podfileGenerationEnabled = iosResolverType.GetPropertyValue<bool>("PodfileGenerationEnabled", BindingFlags.Static | BindingFlags.Public);
 
                 cocoapodsIntegrationMethod = iosResolverType.GetPropertyValue<int>("CocoapodsIntegrationMethodPref", BindingFlags.Static | BindingFlags.Public) switch
