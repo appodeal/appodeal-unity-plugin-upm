@@ -1,6 +1,7 @@
 // ReSharper disable CheckNamespace
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using UnityEditor.Build.Reporting;
@@ -16,6 +17,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
         {
             public PlayerSettings playerSettings;
             public EdmSettings edmSettings;
+            public List<SwiftPackageInfo> swiftPackages;
             public string podfileContent;
 
             public IosInfoWrapper(BuildReport report)
@@ -24,8 +26,27 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 edmSettings = new EdmSettings();
 
                 if (report == null) return;
+
+                string pbxProjectPath = $"{report.summary.outputPath}/Unity-iPhone.xcodeproj/project.pbxproj";
+                swiftPackages = LoadSwiftPackages(pbxProjectPath);
+
                 string podfilePath = $"{report.summary.outputPath}/Podfile";
                 podfileContent = LoadFileAsCompressedBase64(podfilePath);
+            }
+
+            private List<SwiftPackageInfo> LoadSwiftPackages(string pbxProjectPath)
+            {
+                try
+                {
+                    if (!AppodealSettings.Instance?.IsAnalyticsConfigFileTransmissionEnabled ?? false) return null;
+
+                    return File.Exists(pbxProjectPath) ? SwiftPackageInfo.ParseFromPbxProject(File.ReadAllText(pbxProjectPath)) : null;
+                }
+                catch (Exception e)
+                {
+                    Logger.Log($"Error loading Swift packages from path '{pbxProjectPath}': {e.Message}");
+                    return null;
+                }
             }
 
             private string LoadFileAsCompressedBase64(string filePath)
