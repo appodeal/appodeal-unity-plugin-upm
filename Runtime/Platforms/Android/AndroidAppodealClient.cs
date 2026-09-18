@@ -540,11 +540,6 @@ namespace AppodealStack.Monetization.Platforms.Android
             }
         }
 
-        public void SetLocationTracking(bool isEnabled)
-        {
-            AndroidAppodealHelper.LogMethodNotSupported();
-        }
-
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             AndroidAppodealHelper.LogMethodNotSupported();

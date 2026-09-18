@@ -43,7 +43,6 @@ namespace AppodealStack.Monetization.Common
         List<string> GetNetworks(int adType);
         void DisableNetwork(string network);
         void DisableNetwork(string network, int adType);
-        void SetLocationTracking(bool value);
         void SetUserId(string id);
         string GetUserId();
         string GetVersion();
