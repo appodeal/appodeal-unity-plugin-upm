@@ -50,29 +50,51 @@ def fetch_podspec_from_custom(owner, repo, name, version):
     return data, url
 
 
-def extract_ios_sdk(podspec):
+def extract_ios_sdk(podspec, subspec_path=()):
     if not podspec:
         return None
-    for key in ('platforms', 'sdk'):
-        val = podspec.get(key)
-        if isinstance(val, dict):
-            return val.get('ios')
+    # a subspec may override the root deployment target
+    node, candidates = podspec, [podspec]
+    for part in subspec_path:
+        node = next((s for s in node.get('subspecs', []) if s.get('name') == part), None)
+        if node is None:
+            break
+        candidates.append(node)
+    for spec in reversed(candidates):
+        for key in ('platforms', 'sdk'):
+            val = spec.get(key)
+            if isinstance(val, dict) and val.get('ios'):
+                return val['ios']
     return None
 
 
 def process_pod(entry, sources):
     name, version, xml_sdk = entry['name'], entry['version'], entry['xml_sdk']
-    podspec, url = fetch_podspec_from_cdn(name, version)
-    found = bool(podspec)
-    if not found:
-        for owner, repo in sources:
-            podspec, url = fetch_podspec_from_custom(owner, repo, name, version)
-            if podspec:
-                found = True
-                break
-    ios_sdk = extract_ios_sdk(podspec)
-    match = found and ios_sdk == xml_sdk
-    return {**entry, 'ios_sdk': ios_sdk, 'url': url, 'found': found, 'match': match}
+    # "Pod/Subspec" lives in the root pod's podspec
+    root_name, *subspec_path = name.split('/')
+
+    # the same pod+version can be published to several repos with different targets
+    specs = []
+    podspec, url = fetch_podspec_from_cdn(root_name, version)
+    if podspec:
+        specs.append((extract_ios_sdk(podspec, subspec_path), url))
+    for owner, repo in sources:
+        podspec, url = fetch_podspec_from_custom(owner, repo, root_name, version)
+        if podspec:
+            specs.append((extract_ios_sdk(podspec, subspec_path), url))
+
+    found = bool(specs)
+    matched = [s for s in specs if s[0] == xml_sdk]
+    ios_sdk, url = (matched or specs or [(None, None)])[0]
+    return {
+        **entry,
+        'ios_sdk': ios_sdk,
+        'url': url,
+        'found': found,
+        'match': bool(matched),
+        'conflict': len({s[0] for s in specs}) > 1,
+        'specs': specs,
+    }
 
 
 def main(xml_path):
@@ -138,6 +160,24 @@ def main(xml_path):
         md.append('</details>')
     else:
         md.append('- All podspecs found ✅')
+    md.append('')
+
+    # informational only: XML matches one of the published copies, so it does not fail the run
+    conflicts = [r for r in results if r['conflict']]
+    md.append('### 🔀 Source Conflicts')
+    if conflicts:
+        md.append(f"- **{len(conflicts)} pods published with different iOS targets in different repos.**")
+        md.append('<details open>')
+        md.append('')
+        md.append('| Pod | XML SDK | JSON SDK per source |')
+        md.append('| --- | ------- | ------------------- |')
+        for r in conflicts:
+            per_source = ', '.join(f"[{sdk}]({url})" for sdk, url in r['specs'])
+            md.append(f"| {r['name']} | {r['xml_sdk']} | {per_source} |")
+        md.append('')
+        md.append('</details>')
+    else:
+        md.append('- No conflicts ✅')
     md.append('')
 
     md.append('### ✅ Matches')
