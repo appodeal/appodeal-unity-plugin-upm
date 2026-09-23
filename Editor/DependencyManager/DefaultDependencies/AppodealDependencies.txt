@@ -130,8 +130,8 @@
 		<iosPod id="appodeal_iab" name="AppodealIABAdapter" version="4.4.0.0" minTargetSdk="15.0" />
 		<iosPod id="appodeal_inmobi" name="AppodealInMobiAdapter" version="11.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_ironsource" name="AppodealIronSourceAdapter" version="9.6.0.0.0" minTargetSdk="13.0" />
-		<iosPod id="appodeal_levelplay" name="AppodealLevelPlayAdapter" version="9.6.0.0.0" minTargetSdk="13.0" />
-		<iosPod id="appodeal_max" name="AppodealAppLovinMAXAdapter" version="13.6.3.0" minTargetSdk="12.0" />
+		<iosPod id="appodeal_levelplay" name="AppodealLevelPlayAdapter" version="9.6.0.0.0" minTargetSdk="15.0" />
+		<iosPod id="appodeal_max" name="AppodealAppLovinMAXAdapter" version="13.6.3.0" minTargetSdk="15.0" />
 		<iosPod id="appodeal_meta_audience_network" name="AppodealMetaAudienceNetworkAdapter" version="6.21.1.0" minTargetSdk="13.0" />
 		<iosPod id="appodeal_mintegral" name="AppodealMintegralAdapter" version="8.1.6.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_my_target" name="AppodealMyTargetAdapter" version="5.43.0.0" minTargetSdk="14.0" />
@@ -146,7 +146,6 @@
 		<iosPod id="bidon_dt_exchange" name="BidonAdapterDTExchange" version="8.4.7.0" minTargetSdk="13.0" />
 		<iosPod id="bidon_inmobi" name="BidonAdapterInMobi" version="11.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidon_ironsource" name="BidonAdapterIronSource" version="9.6.0.0.0" minTargetSdk="13.0" />
-		<iosPod id="bidon_meta_audience_network" name="BidonAdapterMetaAudienceNetwork" version="6.21.1.1" minTargetSdk="13.0" />
 		<iosPod id="bidon_mobilefuse" name="BidonAdapterMobileFuse" version="1.11.0.0" minTargetSdk="12.0" />
 		<iosPod id="bidon_moloco" name="BidonAdapterMoloco" version="4.7.0.0" minTargetSdk="13.0" />
 		<iosPod id="bidon_my_target" name="BidonAdapterMyTarget" version="5.43.0.0" minTargetSdk="14.0" />
@@ -161,7 +160,6 @@
 		<iosPod id="levelplay_bigo_ads" name="IronSourceBigoAdapter" version="5.9.0.0" minTargetSdk="12.0" />
 		<iosPod id="levelplay_dt_exchange" name="IronSourceFyberAdapter" version="5.8.0.0" minTargetSdk="13.0" />
 		<iosPod id="levelplay_inmobi" name="IronSourceInMobiAdapter" version="5.7.0.0" minTargetSdk="12.0" />
-		<iosPod id="levelplay_meta_audience_network" name="IronSourceFacebookAdapter" version="5.3.0.0" minTargetSdk="13.0" />
 		<iosPod id="levelplay_mintegral" name="IronSourceMintegralAdapter" version="5.19.0.0" minTargetSdk="12.0" />
 		<iosPod id="levelplay_mobilefuse" name="IronSourceMobileFuseAdapter" version="5.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="levelplay_moloco" name="IronSourceMolocoAdapter" version="5.13.0.0" minTargetSdk="12.0" />
