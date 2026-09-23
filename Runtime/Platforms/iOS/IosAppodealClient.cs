@@ -699,11 +699,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
             AppodealObjCBridge.AppodealDisableNetworkForAdTypes(network, NativeAdTypesForType(adTypes));
         }
 
-        public void SetLocationTracking(bool value)
-        {
-            AppodealObjCBridge.AppodealSetLocationTracking(value);
-        }
-
         public string GetVersion()
         {
             return AppodealObjCBridge.AppodealGetVersion();

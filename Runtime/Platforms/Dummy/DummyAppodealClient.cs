@@ -713,11 +713,6 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.DisableNetwork method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
         }
 
-        public void SetLocationTracking(bool value)
-        {
-            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetLocationTracking method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-        }
-
         public void SetTriggerOnLoadedOnPrecache(int adTypes, bool onLoadedTriggerBoth)
         {
             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.SetTriggerOnLoadedOnPrecache method on an unsupported platform. Run your application on either Android or iOS device to test this method.");

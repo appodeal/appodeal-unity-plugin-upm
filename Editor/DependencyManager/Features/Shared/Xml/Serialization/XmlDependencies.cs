@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         [XmlAttribute(AttributeName = "pluginVersion")]
         public string PluginVersion { get; set; }
+
+        [XmlElement(ElementName = "remoteSwiftPackage")]
+        public List<RemoteSwiftPackageNode> RemoteSwiftPackages { get; set; }
 
         [XmlElement(ElementName = "iosPods")]
         public IosNode Ios { get; set; }

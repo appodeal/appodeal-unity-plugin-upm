@@ -459,16 +459,6 @@ namespace AppodealStack.Monetization.Api
             GetInstance().DisableNetwork(network, adType);
         }
 
-        /// <summary>
-        /// Defines whether location tracking is allowed. (Supported only for <see langword="iOS"/> platform)
-        /// </summary>
-        /// <remarks>On android location tracking is always enabled if the corresponding permission was given.</remarks>
-        /// <param name="value">true to enable location tracking, false to disable.</param>
-        public static void SetLocationTracking(bool value)
-        {
-            GetInstance().SetLocationTracking(value);
-        }
-
         /// <summary>Sets user id.</summary>
         /// <remarks>See <see href="https://docs.appodeal.com/unity/advanced/user-data?distribution=upm#set-user-id"/> for more details.</remarks>
         /// <param name="id">user id.</param>

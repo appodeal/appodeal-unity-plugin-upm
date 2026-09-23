@@ -6,6 +6,11 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DependenciesDiff
     {
+        private List<RemoteSwiftPackageNode> AddedSwiftPackages { get; set; }
+        private List<RemoteSwiftPackageNode> RemovedSwiftPackages { get; set; }
+        private List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)> UpdatedSwiftPackages { get; set; }
+        private List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)> DowngradedSwiftPackages { get; set; }
+
         private List<PodNode> AddedIosPods { get; set; }
         private List<PodNode> RemovedIosPods  { get; set; }
         private List<(PodNode Old, PodNode New)> UpdatedIosPods { get; set; }
@@ -20,6 +25,30 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public static DependenciesDiff Get(XmlDependencies local, XmlDependencies remote)
         {
+            var localSwiftPackageUrls = local?.RemoteSwiftPackages?.Select(p => p.Url).ToHashSet() ?? new HashSet<string>();
+            var addedSwiftPackages = remote?.RemoteSwiftPackages?
+                .Where(rPkg => !localSwiftPackageUrls.Contains(rPkg.Url)).ToList() ?? new List<RemoteSwiftPackageNode>();
+
+            var remoteSwiftPackageUrls = remote?.RemoteSwiftPackages?.Select(p => p.Url).ToHashSet() ?? new HashSet<string>();
+            var removedSwiftPackages = local?.RemoteSwiftPackages?
+                .Where(lPkg => !remoteSwiftPackageUrls.Contains(lPkg.Url)).ToList() ?? new List<RemoteSwiftPackageNode>();
+
+            var updatedSwiftPackages = new List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)>();
+            var downgradedSwiftPackages = new List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)>();
+            remote?.RemoteSwiftPackages?.ForEach(rPkg =>
+            {
+                var lPkg = local?.RemoteSwiftPackages?.FirstOrDefault(pkg => pkg.Url == rPkg.Url);
+                if (lPkg == null) return;
+                var comparisonResult = lPkg.Version.CompareAdapterVersionTo(rPkg.Version);
+                if (comparisonResult == VersionComparisonResult.WrongInput)
+                {
+                    LogHelper.LogWarning($"Invalid version format for Swift package '{lPkg.Url}': '{lPkg.Version}' vs '{rPkg.Version}'");
+                    return;
+                }
+                if (comparisonResult == VersionComparisonResult.Previous) updatedSwiftPackages.Add((lPkg, rPkg));
+                else if (comparisonResult == VersionComparisonResult.Subsequent) downgradedSwiftPackages.Add((lPkg, rPkg));
+            });
+
             var localIosPodIds = local?.Ios?.Pods?.Select(p => p.Id).ToHashSet() ?? new HashSet<string>();
             var addedIosPods = remote?.Ios?.Pods?
                 .Where(rPod => !localIosPodIds.Contains(rPod.Id)).ToList() ?? new List<PodNode>();
@@ -73,6 +102,10 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             return new DependenciesDiff
             {
+                AddedSwiftPackages = addedSwiftPackages,
+                RemovedSwiftPackages = removedSwiftPackages,
+                UpdatedSwiftPackages = updatedSwiftPackages,
+                DowngradedSwiftPackages = downgradedSwiftPackages,
                 AddedIosPods = addedIosPods,
                 RemovedIosPods = removedIosPods,
                 UpdatedIosPods = updatedIosPods,
@@ -86,7 +119,11 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public bool Any()
         {
-            return AddedIosPods?.Count > 0 ||
+            return AddedSwiftPackages?.Count > 0 ||
+                   RemovedSwiftPackages?.Count > 0 ||
+                   UpdatedSwiftPackages?.Count > 0 ||
+                   DowngradedSwiftPackages?.Count > 0 ||
+                   AddedIosPods?.Count > 0 ||
                    RemovedIosPods?.Count > 0 ||
                    UpdatedIosPods?.Count > 0 ||
                    DowngradedIosPods?.Count > 0 ||
@@ -99,6 +136,34 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         public override string ToString()
         {
             var changes = new List<string>();
+
+            if (AddedSwiftPackages?.Count > 0)
+            {
+                string addedSwiftPackages = String.Join("\n", AddedSwiftPackages.Where(pkg => pkg != null).SelectMany(ExtractSwiftPackageNames));
+                changes.Add($"Added iOS Swift packages:\n{addedSwiftPackages}");
+            }
+
+            if (RemovedSwiftPackages?.Count > 0)
+            {
+                string removedSwiftPackages = String.Join("\n", RemovedSwiftPackages.Where(pkg => pkg != null).SelectMany(ExtractSwiftPackageNames));
+                changes.Add($"Removed iOS Swift packages:\n{removedSwiftPackages}");
+            }
+
+            if (UpdatedSwiftPackages?.Count > 0)
+            {
+                string updatedSwiftPackages = String.Join("\n", UpdatedSwiftPackages
+                    .Where(tuple => tuple.Old != null && tuple.New != null)
+                    .SelectMany(tuple => FormatSwiftPackageUpdate(tuple.Old, tuple.New)));
+                changes.Add($"Updated iOS Swift packages:\n{updatedSwiftPackages}");
+            }
+
+            if (DowngradedSwiftPackages?.Count > 0)
+            {
+                string downgradedSwiftPackages = String.Join("\n", DowngradedSwiftPackages
+                    .Where(tuple => tuple.Old != null && tuple.New != null)
+                    .SelectMany(tuple => FormatSwiftPackageUpdate(tuple.Old, tuple.New)));
+                changes.Add($"Downgraded iOS Swift packages:\n{downgradedSwiftPackages}");
+            }
 
             if (AddedIosPods?.Count > 0)
             {
@@ -161,6 +226,18 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
 
             return changes.Count > 0 ? String.Join("\n\n", changes) : String.Empty;
+        }
+
+        private static IEnumerable<string> ExtractSwiftPackageNames(RemoteSwiftPackageNode pkg)
+        {
+            return pkg.Packages?.Select(product => product.Name) ?? Enumerable.Empty<string>();
+        }
+
+        private static IEnumerable<string> FormatSwiftPackageUpdate(RemoteSwiftPackageNode oldPkg, RemoteSwiftPackageNode newPkg)
+        {
+            string oldVersion = VersionComparer.DecodeSwiftPackageVersion(oldPkg.Version);
+            string newVersion = VersionComparer.DecodeSwiftPackageVersion(newPkg.Version);
+            return ExtractSwiftPackageNames(newPkg).Select(name => $"{name} v{oldVersion} --> v{newVersion}");
         }
 
         private static string ExtractAndroidPackageName(string spec)

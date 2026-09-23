@@ -139,9 +139,6 @@ namespace AppodealStack.Monetization.Platforms.Ios
         internal static extern void AppodealDisableNetworkForAdTypes(string name, int type);
 
         [DllImport("__Internal")]
-        internal static extern void AppodealSetLocationTracking(bool value);
-
-        [DllImport("__Internal")]
         internal static extern string AppodealGetVersion();
 
         [DllImport("__Internal")]

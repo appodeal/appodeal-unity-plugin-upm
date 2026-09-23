@@ -1,5 +1,37 @@
 # Changelog
 
+## [4.4.0](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.0...v4.4.0) (2026-09-23)
+
+### ⚠ BREAKING CHANGES
+
+* remove SetLocationTracking API (#178)
+
+### Features
+
+* **analytics:** report swift package data in ios build request ([#177](https://github.com/appodeal/appodeal-unity-plugin-upm/issues/177)) ([3b98b0a](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/3b98b0a803efbcc84b4db9f4783603727c3b50fd))
+* **editor:** add embed script for Swift Package artifacts ([3e3cb5e](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/3e3cb5e86f8efe3c50c3ebe31022eb743913f59c))
+* **editor:** add XML models for remote swift packages ([ddc33c8](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/ddc33c8314893d6ae1fc7e240286c04a5c1d7d47))
+* **editor:** embed Swift Package artifacts in iOS builds ([cb37848](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/cb378487e5e0e3dca9c096a0580dadd77fbfdd2b))
+* **editor:** report swift package changes in dependencies diff ([a601445](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/a60144553a177e3e0270d47d57e4c088b9a075a4))
+* **editor:** run Swift Package embedder in iOS post-process ([6b43431](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/6b43431750a7b10dc39ed21ace40196f02c710ff))
+* update Appodeal Android SDK to v4.4.0 ([af95487](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/af954877049818195c19c862c64f51135d29c591))
+* update Appodeal iOS SDK to v4.4.0 ([31caca6](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/31caca637f72030d59087f1353b60721b3c8d0f5))
+
+### Bug Fixes
+
+* defer DM page activation to avoid blank window ([#171](https://github.com/appodeal/appodeal-unity-plugin-upm/issues/171)) ([f5fb9e1](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/f5fb9e1af3f0169cce9351a11f243db4b3024192))
+* **editor:** check framework name with suffix in ContainsFramework ([c64354c](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/c64354c04e0a52200ad0b7608ffe2066649ae59b))
+* **editor:** clarify Firebase plist bundle id mismatch warning ([6b5fea0](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/6b5fea03650f44f5f0608a4548a773edfeb1fb25))
+* **editor:** dedupe Facebook URL scheme on append builds ([496f688](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/496f688e987506009503574b759696b64b2fadb0))
+* **editor:** detect AdMob adapter via SPM swift packages ([#175](https://github.com/appodeal/appodeal-unity-plugin-upm/issues/175)) ([52ccd80](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/52ccd8076b5e2b7b21910d0c2f01fa37e9018ea8))
+* **editor:** detect AppLovin MAX dependency beyond the Podfile ([#174](https://github.com/appodeal/appodeal-unity-plugin-upm/issues/174)) ([6250f68](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/6250f68ef36659b86da9dffe54e454971ce6c92a))
+* **editor:** keep remoteSwiftPackage nodes on xml round-trip ([6c13d83](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/6c13d83657813558b487d382d2994af172bf0ef2))
+* **editor:** overwrite Firebase plist on append builds ([61627dd](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/61627ddad95361d32b96ba068c7ec570b52fe5dc))
+
+### Miscellaneous Chores
+
+* remove SetLocationTracking API ([#178](https://github.com/appodeal/appodeal-unity-plugin-upm/issues/178)) ([f7a991a](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/f7a991ab2a70e10d11e6af16c5bf36612dc6c488))
+
 ## 4.3.0 (July 23, 2026)
 
 + Updated Appodeal Android SDK to v4.3.0

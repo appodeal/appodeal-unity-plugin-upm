@@ -2,14 +2,13 @@
 
 using System;
 using System.IO;
-using UnityEditor;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
-    public static class IosPostProcessServices
+    internal static class IosPostProcessServices
     {
         private const string CfBundleURLTypes = "CFBundleURLTypes";
         private const string CfBundleURLSchemes = "CFBundleURLSchemes";
@@ -47,43 +46,21 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             var plist = new PlistDocument();
             plist.ReadFromFile(plistPath);
 
-        #region FacebookAppID
-
             if (plist.root[FacebookAppID] == null) plist.root.SetString(FacebookAppID, fbAppId);
-
-        #endregion
-
-        #region FacebookClientToken
-
             if (plist.root[FacebookClientToken] == null) plist.root.SetString(FacebookClientToken, fbClientToken);
-
-        #endregion
-
-        #region FacebookAutoLogAppEventsEnabled
-
             if (plist.root[FacebookAutoLogAppEventsEnabled] == null) plist.root.SetBoolean(FacebookAutoLogAppEventsEnabled, areFbEventsEnabled);
-
-        #endregion
-
-        #region FacebookAdvertiserIDCollectionEnabled
-
             if (plist.root[FacebookAdvertiserIDCollectionEnabled] == null) plist.root.SetBoolean(FacebookAdvertiserIDCollectionEnabled, isFbIdsCollectionEnabled);
 
-        #endregion
-
-        #region CFBundleURLTypes
-
+            string fbScheme = $"fb{fbAppId}";
             var typesArray = plist.root[CfBundleURLTypes]?.AsArray() ?? plist.root.CreateArray(CfBundleURLTypes);
-
-            var schemesDict = typesArray.values.Find(el => el.AsDict()[CfBundleURLSchemes] != null)?.AsDict() ?? typesArray.AddDict();
-
-            if (schemesDict[CfBundleURLName]?.AsString() == null) schemesDict.SetString(CfBundleURLName, FacebookUrlName);
-
-            var schemesArray = schemesDict[CfBundleURLSchemes]?.AsArray() ?? schemesDict.CreateArray(CfBundleURLSchemes);
-
-            if (schemesArray.values.Find(el => el.AsString() == fbAppId) == null) schemesArray.AddString($"fb{fbAppId}");
-
-        #endregion
+            var fbType = typesArray.values.Find(el => el.AsDict()[CfBundleURLName]?.AsString() == FacebookUrlName)?.AsDict();
+            if (fbType == null)
+            {
+                fbType = typesArray.AddDict();
+                fbType.SetString(CfBundleURLName, FacebookUrlName);
+            }
+            var schemesArray = fbType[CfBundleURLSchemes]?.AsArray() ?? fbType.CreateArray(CfBundleURLSchemes);
+            if (schemesArray.values.Find(el => el.AsString() == fbScheme) == null) schemesArray.AddString(fbScheme);
 
             File.WriteAllText(plistPath, plist.WriteToString());
         }
@@ -102,10 +79,10 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 plist.root.values.TryGetValue(BundleIdPlistKey, out var bundle);
                 if (bundle?.AsString() == Application.identifier)
                 {
-                    FileUtil.CopyFileOrDirectory(plistFileUnityPath, plistFileXcodePath);
+                    File.Copy(plistFileUnityPath, plistFileXcodePath, overwrite: true);
                     return true;
                 }
-                Debug.LogWarning($"No valid Firebase Plist file was found for {Application.identifier} at {plistFileUnityPath}. This service won't be initialized properly.");
+                Debug.LogWarning($"Firebase Plist file at {plistFileUnityPath} has BUNDLE_ID '{bundle?.AsString()}', expected '{Application.identifier}'. This service won't be initialized properly.");
                 return false;
             }
             Debug.LogWarning($"Firebase Plist file was not found at {plistFileUnityPath}. This service won't be initialized properly.");

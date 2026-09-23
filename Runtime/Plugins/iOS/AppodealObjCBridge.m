@@ -240,10 +240,6 @@ void AppodealDisableNetworkForAdTypes(const char *networkName, int type) {
     [Appodeal disableNetworkForAdType:type name:[NSString stringWithUTF8String:networkName]];
 }
 
-void AppodealSetLocationTracking(BOOL value) {
-    [Appodeal setLocationTracking:value];
-}
-
 void AppodealSetTriggerPrecacheCallbacks(int types, bool value) {
     [Appodeal setTriggerPrecacheCallbacks:value types:types];
 }
