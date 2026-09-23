@@ -6,7 +6,7 @@
     "tagName": "v${version}",
     "push": true,
     "requireCleanWorkingDir": true,
-    "requireBranch": "release/*"
+    "requireBranch": ["release/*", "chore/*prepare-release"]
   },
   "github": {
     "release": true,
