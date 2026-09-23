@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<dependencies pluginVersion="4.3.0">
+<dependencies pluginVersion="4.4.0">
 	<remoteSwiftPackage url="https://github.com/appodeal/Appodeal-Swift-Package.git" version="4.4.0">
 		<swiftPackage name="AppodealSDK" replacesPod="Appodeal" />
 	</remoteSwiftPackage>
