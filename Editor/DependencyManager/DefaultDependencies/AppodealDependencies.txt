@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<dependencies pluginVersion="4.3.0">
+<dependencies pluginVersion="4.3.1-beta.0">
 	<iosPods>
-		<iosPod id="appodeal" name="Appodeal" version="4.3.0" minTargetSdk="12.0" />
+		<iosPod id="appodeal" name="Appodeal" version="4.3.1-bmplus.1" minTargetSdk="12.0" />
 		<iosPod id="appodeal_adjust" name="AppodealAdjustAdapter" version="5.7.0.1" minTargetSdk="12.0" />
 		<iosPod id="appodeal_admob" name="AppodealGoogleAdMobAdapter" version="13.5.0.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_amazon" name="AppodealAmazonAdapter" version="5.5.0.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_applovin" name="AppodealAppLovinAdapter" version="13.6.2.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_appsflyer" name="AppodealAppsFlyerAdapter" version="6.18.0.2" minTargetSdk="12.0" />
 		<iosPod id="appodeal_bidmachine" name="AppodealBidMachineAdapter" version="3.7.1.0" minTargetSdk="12.0" />
+		<iosPod id="appodeal_bidmachine_plus" name="AppodealBidMachinePlusAdapter" version="0.2.0.5-beta.2" minTargetSdk="13.0" />
 		<iosPod id="appodeal_bidon" name="AppodealBidonAdapter" version="0.15.0.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_bigo_ads" name="AppodealBigoAdsAdapter" version="5.2.1.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_dt_exchange" name="AppodealDTExchangeAdapter" version="8.4.7.0" minTargetSdk="13.0" />
@@ -86,16 +87,18 @@
 		<sources>
 			<source>https://github.com/appodeal/CocoaPods.git</source>
 			<source>https://github.com/bidon-io/CocoaPods-Specs.git</source>
+			<source>https://github.com/bidmachine/CocoaPods-Specs-External.git</source>
 		</sources>
 	</iosPods>
 	<androidPackages>
-		<androidPackage id="appodeal" spec="com.appodeal.ads.sdk:core:4.3.0" />
+		<androidPackage id="appodeal" spec="com.appodeal.ads.sdk:core:4.3.1-bmplus.0" />
 		<androidPackage id="appodeal_adjust" spec="com.appodeal.ads.sdk.adapters:adjust:5.7.0.0" />
 		<androidPackage id="appodeal_admob" spec="com.appodeal.ads.sdk.adapters:admob:25.2.0.0" />
 		<androidPackage id="appodeal_amazon" spec="com.appodeal.ads.sdk.adapters:amazon:12.0.0.0" />
 		<androidPackage id="appodeal_applovin" spec="com.appodeal.ads.sdk.adapters:applovin:13.6.3.0" />
 		<androidPackage id="appodeal_appsflyer" spec="com.appodeal.ads.sdk.adapters:appsflyer:6.18.0.1" />
 		<androidPackage id="appodeal_bidmachine" spec="com.appodeal.ads.sdk.adapters:bidmachine:3.7.1.0" />
+		<androidPackage id="appodeal_bidmachine_plus" spec="com.appodeal.ads.sdk.adapters:bidmachine_plus:0.2.0-beta.3.0" />
 		<androidPackage id="appodeal_bidon" spec="com.appodeal.ads.sdk.adapters:bidon:0.14.0.0" />
 		<androidPackage id="appodeal_bigo_ads" spec="com.appodeal.ads.sdk.adapters:bigo_ads:5.9.0.0" />
 		<androidPackage id="appodeal_chartboost" spec="com.appodeal.ads.sdk.adapters:chartboost:9.10.2.0" />
@@ -183,6 +186,9 @@
 		<androidPackage id="max_yandex_ads" spec="com.applovin.mediation:yandex-adapter:7.17.0.0" />
 		<repositories>
 			<repository>https://artifactory.appodeal.com/appodeal</repository>
+			<repository>https://artifactory.appodeal.com/appodeal-beta</repository>
+			<repository>https://artifactory.bidmachine.io/bidmachine</repository>
+			<repository>https://artifactory.bidmachine.io/bidmachine-beta</repository>
 			<repository>https://artifactory.bidon.org/bidon</repository>
 			<repository>https://repo1.maven.org/maven2</repository>
 		</repositories>
