@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.3.1-beta.0](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.0...v4.3.1-beta.0) (2026-09-24)
+
+### Features
+
+* update Appodeal SDK to 4.3.1-bmplus and add BidMachine Plus ([c456ea1](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/c456ea1aae8c8c00012caaa193ea0b3c793c181f))
+
 ## 4.3.0 (July 23, 2026)
 
 + Updated Appodeal Android SDK to v4.3.0
