@@ -840,7 +840,7 @@ namespace AppodealStack.Monetization.Api
             return GetInstance().ShowMediationDebugger(provider);
         }
 
-    #region Deprecated methods
+        #region Deprecated methods
 
         [Obsolete("Will be changed in a future release.", false)]
         public static void setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities)
@@ -848,7 +848,7 @@ namespace AppodealStack.Monetization.Api
             GetInstance().setSharedAdsInstanceAcrossActivities(sharedAdsInstanceAcrossActivities);
         }
 
-    #endregion
+        #endregion
 
     }
 }

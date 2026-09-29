@@ -12,12 +12,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)> DowngradedSwiftPackages { get; set; }
 
         private List<PodNode> AddedIosPods { get; set; }
-        private List<PodNode> RemovedIosPods  { get; set; }
+        private List<PodNode> RemovedIosPods { get; set; }
         private List<(PodNode Old, PodNode New)> UpdatedIosPods { get; set; }
         private List<(PodNode Old, PodNode New)> DowngradedIosPods { get; set; }
 
         private List<PackageNode> AddedAndroidPackages { get; set; }
-        private List<PackageNode> RemovedAndroidPackages  { get; set; }
+        private List<PackageNode> RemovedAndroidPackages { get; set; }
         private List<(PackageNode Old, PackageNode New)> UpdatedAndroidPackages { get; set; }
         private List<(PackageNode Old, PackageNode New)> DowngradedAndroidPackages { get; set; }
 

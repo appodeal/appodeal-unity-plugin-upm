@@ -107,7 +107,7 @@ namespace AppodealStack.Monetization.Api
             /// <param name="purchaseType">type of the purchase.</param>
             public Builder(AppStorePurchaseType purchaseType)
             {
-                 _appStoreInAppPurchaseBuilder = AppodealAdsClientFactory.GetAppStoreInAppPurchaseBuilder(purchaseType);
+                _appStoreInAppPurchaseBuilder = AppodealAdsClientFactory.GetAppStoreInAppPurchaseBuilder(purchaseType);
             }
 
             /// <summary>

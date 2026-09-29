@@ -81,7 +81,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             { BannerView, "ApdBannerViewAd" }
         };
 
-        private readonly Dictionary<int,EditorAd> _ads = new()
+        private readonly Dictionary<int, EditorAd> _ads = new()
         {
             { Interstitial, new EditorAd(Interstitial, null, "ApdInterstitialAd", "Interstitial", Vector2.zero) },
             { Banner, new EditorAd(Banner, null, "ApdBannerBottomAd", "Banner", new Vector2(320, 50)) },
@@ -292,7 +292,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
                 if (Mathf.Approximately(pos.y, AppodealViewPosition.VerticalBottom)) calculatedPos.y = ad.Size.y * Screen.dpi / 160 - Screen.height;
                 else if (Mathf.Approximately(pos.y, AppodealViewPosition.VerticalTop)) calculatedPos.y = 0;
-                else calculatedPos.y = - pos.y;
+                else calculatedPos.y = -pos.y;
 
                 if (calculatedPos.x < 0 || calculatedPos.y > 0 || calculatedPos.x > Screen.width - ad.Size.x * Screen.dpi / 160 || calculatedPos.y < ad.Size.y * Screen.dpi / 160 - Screen.height) return false;
 
@@ -314,7 +314,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             var ad = GetEditorAdObjectByAdType(adType);
 
-            switch (ad.Type) {
+            switch (ad.Type)
+            {
                 case Mrec:
                     SetBannerWidth(ad, adType);
                     break;
@@ -669,8 +670,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         public bool IsSmartBannersEnabled()
         {
-             if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.IsSmartBannersEnabled method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
-             return false;
+            if (CheckIfLoggingEnabled()) Debug.Log("Calling Appodeal.IsSmartBannersEnabled method on an unsupported platform. Run your application on either Android or iOS device to test this method.");
+            return false;
         }
 
         public void SetBannerAnimation(bool value)

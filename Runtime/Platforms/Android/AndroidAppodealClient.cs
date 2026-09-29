@@ -343,7 +343,7 @@ namespace AppodealStack.Monetization.Platforms.Android
             try
             {
                 int countOfNetworks = networks.Call<int>("size");
-                for(int i = 0; i < countOfNetworks; i++)
+                for (int i = 0; i < countOfNetworks; i++)
                 {
                     networksList.Add(networks.Call<string>("get", i));
                 }

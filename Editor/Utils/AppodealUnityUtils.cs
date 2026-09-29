@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -65,7 +65,7 @@ namespace AppodealInc.Mediation.Utils.Editor
         {
             var appId = typeof(PlayerSettings).GetProperty("applicationIdentifier", PublicStaticFlags);
             if (appId == null) appId = typeof(PlayerSettings).GetProperty("bundleIdentifier", PublicStaticFlags);
-            var bundleId = (string) appId?.GetValue(null, null);
+            var bundleId = (string)appId?.GetValue(null, null);
             return bundleId;
         }
 
@@ -167,7 +167,7 @@ namespace AppodealInc.Mediation.Utils.Editor
             return platforms
                 .Select(platform => buildToolsRegex.Match(platform))
                 .Select(match => int.Parse(match.Groups[1].Value))
-                .Concat(new[] {0}).Max();
+                .Concat(new[] { 0 }).Max();
         }
 
         public static AndroidArchitecture GetAndroidArchitecture()
@@ -178,13 +178,13 @@ namespace AppodealInc.Mediation.Utils.Editor
             if (targetArchitectures != null)
             {
                 var armv7 = Enum.Parse(targetArchitectures.PropertyType, "ARMv7");
-                var armv7_int = (int) Convert.ChangeType(armv7, typeof(int));
+                var armv7_int = (int)Convert.ChangeType(armv7, typeof(int));
                 var arm64 = Enum.Parse(targetArchitectures.PropertyType, "ARM64");
-                var arm64_int = (int) Convert.ChangeType(arm64, typeof(int));
+                var arm64_int = (int)Convert.ChangeType(arm64, typeof(int));
                 var x64 = Enum.Parse(targetArchitectures.PropertyType, "X86");
-                var x64_int = (int) Convert.ChangeType(x64, typeof(int));
+                var x64_int = (int)Convert.ChangeType(x64, typeof(int));
                 var currentArch = targetArchitectures.GetValue(null, null);
-                var currentArch_int = (int) Convert.ChangeType(currentArch, typeof(int));
+                var currentArch_int = (int)Convert.ChangeType(currentArch, typeof(int));
                 if ((currentArch_int & armv7_int) == armv7_int) arch |= AndroidArchitecture.ARmv7;
                 if ((currentArch_int & arm64_int) == arm64_int) arch |= AndroidArchitecture.ARM64;
                 if ((currentArch_int & x64_int) == x64_int) arch |= AndroidArchitecture.X86;
@@ -226,7 +226,7 @@ namespace AppodealInc.Mediation.Utils.Editor
 
         public static Texture2D MakeColorTexture(int width, int height, Color color)
         {
-            var colors = new Color [width * height];
+            var colors = new Color[width * height];
             for (var i = 0; i < colors.Length; ++i)
                 colors[i] = color;
 

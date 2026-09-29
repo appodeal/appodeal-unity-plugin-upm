@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Collections.Generic;
@@ -26,31 +26,31 @@ namespace AppodealSample
 
         #region Appodeal Demo Scene UI Components
 
-        [SerializeField] private List<GameObject>   panels;
-        [SerializeField] private Button             nextPanelButton;
-        [SerializeField] private Button             previousPanelButton;
-        [SerializeField] private Toggle             loggingToggle;
-        [SerializeField] private Toggle             testingToggle;
-        [SerializeField] private Toggle             safeAreaToggle;
-        [SerializeField] private Toggle             mrecInitializationToggle;
-        [SerializeField] private Toggle             bannerInitializationToggle;
-        [SerializeField] private Toggle             interstitialInitializationToggle;
-        [SerializeField] private Toggle             rewardedVideoInitializationToggle;
-        [SerializeField] private Toggle             smartBannerToggle;
-        [SerializeField] private Toggle             tabletBannerToggle;
-        [SerializeField] private Toggle             bannerAnimationToggle;
-        [SerializeField] private Toggle             interstitialAutoCacheToggle;
-        [SerializeField] private Toggle             rewardedVideoAutoCacheToggle;
-        [SerializeField] private Toggle             nonPersonalizedTrueToggle;
-        [SerializeField] private Toggle             nonPersonalizedFalseToggle;
-        [SerializeField] private Text               pluginVersionText;
-        [SerializeField] private Text               interstitialButtonText;
-        [SerializeField] private Text               rewardedVideoButtonText;
-        [SerializeField] private Toggle             allServicesToggle;
-        [SerializeField] private Toggle             adjustServiceToggle;
-        [SerializeField] private Toggle             appsFlyerServiceToggle;
-        [SerializeField] private Toggle             facebookServiceToggle;
-        [SerializeField] private Toggle             firebaseServiceToggle;
+        [SerializeField] private List<GameObject> panels;
+        [SerializeField] private Button nextPanelButton;
+        [SerializeField] private Button previousPanelButton;
+        [SerializeField] private Toggle loggingToggle;
+        [SerializeField] private Toggle testingToggle;
+        [SerializeField] private Toggle safeAreaToggle;
+        [SerializeField] private Toggle mrecInitializationToggle;
+        [SerializeField] private Toggle bannerInitializationToggle;
+        [SerializeField] private Toggle interstitialInitializationToggle;
+        [SerializeField] private Toggle rewardedVideoInitializationToggle;
+        [SerializeField] private Toggle smartBannerToggle;
+        [SerializeField] private Toggle tabletBannerToggle;
+        [SerializeField] private Toggle bannerAnimationToggle;
+        [SerializeField] private Toggle interstitialAutoCacheToggle;
+        [SerializeField] private Toggle rewardedVideoAutoCacheToggle;
+        [SerializeField] private Toggle nonPersonalizedTrueToggle;
+        [SerializeField] private Toggle nonPersonalizedFalseToggle;
+        [SerializeField] private Text pluginVersionText;
+        [SerializeField] private Text interstitialButtonText;
+        [SerializeField] private Text rewardedVideoButtonText;
+        [SerializeField] private Toggle allServicesToggle;
+        [SerializeField] private Toggle adjustServiceToggle;
+        [SerializeField] private Toggle appsFlyerServiceToggle;
+        [SerializeField] private Toggle facebookServiceToggle;
+        [SerializeField] private Toggle firebaseServiceToggle;
 
         #endregion
 
@@ -209,7 +209,7 @@ namespace AppodealSample
 
             Appodeal.SetUserId("1");
             Appodeal.SetCustomFilter(PredefinedKeys.UserAge, 18);
-            Appodeal.SetCustomFilter(PredefinedKeys.UserGender, (int) AppodealUserGender.Male);
+            Appodeal.SetCustomFilter(PredefinedKeys.UserGender, (int)AppodealUserGender.Male);
             Appodeal.ResetCustomFilter(PredefinedKeys.UserGender);
 
             Appodeal.SetExtraData("testKey", "testValue");
@@ -233,8 +233,8 @@ namespace AppodealSample
 
             Appodeal.SetAutoCache(AppodealAdType.Interstitial, interstitialAutoCacheToggle.isOn);
             Appodeal.SetAutoCache(AppodealAdType.RewardedVideo, rewardedVideoAutoCacheToggle.isOn);
-            interstitialButtonText.text =  interstitialAutoCacheToggle.isOn ? InterstitialCaching : InterstitialCache;
-            rewardedVideoButtonText.text =  rewardedVideoAutoCacheToggle.isOn ? RewardedVideoCaching : RewardedVideoCache;
+            interstitialButtonText.text = interstitialAutoCacheToggle.isOn ? InterstitialCaching : InterstitialCache;
+            rewardedVideoButtonText.text = rewardedVideoAutoCacheToggle.isOn ? RewardedVideoCaching : RewardedVideoCache;
 
             SetAppodealCallbacks();
 
@@ -456,7 +456,7 @@ namespace AppodealSample
             output = networksList == null ? String.Empty : String.Join(", ", (networksList.ToArray()));
             Debug.Log($"[APDUnity] [Appodeal] GetNetworks() for Mrec: {output}");
 
-            pluginVersionText.text = $"Appodeal Unity Plugin v{ AppodealVersions.GetPluginVersion() } & SDK v{ Appodeal.GetNativeSDKVersion() }";
+            pluginVersionText.text = $"Appodeal Unity Plugin v{AppodealVersions.GetPluginVersion()} & SDK v{Appodeal.GetNativeSDKVersion()}";
         }
 
         #endregion

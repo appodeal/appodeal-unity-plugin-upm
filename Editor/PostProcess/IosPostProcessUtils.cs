@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (String.IsNullOrEmpty(PlayerSettings.iOS.targetOSVersionString)) return;
 
-            if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0)  return;
+            if (!AppodealSettings.Instance.IosSkAdNetworkItems || (AppodealSettings.Instance.IosSkAdNetworkItemsList?.Count ?? 0) <= 0) return;
 
             if (buildTarget != BuildTarget.iOS) return;
 

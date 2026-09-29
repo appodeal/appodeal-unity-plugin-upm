@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System.Runtime.InteropServices;
 
@@ -159,8 +159,8 @@ namespace AppodealStack.Monetization.Platforms.Ios
         [DllImport("__Internal")]
         internal static extern double AppodealGetPredictedEcpm(int adType);
 
-		[DllImport("__Internal")]
-		internal static extern double AppodealGetPredictedEcpmForPlacement(int adType, string placement);
+        [DllImport("__Internal")]
+        internal static extern double AppodealGetPredictedEcpmForPlacement(int adType, string placement);
 
         [DllImport("__Internal")]
         internal static extern void AppodealSetCustomFilterBool(string name, bool value);
