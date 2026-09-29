@@ -11,7 +11,10 @@ insert_final_newline = true
 indent_style = space
 indent_size = 4
 
-# Disable "namespace doesn't match folder structure" for all C# files in this tool
+# Braced case blocks stay at the case label level
+csharp_indent_case_contents_when_block = false
+
+# Disable "namespace doesn't match folder structure" for all C# files
 dotnet_diagnostic.IDE0130.severity = none
 resharper_check_namespace_highlighting = none
 
