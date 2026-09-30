@@ -11,11 +11,13 @@ ticket: `feature/SDK-123-short-name`, `fix/SDK-123-...`, `chore/SDK-123-...`.
 1. Take a ticket in the SDK project in Jira and create the work branch.
 2. Commit with Conventional Commits messages; they become the changelog.
 3. Open a PR into the release branch and fill in the template.
-4. CI runs lint, test, build and review. When `AppodealDependencies.txt`
-   changes, the pods job also checks iOS minimum targets and posts a report. On
-   release branches nothing is a required check, so a red pods job is a warning;
-   small fixes can also go into the release branch directly.
-5. A code owner approves and the author merges.
+4. CI runs lint, test, build, review and the secret scan. When
+   `AppodealDependencies.txt` changes, the pods job also checks that every pod
+   is published with the iOS minimum target from the XML and posts a report. To
+   merge into a release branch, everything except review must pass.
+5. The author merges once the required checks pass. A review is welcome but not
+   required here: the code owner review is mandatory on the release PR into
+   `main`.
 
 ## Release
 

@@ -23,7 +23,7 @@ three lists: `androidPackage` (Maven specs), `iosPod` and `remoteSwiftPackage`.
 
    The script writes `pod_sdk_report.md` and exits with 1 on a mismatch or a
    missing podspec. CI runs it on every PR that touches the file and blocks the
-   merge into `main`.
+   merge into `main` and into release branches.
 
 3. When both an Appodeal wrapper and an AppLovin MAX wrapper exist for the same
    network, open `Package.swift` of both tags and compare the upstream SDK in
