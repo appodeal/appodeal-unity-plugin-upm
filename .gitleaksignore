@@ -1,0 +1,8 @@
+# Appodeal demo app keys in the usage sample. App keys ship inside every app
+# build and are not secrets. The current lines carry gitleaks:allow comments.
+809c25ccbce758851ef84b0634fc24cb5a077eb6:Samples~/UsageSample/AppodealDemo.cs:generic-api-key:60
+809c25ccbce758851ef84b0634fc24cb5a077eb6:Samples~/UsageSample/AppodealDemo.cs:generic-api-key:62
+adb2a929d9d71281a1000ce3cb265aac1ecca6e8:Samples~/UsageSample/AppodealDemo.cs:generic-api-key:54
+adb2a929d9d71281a1000ce3cb265aac1ecca6e8:Samples~/UsageSample/AppodealDemo.cs:generic-api-key:56
+d9ded189bda30ebc9cba86acd9718a5828457d66:Demo~/Scripts/AppodealDemo.cs:generic-api-key:43
+d9ded189bda30ebc9cba86acd9718a5828457d66:Demo~/Scripts/AppodealDemo.cs:generic-api-key:45

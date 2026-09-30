@@ -1,0 +1,246 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+      deps: ${{ steps.filter.outputs.deps }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            code:
+              - '**/*.cs'
+              - '**/*.asmdef'
+              - 'package.json'
+              - '.github/workflows/ci.yml'
+            deps:
+              - 'Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt'
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Lint workflows
+        uses: docker://rhysd/actionlint:1.7.12
+        with:
+          args: -color
+      - name: Check .meta files
+        uses: DeNA/unity-meta-check@v4.0.0
+        with:
+          target_type: upm-package
+      - name: Check C# formatting
+        run: dotnet format whitespace --folder --verify-no-changes
+
+  # game-ci has no floating tag and packageMode needs an exact version, so look
+  # up the newest 6000.3 patch that already has a game-ci image
+  unity-lts:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - id: resolve
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, re, urllib.request
+          url = "https://hub.docker.com/v2/repositories/unityci/editor/tags?page_size=100&name=ubuntu-6000.3."
+          found = []
+          while url:
+              page = json.load(urllib.request.urlopen(url))
+              found += [m.group(1) for t in page["results"]
+                        if (m := re.fullmatch(r"ubuntu-(6000\.3\.\d+f\d+)-base-3", t["name"]))]
+              url = page["next"]
+          print("version=" + max(found, key=lambda v: [int(x) for x in re.findall(r"\d+", v)]))
+          EOF
+
+  test:
+    needs: [changes, lint, unity-lts]
+    if: needs.changes.outputs.code == 'true'
+    # A Pro seat has two machine activations and the maintainer's Mac holds one,
+    # so only one Unity job may run at a time across the whole repo. Never
+    # cancel a running job: a killed container keeps its activation, and it
+    # has to be returned by hand on id.unity.com.
+    concurrency:
+      group: unity-license
+      cancel-in-progress: false
+    # Stable names for required checks: the LTS patch changes over time
+    name: test (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      # The license is shared with the maintainer's machine, see the
+      # concurrency note above
+      max-parallel: 1
+      matrix:
+        include:
+          # The oldest supported version, package.json "unity"; 2021.3 gets no
+          # more patches
+          - name: min
+            unity: 2021.3.45f2
+          - name: lts
+            unity: ${{ needs.unity-lts.outputs.version }}
+    steps:
+      # packageMode needs the package in a subdirectory, not in the repo root
+      - uses: actions/checkout@v7
+        with:
+          path: com.appodeal.mediation
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          packageMode: true
+          projectPath: com.appodeal.mediation
+          unityVersion: ${{ matrix.unity }}
+          testMode: editmode
+          scopedRegistryUrl: https://package.openupm.com
+          registryScopes: com.google.external-dependency-manager
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Test results (${{ matrix.name }}, ${{ matrix.unity }})
+          coverageOptions: generateAdditionalMetrics;generateHtmlReport;assemblyFilters:+AppodealStack.*,+AppodealInc.*,-*.Tests
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: test-results-${{ matrix.name }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coverage-${{ matrix.name }}
+          path: ${{ steps.tests.outputs.coveragePath }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Standalone UPM CLI: signs without a Unity Editor or a license. Not
+      # pinned: it is the client of Unity's signing service, keep it current
+      - name: Install UPM CLI
+        run: |
+          curl -fsSL https://cdn.packages.unity.com/upm-cli/install.sh | sh
+          echo "$HOME/.upm/bin" >> "$GITHUB_PATH"
+      - name: Pack and sign
+        env:
+          UPM_SERVICE_ACCOUNT_KEY_ID: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_ID }}
+          UPM_SERVICE_ACCOUNT_KEY_SECRET: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_SECRET }}
+          UNITY_ORG_ID: ${{ vars.UNITY_ORG_ID }}
+        run: |
+          upm --version
+          upm pack . --organization-id "$UNITY_ORG_ID" --destination build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: package
+          path: build/*.tgz
+
+  review:
+    needs: lint
+    # A new push supersedes the review of the previous one
+    concurrency:
+      group: review-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    # Dependabot only bumps action versions, and its runs get no Actions secrets
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write # gh label create needs it
+    steps:
+      - uses: actions/checkout@v7
+      # Same labels as in appodeal-life. `gh pr edit --add-label` fails on a
+      # label that does not exist, so create them first; -f makes it idempotent.
+      - name: Ensure review labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh label create "claude: approved" -R "$GITHUB_REPOSITORY" \
+            --color 0e8a16 --description "Claude review: no issues found" -f
+          gh label create "claude: changes needed" -R "$GITHUB_REPOSITORY" \
+            --color d93f0b --description "Claude review: issues to fix" -f
+          for score in 1 2 3 4 5 6 7 8 9 10; do
+            case "$score" in
+              1|2) color=0e8a16 ;;
+              3|4) color=a4c639 ;;
+              5|6) color=fbca04 ;;
+              7|8) color=ef7d1a ;;
+              *) color=b60205 ;;
+            esac
+            gh label create "complexity: $score" -R "$GITHUB_REPOSITORY" \
+              --color "$color" --description "PR complexity $score/10" -f
+          done
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Review this pull request. Read AGENTS.md first: it lists the
+            repository conventions and hazards.
+
+            Report only real problems: bugs, broken UPM packaging (missing
+            .meta files, asmdef references, platform defines), wrong native
+            dependency versions, and changes that contradict AGENTS.md. Skip
+            formatting, `dotnet format` checks it.
+
+            Leave an inline comment for each problem. If there are none, post
+            one short PR comment that says so.
+
+            Then score how hard the PR was to implement, 1 to 10. Score
+            effort, not diff size: version bumps and generated files are 1.
+            1-2 trivial (a guard, a config value); 3-4 one area, simple logic;
+            5-6 several modules, existing patterns; 7-8 cross-cutting change
+            or a new workflow; 9-10 architectural change.
+
+            Finish with exactly one command. With no problems found:
+            gh pr edit <PR> --add-label "claude: approved" --remove-label "claude: changes needed" --add-label "complexity: <score>"
+            With at least one problem:
+            gh pr edit <PR> --add-label "claude: changes needed" --remove-label "claude: approved" --add-label "complexity: <score>"
+            Add --remove-label for any other "complexity:" label the PR has.
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr edit:*)"
+
+  # Blocks merges into main only: on PRs into release/* the red check is a
+  # warning, those branches have no required checks
+  pods:
+    needs: changes
+    if: github.event_name == 'pull_request' && needs.changes.outputs.deps == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+      - run: pip install requests
+      - name: Validate iOS pod minimum SDK versions
+        run: python3 .ci/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
+      - name: Comment report
+        if: always()
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: pod_sdk_report.md

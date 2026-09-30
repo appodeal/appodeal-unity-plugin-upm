@@ -1,0 +1,8 @@
+name: Check PR
+
+on: pull_request
+
+jobs:
+  gitleaks:
+    uses: appodeal/devops/.github/workflows/shared-gitleaks.yml@master
+    secrets: inherit

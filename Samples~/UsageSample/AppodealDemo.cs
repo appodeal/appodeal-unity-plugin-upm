@@ -59,9 +59,9 @@ namespace AppodealSample
 #if UNITY_EDITOR && !UNITY_ANDROID && !UNITY_IOS
         private const string DefaultAppKey = "";
 #elif UNITY_ANDROID
-        private const string DefaultAppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
+        private const string DefaultAppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f"; // gitleaks:allow demo app key, not a secret
 #elif UNITY_IOS
-        private const string DefaultAppKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+        private const string DefaultAppKey = "466de0d625e01e8811c588588a42a55970bc7c132649eede"; // gitleaks:allow demo app key, not a secret
 #else
         private const string DefaultAppKey = "";
 #endif
