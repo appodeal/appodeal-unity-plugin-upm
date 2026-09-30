@@ -6,8 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+#if APPODEAL_UGUI
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+#endif
 using UnityEngine.Video;
 using AppodealStack.Monetization.Common;
 using AppodealInc.Mediation.Utils.Editor;
@@ -97,7 +99,9 @@ namespace AppodealStack.Monetization.Platforms.Dummy
         private IAppodealInitializationListener _appodealInitializationListener;
 
         private VideoPlayer _videoPlayer;
+#if APPODEAL_UGUI
         private Toggle _loggingToggle;
+#endif
 
         private bool IsLoggingEnabled { get; set; }
         private bool IsSDKInitialized { get; set; }
@@ -212,6 +216,11 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                 return;
             }
 
+#if !APPODEAL_UGUI
+            // The Editor ad prefabs are built with uGUI, so there is nothing to show without it
+            Debug.LogWarning($"Appodeal: {ad.Name} can't be shown in the Editor without the com.unity.ugui package");
+            SimFireCallback(ad.Name, FailedToLoad);
+#else
             string defaultPath = $"{AppodealEditorConstants.EditorAdPrefabsDir}/{prefabName}.prefab";
             string[] assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
             string prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
@@ -275,6 +284,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
             if (ad.Type == Banner) SimFireCallback(ad.Name, Loaded, 80, false);
             else SimFireCallback(ad.Name, Loaded, false);
+#endif
         }
 
         private bool SimShowAdAtPos(int adType, Vector2 pos)
@@ -323,11 +333,13 @@ namespace AppodealStack.Monetization.Platforms.Dummy
                     SetBannerPosition(ad, adType);
                     SetBannerWidth(ad, adType);
                     break;
+#if APPODEAL_UGUI
                 case Interstitial:
                     var img = ad.GameObject.transform.Find("Panel").GetComponent<Image>();
                     var sprite = Screen.height < Screen.width ? Resources.Load<Sprite>(HorizontalInterstitialAssetName) : Resources.Load<Sprite>(VerticalInterstitialAssetName);
                     img.sprite = sprite;
                     break;
+#endif
                 case RewardedVideo:
                     _videoPlayer = ad.GameObject.GetComponentInChildren<VideoPlayer>();
                     var videoClip = Screen.height < Screen.width ? Resources.Load<VideoClip>(HorizontalVideoAssetName) : Resources.Load<VideoClip>(VerticalVideoAssetName);
@@ -492,11 +504,13 @@ namespace AppodealStack.Monetization.Platforms.Dummy
 
         private bool CheckIfLoggingEnabled()
         {
+#if APPODEAL_UGUI
             if (_loggingToggle == null)
             {
                 _loggingToggle = GameObject.Find("Logging Toggle")?.GetComponent<Toggle>();
                 IsLoggingEnabled = _loggingToggle?.isOn ?? false;
             }
+#endif
 
             return IsLoggingEnabled;
         }
