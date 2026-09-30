@@ -1,6 +1,8 @@
 <!--
-Title: conventional commit style, e.g. "feat: add MREC placement support".
-It lands in CHANGELOG.md through release-it.
+Title: "[SDK-XXXX] Short description".
+CHANGELOG.md is built from commit messages, not from this title. A squash
+merge of a PR with several commits keeps only the title, so squash
+single-commit PRs only.
 -->
 
 ## Summary
