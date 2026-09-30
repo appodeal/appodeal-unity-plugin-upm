@@ -1,9 +1,30 @@
 # VCS
 
 .gitattributes
+/.gitleaksignore
 /.github
 
 # CI/CD
 
 /.ci
 .release-it.json
+
+# Tests
+
+/Tests
+/Tests.meta
+
+# Repository docs and agent config
+
+/.agents
+/.claude
+/.editorconfig
+/.mcp.json
+/AGENTS.md
+/AGENTS.md.meta
+/CLAUDE.md
+/CLAUDE.md.meta
+/CONTEXT.md
+/CONTEXT.md.meta
+/docs
+/docs.meta
