@@ -1,17 +1,12 @@
 {
   "git": {
-    "commit": true,
-    "commitMessage": "chore: prepare v${version} release",
-    "tag": true,
-    "tagName": "v${version}",
-    "push": true,
-    "requireCleanWorkingDir": true,
-    "requireBranch": "release/*"
+    "commit": false,
+    "tag": false,
+    "push": false,
+    "requireCleanWorkingDir": true
   },
   "github": {
-    "release": true,
-    "releaseName": "v${version}",
-    "draft": true
+    "release": false
   },
   "npm": {
     "publish": false

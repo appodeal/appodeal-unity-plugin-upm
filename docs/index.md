@@ -21,6 +21,8 @@
   people: preparing a release, updating native dependencies.
 - [.github/workflows/ci.yml](../.github/workflows/ci.yml): what CI checks on
   every PR.
+- [.github/workflows/release.yml](../.github/workflows/release.yml): drafts the
+  GitHub release after a release PR is merged into `main`.
 
 None of these files except `Documentation~/` reach the users: `.npmignore`
 excludes them from the package.
