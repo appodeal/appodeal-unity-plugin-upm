@@ -24,6 +24,10 @@ release commit is made locally.
 
    To preview the changelog without writing files, add `--changelog`.
 
+   The versions are pinned on purpose: with the same release-it and preset,
+   CHANGELOG.md keeps one format from release to release. Dependabot can't see
+   them, so bump both by hand when the command breaks or a fix is needed.
+
 3. Set the same version in the other two places. The tests fail if the three
    values differ.
    - `AppodealPluginVersion` in `Runtime/Common/AppodealVersions.cs`
