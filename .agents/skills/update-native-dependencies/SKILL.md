@@ -18,7 +18,7 @@ three lists: `androidPackage` (Maven specs), `iosPod` and `remoteSwiftPackage`.
 
    ```sh
    pip install requests
-   python3 .ci/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
+   python3 .github/scripts/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
    ```
 
    The script writes `pod_sdk_report.md` and exits with 1 on a mismatch or a

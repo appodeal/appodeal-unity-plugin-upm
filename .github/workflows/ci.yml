@@ -237,7 +237,7 @@ jobs:
           python-version: '3.x'
       - run: pip install requests
       - name: Validate iOS pod minimum SDK versions
-        run: python3 .ci/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
+        run: python3 .github/scripts/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
       - name: Comment report
         if: always()
         uses: peter-evans/create-or-update-comment@v5

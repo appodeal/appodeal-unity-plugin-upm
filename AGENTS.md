@@ -41,7 +41,7 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
 - `Editor/Analytics/` sends build reports; `Sanitization/` strips user data
   first.
 - `Samples~/UsageSample/` is the demo scene, `Tests/Editor/` the EditMode tests,
-  `.ci/` the pod validation script.
+  `.github/scripts/` the pod validation script.
 - Boundaries: Runtime code never references Editor assemblies. Platform
   assemblies reference only `AppodealStack.Monetization.Common`.
 
