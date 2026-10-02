@@ -9,15 +9,15 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmChoicesScriptableObject : ScriptableObject
     {
-        [HideInInspector] [SerializeField] private bool validateDependenciesPeriodically = true;
+        [HideInInspector][SerializeField] private bool validateDependenciesPeriodically = true;
 
-        [HideInInspector] [SerializeField] private bool checkPeriodicallyForPluginUpdates = true;
-        [HideInInspector] [SerializeField] private bool includePluginBetaVersions;
+        [HideInInspector][SerializeField] private bool checkPeriodicallyForPluginUpdates = true;
+        [HideInInspector][SerializeField] private bool includePluginBetaVersions;
 
-        [HideInInspector] [SerializeField] private bool enableVerboseLogging;
+        [HideInInspector][SerializeField] private bool enableVerboseLogging;
 
-        [HideInInspector] [SerializeField] private SdkSelectionMode selectionMode = SdkSelectionMode.Default;
-        [HideInInspector] [SerializeField] private List<SdkSelectionState> customSelections = new();
+        [HideInInspector][SerializeField] private SdkSelectionMode selectionMode = SdkSelectionMode.Default;
+        [HideInInspector][SerializeField] private List<SdkSelectionState> customSelections = new();
 
         private static DmChoicesScriptableObject _instance;
 

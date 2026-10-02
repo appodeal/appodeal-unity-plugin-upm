@@ -15,7 +15,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
     public static class AndroidPreProcessServices
     {
 
-    #region Firebase
+        #region Firebase
 
         public static void GenerateXMLForFirebase()
         {
@@ -57,7 +57,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             CreateOrReplaceFirebaseXml(xmlFilePath, firebaseStrings);
         }
 
-        private static Dictionary<string,string> ParseFirebaseJson(string path)
+        private static Dictionary<string, string> ParseFirebaseJson(string path)
         {
             string jsonString = new StreamReader(path).ReadToEnd();
             var model = JsonUtility.FromJson<FirebaseJsonModel>(jsonString);
@@ -93,7 +93,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             return null;
         }
 
-        private static void CreateOrReplaceFirebaseXml(string path, Dictionary<string,string> firebaseStrings)
+        private static void CreateOrReplaceFirebaseXml(string path, Dictionary<string, string> firebaseStrings)
         {
             var xmlDocument = new XmlDocument();
             var root = xmlDocument.DocumentElement;
@@ -134,9 +134,9 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             FileUtil.DeleteFileOrDirectory($"{path}.meta");
         }
 
-    #endregion
+        #endregion
 
-    #region Facebook
+        #region Facebook
         public static void SetupManifestForFacebook()
         {
             string path = $"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.AndroidManifestFile}";
@@ -254,7 +254,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             return false;
         }
 
-    #endregion
+        #endregion
 
     }
 }

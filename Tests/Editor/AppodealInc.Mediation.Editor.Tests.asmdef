@@ -1,0 +1,26 @@
+{
+    "name": "AppodealInc.Mediation.Editor.Tests",
+    "rootNamespace": "AppodealInc.Mediation.Editor.Tests",
+    "references": [
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner",
+        "AppodealInc.Mediation.DependencyManager.Editor",
+        "AppodealInc.Mediation.Utils.Editor",
+        "AppodealStack.Monetization.Common"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

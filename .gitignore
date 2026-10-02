@@ -43,3 +43,7 @@ crashlytics-build.properties
 
 #System files
 *.DS_Store
+
+# Local environment and agent settings
+.env
+.claude/settings.local.json

@@ -1,0 +1,24 @@
+name: Check PR
+
+on: pull_request
+
+jobs:
+  gitleaks:
+    name: Scan secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Scan secrets
+        id: scan
+        run: |
+          touch gitleaksreport.json
+          chmod 666 gitleaksreport.json
+          docker run --rm -v "$(pwd)":/path zricethezav/gitleaks:latest git --config /path/.github/config/gitleaks.toml --log-opts="origin/${{ github.event.repository.default_branch }}..HEAD" -f json -r /path/gitleaksreport.json /path
+
+      - name: Show dangered files
+        if: ${{ always() && steps.scan.conclusion == 'failure' }}
+        run: jq '.[].Fingerprint' gitleaksreport.json

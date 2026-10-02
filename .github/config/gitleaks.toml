@@ -1,0 +1,12 @@
+title = "gitleaks repo config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "global allow lists"
+regexTarget = "match"
+regexes = [
+  '''(AKIA|ASIA)[A-Z0-9]{16}''',
+  '''test*'''
+]

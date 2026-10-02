@@ -1,0 +1,176 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+      deps: ${{ steps.filter.outputs.deps }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            code:
+              - '**/*.cs'
+              - '**/*.asmdef'
+              - 'package.json'
+              - '.github/workflows/ci.yml'
+            deps:
+              - 'Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt'
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Lint workflows
+        uses: docker://rhysd/actionlint:1.7.12
+        with:
+          args: -color
+      - name: Check .meta files
+        uses: DeNA/unity-meta-check@v4.0.0
+        with:
+          target_type: upm-package
+      - name: Check C# formatting
+        run: dotnet format whitespace --folder --verify-no-changes
+
+  # game-ci has no floating tag and packageMode needs an exact version, so look
+  # up the newest 6000.3 patch that already has a game-ci image
+  unity-lts:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - id: resolve
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, re, urllib.request
+          url = "https://hub.docker.com/v2/repositories/unityci/editor/tags?page_size=100&name=ubuntu-6000.3."
+          found = []
+          while url:
+              page = json.load(urllib.request.urlopen(url))
+              found += [m.group(1) for t in page["results"]
+                        if (m := re.fullmatch(r"ubuntu-(6000\.3\.\d+f\d+)-base-3", t["name"]))]
+              url = page["next"]
+          print("version=" + max(found, key=lambda v: [int(x) for x in re.findall(r"\d+", v)]))
+          EOF
+
+  test:
+    needs: [changes, lint, unity-lts]
+    if: needs.changes.outputs.code == 'true'
+    # A Pro seat has two machine activations and the maintainer's Mac holds one,
+    # so only one Unity job may run at a time across the whole repo. Never
+    # cancel a running job: a killed container keeps its activation, and it
+    # has to be returned by hand on id.unity.com.
+    concurrency:
+      group: unity-license
+      cancel-in-progress: false
+    # Stable names for required checks: the LTS patch changes over time
+    name: test (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      # The license is shared with the maintainer's machine, see the
+      # concurrency note above
+      max-parallel: 1
+      matrix:
+        include:
+          # The oldest supported version, package.json "unity"; 2021.3 gets no
+          # more patches
+          - name: min
+            unity: 2021.3.45f2
+          - name: lts
+            unity: ${{ needs.unity-lts.outputs.version }}
+    steps:
+      # packageMode needs the package in a subdirectory, not in the repo root
+      - uses: actions/checkout@v7
+        with:
+          path: com.appodeal.mediation
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          packageMode: true
+          projectPath: com.appodeal.mediation
+          unityVersion: ${{ matrix.unity }}
+          testMode: editmode
+          scopedRegistryUrl: https://package.openupm.com
+          registryScopes: com.google.external-dependency-manager
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Test results (${{ matrix.name }}, ${{ matrix.unity }})
+          coverageOptions: generateAdditionalMetrics;generateHtmlReport;assemblyFilters:+AppodealStack.*,+AppodealInc.*,-*.Tests
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: test-results-${{ matrix.name }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coverage-${{ matrix.name }}
+          path: ${{ steps.tests.outputs.coveragePath }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # Standalone UPM CLI: signs without a Unity Editor or a license. Not
+      # pinned: it is the client of Unity's signing service, keep it current
+      - name: Install UPM CLI
+        run: |
+          curl -fsSL https://cdn.packages.unity.com/upm-cli/install.sh | sh
+          echo "$HOME/.upm/bin" >> "$GITHUB_PATH"
+      - name: Pack and sign
+        env:
+          UPM_SERVICE_ACCOUNT_KEY_ID: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_ID }}
+          UPM_SERVICE_ACCOUNT_KEY_SECRET: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_SECRET }}
+          UNITY_ORG_ID: ${{ vars.UNITY_ORG_ID }}
+        run: |
+          upm --version
+          upm pack . --organization-id "$UNITY_ORG_ID" --destination build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: package
+          path: build/*.tgz
+
+  # Required on main and release/*: a dependency change is merged only after
+  # its pods are published with the minTargetSdk from the XML
+  pods:
+    needs: changes
+    if: github.event_name == 'pull_request' && needs.changes.outputs.deps == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+      - run: pip install requests
+      - name: Validate iOS pod minimum SDK versions
+        run: python3 .github/scripts/validate_min_sdk.py Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt
+      - name: Comment report
+        if: always()
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: pod_sdk_report.md

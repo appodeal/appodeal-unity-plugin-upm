@@ -1,0 +1,6 @@
+paths:
+  .github/workflows/claude-review.yml:
+    ignore:
+      # actionlint ships its own list of claude-code-action inputs, and that
+      # list predates the workload identity federation inputs
+      - 'input "anthropic_[a-z_]+" is not defined in action "anthropics/claude-code-action@v1"'

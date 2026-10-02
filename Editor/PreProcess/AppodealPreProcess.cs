@@ -83,7 +83,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         private void EnableMultidex(string manifestPath, AndroidManifest androidManifest)
         {
-            if(CheckContainsMultidex(manifestPath, ManifestMultidexApp))
+            if (CheckContainsMultidex(manifestPath, ManifestMultidexApp))
             {
                 androidManifest.RemoveMultiDexApplication();
             }

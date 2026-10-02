@@ -446,7 +446,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
             return 0;
         }
 
-        private static string DictionaryToString(Dictionary <string, object> dictionary)
+        private static string DictionaryToString(Dictionary<string, object> dictionary)
         {
             string dictionaryString = dictionary.Aggregate("", (current, keyValues)
                 => current + (keyValues.Key + "=" + keyValues.Value.GetType() + ":" + keyValues.Value + ","));
@@ -741,15 +741,15 @@ namespace AppodealStack.Monetization.Platforms.Ios
                 : AppodealObjCBridge.AppodealGetPredictedEcpm(NativeAdTypesForType(adType));
         }
 
-		public double GetPredictedEcpmForPlacement(int adType, string placement)
-		{
-			if (adType == AppodealAdType.Mrec)
-			{
-				return AppodealObjCBridge.AppodealGetMrecViewPredictedEcpm();
-			}
-			if (String.IsNullOrEmpty(placement)) placement = "default";
-			return AppodealObjCBridge.AppodealGetPredictedEcpmForPlacement(NativeAdTypesForType(adType), placement);
-		}
+        public double GetPredictedEcpmForPlacement(int adType, string placement)
+        {
+            if (adType == AppodealAdType.Mrec)
+            {
+                return AppodealObjCBridge.AppodealGetMrecViewPredictedEcpm();
+            }
+            if (String.IsNullOrEmpty(placement)) placement = "default";
+            return AppodealObjCBridge.AppodealGetPredictedEcpmForPlacement(NativeAdTypesForType(adType), placement);
+        }
 
         public void SetCustomFilter(string name, bool value)
         {
@@ -840,7 +840,7 @@ namespace AppodealStack.Monetization.Platforms.Ios
         public void ValidateAppStoreInAppPurchase(IAppStoreInAppPurchase purchase, IInAppPurchaseValidationListener listener)
         {
             SetInAppPurchaseValidationCallbacks(listener);
-            AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int) purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
+            AppodealObjCBridge.AppodealValidateInAppPurchase(purchase.GetProductId(), purchase.GetPrice(), purchase.GetCurrency(), purchase.GetTransactionId(), purchase.GetAdditionalParameters(), (int)purchase.GetPurchaseType(), InAppPurchaseValidationSucceeded, InAppPurchaseValidationFailed);
         }
 
         public void SetEndpoint(string baseUrl)

@@ -7,7 +7,7 @@
   "changelogUrl": "https://docs.appodeal.com/unity/changelog",
   "unity": "2021.3",
   "dependencies": {
-    "com.google.external-dependency-manager": "1.2.175"
+    "com.google.external-dependency-manager": "1.2.185"
   },
   "keywords": [
     "Ads",

@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -17,13 +17,13 @@ namespace AppodealInc.Mediation.Utils.Editor
 
         public static string ToJson<T>(T[] array)
         {
-            var wrapper = new Wrapper<T> {items = array};
+            var wrapper = new Wrapper<T> { items = array };
             return JsonUtility.ToJson(wrapper);
         }
 
         public static string ToJson<T>(T[] array, bool prettyPrint)
         {
-            var wrapper = new Wrapper<T> {items = array};
+            var wrapper = new Wrapper<T> { items = array };
             return JsonUtility.ToJson(wrapper, prettyPrint);
         }
 

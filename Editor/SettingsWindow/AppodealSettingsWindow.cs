@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 
 using System;
 using System.Collections.Generic;
@@ -302,10 +302,10 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
         private static void LabelField(string label)
         {
             EditorGUILayout.LabelField(label, new GUIStyle(EditorStyles.label)
-                {
-                    fontSize = 15,
-                    fontStyle = FontStyle.Bold
-                },
+            {
+                fontSize = 15,
+                fontStyle = FontStyle.Bold
+            },
                 GUILayout.Height(20), GUILayout.Width(311));
             GUILayout.Space(2);
         }
@@ -357,7 +357,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
 
             var c = GUI.color;
             GUI.color = Color.grey;
-            GUILayout.Box( GUIContent.none, separatorLineStyle );
+            GUILayout.Box(GUIContent.none, separatorLineStyle);
             GUI.color = c;
         }
 
@@ -367,7 +367,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             {
                 fontSize = 16,
                 fontStyle = FontStyle.Bold,
-                normal = new GUIStyleState { textColor = new Color(0.7f,0.6f,0.1f) },
+                normal = new GUIStyleState { textColor = new Color(0.7f, 0.6f, 0.1f) },
                 alignment = TextAnchor.MiddleCenter
 
             }, GUILayout.Height(20));

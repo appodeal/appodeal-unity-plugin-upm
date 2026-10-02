@@ -1,0 +1,3 @@
+# The SDK team owns every path, including the sensitive ones
+# (.github/, AGENTS.md, CLAUDE.md, .mcp.json, package.json).
+* @appodeal/sdk-team

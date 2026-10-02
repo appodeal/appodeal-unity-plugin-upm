@@ -1,0 +1,80 @@
+name: Claude Review
+
+# Kept apart from ci.yml: the Claude GitHub App runs only when this file matches
+# the one on the default branch, so CI changes don't switch the review off.
+on: pull_request
+
+# A new push supersedes the review of the previous one
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    # Dependabot only bumps action versions, and its runs get no Actions secrets
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write # gh label create needs it
+      id-token: write # OIDC token for the Claude GitHub App and Anthropic WIF
+    steps:
+      - uses: actions/checkout@v7
+      # `gh pr edit --add-label` fails on a label that does not exist, so
+      # create them first; -f makes it idempotent.
+      - name: Ensure review labels exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh label create "claude: approved" -R "$GITHUB_REPOSITORY" \
+            --color 0e8a16 --description "Claude review: no issues found" -f
+          gh label create "claude: changes needed" -R "$GITHUB_REPOSITORY" \
+            --color d93f0b --description "Claude review: issues to fix" -f
+          for score in 1 2 3 4 5 6 7 8 9 10; do
+            case "$score" in
+              1|2) color=0e8a16 ;;
+              3|4) color=a4c639 ;;
+              5|6) color=fbca04 ;;
+              7|8) color=ef7d1a ;;
+              *) color=b60205 ;;
+            esac
+            gh label create "complexity: $score" -R "$GITHUB_REPOSITORY" \
+              --color "$color" --description "PR complexity $score/10" -f
+          done
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_federation_rule_id: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+          anthropic_organization_id: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+          anthropic_service_account_id: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Review this pull request. Read AGENTS.md first: it lists the
+            repository conventions and hazards.
+
+            Report only real problems: bugs, broken UPM packaging (missing
+            .meta files, asmdef references, platform defines), wrong native
+            dependency versions, and changes that contradict AGENTS.md. Skip
+            formatting, `dotnet format` checks it. Don't describe what the PR
+            does; only report findings.
+
+            Leave an inline comment for each problem. If there are none, post
+            one short PR comment that says so.
+
+            Then score how hard the PR was to implement, 1 to 10. Score
+            effort, not diff size: version bumps and generated files are 1.
+            1-2 trivial (a guard, a config value); 3-4 one area, simple logic;
+            5-6 several modules, existing patterns; 7-8 cross-cutting change
+            or a new workflow; 9-10 architectural change.
+
+            Finish with exactly one command. With no problems found:
+            gh pr edit <PR> --add-label "claude: approved" --remove-label "claude: changes needed" --add-label "complexity: <score>"
+            With at least one problem:
+            gh pr edit <PR> --add-label "claude: changes needed" --remove-label "claude: approved" --add-label "complexity: <score>"
+            Add --remove-label for any other "complexity:" label the PR has.
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr edit:*)"
