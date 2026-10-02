@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.1-beta.1](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.0...v4.3.1-beta.1) (2026-10-02)
+
+### Features
+
+* update BidMachine adapters to 3.8.0 ([a6d5eb3](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/a6d5eb35fe9a12f6ac60f6238e3256c6c0a8c738))
+* update BidMachine Plus adapters to 0.2.0-beta.6 ([3066237](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/3066237cac2632febb79ef2fd20e76c6118f41de))
+
 ## [4.3.1-beta.0](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.0...v4.3.1-beta.0) (2026-09-24)
 
 ### Features
