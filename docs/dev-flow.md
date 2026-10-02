@@ -28,11 +28,12 @@ every change goes through a pull request.
    CHANGELOG.md from them.
 3. Open a PR into the release branch and fill in the template.
 4. CI runs lint, the EditMode tests on Unity 2021.3 and on the newest 6000.3
-   patch, the signed package build, the Claude review and the secret scan. When
+   patch, the signed package build, the dependency review and the secret scan,
+   and a separate workflow runs the Claude review. When
    `AppodealDependencies.txt` changes, the pods job checks that every pod is
-   published with the iOS minimum target from the XML. All of them except the
-   review must pass. Unity jobs of all PRs share one license and run one at a
-   time, so a test job may wait in a queue.
+   published with the iOS minimum target from the XML. Everything except the
+   review must pass; the review only reports. Unity jobs of all PRs share one
+   license and run one at a time, so a test job may wait in a queue.
 5. No approval is required. The author merges once the checks pass.
 
 ## Release preparation
@@ -44,9 +45,11 @@ tests compare the three values, so a PR that bumps only some of them fails.
 
 ## Release
 
-1. Open a PR from `release/X.Y.Z` into `main`. Every check must pass, including
-   the review and pods, and a member of `@appodeal/sdk-team` other than the
-   author must approve.
+1. Open a PR from `release/X.Y.Z` into `main`. Every CI check must pass,
+   including the build and pods, and a member of `@appodeal/sdk-team` other than
+   the author must approve. The Claude review is advisory: it fails only when
+   the review service is down, never because of its findings, so read its
+   comments and labels before you approve.
 2. The release branch must be up to date with `main`. If `main` has moved, for
    example after a Dependabot PR, first open a PR from `main` into
    `release/X.Y.Z`. The Update branch button doesn't work here: it would push to

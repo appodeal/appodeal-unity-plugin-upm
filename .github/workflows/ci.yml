@@ -151,6 +151,15 @@ jobs:
           name: package
           path: build/*.tgz
 
+  # Blocks a PR that adds a dependency with a known vulnerability, such as an
+  # action version from the GitHub Advisory Database
+  dependencies:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/dependency-review-action@v5.0.0
+
   # Required on main and release/*: a dependency change is merged only after
   # its pods are published with the minTargetSdk from the XML
   pods:
