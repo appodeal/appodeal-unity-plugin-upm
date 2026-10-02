@@ -19,9 +19,13 @@ single-commit PRs only.
 
 <!-- How you checked it: tests, a build of the test project, a device run. -->
 
-## Risk and impact
+## Risk
 
-<!-- Public API, native SDK versions, iOS or Android build output. Write "none" if nothing changes for users. -->
+<!-- What can break and for whom: public API, native SDK versions, iOS or Android build output. -->
+
+## Product and architecture impact
+
+<!-- What changes for games and in the plugin's structure. Write "none" if nothing does. -->
 
 ## Rollout and rollback
 
