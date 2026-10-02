@@ -160,10 +160,12 @@ jobs:
     # Dependabot only bumps action versions, and its runs get no Actions secrets
     if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       pull-requests: write
       issues: write # gh label create needs it
+      id-token: write # OIDC token for Anthropic workload identity federation
     steps:
       - uses: actions/checkout@v7
       # Same labels as in appodeal-life. `gh pr edit --add-label` fails on a
@@ -190,8 +192,9 @@ jobs:
           done
       - uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          anthropic_federation_rule_id: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+          anthropic_organization_id: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+          anthropic_service_account_id: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
@@ -202,7 +205,8 @@ jobs:
             Report only real problems: bugs, broken UPM packaging (missing
             .meta files, asmdef references, platform defines), wrong native
             dependency versions, and changes that contradict AGENTS.md. Skip
-            formatting, `dotnet format` checks it.
+            formatting, `dotnet format` checks it. Don't describe what the PR
+            does; only report findings.
 
             Leave an inline comment for each problem. If there are none, post
             one short PR comment that says so.
