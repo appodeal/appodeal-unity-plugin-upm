@@ -18,7 +18,7 @@
 		<iosPod id="appodeal_inmobi" name="AppodealInMobiAdapter" version="11.3.0.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_ironsource" name="AppodealIronSourceAdapter" version="9.4.0.0.0" minTargetSdk="13.0" />
 		<iosPod id="appodeal_levelplay" name="AppodealLevelPlayAdapter" version="9.4.0.0.0" minTargetSdk="13.0" />
-		<iosPod id="appodeal_max" name="AppodealAppLovinMAXAdapter" version="13.6.4.2" minTargetSdk="15.0" />
+		<iosPod id="appodeal_max" name="AppodealAppLovinMAXAdapter" version="13.6.4.2-bmplus.1" minTargetSdk="15.0" />
 		<iosPod id="appodeal_meta_audience_network" name="AppodealMetaAudienceNetworkAdapter" version="6.21.1.0" minTargetSdk="13.0" />
 		<iosPod id="appodeal_mintegral" name="AppodealMintegralAdapter" version="8.1.3.0" minTargetSdk="12.0" />
 		<iosPod id="appodeal_my_target" name="AppodealMyTargetAdapter" version="5.43.0.0" minTargetSdk="14.0" />
