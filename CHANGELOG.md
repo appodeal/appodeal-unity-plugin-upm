@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.3.1-beta.4](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.3...v4.3.1-beta.4) (2026-10-05)
+
+### Bug Fixes
+
+* align runtime and dependency versions for 4.3.1-beta.4 ([4b60463](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/4b6046311888a3324132d28916f6e1193698514a))
+
+## [4.3.1-beta.3](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.2...v4.3.1-beta.3) (2026-10-05)
+
 ## [4.3.1-beta.1](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.0...v4.3.1-beta.1) (2026-10-02)
 
 ### Features
