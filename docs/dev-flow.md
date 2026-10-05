@@ -36,6 +36,18 @@ every change goes through a pull request.
    license and run one at a time, so a test job may wait in a queue.
 5. No approval is required. The author merges once the checks pass.
 
+## Repository tooling
+
+The release branch carries everything that makes up the plugin: the files that
+ship to games, the tests, and the configs used to format the code and to prepare
+the release. A PR that changes none of that, only the repository's own tooling
+such as CI workflows, agent setup or contributor docs, may target `main`
+instead. A PR that mixes both goes through the release branch, and so does one
+you are unsure about.
+
+Branch off `main`; the rules of step 1 of Release apply. After the merge, open
+release PRs into `main` fall behind; see step 2 of Release.
+
 ## Release preparation
 
 Follow the [prepare-release](../.agents/skills/prepare-release/SKILL.md) skill.

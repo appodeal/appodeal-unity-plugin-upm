@@ -71,9 +71,13 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
 - Every file the package ships has a committed `.meta` with a unique GUID.
   Repo-only files at the root (`AGENTS.md`, `docs/`, `Tests/`) also go into
   `.npmignore`, which controls what UPM installs from the git URL.
-- Pull requests: the title is `[SDK-123] Short description`, the base is the
-  release branch, and the template is filled in. Merge with a merge commit;
-  squash only single-commit PRs. The full flow is in `docs/dev-flow.md`.
+- Pull requests: the title is `[SDK-123] Short description` and the template is
+  filled in. The base is the release branch. A PR that changes only the
+  repository's own tooling (CI workflows, agent setup, contributor docs) may
+  target `main`. Anything that is part of the plugin or of how it is built,
+  tested and released goes through the release branch; so does a PR you are
+  unsure about. Merge with a merge commit; squash only single-commit PRs. The
+  full flow is in `docs/dev-flow.md`.
 - Commit messages follow Conventional Commits: release-it builds CHANGELOG.md
   from them at release time.
   ```text
