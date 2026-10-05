@@ -1,7 +1,7 @@
 # Appodeal Unity Plugin (UPM distribution)
 
 Monetize more with less hassle. Our one ad mediation SDK includes it all: 70+ ad
-demand sources, all ad formats, in-app bidding algorithm, full-controls, a/b
+demand sources, all ad formats, in-app bidding algorithm, full control, A/B
 testing plus much more.
 
 ## Useful links:
