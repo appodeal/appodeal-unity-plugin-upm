@@ -183,3 +183,17 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body-path: pod_sdk_report.md
+
+  # The one check branch protection requires from this workflow. Skipped jobs
+  # count as passed: pods without dependency changes, tests without code
+  # changes. changes and unity-lts are listed too: if they fail, the jobs that
+  # need them are skipped rather than failed. Add every new job here instead
+  # of to the branch rules.
+  ci:
+    if: always()
+    needs: [changes, lint, unity-lts, test, build, dependencies, pods]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if a job failed or was cancelled
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
