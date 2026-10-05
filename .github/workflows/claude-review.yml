@@ -46,9 +46,7 @@ jobs:
           done
       - uses: anthropics/claude-code-action@v1
         with:
-          anthropic_federation_rule_id: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
-          anthropic_organization_id: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
-          anthropic_service_account_id: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
