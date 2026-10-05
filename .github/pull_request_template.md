@@ -11,9 +11,9 @@ single-commit PRs only.
 
 ## Jira
 
-<!-- Delete if there is no ticket. -->
+<!-- The ticket key; GitHub turns it into a Jira link. Delete if there is no ticket. -->
 
-[SDK-XXXX](https://appodeal.atlassian.net/browse/SDK-XXXX)
+SDK-XXXX
 
 ## Validation
 
