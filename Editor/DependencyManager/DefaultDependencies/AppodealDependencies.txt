@@ -99,7 +99,7 @@
 		<androidPackage id="appodeal_applovin" spec="com.appodeal.ads.sdk.adapters:applovin:13.6.3.0" />
 		<androidPackage id="appodeal_appsflyer" spec="com.appodeal.ads.sdk.adapters:appsflyer:6.18.0.1" />
 		<androidPackage id="appodeal_bidmachine" spec="com.appodeal.ads.sdk.adapters:bidmachine:3.8.0.0" />
-		<androidPackage id="appodeal_bidmachine_plus" spec="com.appodeal.ads.sdk.adapters:bidmachine_plus:0.2.0-beta.6.0" />
+		<androidPackage id="appodeal_bidmachine_plus" spec="com.appodeal.ads.sdk.adapters:bidmachine_plus:0.2.0-beta.9.0" />
 		<androidPackage id="appodeal_bidon" spec="com.appodeal.ads.sdk.adapters:bidon:0.14.0.0" />
 		<androidPackage id="appodeal_bigo_ads" spec="com.appodeal.ads.sdk.adapters:bigo_ads:5.9.0.0" />
 		<androidPackage id="appodeal_chartboost" spec="com.appodeal.ads.sdk.adapters:chartboost:9.10.2.0" />
@@ -110,7 +110,7 @@
 		<androidPackage id="appodeal_inmobi" spec="com.appodeal.ads.sdk.adapters:inmobi:11.3.0.0" />
 		<androidPackage id="appodeal_ironsource" spec="com.appodeal.ads.sdk.adapters:ironsource:9.4.4.0" />
 		<androidPackage id="appodeal_levelplay" spec="com.appodeal.ads.sdk.adapters:level_play:9.4.4.0" />
-		<androidPackage id="appodeal_max" spec="com.appodeal.ads.sdk.adapters:applovin_max:13.6.4.2" />
+		<androidPackage id="appodeal_max" spec="com.appodeal.ads.sdk.adapters:applovin_max:13.6.4.4" />
 		<androidPackage id="appodeal_meta_audience_network" spec="com.appodeal.ads.sdk.adapters:meta:6.20.0.0" />
 		<androidPackage id="appodeal_mintegral" spec="com.appodeal.ads.sdk.adapters:mintegral:17.1.61.0" />
 		<androidPackage id="appodeal_mobilefuse" spec="com.appodeal.ads.sdk.adapters:mobilefuse:1.11.0.0" />
