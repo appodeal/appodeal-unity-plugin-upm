@@ -6,7 +6,7 @@ repo by git URL with a version tag.
 
 ## Stack
 
-C# 9 · Unity 2021.3+ (CI tests on 2021.3.45f2 and the newest 6000.3 LTS patch) ·
+C# 9 · Unity 2022.3+ (CI tests on 2022.3.62f3 and the newest 6000.3 LTS patch) ·
 EDM4U 1.2.185 for native dependencies · Unity Test Framework (NUnit) ·
 release-it for versioning and CHANGELOG.
 

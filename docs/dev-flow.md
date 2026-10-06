@@ -27,7 +27,7 @@ every change goes through a pull request.
 2. Make signed commits with Conventional Commits messages; release-it builds
    CHANGELOG.md from them.
 3. Open a PR into the release branch and fill in the template.
-4. CI runs lint, the EditMode tests on Unity 2021.3 and on the newest 6000.3
+4. CI runs lint, the EditMode tests on Unity 2022.3 and on the newest 6000.3
    patch, the signed package build, the dependency review and the secret scan,
    and a separate workflow runs the Claude review. When
    `AppodealDependencies.txt` changes, the pods job checks that every pod is
