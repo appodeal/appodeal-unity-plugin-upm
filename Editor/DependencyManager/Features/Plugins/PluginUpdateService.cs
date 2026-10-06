@@ -11,8 +11,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         public static async Task<bool> CheckAndUpdateAsync()
         {
-            if (!IsPluginAutoUpdateSupported()) return false;
-
             var pluginsFetchOutcome = await DataLoader.FetchAvailablePluginsAsync();
             if (!pluginsFetchOutcome.IsSuccess)
             {
@@ -64,16 +62,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             bool shouldUpdate = EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, message, "Update", "Cancel");
             LogHelper.Log($"{nameof(ShowUpdateDialog)}({nameof(message)}: {message}) => {shouldUpdate}");
             return shouldUpdate;
-        }
-
-        private static bool IsPluginAutoUpdateSupported()
-        {
-#if UNITY_2022_1_OR_NEWER
-            return true;
-#else
-            LogHelper.LogWarning("Plugin auto-update is disabled on Unity v2021 due to Package Manager instability. Please update manually via Package Manager");
-            return false;
-#endif
         }
     }
 }
