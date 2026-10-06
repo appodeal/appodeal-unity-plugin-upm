@@ -18,7 +18,7 @@ and [issues](https://github.com/appodeal/appodeal-unity-plugin-upm/issues) pages
 
 **[REQUIRED]**
  - Computer OS: [e.g. Windows, macOS]
- - Unity Editor Version: [e.g. 2021.3.1f1]
+ - Unity Editor Version: [e.g. 2022.3.62f3]
  - Appodeal Unity Plugin Version: [e.g. 3.0.1]
  - Bug Repro Rate: [e.g. 100%, 25%]
 

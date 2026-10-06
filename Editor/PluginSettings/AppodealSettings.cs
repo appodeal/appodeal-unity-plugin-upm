@@ -180,12 +180,7 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
             set
             {
                 nSAppTransportSecurity = value;
-#if UNITY_2022_1_OR_NEWER
                 PlayerSettings.insecureHttpOption = value ? InsecureHttpOption.AlwaysAllowed : InsecureHttpOption.NotAllowed;
-#else
-                if (BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.iOS, BuildTarget.iOS)) PlayerSettings.iOS.allowHTTPDownload = value;
-                else nSAppTransportSecurity = false;
-#endif
             }
         }
 

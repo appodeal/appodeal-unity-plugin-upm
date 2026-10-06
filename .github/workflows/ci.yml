@@ -90,10 +90,11 @@ jobs:
       max-parallel: 1
       matrix:
         include:
-          # The oldest supported version, package.json "unity"; 2021.3 gets no
-          # more patches
+          # The oldest supported version, package.json "unity". 2022.3.62f3 is
+          # its last public patch: later ones are xLTS and need an Enterprise
+          # or Industry license
           - name: min
-            unity: 2021.3.45f2
+            unity: 2022.3.62f3
           - name: lts
             unity: ${{ needs.unity-lts.outputs.version }}
     steps:
