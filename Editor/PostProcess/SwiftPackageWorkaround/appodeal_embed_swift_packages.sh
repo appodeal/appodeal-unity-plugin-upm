@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copies Swift Package artifacts into the application bundle, as '[CP] Embed Pods Frameworks' does
-# for CocoaPods. EDM4U links the packages into UnityFramework only, so dynamic frameworks and
+# for CocoaPods. EDM links the packages into UnityFramework only, so dynamic frameworks and
 # resource bundles never reach the '.app': the application fails to launch with 'Library not
 # loaded: @rpath/...' or crashes with 'unable to find bundle named ...'.
 # https://github.com/googlesamples/unity-jar-resolver/issues/779

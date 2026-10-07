@@ -7,8 +7,8 @@ repo by git URL with a version tag.
 ## Stack
 
 C# 9 · Unity 2022.3+ (CI tests on 2022.3.62f3 and the newest 6000.3 LTS patch) ·
-EDM4U 1.2.185 for native dependencies · Unity Test Framework (NUnit) ·
-release-it for versioning and CHANGELOG.
+EDM 2.1.0 for native dependencies · Unity Test Framework (NUnit) · release-it
+for versioning and CHANGELOG.
 
 ## Commands
 
@@ -37,7 +37,7 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   `AppodealAdsClientFactory` picks one.
 - `Runtime/Plugins/iOS/` holds the Objective-C side of the bridge.
 - `Editor/DependencyManager/` is the Dependency Manager window. Its
-  `DefaultDependencies/AppodealDependencies.txt` is the EDM4U XML with every
+  `DefaultDependencies/AppodealDependencies.txt` is the EDM XML with every
   native SDK, adapter, pod and Swift package.
 - `Editor/PreProcess/`, `Editor/PostProcess/` are build hooks: Gradle and
   manifest for Android, Xcode project and Info.plist for iOS.

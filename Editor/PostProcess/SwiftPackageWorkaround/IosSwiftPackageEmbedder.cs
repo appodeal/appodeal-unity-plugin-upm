@@ -8,14 +8,14 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 {
     /// <summary>
     /// <para>
-    /// EDM4U links Swift Package products into UnityFramework and leaves two things undone: the
+    /// EDM links Swift Package products into UnityFramework and leaves two things undone: the
     /// '-ObjC' flag on that target, and copying dynamic frameworks and resource bundles into the
     /// '.app'. Xcode copies them on its own only for products linked against an application target,
     /// and linking them there as well would put every static class into both binaries.
     /// </para>
     /// <para>
-    /// Upstream: https://github.com/googlesamples/unity-jar-resolver/issues/779. Once fixed there,
-    /// delete this folder and the call in AppodealPostProcess.
+    /// Reported against EDM4U: https://github.com/googlesamples/unity-jar-resolver/issues/779.
+    /// Once EDM handles it, delete this folder and the call in AppodealPostProcess.
     /// </para>
     /// </summary>
     internal static class IosSwiftPackageEmbedder
@@ -29,7 +29,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             string projectPath = PBXProject.GetPBXProjectPath(buildPath);
             string contents = File.ReadAllText(projectPath);
 
-            // EDM4U adds packages at build order 35, ahead of AppodealPostProcess. A CocoaPods
+            // EDM adds packages at build order 35, ahead of AppodealPostProcess. A CocoaPods
             // project gets the equivalent from 'pod install'.
             if (!contents.Contains("XCRemoteSwiftPackageReference")) return;
 
