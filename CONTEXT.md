@@ -58,10 +58,12 @@ or `ValidatePlayStoreInAppPurchase` for each purchase.
 
 ## Build and dependencies
 
-### EDM4U
+### EDM
 
-External Dependency Manager for Unity. It reads `AppodealDependencies.txt` and
-adds Gradle dependencies, pods and Swift packages to the game build.
+External Dependency Manager, the `com.unity.external-dependency-manager`
+package. It reads `AppodealDependencies.txt` and adds Gradle dependencies, pods
+and Swift packages to the game build. It replaced Google's EDM4U
+(`com.google.external-dependency-manager`).
 
 ### Dependency Manager (DM)
 
@@ -71,7 +73,7 @@ game's copy of the dependencies XML.
 ### Swift package, `replacesPod`
 
 The iOS SDK and adapters also ship as Swift packages. A `swiftPackage` entry
-with `replacesPod` tells EDM4U to use SPM instead of that pod.
+with `replacesPod` tells EDM to use SPM instead of that pod.
 
 ### Append and replace builds
 

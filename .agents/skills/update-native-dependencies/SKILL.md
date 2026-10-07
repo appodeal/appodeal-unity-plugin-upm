@@ -30,7 +30,7 @@ three lists: `androidPackage` (Maven specs), `iosPod` and `remoteSwiftPackage`.
    `.package(url:, exact:)`. Different pins make SPM fail to resolve the whole
    graph. If no pair of tags matches, the MAX adapter for that network stays on
    pods.
-4. Build the iOS test project twice, with Swift packages on and off in EDM4U,
+4. Build the iOS test project twice, with Swift packages on and off in EDM,
    and the Android test project once.
 5. Commit with a message that names the platform and the version, for example
    `feat: update Appodeal iOS SDK to v4.4.0`.
