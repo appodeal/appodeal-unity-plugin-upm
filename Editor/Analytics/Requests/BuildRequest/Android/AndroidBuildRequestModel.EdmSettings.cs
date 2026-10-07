@@ -36,9 +36,11 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 autoResolveOnBuild = androidResolverType.GetPropertyValue<bool>("AutoResolveOnBuild", BindingFlags.Static | BindingFlags.NonPublic);
                 patchAndroidManifest = androidResolverType.GetPropertyValue<bool>("PatchAndroidManifest", BindingFlags.Static | BindingFlags.NonPublic);
                 useJetifier = androidResolverType.GetPropertyValue<bool>("UseJetifier", BindingFlags.Static | BindingFlags.NonPublic);
-                patchMainGradle = androidResolverType.GetPropertyValue<bool>("PatchMainTemplateGradle", BindingFlags.Static | BindingFlags.NonPublic);
-                patchGradleProperties = androidResolverType.GetPropertyValue<bool>("PatchPropertiesTemplateGradle", BindingFlags.Static | BindingFlags.NonPublic);
                 patchSettingsGradle = androidResolverType.GetPropertyValue<bool>("PatchSettingsTemplateGradle", BindingFlags.Static | BindingFlags.NonPublic);
+
+                // EDM no longer has these settings and always patches; kept for the report format
+                patchMainGradle = true;
+                patchGradleProperties = true;
             }
         }
     }
