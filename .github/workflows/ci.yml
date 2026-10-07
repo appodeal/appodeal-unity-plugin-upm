@@ -113,8 +113,6 @@ jobs:
           projectPath: com.appodeal.mediation
           unityVersion: ${{ matrix.unity }}
           testMode: editmode
-          scopedRegistryUrl: https://package.openupm.com
-          registryScopes: com.google.external-dependency-manager
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: Test results (${{ matrix.name }}, ${{ matrix.unity }})
           coverageOptions: generateAdditionalMetrics;generateHtmlReport;assemblyFilters:+AppodealStack.*,+AppodealInc.*,-*.Tests
