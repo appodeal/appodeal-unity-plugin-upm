@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
@@ -8,7 +7,6 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// <summary>
     /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IAdRevenueListener"/> interface.
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class AppodealAdRevenueCallback : AndroidJavaProxy
     {
         private readonly IAdRevenueListener _listener;
