@@ -8,7 +8,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-    public class FirebaseJsonModel
+    internal class GoogleServicesJsonDto
     {
         public ProjectInfo project_info;
         public List<Client> client;

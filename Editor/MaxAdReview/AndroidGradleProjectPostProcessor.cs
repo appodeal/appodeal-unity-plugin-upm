@@ -283,7 +283,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 using var reader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException());
                 string text = reader.ReadToEnd();
 
-                return JsonUtility.FromJson<MaxAdReviewKeyResponseModel>(text).api_key;
+                return JsonUtility.FromJson<MaxAdReviewKeyResponseDto>(text).api_key;
             }
             catch (Exception e)
             {

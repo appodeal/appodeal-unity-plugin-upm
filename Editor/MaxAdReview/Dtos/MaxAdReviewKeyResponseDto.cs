@@ -6,7 +6,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class MaxAdReviewKeyResponseModel
+    internal class MaxAdReviewKeyResponseDto
     {
         public string api_key;
     }
