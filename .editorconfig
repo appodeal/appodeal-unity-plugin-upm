@@ -22,3 +22,8 @@ resharper_check_namespace_highlighting = none
 [**/Dtos/**/*.cs]
 dotnet_diagnostic.IDE1006.severity = none
 resharper_inconsistent_naming_highlighting = none
+
+# Android callback proxies: method names mirror the Java interfaces
+[**/Platforms/Android/Callbacks/*.cs]
+dotnet_diagnostic.IDE1006.severity = none
+resharper_inconsistent_naming_highlighting = none
