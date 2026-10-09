@@ -218,53 +218,11 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
         }
 
-        private static readonly string[] FrameworkList =
-        {
-            "AdSupport",
-            "AudioToolbox",
-            "AVFoundation",
-            "CFNetwork",
-            "CoreFoundation",
-            "CoreGraphics",
-            "CoreImage",
-            "CoreLocation",
-            "CoreMedia",
-            "CoreMotion",
-            "CoreTelephony",
-            "CoreText",
-            "EventKitUI",
-            "EventKit",
-            "GLKit",
-            "ImageIO",
-            "JavaScriptCore",
-            "MediaPlayer",
-            "MessageUI",
-            "MobileCoreServices",
-            "QuartzCore",
-            "SafariServices",
-            "Security",
-            "Social",
-            "StoreKit",
-            "SystemConfiguration",
-            "Twitter",
-            "UIKit",
-            "VideoToolbox",
-            "WatchConnectivity",
-            "WebKit"
-        };
+        // Empty: the SDKs pull their system frameworks through autolink and SPM linker settings. Kept for an SDK
+        // that may need a framework linked into the app target.
+        private static readonly string[] FrameworkList = { };
 
-        private static readonly string[] WeakFrameworkList =
-        {
-            "AppTrackingTransparency"
-        };
-
-        private static readonly string[] PlatformLibs =
-        {
-            "libc++.dylib",
-            "libz.dylib",
-            "libsqlite3.dylib",
-            "libxml2.2.dylib"
-        };
+        private static readonly string[] WeakFrameworkList = { };
 
         public static void PrepareProject(string buildPath)
         {
@@ -275,7 +233,6 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             project.ReadFromFile(projectPath);
 
             string mainTarget = project.GetUnityMainTargetGuid();
-            string unityFrameworkTarget = project.GetUnityFrameworkTargetGuid();
 
             string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
             if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
@@ -286,19 +243,9 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             AddProjectFrameworks(FrameworkList, project, mainTarget, false);
             AddProjectFrameworks(WeakFrameworkList, project, mainTarget, true);
-            AddProjectLibs(PlatformLibs, project, mainTarget);
 
-            project.SetBuildProperty(mainTarget, "SWIFT_VERSION", "5.0");
-            project.SetBuildProperty(mainTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "YES");
-
-            project.SetBuildProperty(project.ProjectGuid(), "ENABLE_BITCODE", "NO");
-
-            project.SetBuildProperty(unityFrameworkTarget, "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES", "NO");
-
-            project.AddBuildProperty(mainTarget, "OTHER_LDFLAGS", "-ObjC");
-            project.AddBuildProperty(mainTarget, "LIBRARY_SEARCH_PATHS", "$(SRCROOT)/Libraries");
-            project.AddBuildProperty(mainTarget, "LD_RUNPATH_SEARCH_PATHS", "@executable_path/Frameworks");
-            project.AddBuildProperty(mainTarget, "LIBRARY_SEARCH_PATHS", "$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)");
+            // No "$(inherited)": otherwise the app target takes the Pods xcconfig flags and links the UnityFramework adapters a second time.
+            project.UpdateBuildProperty(mainTarget, "OTHER_LDFLAGS", new[] { "-ObjC" }, new[] { "$(inherited)" });
 
             project.WriteToFile(projectPath);
         }
@@ -311,15 +258,6 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 {
                     project.AddFrameworkToProject(target, framework + Suffix, weak);
                 }
-            }
-        }
-
-        private static void AddProjectLibs(IEnumerable<string> libs, PBXProject project, string target)
-        {
-            foreach (string lib in libs)
-            {
-                string libGuid = project.AddFile("usr/lib/" + lib, "Libraries/" + lib, PBXSourceTree.Sdk);
-                project.AddFileToBuild(target, libGuid);
             }
         }
 
