@@ -18,12 +18,8 @@ csharp_indent_case_contents_when_block = false
 dotnet_diagnostic.IDE0130.severity = none
 resharper_check_namespace_highlighting = none
 
-# DTOs: allow API contract naming (snake_case, lowercase, etc.)
-[**/Dtos/**/*.cs]
-dotnet_diagnostic.IDE1006.severity = none
-resharper_inconsistent_naming_highlighting = none
-
-# Android callback proxies: method names mirror the Java interfaces
-[**/Platforms/Android/Callbacks/*.cs]
+# Types that mirror an external contract keep its naming: JSON DTOs with
+# snake_case fields and Android callback proxies with Java method names
+[{**/Dtos/**/*.cs,**/Platforms/Android/Callbacks/*.cs}]
 dotnet_diagnostic.IDE1006.severity = none
 resharper_inconsistent_naming_highlighting = none
