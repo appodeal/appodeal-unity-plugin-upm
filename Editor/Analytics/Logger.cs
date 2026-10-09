@@ -1,4 +1,3 @@
-// ReSharper disable CheckNamespace
 // ReSharper disable HeuristicUnreachableCode
 
 #pragma warning disable CS0162

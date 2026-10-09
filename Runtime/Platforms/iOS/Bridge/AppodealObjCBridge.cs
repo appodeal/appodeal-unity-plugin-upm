@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 using System.Runtime.InteropServices;
 
 namespace AppodealStack.Monetization.Platforms.Ios

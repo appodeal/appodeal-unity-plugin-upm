@@ -1,6 +1,4 @@
 #if UNITY_ANDROID || APPODEAL_DEV
-// ReSharper disable CheckNamespace
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 
