@@ -1,6 +1,5 @@
 using System;
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.DependencyManager.Editor;
@@ -10,16 +9,8 @@ using AppodealInc.Mediation.Utils.Editor;
 
 namespace AppodealInc.Mediation.TopBarMenu.Editor
 {
-    public class AppodealMenu : ScriptableObject
+    public static class AppodealMenu
     {
-#if APPODEAL_DEV
-        [MenuItem("Appodeal/Create Tarball", false, 0)]
-        public static void CreateTarball()
-        {
-            Client.Pack("Packages/com.appodeal.mediation", "~/Downloads/Appodeal/");
-        }
-#endif
-
         [MenuItem("Appodeal/Plugin Documentation", false, 1)]
         public static void OpenDocumentation()
         {
