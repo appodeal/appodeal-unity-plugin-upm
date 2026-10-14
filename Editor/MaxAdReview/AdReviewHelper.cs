@@ -6,11 +6,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
     {
         private const string Tag = "[Appodeal] [MaxAdReview]";
 
-        public static void Log(string message)
-        {
-            if (!Debug.isDebugBuild) return;
-            Debug.Log(message.AddPrefix());
-        }
+        public static void Log(string message) => Debug.Log(message.AddPrefix());
 
         public static void LogWarning(string message) => Debug.LogWarning(message.AddPrefix());
 
