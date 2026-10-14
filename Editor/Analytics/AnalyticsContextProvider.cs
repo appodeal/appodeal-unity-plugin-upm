@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 using System;
 using UnityEditor;
 using UnityEngine;

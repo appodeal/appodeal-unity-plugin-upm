@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 namespace AppodealStack.Monetization.Platforms.Android
 {
     internal static partial class AndroidConstants

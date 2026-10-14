@@ -1,8 +1,5 @@
-// ReSharper disable CheckNamespace
-
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.Scripting;
 using AppodealStack.Monetization.Common;
@@ -12,7 +9,6 @@ namespace AppodealStack.Monetization.Platforms.Android
     /// <summary>
     /// Android implementation of the <see cref="AppodealStack.Monetization.Common.IAppodealInitializationListener"/> interface.
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class AppodealInitializationCallback : AndroidJavaProxy
     {
         private readonly IAppodealInitializationListener _listener;

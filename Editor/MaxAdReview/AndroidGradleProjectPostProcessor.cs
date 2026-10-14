@@ -1,6 +1,4 @@
 #if UNITY_ANDROID || APPODEAL_DEV
-// ReSharper disable CheckNamespace
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -285,7 +283,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 using var reader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException());
                 string text = reader.ReadToEnd();
 
-                return JsonUtility.FromJson<MaxAdReviewKeyResponseModel>(text).api_key;
+                return JsonUtility.FromJson<MaxAdReviewKeyResponseDto>(text).api_key;
             }
             catch (Exception e)
             {

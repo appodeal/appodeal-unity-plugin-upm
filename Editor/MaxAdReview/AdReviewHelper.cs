@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 using UnityEngine;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor

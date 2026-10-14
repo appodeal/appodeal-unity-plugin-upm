@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal static class SanitizationExtensions

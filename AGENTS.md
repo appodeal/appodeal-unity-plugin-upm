@@ -32,7 +32,7 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
 - `Runtime/Api/` is the public API, the static `Appodeal` class.
 - `Runtime/Common/` holds shared types, callback interfaces and
   `AppodealVersions`.
-- `Runtime/Platforms/` has one client per platform: `Android/` (JNI), `iOS/`
+- `Runtime/Platforms/` has one client per platform: `Android/` (JNI), `Ios/`
   (Objective-C bridge), `Dummy/` (Editor and unsupported platforms).
   `AppodealAdsClientFactory` picks one.
 - `Runtime/Plugins/iOS/` holds the Objective-C side of the bridge.

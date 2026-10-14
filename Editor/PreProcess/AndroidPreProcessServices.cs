@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,7 +58,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         private static Dictionary<string, string> ParseFirebaseJson(string path)
         {
             string jsonString = new StreamReader(path).ReadToEnd();
-            var model = JsonUtility.FromJson<FirebaseJsonModel>(jsonString);
+            var model = JsonUtility.FromJson<GoogleServicesJsonDto>(jsonString);
             var projectInfo = model?.project_info;
 
             if (projectInfo?.project_id == null || (model.client?.Count ?? 0) <= 0) return null;

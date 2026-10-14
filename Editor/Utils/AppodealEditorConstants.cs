@@ -1,5 +1,3 @@
-// ReSharper disable CheckNamespace
-
 namespace AppodealInc.Mediation.Utils.Editor
 {
     public static class AppodealEditorConstants

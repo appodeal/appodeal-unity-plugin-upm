@@ -1,16 +1,10 @@
-// ReSharper disable CheckNamespace
-
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {
     [Serializable]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("ReSharper", "NotAccessedField.Global")]
-    public class FirebaseJsonModel
+    internal class GoogleServicesJsonDto
     {
         public ProjectInfo project_info;
         public List<Client> client;

@@ -79,17 +79,10 @@ UIViewController* RootViewControllerUnityMrec() {
 
     if (YAxis == BANNER_Y_POSITION_TOP) {
         mask |= UIViewAutoresizingFlexibleBottomMargin;
-        if (@available(iOS 11.0, *)) {
-            yOffset = superView.safeAreaInsets.top;
-        }
+        yOffset = superView.safeAreaInsets.top;
     } else if (YAxis == BANNER_Y_POSITION_BOTTOM) {
         mask |= UIViewAutoresizingFlexibleTopMargin;
-        if (@available(iOS 11.0, *)) {
-            yOffset = superviewSize.height - mrecHeight - superView.safeAreaInsets.bottom;
-        }
-        else {
-            yOffset = superviewSize.height - mrecHeight;
-        }
+        yOffset = superviewSize.height - mrecHeight - superView.safeAreaInsets.bottom;
     } else if (YAxis < -2) {
         NSLog(@"[Appodeal Banner view][error] Banner view y offset cannot be less than 0");
         yOffset = 0;
