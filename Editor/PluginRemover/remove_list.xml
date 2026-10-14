@@ -45,7 +45,7 @@
         <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
-        <name>Appodeal Andoid Library Directory</name>
+        <name>Appodeal Android Library Directory</name>
         <path>Plugins/Android/appodeal.androidlib</path>
         <check_if_empty>false</check_if_empty>
         <is_confirmation_required>false</is_confirmation_required>

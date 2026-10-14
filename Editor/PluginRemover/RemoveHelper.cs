@@ -24,7 +24,7 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
         public bool performOnlyIfTotalRemove;
     }
 
-    public static class RemoveHelper
+    internal static class RemoveHelper
     {
         public static void RemovePlugin()
         {
