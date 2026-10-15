@@ -38,8 +38,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             AnalyticsService.TrackClickEvent(ActionType.UpdatePlugin);
 
-            // string homePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
-            // var request = Client.Add($"file:{homePath}/Downloads/Appodeal/com.appodeal.mediation-{latestPluginSelectOutcome.Value.version}.tgz");
             var request = Client.Add($"{DmConstants.Plugin.PackageGitUrl}#v{latestPluginSelectOutcome.Value.version}");
             while (!request.IsCompleted) await Task.Yield();
             if (request.Status == StatusCode.Failure)
