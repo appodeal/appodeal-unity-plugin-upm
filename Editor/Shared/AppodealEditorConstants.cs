@@ -1,4 +1,4 @@
-namespace AppodealInc.Mediation.Utils.Editor
+namespace AppodealInc.Mediation.Shared.Editor
 {
     public static class AppodealEditorConstants
     {

@@ -5,7 +5,7 @@ using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.DependencyManager.Editor;
 using AppodealInc.Mediation.PluginRemover.Editor;
 using AppodealInc.Mediation.SettingsWindow.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.TopBarMenu.Editor
 {

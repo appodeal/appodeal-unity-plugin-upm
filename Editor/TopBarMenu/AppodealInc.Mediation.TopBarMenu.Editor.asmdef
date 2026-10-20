@@ -6,7 +6,7 @@
         "AppodealInc.Mediation.DependencyManager.Editor",
         "AppodealInc.Mediation.PluginRemover.Editor",
         "AppodealInc.Mediation.SettingsWindow.Editor",
-        "AppodealInc.Mediation.Utils.Editor"
+        "AppodealInc.Mediation.Shared.Editor"
     ],
     "includePlatforms": [
         "Editor"

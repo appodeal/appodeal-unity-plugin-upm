@@ -6,7 +6,7 @@ using System.Xml;
 using UnityEditor;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {

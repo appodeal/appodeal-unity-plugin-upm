@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using UnityEditor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {

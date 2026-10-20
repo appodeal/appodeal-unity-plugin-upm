@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using UnityEditor.PackageManager;
 using NUnit.Framework;
 using AppodealInc.Mediation.DependencyManager.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 using AppodealStack.Monetization.Common;
 
 namespace AppodealInc.Mediation.Editor.Tests

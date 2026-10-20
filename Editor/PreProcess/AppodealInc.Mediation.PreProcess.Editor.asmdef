@@ -3,7 +3,7 @@
     "rootNamespace": "AppodealInc.Mediation.PreProcess.Editor",
     "references": [
         "AppodealInc.Mediation.PluginSettings.Editor",
-        "AppodealInc.Mediation.Utils.Editor"
+        "AppodealInc.Mediation.Shared.Editor"
     ],
     "includePlatforms": [
         "Editor"

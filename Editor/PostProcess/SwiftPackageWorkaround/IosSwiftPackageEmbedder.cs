@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEditor.iOS.Xcode;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 #endif
 using UnityEngine.Video;
 using AppodealStack.Monetization.Common;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealStack.Monetization.Platforms.Dummy
 {

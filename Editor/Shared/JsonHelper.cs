@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-namespace AppodealInc.Mediation.Utils.Editor
+namespace AppodealInc.Mediation.Shared.Editor
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class JsonHelper

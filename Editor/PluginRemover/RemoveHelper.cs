@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using AppodealInc.Mediation.Analytics.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PluginRemover.Editor
 {
