@@ -82,6 +82,11 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   HTTP client, and each module keeps its own paths. The public Editor types are
   deliberate API: `AppodealSettings`, which build scripts use, and the XML nodes
   in DependencyManager, which `XmlSerializer` requires.
+- File paths use forward slashes on every platform, as Unity does:
+  `$"{dir}/{file}"`. Paths inside the project are relative to the project folder
+  and come from `PluginPaths`. `Path.GetFullPath(Path.Combine(...))` is only for
+  a native absolute path: one handed to an external process or one that climbs
+  with `..`.
 - Every file the package ships has a committed `.meta` with a unique GUID.
   Repo-only files at the root (`AGENTS.md`, `docs/`, `Tests/`) also go into
   `.npmignore`, which controls what UPM installs from the git URL.
