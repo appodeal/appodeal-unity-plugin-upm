@@ -8,7 +8,7 @@ using AppodealInc.Mediation.SettingsWindow.Editor;
 
 namespace AppodealInc.Mediation.TopBarMenu.Editor
 {
-    public static class AppodealMenu
+    internal static class AppodealMenu
     {
         [MenuItem("Appodeal/Plugin Documentation", false, 1)]
         public static void OpenDocumentation()

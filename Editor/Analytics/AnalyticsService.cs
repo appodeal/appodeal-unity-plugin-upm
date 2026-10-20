@@ -5,7 +5,7 @@ using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
-    public static class AnalyticsService
+    internal static class AnalyticsService
     {
         private static readonly AppodealLogger Log = AnalyticsLogging.Log;
 

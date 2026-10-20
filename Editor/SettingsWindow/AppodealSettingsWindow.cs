@@ -11,7 +11,7 @@ using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.SettingsWindow.Editor
 {
-    public class AppodealSettingsWindow : EditorWindow
+    internal class AppodealSettingsWindow : EditorWindow
     {
         private static readonly AppodealLogger Log = new("Settings");
 

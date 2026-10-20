@@ -10,7 +10,7 @@ using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {
-    public static class AndroidPreProcessServices
+    internal static class AndroidPreProcessServices
     {
         private static readonly AppodealLogger Log = PreProcessLogging.Log;
 

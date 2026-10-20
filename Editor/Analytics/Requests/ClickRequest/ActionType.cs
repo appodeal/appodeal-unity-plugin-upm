@@ -3,7 +3,7 @@ using System;
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     [Serializable]
-    public enum ActionType
+    internal enum ActionType
     {
         OpenDocumentation = 0,
         OpenDependencyManager,

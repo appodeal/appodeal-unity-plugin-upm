@@ -2,7 +2,7 @@ using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
-    public static partial class DmConstants
+    internal static partial class DmConstants
     {
         internal static class Choices
         {
