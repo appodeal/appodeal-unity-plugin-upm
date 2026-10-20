@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -10,6 +11,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 #endif
     internal partial class SdkCardShell : VisualElement
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string CommonStyleSheetPath = "Appodeal/DependencyManager/SdkCards/SdkCardsCommon";
 
 #if !UNITY_6000_0_OR_NEWER
@@ -26,7 +29,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!View.TryLoadFromTemplate())
             {
-                LogHelper.LogError("[SdkCardShell] Failed to initialize View");
+                Log.Error("[SdkCardShell] Failed to initialize View");
                 return;
             }
 

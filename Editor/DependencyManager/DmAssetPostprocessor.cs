@@ -9,6 +9,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmAssetPostprocessor : AssetPostprocessor
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private static readonly object Gate = new();
         private static bool _isProcessing;
 
@@ -24,7 +26,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
         }
 
@@ -59,7 +61,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {
@@ -88,7 +90,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {

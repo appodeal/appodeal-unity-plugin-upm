@@ -12,6 +12,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DmHttpClient
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const int WebRequestTimeoutMs = 30_000;
 
         private static readonly Lazy<HttpClient> LazyHttpClient = new(CreateHttpClient);
@@ -112,13 +114,13 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             {
                 case OperationCanceledException oce:
                     if (cancellationToken.IsCancellationRequested) { return Failure.Create("Cancelled", "Request was cancelled"); }
-                    LogHelper.LogError($"Request timeout for {url}: {oce.Message}");
+                    Log.Error($"Request timeout for {url}: {oce.Message}");
                     return Failure.Create("Timeout", "Request timed out");
                 case HttpRequestException hre:
-                    LogHelper.LogError($"HTTP request error for {url}: {hre.Message}");
+                    Log.Error($"HTTP request error for {url}: {hre.Message}");
                     return Failure.Create("HttpRequestException", hre.Message);
                 default:
-                    LogHelper.LogError($"Unexpected error for {url}: {ex.Message}");
+                    Log.Error($"Unexpected error for {url}: {ex.Message}");
                     return Failure.Create(ex.GetType().ToString(), ex.Message);
             }
         }

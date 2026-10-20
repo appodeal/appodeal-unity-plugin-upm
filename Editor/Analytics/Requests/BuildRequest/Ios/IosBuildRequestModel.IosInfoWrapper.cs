@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using UnityEditor.Build.Reporting;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
@@ -13,6 +14,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
         [SuppressMessage("ReSharper", "NotAccessedField.Global")]
         internal sealed class IosInfoWrapper
         {
+            private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
             public PlayerSettings playerSettings;
             public EdmSettings edmSettings;
             public List<SwiftPackageInfo> swiftPackages;
@@ -42,7 +45,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 }
                 catch (Exception e)
                 {
-                    Logger.Log($"Error loading Swift packages from path '{pbxProjectPath}': {e.Message}");
+                    Log.Verbose($"Error loading Swift packages from path '{pbxProjectPath}': {e.Message}");
                     return null;
                 }
             }
@@ -57,7 +60,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 }
                 catch (Exception e)
                 {
-                    Logger.Log($"Error loading Podfile from path '{filePath}': {e.Message}");
+                    Log.Verbose($"Error loading Podfile from path '{filePath}': {e.Message}");
                     return null;
                 }
             }

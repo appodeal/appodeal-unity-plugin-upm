@@ -11,6 +11,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class VersionComparer
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private static readonly Regex PluginVersionRegex = new(DmConstants.Regex.PluginVersionPattern);
         private static readonly Regex AdapterVersionRegex = new(DmConstants.Regex.AdapterVersionPattern);
 
@@ -19,21 +21,21 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var depsReadOutcome = DataLoader.TryReadLocalDependencies();
             if (!depsReadOutcome.IsSuccess)
             {
-                LogHelper.LogWarning($"Failed to read local dependencies. Reason: '{depsReadOutcome.Failure.Message}'");
+                Log.Warning($"Failed to read local dependencies. Reason: '{depsReadOutcome.Failure.Message}'");
                 return false;
             }
 
             var localDeps = depsReadOutcome.Value;
             if (String.IsNullOrWhiteSpace(localDeps.PluginVersion))
             {
-                LogHelper.Log("Local dependencies file has no plugin version specified");
+                Log.Verbose("Local dependencies file has no plugin version specified");
                 return false;
             }
 
             var packageVersionLookupOutcome = PackageVersionProvider.TryLookupVersion();
             if (!packageVersionLookupOutcome.IsSuccess)
             {
-                LogHelper.LogWarning($"Failed to get current plugin version. Reason: '{packageVersionLookupOutcome.Failure.Message}'");
+                Log.Warning($"Failed to get current plugin version. Reason: '{packageVersionLookupOutcome.Failure.Message}'");
                 return false;
             }
 
@@ -41,7 +43,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (localDeps.PluginVersion == currentPluginVersion) return true;
 
-            LogHelper.Log($"Plugin version mismatch: config has '{localDeps.PluginVersion}', current plugin is '{currentPluginVersion}'");
+            Log.Verbose($"Plugin version mismatch: config has '{localDeps.PluginVersion}', current plugin is '{currentPluginVersion}'");
             return false;
         }
 

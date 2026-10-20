@@ -6,6 +6,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class AndroidLibraryInstaller
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static bool EnsureAndroidLibraryDirectory(bool forceReinstall = false)
         {
             if (Directory.Exists(PluginPaths.AndroidLibDir))
@@ -17,7 +19,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             string source = $"{PluginPaths.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
             if (!Directory.Exists(source))
             {
-                LogHelper.LogError($"Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
+                Log.Error($"Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
                 return false;
             }
 

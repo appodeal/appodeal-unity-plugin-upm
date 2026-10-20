@@ -7,6 +7,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DependenciesInstaller
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         internal static bool EnsureDependenciesXmlFile()
         {
             try
@@ -20,7 +22,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 var depsFileInfo = new FileInfo(DmConstants.Plugin.BundledDependenciesFilePath);
                 if (!depsFileInfo.Exists)
                 {
-                    LogHelper.LogError($"File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
+                    Log.Error($"File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
                     return false;
                 }
 
@@ -31,7 +33,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
                 return false;
             }
         }

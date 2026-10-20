@@ -8,11 +8,14 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     internal static class IosBuildPostProcessor
     {
+        private static readonly AppodealLogger Log = MaxAdReviewLogging.Log;
+
         private const string MaxPod = "AppodealAppLovinMAXAdapter";
         private const string ScriptName = "AppLovinQualityServiceSetup.rb";
         private const string IosSetupUrl = "https://api2.safedk.com/v1/build/ios_setup2";
@@ -32,7 +35,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
             if (String.IsNullOrWhiteSpace(AppodealSettings.Instance.MaxSdkKey))
             {
-                AdReviewHelper.LogWarning("SDK key is missing --> Ad Review installation skipped");
+                Log.Warning("SDK key is missing --> Ad Review installation skipped");
                 return;
             }
 
@@ -40,13 +43,13 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             {
                 if (!IsMaxAdapterLinked(buildOutputPath))
                 {
-                    AdReviewHelper.LogWarning("AppLovin MAX dependency not found --> Ad Review installation skipped");
+                    Log.Warning("AppLovin MAX dependency not found --> Ad Review installation skipped");
                     return;
                 }
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Failed to check for AppLovin MAX dependency presence --> Ad Review installation skipped. Error: '{e.Message}'");
+                Log.Error($"Failed to check for AppLovin MAX dependency presence --> Ad Review installation skipped. Error: '{e.Message}'");
                 return;
             }
 
@@ -58,18 +61,18 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             (int exitCode, _, _) = ShellUtil.RunInBash("ruby", "--version", buildOutputPath);
             if (exitCode != 0)
             {
-                AdReviewHelper.LogError("iOS installation requires Ruby. Please install Ruby, export it to your system PATH and re-export the project");
+                Log.Error("iOS installation requires Ruby. Please install Ruby, export it to your system PATH and re-export the project");
                 return;
             }
 
             (int setupScriptExitCode, string output, string error) = ShellUtil.RunInBash("ruby", setupScriptPath, buildOutputPath);
             if (setupScriptExitCode != 0)
             {
-                AdReviewHelper.LogError($"Installation of Ad Review failed. Error: '{error}'");
+                Log.Error($"Installation of Ad Review failed. Error: '{error}'");
             }
             else
             {
-                AdReviewHelper.Log($"Ad Review was successfully installed. Output: '{output}'");
+                Log.Info($"Ad Review was successfully installed. Output: '{output}'");
             }
         }
 
@@ -103,7 +106,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 using var response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    AdReviewHelper.LogError($"Setup script downloading failed --> Ad Review installation skipped. StatusCode: '{response.StatusCode}'");
+                    Log.Error($"Setup script downloading failed --> Ad Review installation skipped. StatusCode: '{response.StatusCode}'");
                     return false;
                 }
 
@@ -115,7 +118,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Failed to download the setup script --> Ad Review installation skipped. Error: '{e.Message}'");
+                Log.Error($"Failed to download the setup script --> Ad Review installation skipped. Error: '{e.Message}'");
                 return false;
             }
         }

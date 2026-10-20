@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class SdkTooltipPopupView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkTooltip/SdkTooltipPopup";
 
         private readonly string _sdkName;
@@ -25,7 +28,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[SdkTooltipView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[SdkTooltipView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -38,7 +41,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (tooltip == null || sdkNameLabel == null || requirementLabel == null || descriptionLabel == null)
             {
-                LogHelper.LogError("[SdkTooltipView] Failed to find required elements in template");
+                Log.Error("[SdkTooltipView] Failed to find required elements in template");
                 return false;
             }
 

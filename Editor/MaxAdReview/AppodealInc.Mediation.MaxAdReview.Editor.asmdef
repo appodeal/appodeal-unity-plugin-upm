@@ -2,7 +2,8 @@
     "name": "AppodealInc.Mediation.MaxAdReview.Editor",
     "rootNamespace": "AppodealInc.Mediation.MaxAdReview.Editor",
     "references": [
-        "AppodealInc.Mediation.PluginSettings.Editor"
+        "AppodealInc.Mediation.PluginSettings.Editor",
+        "AppodealInc.Mediation.Shared.Editor"
     ],
     "includePlatforms": [
         "Editor"

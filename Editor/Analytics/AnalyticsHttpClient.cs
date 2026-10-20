@@ -4,11 +4,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal static class AnalyticsHttpClient
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         private const int WebRequestTimeoutMs = 10_000;
 
         public static async Task<bool> PostAsync(string url, string json)
@@ -47,7 +50,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sending analytics data to {url}: {e.Message}");
+                Log.Verbose($"Error sending analytics data to {url}: {e.Message}");
                 return false;
             }
         }

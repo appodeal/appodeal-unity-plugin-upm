@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class WizardScreenView : IDisposable
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/Screens/WizardScreen";
         private const int PopupAutoHideDelayMs = 5000;
 
@@ -45,7 +48,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[WizardScreenView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[WizardScreenView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -53,7 +56,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!BindElements())
             {
-                LogHelper.LogError("[WizardScreenView] Failed to bind required elements");
+                Log.Error("[WizardScreenView] Failed to bind required elements");
                 return false;
             }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -12,6 +13,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 #endif
     internal partial class SdkVersionDropdown : VisualElement, IDisposable
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
 #if !UNITY_6000_0_OR_NEWER
         public new class UxmlFactory : UxmlFactory<SdkVersionDropdown> { }
 #endif
@@ -45,13 +48,13 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!_buttonController.TryInitialize())
             {
-                LogHelper.LogError("[SdkVersionDropdown] Failed to initialize button controller");
+                Log.Error("[SdkVersionDropdown] Failed to initialize button controller");
                 return;
             }
 
             if (!_popupController.TryInitialize())
             {
-                LogHelper.LogError("[SdkVersionDropdown] Failed to initialize popup controller");
+                Log.Error("[SdkVersionDropdown] Failed to initialize popup controller");
                 return;
             }
 

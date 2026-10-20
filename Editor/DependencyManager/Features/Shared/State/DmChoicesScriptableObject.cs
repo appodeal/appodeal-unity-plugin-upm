@@ -10,6 +10,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmChoicesScriptableObject : ScriptableObject
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         [HideInInspector][SerializeField] private bool validateDependenciesPeriodically = true;
 
         [HideInInspector][SerializeField] private bool checkPeriodicallyForPluginUpdates = true;
@@ -34,7 +36,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
                 if (File.Exists(DmConstants.Choices.FilePath))
                 {
-                    LogHelper.LogError($"Failed to load existing asset from '{DmConstants.Choices.FilePath}'");
+                    Log.Error($"Failed to load existing asset from '{DmConstants.Choices.FilePath}'");
                     return null;
                 }
 

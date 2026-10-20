@@ -2,11 +2,14 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     internal static class ShellUtil
     {
+        private static readonly AppodealLogger Log = MaxAdReviewLogging.Log;
+
         public static (int exitCode, string output, string error) RunInBash(string program, string programArgs, string workingDirectory)
         {
             string bashArgs = $"-l -c \"{program} '{programArgs}'\"";
@@ -27,7 +30,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             using var process = Process.Start(psi);
             if (process == null)
             {
-                UnityEngine.Debug.LogError($"[ShellUtil] Failed to start process `{psi.FileName} {psi.Arguments}`");
+                Log.Error($"Failed to start process `{psi.FileName} {psi.Arguments}`");
                 return (-1, String.Empty, String.Empty);
             }
 

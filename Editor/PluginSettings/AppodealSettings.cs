@@ -9,6 +9,8 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 {
     public class AppodealSettings : ScriptableObject
     {
+        private static readonly AppodealLogger Log = PluginSettingsLogging.Log;
+
         internal const string AdMobAppIdPlaceholder = "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy";
 
         private const string ResourceName = "AppodealSettings";
@@ -88,7 +90,7 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
                 if (File.Exists(FilePath))
                 {
-                    Debug.LogError($"[Appodeal] Failed to load existing asset from '{FilePath}'");
+                    Log.Error($"Failed to load existing asset from '{FilePath}'");
                     return null;
                 }
 

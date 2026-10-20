@@ -8,11 +8,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.SettingsWindow.Editor
 {
     public class AppodealSettingsWindow : EditorWindow
     {
+        private static readonly AppodealLogger Log = new("Settings");
+
         public static void ShowAppodealSettingsWindow()
         {
             AnalyticsService.TrackClickEvent(ActionType.OpenAppodealSettings);
@@ -73,7 +76,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Log.Exception(e);
                 return new List<string>();
             }
         }
@@ -110,7 +113,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Log.Exception(e);
                 return new List<string>();
             }
         }

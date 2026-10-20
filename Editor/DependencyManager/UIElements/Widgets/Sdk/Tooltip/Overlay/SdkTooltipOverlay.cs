@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class SdkTooltipOverlay
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const float GapBelowAnchor = 5f;
         private const float GapAboveAnchor = 5f;
         private const float EditorWindowBorder = 2f;
@@ -23,7 +26,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _overlayView = new SdkTooltipOverlayView();
             if (!_overlayView.TryLoadFromTemplate())
             {
-                LogHelper.LogError("[SdkTooltipOverlay] Failed to load template");
+                Log.Error("[SdkTooltipOverlay] Failed to load template");
                 _overlayView = null;
                 return;
             }
@@ -56,7 +59,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!_currentTooltip.TryLoadFromTemplate())
             {
-                LogHelper.LogError("[SdkTooltipOverlay] Failed to create tooltip view");
+                Log.Error("[SdkTooltipOverlay] Failed to create tooltip view");
                 _currentTooltip = null;
                 return;
             }

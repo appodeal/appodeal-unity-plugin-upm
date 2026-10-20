@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class LoadingScreenView : IDisposable
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/Screens/LoadingScreen";
 
         private const float RotationSpeed = 8f;
@@ -33,7 +36,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[LoadingScreenView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[LoadingScreenView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -42,7 +45,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _spinner = Root.Q<VisualElement>(DmConstants.Uxml.LoadingScreen.Spinner);
             if (_spinner == null)
             {
-                LogHelper.LogError("[LoadingScreenView] Failed to find Spinner element in template");
+                Log.Error("[LoadingScreenView] Failed to find Spinner element in template");
                 return false;
             }
 

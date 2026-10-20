@@ -9,11 +9,14 @@ using System.Text.RegularExpressions;
 using UnityEditor.Android;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.MaxAdReview.Editor
 {
     internal class AndroidGradleProjectPostProcessor : IPostGenerateGradleAndroidProject
     {
+        private static readonly AppodealLogger Log = MaxAdReviewLogging.Log;
+
         private const string CredUrl = "https://api2.safedk.com/v1/build/cred";
         private const string MaxAdapter = "com.appodeal.ads.sdk.adapters:applovin_max";
         private const string PluginId = "com.applovin.quality";
@@ -34,7 +37,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
             if (action == PatchAction.Add && String.IsNullOrWhiteSpace(AppodealSettings.Instance.MaxSdkKey))
             {
-                AdReviewHelper.LogWarning("SDK key is missing --> disabling Ad Review");
+                Log.Warning("SDK key is missing --> disabling Ad Review");
                 action = PatchAction.Remove;
             }
 
@@ -46,13 +49,13 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                     string fileContents = File.ReadAllText(unityLibBuildGradleFilePath);
                     if (!fileContents.Contains(MaxAdapter))
                     {
-                        AdReviewHelper.LogWarning("AppLovin MAX dependency not found --> disabling Ad Review");
+                        Log.Warning("AppLovin MAX dependency not found --> disabling Ad Review");
                         action = PatchAction.Remove;
                     }
                 }
                 catch (Exception e)
                 {
-                    AdReviewHelper.LogError($"Failed to read '{unityLibBuildGradleFilePath}' to check for AppLovin MAX dependency presence --> disabling Ad Review. Error: '{e.Message}'");
+                    Log.Error($"Failed to read '{unityLibBuildGradleFilePath}' to check for AppLovin MAX dependency presence --> disabling Ad Review. Error: '{e.Message}'");
                     action = PatchAction.Remove;
                 }
             }
@@ -77,7 +80,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Failed to read some .gradle files for patching --> disabling Ad Review. Error: '{e.Message}'");
+                Log.Error($"Failed to read some .gradle files for patching --> disabling Ad Review. Error: '{e.Message}'");
                 action = PatchAction.Remove;
             }
 
@@ -88,12 +91,12 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
                 if (isPatched) continue;
 
-                AdReviewHelper.LogWarning($"Rolling back .gradle files due to unexpected error during patching for '{filePath}'");
+                Log.Warning($"Rolling back .gradle files due to unexpected error during patching for '{filePath}'");
                 RollbackAll(backups);
                 return;
             }
 
-            if (action == PatchAction.Add) AdReviewHelper.Log("Ad Review was successfully installed");
+            if (action == PatchAction.Add) Log.Info("Ad Review was successfully installed");
         }
 
         private void RollbackAll(Dictionary<string, byte[]> backups)
@@ -106,7 +109,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
                 }
                 catch (Exception e)
                 {
-                    AdReviewHelper.LogError($"Rollback failed for '{filePath}'. Error: '{e.Message}'");
+                    Log.Error($"Rollback failed for '{filePath}'. Error: '{e.Message}'");
                 }
             }
         }
@@ -151,7 +154,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Patching failed for '{filePath}'. Error: '{e.Message}'");
+                Log.Error($"Patching failed for '{filePath}'. Error: '{e.Message}'");
                 return false;
             }
         }
@@ -190,7 +193,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Patching failed for '{filePath}'. Error: '{e.Message}'");
+                Log.Error($"Patching failed for '{filePath}'. Error: '{e.Message}'");
                 return false;
             }
         }
@@ -240,7 +243,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Patching failed for '{filePath}'. Error: '{e.Message}'");
+                Log.Error($"Patching failed for '{filePath}'. Error: '{e.Message}'");
                 return false;
             }
         }
@@ -287,7 +290,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             }
             catch (Exception e)
             {
-                AdReviewHelper.LogError($"Retrieving api key failed. Error: '{e.Message}'");
+                Log.Error($"Retrieving api key failed. Error: '{e.Message}'");
                 return null;
             }
         }

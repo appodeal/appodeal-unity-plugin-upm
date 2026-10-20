@@ -12,6 +12,8 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 {
     public static class AndroidPreProcessServices
     {
+        private static readonly AppodealLogger Log = PreProcessLogging.Log;
+
         private const string AndroidManifestFile = "AndroidManifest.xml";
         private const string FirebaseAndroidConfigPath = "res/values";
         private const string FirebaseAndroidConfigFile = "google-services.xml";
@@ -34,7 +36,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (!Directory.Exists(PluginPaths.AndroidLibDir))
             {
-                Debug.LogError($"[Appodeal] Android Library was not found on path '{PluginPaths.AndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
+                Log.Error($"Android Library was not found on path '{PluginPaths.AndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
                 return;
             }
 
@@ -42,7 +44,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (!File.Exists(jsonFilePath))
             {
-                Debug.LogError($"[Appodeal] Firebase Android Configuration file was not found on path '{jsonFilePath}'. This service cannot be configured correctly.");
+                Log.Error($"Firebase Android Configuration file was not found on path '{jsonFilePath}'. This service cannot be configured correctly.");
                 return;
             }
 
@@ -50,7 +52,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (firebaseStrings == null)
             {
-                Debug.LogError($"[Appodeal] Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
+                Log.Error($"Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
                 RemoveFirebaseXmlDir($"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}");
                 return;
             }
@@ -150,7 +152,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (!File.Exists(path))
             {
-                Debug.LogWarning($"Missing AndroidManifest.xml file at {path}." +
+                Log.Warning($"Missing AndroidManifest.xml file at {path}." +
                                  "\nFacebook App ID cannot be added. This service won't be initialized properly!");
                 return;
             }
@@ -170,7 +172,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (String.IsNullOrEmpty(appId) | String.IsNullOrEmpty(clientToken))
             {
-                Debug.LogWarning("Facebook App ID / Client Token is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
+                Log.Warning("Facebook App ID / Client Token is empty (Appodeal > Appodeal Settings). This service won't be initialized properly!");
                 return;
             }
 
@@ -180,7 +182,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             var xmlNode = FindChildNode(FindChildNode(xmlDocument, "manifest"), "application");
             if (xmlNode == null)
             {
-                Debug.LogError("Error parsing " + fullPath);
+                Log.Error("Error parsing " + fullPath);
                 return;
             }
 

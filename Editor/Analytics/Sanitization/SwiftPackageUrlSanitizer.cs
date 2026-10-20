@@ -1,10 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal class SwiftPackageUrlSanitizer : BaseSanitizer
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         private static readonly Regex HttpUrlTokenPattern = new(
             @"\b(?<protocol>https?://)(?<token>[^:@/\s'""\n]+)@(?<host>[^/\s'""\n]+)(?<path>[^'"";\s\n]*)",
             StandardOptions, RegexTimeout);
@@ -27,7 +30,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing Swift package URL credentials: {e.Message}");
+                Log.Verbose($"Error sanitizing Swift package URL credentials: {e.Message}");
                 return content;
             }
         }

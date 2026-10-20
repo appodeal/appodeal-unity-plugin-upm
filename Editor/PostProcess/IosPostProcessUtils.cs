@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
-using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Shared.Editor;
 
@@ -14,6 +13,8 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 {
     internal static class IosPostProcessUtils
     {
+        private static readonly AppodealLogger Log = PostProcessLogging.Log;
+
         private const string Suffix = ".framework";
 
         private const string KeySkAdNetworkItems = "SKAdNetworkItems";
@@ -60,7 +61,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Log.Error(e.Message);
                     array = null;
                 }
             }
@@ -104,7 +105,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Log.Error(e.Message);
                     array = null;
                 }
             }
@@ -125,7 +126,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError(e.Message);
+                        Log.Error(e.Message);
                     }
                 }
 
@@ -161,13 +162,13 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!File.Exists(PluginPaths.DependenciesFile))
             {
-                Debug.LogWarning($"Missing deps config ({PluginPaths.DependenciesFile}). Ensure that Appodeal Unity plugin is imported correctly");
+                Log.Warning($"Missing deps config ({PluginPaths.DependenciesFile}). Ensure that Appodeal Unity plugin is imported correctly");
                 return;
             }
 
             if (!CheckIosAttribute())
             {
-                Debug.LogWarning("Google AdMob dependency is not found. Skipping AdMob App ID setup");
+                Log.Warning("Google AdMob dependency is not found. Skipping AdMob App ID setup");
                 return;
             }
 
@@ -175,13 +176,13 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (String.IsNullOrEmpty(admobAppId))
             {
-                Debug.LogError("AdMob App ID is not set via 'Appodeal/Appodeal Settings' tool. The app may crash on startup!");
+                Log.Error("AdMob App ID is not set via 'Appodeal/Appodeal Settings' tool. The app may crash on startup!");
                 return;
             }
 
             if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealSettings.AdMobAppIdPlaceholder)
             {
-                Debug.LogError($"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
+                Log.Error($"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                                "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
                                "\nAlternatively, change the value manually in Info.plist file");
             }
@@ -230,7 +231,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         public static void PrepareProject(string buildPath)
         {
-            Debug.Log("Preparing your Xcode project for Appodeal");
+            Log.Info("Preparing your Xcode project for Appodeal");
 
             string projectPath = PBXProject.GetPBXProjectPath(buildPath);
             var project = new PBXProject();
@@ -280,7 +281,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
             catch (IOException exception)
             {
-                Debug.LogError(exception.Message);
+                Log.Error(exception.Message);
                 return false;
             }
 
@@ -339,7 +340,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Log.Error(e.Message);
                 }
             }
             return false;

@@ -10,6 +10,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class WizardScreenController : IDisposable
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private readonly WizardScreenView _view = new();
         private readonly SdkSelectionModeManager _selectionManager = new();
 
@@ -52,7 +54,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var packageVersionLookupOutcome = PackageVersionProvider.TryLookupVersion();
             if (!packageVersionLookupOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to get plugin version: {packageVersionLookupOutcome.Failure.Message}");
+                Log.Error($"Failed to get plugin version: {packageVersionLookupOutcome.Failure.Message}");
                 return false;
             }
 
@@ -61,12 +63,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!availabilityOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to check version availability: {availabilityOutcome.Failure.Message}");
+                Log.Error($"Failed to check version availability: {availabilityOutcome.Failure.Message}");
                 return false;
             }
             if (!availabilityOutcome.Value)
             {
-                LogHelper.LogError($"Plugin version '{packageVersionLookupOutcome.Value}' is not available");
+                Log.Error($"Plugin version '{packageVersionLookupOutcome.Value}' is not available");
                 return false;
             }
 
@@ -192,7 +194,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!fetchOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to generate dependencies: {fetchOutcome.Failure.Message}");
+                Log.Error($"Failed to generate dependencies: {fetchOutcome.Failure.Message}");
                 _view.ShowFailPopup();
                 return false;
             }
@@ -200,7 +202,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var deserializationOutcome = XmlHandler.TryDeserializeDependencies(fetchOutcome.Value);
             if (!deserializationOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to parse dependencies XML: {deserializationOutcome.Failure.Message}");
+                Log.Error($"Failed to parse dependencies XML: {deserializationOutcome.Failure.Message}");
                 _view.ShowFailPopup();
                 return false;
             }
@@ -210,14 +212,16 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!XmlHandler.TryUpdateDependencies(deserializationOutcome.Value))
             {
-                LogHelper.LogError("Failed to save dependencies to file");
+                Log.Error("Failed to save dependencies to file");
                 _view.ShowFailPopup();
                 return false;
             }
 
             var diff = DependenciesDiff.Get(localDeps, deserializationOutcome.Value);
-            string message = $"{LogHelper.Colorize(Color.green, "Successfully")} updated dependencies.";
-            LogHelper.LogDepsUpdate(message, diff);
+            string message = $"{AppodealLogger.Colorize(Color.green, "Successfully")} updated dependencies.";
+            string changes = diff.ToString();
+            if (!String.IsNullOrEmpty(changes)) message += $"\n\n{changes}\n";
+            Log.Info(message);
 
             SaveCustomSelections();
 
@@ -291,7 +295,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {
@@ -310,7 +314,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {

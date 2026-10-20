@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class GenericSdkCardView : ISdkCardView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkCards/GenericSdkCardTemplate";
 
         private VisualElement _sdkIcon;
@@ -18,7 +21,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[GenericSdkCardView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[GenericSdkCardView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -27,7 +30,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             Shell = Root.Q<SdkCardShell>(DmConstants.Uxml.SdkCards.Generic.ShellName);
             if (Shell == null)
             {
-                LogHelper.LogError("[GenericSdkCardView] SdkCardShell not found in template");
+                Log.Error("[GenericSdkCardView] SdkCardShell not found in template");
                 return false;
             }
 

@@ -1,10 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal class GradleFileSanitizer : BaseSanitizer
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         private static readonly Regex UrlCredentialPattern = new(
             @"(?<prefix>url\s*[=:]\s*['""]?)(?<protocol>https?://)(?<username>[^:@\s'""\n]+):(?<password>[^@\s'""\n]+)@(?<host>[^/\s'""\n]+)(?<path>[^'""]*?)(?<suffix>['""]?)",
             StandardOptions, RegexTimeout);
@@ -123,7 +126,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing URL credentials: {e.Message}");
+                Log.Verbose($"Error sanitizing URL credentials: {e.Message}");
                 return content;
             }
         }
@@ -144,7 +147,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing Gradle platform-specific patterns: {e.Message}");
+                Log.Verbose($"Error sanitizing Gradle platform-specific patterns: {e.Message}");
                 return content;
             }
         }
@@ -171,7 +174,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing property credentials: {e.Message}");
+                Log.Verbose($"Error sanitizing property credentials: {e.Message}");
                 return content;
             }
         }
@@ -203,7 +206,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing special patterns: {e.Message}");
+                Log.Verbose($"Error sanitizing special patterns: {e.Message}");
                 return content;
             }
         }

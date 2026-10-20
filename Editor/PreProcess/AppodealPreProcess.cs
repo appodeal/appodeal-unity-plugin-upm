@@ -6,7 +6,6 @@ using System.Xml;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Shared.Editor;
 
@@ -14,6 +13,8 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 {
     internal class AppodealPreProcess : IPreprocessBuildWithReport
     {
+        private static readonly AppodealLogger Log = PreProcessLogging.Log;
+
         private const string ManifestTemplateName = "AndroidManifest.xml";
 
         private const string CoarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
@@ -33,7 +34,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             if (!File.Exists(manifestPath))
             {
-                Debug.LogError($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
+                Log.Error($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
                 throw new BuildFailedException("Couldn't find Appodeal Android Manifest file");
             }
 
@@ -57,7 +58,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.Log($"Missing Network config at {depsFilePath}. AdMob App Id won't be added");
+                Log.Info($"Missing Network config at {depsFilePath}. AdMob App Id won't be added");
                 return;
             }
 
@@ -69,7 +70,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 {
                     androidManifest.RemoveAdmobAppId();
                 }
-                Debug.LogError(
+                Log.Error(
                     "AdMob App ID is not set via 'Appodeal/Appodeal Settings' tool." +
                     "\nThe app may crash on startup!");
             }
@@ -77,7 +78,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             {
                 if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealSettings.AdMobAppIdPlaceholder)
                 {
-                    Debug.LogError(
+                    Log.Error(
                         $"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                         "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool.");
                 }

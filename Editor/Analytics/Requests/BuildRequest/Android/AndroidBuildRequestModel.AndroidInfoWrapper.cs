@@ -12,6 +12,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
         [SuppressMessage("ReSharper", "NotAccessedField.Global")]
         internal sealed class AndroidInfoWrapper
         {
+            private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
             private const string MainGradleFileName = "mainTemplate.gradle";
             private const string SettingsGradleFileName = "settingsTemplate.gradle";
             private const string GradlePropertiesFileName = "gradleTemplate.properties";
@@ -43,7 +45,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 }
                 catch (Exception e)
                 {
-                    Logger.Log($"Error loading Gradle template '{fileName}' file: {e.Message}");
+                    Log.Verbose($"Error loading Gradle template '{fileName}' file: {e.Message}");
                     return null;
                 }
             }

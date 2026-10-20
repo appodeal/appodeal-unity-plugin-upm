@@ -8,6 +8,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class ComponentsLoader
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static async Task<Outcome<(List<AdNetworkSdkCardController> adNetworks, List<GenericSdkCardController> services)>> TryLoadAsync(
             WizardRequestDto request,
             string pluginVersion,
@@ -15,7 +17,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             if (!WizardRequestBuilder.HasMediationSelections(request))
             {
-                LogHelper.LogError("No mediations selected. Cannot load SDKs");
+                Log.Error("No mediations selected. Cannot load SDKs");
                 return Failure.Create("ValidationError", "No mediations selected");
             }
 
@@ -24,7 +26,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!fetchOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to load SDKs: {fetchOutcome.Failure.Message}");
+                Log.Error($"Failed to load SDKs: {fetchOutcome.Failure.Message}");
                 return fetchOutcome.Failure;
             }
 

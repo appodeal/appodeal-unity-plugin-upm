@@ -1,10 +1,13 @@
 using UnityEditor;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmChoicesSettingsProvider : SettingsProvider
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private SettingsScreenController _settingsController;
 
         private VisualElement _rootElement;
@@ -15,7 +18,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             if (DmChoicesScriptableObject.Instance == null)
             {
-                LogHelper.LogError("DM Settings window cannot be displayed as its data asset failed to load");
+                Log.Error("DM Settings window cannot be displayed as its data asset failed to load");
                 return;
             }
 
@@ -25,7 +28,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _settingsController = new SettingsScreenController();
             if (!_settingsController.TryInitialize())
             {
-                LogHelper.LogError("DM Settings window cannot be displayed as its visual asset failed to load");
+                Log.Error("DM Settings window cannot be displayed as its visual asset failed to load");
                 return;
             }
 
