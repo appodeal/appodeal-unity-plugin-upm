@@ -1,12 +1,11 @@
 #if UNITY_IOS || APPODEAL_DEV
 using System;
 using System.IO;
-using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
+using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Shared.Editor;
 
@@ -18,7 +17,9 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
         private const string MaxPod = "AppodealAppLovinMAXAdapter";
         private const string ScriptName = "AppLovinQualityServiceSetup.rb";
-        private const string IosSetupUrl = "https://api2.safedk.com/v1/build/ios_setup2";
+        private const string IosSetupUrl = ServiceHosts.SafeDk + "/v1/build/ios_setup2";
+
+        private static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
 
         [PostProcessBuild(Int32.MaxValue)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
@@ -87,33 +88,19 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
         private static bool DownloadIosSetupScript(string setupScriptPath)
         {
-            string postJson = $"{{\"sdk_key\":\"{AppodealSettings.Instance.MaxSdkKey}\"}}";
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(postJson);
-
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(IosSetupUrl);
-                request.Method = "POST";
-                request.ContentType = "application/json";
-                request.ContentLength = bodyRaw.Length;
-                request.Timeout = 10_000;
+                string body = JsonUtility.ToJson(new MaxSdkKeyRequestDto { sdk_key = AppodealSettings.Instance.MaxSdkKey });
 
-                using (var requestStream = request.GetRequestStream())
+                // The post-build callback is synchronous, so it waits for the response
+                var scriptOutcome = AppodealHttpClient.PostJsonAsync(IosSetupUrl, body, RequestTimeout).GetAwaiter().GetResult();
+                if (!scriptOutcome.IsSuccess)
                 {
-                    requestStream.Write(bodyRaw, 0, bodyRaw.Length);
-                }
-
-                using var response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    Log.Error($"Setup script downloading failed --> Ad Review installation skipped. StatusCode: '{response.StatusCode}'");
+                    Log.Error($"Setup script downloading failed --> Ad Review installation skipped. Error: '{scriptOutcome.Failure.Type}: {scriptOutcome.Failure.Message}'");
                     return false;
                 }
 
-                using var responseStream = response.GetResponseStream() ?? throw new InvalidOperationException("No response stream");
-                using var fileStream = new FileStream(setupScriptPath, FileMode.Create, FileAccess.Write);
-                responseStream.CopyTo(fileStream);
-
+                File.WriteAllText(setupScriptPath, scriptOutcome.Value);
                 return File.Exists(setupScriptPath);
             }
             catch (Exception e)
