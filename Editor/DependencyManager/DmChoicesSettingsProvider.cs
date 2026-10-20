@@ -46,10 +46,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             DmChoicesScriptableObject.SaveToDisk();
         }
 
+        internal static void Open() => SettingsService.OpenProjectSettings(DmConstants.UI.ChoicesSettingsPath);
+
         [SettingsProvider]
         public static SettingsProvider CreateDmChoicesSettingsProvider()
         {
-            return new DmChoicesSettingsProvider($"Project/{DmConstants.UI.WindowName}/Settings", SettingsScope.Project) { label = "Settings" };
+            return new DmChoicesSettingsProvider(DmConstants.UI.ChoicesSettingsPath, SettingsScope.Project) { label = "Settings" };
         }
     }
 }

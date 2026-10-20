@@ -160,10 +160,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _pendingActivation = null;
         }
 
+        internal static void Open() => SettingsService.OpenProjectSettings(DmConstants.UI.SettingsPath);
+
         [SettingsProvider]
         public static SettingsProvider CreateDmSettingsProvider()
         {
-            var provider = new DmSettingsProvider($"Project/{DmConstants.UI.WindowName}", SettingsScope.Project)
+            var provider = new DmSettingsProvider(DmConstants.UI.SettingsPath, SettingsScope.Project)
             {
                 label = "Appodeal DM",
                 keywords = new HashSet<string>(new[] { "Appodeal", "Dependency", "Manager", "DM" })

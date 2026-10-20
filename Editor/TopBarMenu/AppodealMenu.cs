@@ -1,4 +1,3 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 using AppodealInc.Mediation.Analytics.Editor;
@@ -10,52 +9,52 @@ namespace AppodealInc.Mediation.TopBarMenu.Editor
 {
     internal static class AppodealMenu
     {
-        [MenuItem("Appodeal/Plugin Documentation", false, 1)]
+        private const string Root = "Appodeal/";
+        private const string DependencyManagerRoot = Root + "Dependency Manager/";
+
+        // Unity draws a separator between items whose priorities differ by more than 10
+        private const int LinksGroup = 1;
+        private const int ToolsGroup = 13;
+        private const int RemovalGroup = 27;
+
+        [MenuItem(Root + "Plugin Documentation", false, LinksGroup)]
         public static void OpenDocumentation()
         {
             AnalyticsService.TrackClickEvent(ActionType.OpenDocumentation);
             Application.OpenURL("https://docs.appodeal.com/unity/get-started");
         }
 
-        [MenuItem("Appodeal/Appodeal Homepage", false, 2)]
+        [MenuItem(Root + "Appodeal Homepage", false, LinksGroup + 1)]
         public static void OpenAppodealHomepage()
         {
             Application.OpenURL("https://appodeal.com/");
         }
 
-        [MenuItem("Appodeal/Dependency Manager/Open &d", false, 13)]
+        [MenuItem(DependencyManagerRoot + "Open &d", false, ToolsGroup)]
         public static void AppodealDependencyManager()
         {
-            SettingsService.OpenProjectSettings($"Project/{DmConstants.UI.WindowName}");
+            DmSettingsProvider.Open();
         }
 
-        [MenuItem("Appodeal/Dependency Manager/Validate Dependencies &v", false, 14)]
-        public static async void ValidateDependencies()
+        [MenuItem(DependencyManagerRoot + "Validate Dependencies &v", false, ToolsGroup + 1)]
+        public static void ValidateDependencies()
         {
-            try
-            {
-                await DependencyValidationService.ValidateAsync(isManual: true);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[Appodeal] Failed to validate dependencies: {ex.Message}");
-                EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, $"An unexpected error occurred:\n{ex.Message}", "OK");
-            }
+            DependencyValidationService.ValidateFromMenu();
         }
 
-        [MenuItem("Appodeal/Dependency Manager/Settings", false, 15)]
+        [MenuItem(DependencyManagerRoot + "Settings", false, ToolsGroup + 2)]
         public static void DependencyManagerSettings()
         {
-            SettingsService.OpenProjectSettings($"Project/{DmConstants.UI.WindowName}/Settings");
+            DmChoicesSettingsProvider.Open();
         }
 
-        [MenuItem("Appodeal/Appodeal Settings &s", false, 16)]
+        [MenuItem(Root + "Appodeal Settings &s", false, ToolsGroup + 3)]
         public static void AppodealSettings()
         {
             AppodealSettingsWindow.ShowAppodealSettingsWindow();
         }
 
-        [MenuItem("Appodeal/Remove Plugin", false, 27)]
+        [MenuItem(Root + "Remove Plugin", false, RemovalGroup)]
         public static void RemoveAppodealPlugin()
         {
             RemoveHelper.RemovePlugin();

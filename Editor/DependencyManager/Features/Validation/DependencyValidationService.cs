@@ -11,6 +11,19 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         private static readonly AppodealLogger Log = DmLogging.Log;
 
+        internal static async void ValidateFromMenu()
+        {
+            try
+            {
+                await ValidateAsync(isManual: true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to validate dependencies: {ex.Message}");
+                EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, $"An unexpected error occurred:\n{ex.Message}", "OK");
+            }
+        }
+
         public static async Task<bool> ValidateAsync(bool isManual)
         {
             bool versionMatches = VersionComparer.IsLocalDependenciesVersionMatchingPackageVersion();
