@@ -1,5 +1,6 @@
 using System;
 using UnityEditor.PackageManager;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {

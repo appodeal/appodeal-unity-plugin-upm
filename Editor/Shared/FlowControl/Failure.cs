@@ -1,4 +1,4 @@
-namespace AppodealInc.Mediation.DependencyManager.Editor
+namespace AppodealInc.Mediation.Shared.Editor
 {
     internal class Failure
     {

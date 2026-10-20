@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
