@@ -5,7 +5,6 @@ using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.DependencyManager.Editor;
 using AppodealInc.Mediation.PluginRemover.Editor;
 using AppodealInc.Mediation.SettingsWindow.Editor;
-using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.TopBarMenu.Editor
 {
@@ -27,7 +26,7 @@ namespace AppodealInc.Mediation.TopBarMenu.Editor
         [MenuItem("Appodeal/Dependency Manager/Open &d", false, 13)]
         public static void AppodealDependencyManager()
         {
-            SettingsService.OpenProjectSettings($"Project/{AppodealEditorConstants.DependencyManagerWindowName}");
+            SettingsService.OpenProjectSettings($"Project/{DmConstants.UI.WindowName}");
         }
 
         [MenuItem("Appodeal/Dependency Manager/Validate Dependencies &v", false, 14)]
@@ -47,7 +46,7 @@ namespace AppodealInc.Mediation.TopBarMenu.Editor
         [MenuItem("Appodeal/Dependency Manager/Settings", false, 15)]
         public static void DependencyManagerSettings()
         {
-            SettingsService.OpenProjectSettings($"Project/{AppodealEditorConstants.DependencyManagerWindowName}/Settings");
+            SettingsService.OpenProjectSettings($"Project/{DmConstants.UI.WindowName}/Settings");
         }
 
         [MenuItem("Appodeal/Appodeal Settings &s", false, 16)]

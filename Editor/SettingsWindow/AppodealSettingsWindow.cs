@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.PluginSettings.Editor;
-using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.SettingsWindow.Editor
 {

@@ -6,7 +6,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         internal static class SdkCatalog
         {
-            private const string DmRootDir = AppodealEditorConstants.PackageDir + "/Editor/DependencyManager";
+            private const string DmRootDir = PluginPaths.PackageDir + "/Editor/DependencyManager";
             private const string ResourcesDir = DmRootDir + "/Resources/Appodeal/DependencyManager";
             public const string SdksInfoPath = ResourcesDir + "/SdkCatalog/SdksInfo.asset";
 

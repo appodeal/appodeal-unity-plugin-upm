@@ -1,12 +1,10 @@
-using AppodealInc.Mediation.Shared.Editor;
-
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     public static partial class DmConstants
     {
         internal static class UI
         {
-            public const string WindowName = AppodealEditorConstants.DependencyManagerWindowName;
+            public const string WindowName = "AppodealDependencyManager";
 
             public const string DialogTitle = "Appodeal Dependency Manager";
 

@@ -12,6 +12,15 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 {
     public static class AndroidPreProcessServices
     {
+        private const string AndroidManifestFile = "AndroidManifest.xml";
+        private const string FirebaseAndroidConfigPath = "res/values";
+        private const string FirebaseAndroidConfigFile = "google-services.xml";
+        private const string FirebaseAndroidJsonFile = "google-services.json";
+
+        private const string FacebookApplicationId = "com.facebook.sdk.ApplicationId";
+        private const string FacebookClientToken = "com.facebook.sdk.ClientToken";
+        private const string FacebookAutoLogAppEventsEnabled = "com.facebook.sdk.AutoLogAppEventsEnabled";
+        private const string FacebookAdvertiserIDCollectionEnabled = "com.facebook.sdk.AdvertiserIDCollectionEnabled";
 
         #region Firebase
 
@@ -19,17 +28,17 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         {
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration)
             {
-                RemoveFirebaseXmlDir($"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
+                RemoveFirebaseXmlDir($"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}");
                 return;
             }
 
-            if (!Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir))
+            if (!Directory.Exists(PluginPaths.AndroidLibDir))
             {
-                Debug.LogError($"[Appodeal] Android Library was not found on path '{AppodealEditorConstants.AppodealAndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
+                Debug.LogError($"[Appodeal] Android Library was not found on path '{PluginPaths.AndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
                 return;
             }
 
-            string jsonFilePath = $"Assets/{AppodealEditorConstants.FirebaseAndroidJsonFile}";
+            string jsonFilePath = $"Assets/{FirebaseAndroidJsonFile}";
 
             if (!File.Exists(jsonFilePath))
             {
@@ -42,15 +51,15 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             if (firebaseStrings == null)
             {
                 Debug.LogError($"[Appodeal] Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
-                RemoveFirebaseXmlDir($"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}");
+                RemoveFirebaseXmlDir($"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}");
                 return;
             }
 
-            string valuesDir = $"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.FirebaseAndroidConfigPath}";
+            string valuesDir = $"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}";
 
             Directory.CreateDirectory(valuesDir);
 
-            string xmlFilePath = $"{valuesDir}/{AppodealEditorConstants.FirebaseAndroidConfigFile}";
+            string xmlFilePath = $"{valuesDir}/{FirebaseAndroidConfigFile}";
 
             CreateOrReplaceFirebaseXml(xmlFilePath, firebaseStrings);
         }
@@ -137,7 +146,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         #region Facebook
         public static void SetupManifestForFacebook()
         {
-            string path = $"{AppodealEditorConstants.AppodealAndroidLibDir}/{AppodealEditorConstants.AndroidManifestFile}";
+            string path = $"{PluginPaths.AndroidLibDir}/{AndroidManifestFile}";
 
             if (!File.Exists(path))
             {
@@ -177,24 +186,24 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             string namespaceOfPrefix = xmlNode.GetNamespaceOfPrefix("android");
             var xmlElement = xmlDocument.CreateElement("meta-data");
-            xmlElement.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookApplicationId);
+            xmlElement.SetAttribute("name", namespaceOfPrefix, FacebookApplicationId);
             xmlElement.SetAttribute("value", namespaceOfPrefix, "fb" + appId);
             SetOrReplaceXmlElement(xmlNode, xmlElement);
 
             var xmlElement2 = xmlDocument.CreateElement("meta-data");
-            xmlElement2.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookClientToken);
+            xmlElement2.SetAttribute("name", namespaceOfPrefix, FacebookClientToken);
             xmlElement2.SetAttribute("value", namespaceOfPrefix, clientToken);
             SetOrReplaceXmlElement(xmlNode, xmlElement2);
 
             string value = AppodealSettings.Instance.FacebookAutoLogAppEvents.ToString().ToLower();
             var xmlElement3 = xmlDocument.CreateElement("meta-data");
-            xmlElement3.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAutoLogAppEventsEnabled);
+            xmlElement3.SetAttribute("name", namespaceOfPrefix, FacebookAutoLogAppEventsEnabled);
             xmlElement3.SetAttribute("value", namespaceOfPrefix, value);
             SetOrReplaceXmlElement(xmlNode, xmlElement3);
 
             string value2 = AppodealSettings.Instance.FacebookAdvertiserIDCollection.ToString().ToLower();
             var xmlElement4 = xmlDocument.CreateElement("meta-data");
-            xmlElement4.SetAttribute("name", namespaceOfPrefix, AppodealEditorConstants.FacebookAdvertiserIDCollectionEnabled);
+            xmlElement4.SetAttribute("name", namespaceOfPrefix, FacebookAdvertiserIDCollectionEnabled);
             xmlElement4.SetAttribute("value", namespaceOfPrefix, value2);
             SetOrReplaceXmlElement(xmlNode, xmlElement4);
 

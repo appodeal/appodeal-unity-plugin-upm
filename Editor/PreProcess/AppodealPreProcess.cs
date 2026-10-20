@@ -15,7 +15,12 @@ namespace AppodealInc.Mediation.PreProcess.Editor
     internal class AppodealPreProcess : IPreprocessBuildWithReport
     {
         private const string ManifestTemplateName = "AndroidManifest.xml";
-        private const string AppodealAndroidLibDirPath = "Plugins/Android/appodeal.androidlib";
+
+        private const string CoarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
+        private const string FineLocation = "android.permission.ACCESS_FINE_LOCATION";
+        private const string ExternalStorageWrite = "android.permission.WRITE_EXTERNAL_STORAGE";
+        private const string AccessWifiState = "android.permission.ACCESS_WIFI_STATE";
+        private const string Vibrate = "android.permission.VIBRATE";
 
         public int callbackOrder => 0;
 
@@ -24,7 +29,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             if (report.summary.platform != BuildTarget.Android) return;
             if (AppodealSettings.Instance == null) return;
 
-            string manifestPath = Path.Combine(Application.dataPath, AppodealAndroidLibDirPath, ManifestTemplateName);
+            string manifestPath = Path.GetFullPath(Path.Combine(PluginPaths.AndroidLibDir, ManifestTemplateName));
 
             if (!File.Exists(manifestPath))
             {
@@ -45,7 +50,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
         {
-            string depsFilePath = AppodealEditorConstants.DependenciesFilePath;
+            string depsFilePath = PluginPaths.DependenciesFile;
             if (!File.Exists(depsFilePath) || !CheckContainsAdmobAdapter(depsFilePath))
             {
                 if (File.Exists(path) && CheckContainsAppId(path))
@@ -70,7 +75,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             }
             else
             {
-                if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
+                if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealSettings.AdMobAppIdPlaceholder)
                 {
                     Debug.LogError(
                         $"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
@@ -92,76 +97,76 @@ namespace AppodealInc.Mediation.PreProcess.Editor
         {
             if (AppodealSettings.Instance.AccessCoarseLocationPermission)
             {
-                if (!CheckContainsPermission(manifestPath, AppodealUnityUtils.CoarseLocation))
+                if (!CheckContainsPermission(manifestPath, CoarseLocation))
                 {
-                    androidManifest.SetPermission(AppodealUnityUtils.CoarseLocation);
+                    androidManifest.SetPermission(CoarseLocation);
                 }
             }
             else
             {
-                if (CheckContainsPermission(manifestPath, AppodealUnityUtils.CoarseLocation))
+                if (CheckContainsPermission(manifestPath, CoarseLocation))
                 {
-                    androidManifest.RemovePermission(AppodealUnityUtils.CoarseLocation);
+                    androidManifest.RemovePermission(CoarseLocation);
                 }
             }
 
             if (AppodealSettings.Instance.AccessFineLocationPermission)
             {
-                if (!CheckContainsPermission(manifestPath, AppodealUnityUtils.FineLocation))
+                if (!CheckContainsPermission(manifestPath, FineLocation))
                 {
-                    androidManifest.SetPermission(AppodealUnityUtils.FineLocation);
+                    androidManifest.SetPermission(FineLocation);
                 }
             }
             else
             {
-                if (CheckContainsPermission(manifestPath, AppodealUnityUtils.FineLocation))
+                if (CheckContainsPermission(manifestPath, FineLocation))
                 {
-                    androidManifest.RemovePermission(AppodealUnityUtils.FineLocation);
+                    androidManifest.RemovePermission(FineLocation);
                 }
             }
 
             if (AppodealSettings.Instance.WriteExternalStoragePermission)
             {
-                if (!CheckContainsPermission(manifestPath, AppodealUnityUtils.ExternalStorageWrite))
+                if (!CheckContainsPermission(manifestPath, ExternalStorageWrite))
                 {
-                    androidManifest.SetPermission(AppodealUnityUtils.ExternalStorageWrite);
+                    androidManifest.SetPermission(ExternalStorageWrite);
                 }
             }
             else
             {
-                if (CheckContainsPermission(manifestPath, AppodealUnityUtils.ExternalStorageWrite))
+                if (CheckContainsPermission(manifestPath, ExternalStorageWrite))
                 {
-                    androidManifest.RemovePermission(AppodealUnityUtils.ExternalStorageWrite);
+                    androidManifest.RemovePermission(ExternalStorageWrite);
                 }
             }
 
             if (AppodealSettings.Instance.AccessWifiStatePermission)
             {
-                if (!CheckContainsPermission(manifestPath, AppodealUnityUtils.AccessWifiState))
+                if (!CheckContainsPermission(manifestPath, AccessWifiState))
                 {
-                    androidManifest.SetPermission(AppodealUnityUtils.AccessWifiState);
+                    androidManifest.SetPermission(AccessWifiState);
                 }
             }
             else
             {
-                if (CheckContainsPermission(manifestPath, AppodealUnityUtils.AccessWifiState))
+                if (CheckContainsPermission(manifestPath, AccessWifiState))
                 {
-                    androidManifest.RemovePermission(AppodealUnityUtils.AccessWifiState);
+                    androidManifest.RemovePermission(AccessWifiState);
                 }
             }
 
             if (AppodealSettings.Instance.VibratePermission)
             {
-                if (!CheckContainsPermission(manifestPath, AppodealUnityUtils.Vibrate))
+                if (!CheckContainsPermission(manifestPath, Vibrate))
                 {
-                    androidManifest.SetPermission(AppodealUnityUtils.Vibrate);
+                    androidManifest.SetPermission(Vibrate);
                 }
             }
             else
             {
-                if (CheckContainsPermission(manifestPath, AppodealUnityUtils.Vibrate))
+                if (CheckContainsPermission(manifestPath, Vibrate))
                 {
-                    androidManifest.RemovePermission(AppodealUnityUtils.Vibrate);
+                    androidManifest.RemovePermission(Vibrate);
                 }
             }
         }

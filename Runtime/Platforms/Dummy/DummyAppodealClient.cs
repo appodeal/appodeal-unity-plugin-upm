@@ -10,7 +10,6 @@ using UnityEngine.UI;
 #endif
 using UnityEngine.Video;
 using AppodealStack.Monetization.Common;
-using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealStack.Monetization.Platforms.Dummy
 {
@@ -49,6 +48,8 @@ namespace AppodealStack.Monetization.Platforms.Dummy
     internal class DummyAppodealClient : IAppodealAdsClient
     {
         #region Variables
+
+        private const string EditorAdPrefabsDir = "Packages/com.appodeal.mediation/Editor/EditorAds/Prefabs";
 
         private const string HorizontalInterstitialAssetName = "ApdInterstitialH";
         private const string VerticalInterstitialAssetName = "ApdInterstitialV";
@@ -219,7 +220,7 @@ namespace AppodealStack.Monetization.Platforms.Dummy
             Debug.LogWarning($"Appodeal: {ad.Name} can't be shown in the Editor without the com.unity.ugui package");
             SimFireCallback(ad.Name, FailedToLoad);
 #else
-            string defaultPath = $"{AppodealEditorConstants.EditorAdPrefabsDir}/{prefabName}.prefab";
+            string defaultPath = $"{EditorAdPrefabsDir}/{prefabName}.prefab";
             string[] assetGuids = AssetDatabase.FindAssets($"{prefabName} t:prefab");
             string prefabPath = assetGuids.Length < 1 ? defaultPath : AssetDatabase.GUIDToAssetPath(assetGuids[0]);
 

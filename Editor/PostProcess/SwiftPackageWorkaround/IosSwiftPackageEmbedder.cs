@@ -20,7 +20,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
     {
         private const string BuildPhaseName = "[Appodeal] Embed Swift Package Artifacts";
         private const string ScriptName = "appodeal_embed_swift_packages.sh";
-        private const string BundledScriptPath = AppodealEditorConstants.PackageDir + "/Editor/PostProcess/SwiftPackageWorkaround/" + ScriptName;
+        private const string BundledScriptPath = PluginPaths.PackageDir + "/Editor/PostProcess/SwiftPackageWorkaround/" + ScriptName;
 
         internal static void Apply(string buildPath)
         {

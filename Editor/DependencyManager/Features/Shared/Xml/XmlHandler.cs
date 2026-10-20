@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEditor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -72,7 +73,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                Directory.CreateDirectory(DmConstants.Validation.DependenciesDir);
+                Directory.CreateDirectory(PluginPaths.DependenciesDir);
 
                 var serializationOutcome = TrySerializeDependencies(model);
                 if (!serializationOutcome.IsSuccess)
@@ -81,7 +82,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                     return false;
                 }
 
-                File.WriteAllText(DmConstants.Validation.DependenciesFilePath, serializationOutcome.Value, Encoding.UTF8);
+                File.WriteAllText(PluginPaths.DependenciesFile, serializationOutcome.Value, Encoding.UTF8);
                 AssetDatabase.Refresh();
 
                 return true;

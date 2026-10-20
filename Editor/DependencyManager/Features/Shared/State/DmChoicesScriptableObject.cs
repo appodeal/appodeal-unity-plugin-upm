@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -37,7 +38,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                     return null;
                 }
 
-                Directory.CreateDirectory(DmConstants.Choices.EditorResourcesDir);
+                Directory.CreateDirectory(PluginPaths.EditorResourcesDir);
                 _instance = CreateInstance<DmChoicesScriptableObject>();
                 AssetDatabase.CreateAsset(_instance, DmConstants.Choices.FilePath);
 

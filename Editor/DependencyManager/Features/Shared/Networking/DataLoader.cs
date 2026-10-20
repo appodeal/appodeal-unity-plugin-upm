@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -13,7 +14,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                var fileInfo = new FileInfo(DmConstants.Validation.DependenciesFilePath);
+                var fileInfo = new FileInfo(PluginPaths.DependenciesFile);
 
                 var deserializationOutcome = XmlHandler.TryDeserializeDependencies(fileInfo);
                 return deserializationOutcome.IsSuccess ? deserializationOutcome.Value : deserializationOutcome.Failure;

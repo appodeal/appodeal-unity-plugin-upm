@@ -16,9 +16,9 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                if (deletedAssets.Any(asset => asset.Contains($"Packages/{DmConstants.Plugin.PackageName}"))) return;
+                if (deletedAssets.Any(asset => asset.Contains(PluginPaths.PackageDir))) return;
                 if (movedAssets.Any(asset => asset.Contains(DmConstants.Choices.FileName))) return;
-                if (AppodealUnityUtils.IsDevModeEnabled) return;
+                if (DevMode.IsEnabled) return;
 
                 await RunNormalFlowAsync();
             }

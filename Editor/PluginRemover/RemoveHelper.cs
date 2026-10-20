@@ -26,6 +26,8 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
 
     internal static class RemoveHelper
     {
+        private const string RemoveListFilePath = PluginPaths.PackageDir + "/Editor/PluginRemover/remove_list.xml";
+
         public static void RemovePlugin()
         {
             if (!EditorUtility.DisplayDialog("Appodeal Unity Plugin",
@@ -83,7 +85,7 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
                 FileUtil.DeleteFileOrDirectory(fullItemPath + ".meta");
             }
 
-            Client.Remove(AppodealEditorConstants.PackageName);
+            Client.Remove(PluginPaths.PackageName);
         }
 
         private static IEnumerable<ItemToRemove> ReadXML()
@@ -91,7 +93,7 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
             var itemsToRemove = new List<ItemToRemove>();
 
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(AppodealEditorConstants.RemoveListFilePath);
+            xmlDoc.Load(RemoveListFilePath);
 
             var xmlRoot = xmlDoc.DocumentElement;
             if (xmlRoot == null) return itemsToRemove;

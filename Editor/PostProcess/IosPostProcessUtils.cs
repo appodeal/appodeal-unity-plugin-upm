@@ -16,6 +16,10 @@ namespace AppodealInc.Mediation.PostProcess.Editor
     {
         private const string Suffix = ".framework";
 
+        private const string KeySkAdNetworkItems = "SKAdNetworkItems";
+        private const string KeySkAdNetworkID = "SKAdNetworkIdentifier";
+        private const string KeyAdNetworkIdentifiers = "AdNetworkIdentifiers";
+
         [PostProcessBuild(41)]
         public static void UpdateInfoPlist(BuildTarget buildTarget, string buildPath)
         {
@@ -47,11 +51,11 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             plist.ReadFromString(File.ReadAllText(plistPath));
 
             PlistElementArray array = null;
-            if (plist.root.values.ContainsKey(AppodealUnityUtils.KeySkAdNetworkItems))
+            if (plist.root.values.ContainsKey(KeySkAdNetworkItems))
             {
                 try
                 {
-                    plist.root.values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkItems, out var element);
+                    plist.root.values.TryGetValue(KeySkAdNetworkItems, out var element);
                     if (element != null) array = element.AsArray();
                 }
                 catch (Exception e)
@@ -62,7 +66,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
             else
             {
-                array = plist.root.CreateArray(AppodealUnityUtils.KeySkAdNetworkItems);
+                array = plist.root.CreateArray(KeySkAdNetworkItems);
             }
 
             if (array != null)
@@ -71,7 +75,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 {
                     if (ContainsSkAdNetworkIdentifier(array, id)) continue;
                     var added = array.AddDict();
-                    added.SetString(AppodealUnityUtils.KeySkAdNetworkID, id);
+                    added.SetString(KeySkAdNetworkID, id);
                 }
             }
 
@@ -91,11 +95,11 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             plist.ReadFromString(File.ReadAllText(plistPath));
 
             PlistElementArray array = null;
-            if (plist.root.values.ContainsKey(AppodealUnityUtils.KeyAdNetworkIdentifiers))
+            if (plist.root.values.ContainsKey(KeyAdNetworkIdentifiers))
             {
                 try
                 {
-                    plist.root.values.TryGetValue(AppodealUnityUtils.KeyAdNetworkIdentifiers, out var element);
+                    plist.root.values.TryGetValue(KeyAdNetworkIdentifiers, out var element);
                     if (element != null) array = element.AsArray();
                 }
                 catch (Exception e)
@@ -106,7 +110,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             }
             else
             {
-                array = plist.root.CreateArray(AppodealUnityUtils.KeyAdNetworkIdentifiers);
+                array = plist.root.CreateArray(KeyAdNetworkIdentifiers);
             }
 
             if (array != null)
@@ -155,9 +159,9 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
         private static void AddAdMobApplicationIdentifier(string path)
         {
-            if (!File.Exists(AppodealEditorConstants.DependenciesFilePath))
+            if (!File.Exists(PluginPaths.DependenciesFile))
             {
-                Debug.LogWarning($"Missing deps config ({AppodealEditorConstants.DependenciesFilePath}). Ensure that Appodeal Unity plugin is imported correctly");
+                Debug.LogWarning($"Missing deps config ({PluginPaths.DependenciesFile}). Ensure that Appodeal Unity plugin is imported correctly");
                 return;
             }
 
@@ -175,7 +179,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                 return;
             }
 
-            if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealEditorConstants.AdMobAppIdPlaceholder)
+            if (!admobAppId.StartsWith("ca-app-pub-") || admobAppId == AppodealSettings.AdMobAppIdPlaceholder)
             {
                 Debug.LogError($"Incorrect AdMob App ID: '{admobAppId}'. The app may crash on startup." +
                                "\nPlease enter a valid AdMob App ID via 'Appodeal/Appodeal Settings' tool." +
@@ -272,7 +276,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             XDocument config;
             try
             {
-                config = XDocument.Load(AppodealEditorConstants.DependenciesFilePath);
+                config = XDocument.Load(PluginPaths.DependenciesFile);
             }
             catch (IOException exception)
             {
@@ -326,7 +330,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             {
                 try
                 {
-                    bool identifierExists = elem.AsDict().values.TryGetValue(AppodealUnityUtils.KeySkAdNetworkID, out var value);
+                    bool identifierExists = elem.AsDict().values.TryGetValue(KeySkAdNetworkID, out var value);
 
                     if (identifierExists && value.AsString().Equals(id))
                     {

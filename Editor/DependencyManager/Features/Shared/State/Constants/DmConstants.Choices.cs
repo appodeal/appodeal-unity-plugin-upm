@@ -8,9 +8,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             private const string ResourceName = "AppodealDmChoices";
             public const string FileName = ResourceName + ".asset";
-            public const string EditorResourcesDir = AppodealEditorConstants.EditorResourcesDir;
-            public const string FilePath = EditorResourcesDir + "/" + FileName;
-            public const string ResourcePath = AppodealEditorConstants.ResourcesSubPath + "/" + ResourceName;
+            public const string FilePath = PluginPaths.EditorResourcesDir + "/" + FileName;
+            public const string ResourcePath = PluginPaths.ResourcesSubDir + "/" + ResourceName;
         }
     }
 }

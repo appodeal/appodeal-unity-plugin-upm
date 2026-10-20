@@ -3,6 +3,7 @@
     "rootNamespace": "AppodealInc.Mediation.Analytics.Editor",
     "references": [
         "AppodealInc.Mediation.PluginSettings.Editor",
+        "AppodealInc.Mediation.Shared.Editor",
         "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [

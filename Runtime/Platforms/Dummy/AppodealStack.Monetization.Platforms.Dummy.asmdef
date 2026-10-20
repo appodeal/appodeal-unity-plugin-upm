@@ -2,7 +2,6 @@
     "name": "AppodealStack.Monetization.Platforms.Dummy",
     "rootNamespace": "AppodealStack.Monetization.Platforms.Dummy",
     "references": [
-        "AppodealInc.Mediation.Shared.Editor",
         "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [

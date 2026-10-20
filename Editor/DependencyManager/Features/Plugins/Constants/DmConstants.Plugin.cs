@@ -6,8 +6,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
     {
         internal static class Plugin
         {
-            public const string PackageName = AppodealEditorConstants.PackageName;
-            public const string PackageGitUrl = AppodealEditorConstants.GitRepoAddress;
+            public const string PackageGitUrl = "https://github.com/appodeal/appodeal-unity-plugin-upm.git";
+            public const string BundledDependenciesFilePath = PluginPaths.PackageDir + "/Editor/DependencyManager/DefaultDependencies/AppodealDependencies.txt";
             public const string PostUpdatePendingKey = "ApdDmPostUpdatePending";
             public const string UpdateCheckPerformedKey = "ApdDmAutoCheckForUpdatesPerformed";
         }
