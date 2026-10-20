@@ -30,7 +30,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             if (report.summary.platform != BuildTarget.Android) return;
             if (AppodealSettings.Instance == null) return;
 
-            string manifestPath = Path.GetFullPath(Path.Combine(PluginPaths.AndroidLibDir, ManifestTemplateName));
+            string manifestPath = $"{PluginPaths.AndroidLibDir}/{ManifestTemplateName}";
 
             if (!File.Exists(manifestPath))
             {

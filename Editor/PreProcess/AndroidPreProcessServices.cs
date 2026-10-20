@@ -40,7 +40,7 @@ namespace AppodealInc.Mediation.PreProcess.Editor
                 return;
             }
 
-            string jsonFilePath = $"Assets/{FirebaseAndroidJsonFile}";
+            string jsonFilePath = $"{PluginPaths.AssetsDir}/{FirebaseAndroidJsonFile}";
 
             if (!File.Exists(jsonFilePath))
             {

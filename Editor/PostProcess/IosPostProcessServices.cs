@@ -70,8 +70,8 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration) return false;
 
-            string plistFileUnityPath = Application.dataPath + '/' + FirPlistFileName;
-            string plistFileXcodePath = buildPath + '/' + FirPlistFileName;
+            string plistFileUnityPath = $"{PluginPaths.AssetsDir}/{FirPlistFileName}";
+            string plistFileXcodePath = $"{buildPath}/{FirPlistFileName}";
 
             if (File.Exists(plistFileUnityPath))
             {

@@ -5,7 +5,9 @@ namespace AppodealInc.Mediation.Shared.Editor
         public const string PackageName = "com.appodeal.mediation";
         public const string PackageDir = "Packages/" + PackageName;
 
-        private const string EditorDir = "Assets/Appodeal/Editor";
+        public const string AssetsDir = "Assets";
+
+        private const string EditorDir = AssetsDir + "/Appodeal/Editor";
 
         public const string DependenciesDir = EditorDir + "/Dependencies";
         public const string DependenciesFile = DependenciesDir + "/AppodealDependencies.xml";
@@ -13,7 +15,7 @@ namespace AppodealInc.Mediation.Shared.Editor
         public const string ResourcesSubDir = "Appodeal";
         public const string EditorResourcesDir = EditorDir + "/Resources/" + ResourcesSubDir;
 
-        public const string AndroidPluginsDir = "Assets/Plugins/Android";
+        public const string AndroidPluginsDir = AssetsDir + "/Plugins/Android";
         public const string AndroidLibDir = AndroidPluginsDir + "/appodeal.androidlib";
     }
 }

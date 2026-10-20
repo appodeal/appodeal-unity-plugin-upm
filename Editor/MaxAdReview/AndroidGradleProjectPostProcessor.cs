@@ -44,7 +44,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
 
             if (action == PatchAction.Add)
             {
-                string unityLibBuildGradleFilePath = Path.GetFullPath(Path.Combine(path, "build.gradle"));
+                string unityLibBuildGradleFilePath = $"{path}/build.gradle";
                 try
                 {
                     string fileContents = File.ReadAllText(unityLibBuildGradleFilePath);

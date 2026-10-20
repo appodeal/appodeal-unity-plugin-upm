@@ -32,7 +32,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             if (!contents.Contains("XCRemoteSwiftPackageReference")) return;
 
             // An append build keeps the previous copy.
-            File.Copy(BundledScriptPath, Path.Combine(buildPath, ScriptName), overwrite: true);
+            File.Copy(BundledScriptPath, $"{buildPath}/{ScriptName}", overwrite: true);
 
             var project = new PBXProject();
             project.ReadFromString(contents);

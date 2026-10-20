@@ -82,7 +82,7 @@ namespace AppodealInc.Mediation.MaxAdReview.Editor
             string pbxProjectPath = PBXProject.GetPBXProjectPath(buildOutputPath);
             if (Regex.IsMatch(File.ReadAllText(pbxProjectPath), $@"productName\s*=\s*""?{MaxPod}""?\s*;")) return true;
 
-            string podfilePath = Path.Combine(buildOutputPath, "Podfile");
+            string podfilePath = $"{buildOutputPath}/Podfile";
             return File.Exists(podfilePath) && Regex.IsMatch(File.ReadAllText(podfilePath), $@"^\s*pod\s+['""]{MaxPod}['""]", RegexOptions.Multiline);
         }
 

@@ -27,7 +27,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             if (buildTarget != BuildTarget.iOS) return;
             if (AppodealSettings.Instance == null) return;
 
-            string path = Path.Combine(buildPath, "Info.plist");
+            string path = $"{buildPath}/Info.plist";
 
             AddAdMobApplicationIdentifier(path);
             AddNsUserTrackingUsageDescription(path);
@@ -47,7 +47,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (buildTarget != BuildTarget.iOS) return;
 
-            string plistPath = buildPath + "/Info.plist";
+            string plistPath = $"{buildPath}/Info.plist";
             var plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
 
@@ -91,7 +91,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (buildTarget != BuildTarget.iOS) return;
 
-            string plistPath = buildPath + "/Info.plist";
+            string plistPath = $"{buildPath}/Info.plist";
             var plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
 
@@ -239,7 +239,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             string mainTarget = project.GetUnityMainTargetGuid();
 
-            string firebasePlistPath = Path.Combine(buildPath, "GoogleService-Info.plist");
+            string firebasePlistPath = $"{buildPath}/GoogleService-Info.plist";
             if (IosPostProcessServices.AddFirebasePlistFile(buildPath) && File.Exists(firebasePlistPath))
             {
                 string firebasePlistGuid = project.AddFile("GoogleService-Info.plist", "GoogleService-Info.plist", PBXSourceTree.Source);
