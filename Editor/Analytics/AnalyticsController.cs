@@ -5,12 +5,15 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     [InitializeOnLoad]
     internal class AnalyticsController : IPreprocessBuildWithReport
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         private const int MaxBuildPollingTimeMs = 3_600_000;
         private const int MaxEditorQuittingBlockTimeMs = 1_200;
 
@@ -92,11 +95,11 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (TaskCanceledException)
             {
-                Logger.Log($"Build polling canceled after waiting {MaxBuildPollingTimeMs / 60_000} minutes for {report.summary.platform}");
+                Log.Verbose($"Build polling canceled after waiting {MaxBuildPollingTimeMs / 60_000} minutes for {report.summary.platform}");
             }
             catch (Exception e)
             {
-                Logger.Log($"Error creating or sending 'build' analytics event for {report.summary.platform}: {e.Message}");
+                Log.Verbose($"Error creating or sending 'build' analytics event for {report.summary.platform}: {e.Message}");
             }
         }
     }

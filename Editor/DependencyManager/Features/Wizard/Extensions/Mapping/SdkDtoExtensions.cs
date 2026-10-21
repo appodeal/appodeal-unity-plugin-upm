@@ -1,30 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class SdkDtoExtensions
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static Sdk ToDomain(this SdkDto dto)
         {
             if (dto == null) return null;
 
             if (String.IsNullOrWhiteSpace(dto.name))
             {
-                LogHelper.LogError("SDK name is null or empty. Skipping SDK");
+                Log.Error("SDK name is null or empty. Skipping SDK");
                 return null;
             }
 
             if (!Enum.IsDefined(typeof(Category), dto.category))
             {
-                LogHelper.LogError($"Invalid category value '{dto.category}' for SDK '{dto.name}'. Skipping SDK");
+                Log.Error($"Invalid category value '{dto.category}' for SDK '{dto.name}'. Skipping SDK");
                 return null;
             }
 
             if (!Enum.IsDefined(typeof(Requirement), dto.requirement))
             {
-                LogHelper.LogError($"Invalid requirement value '{dto.requirement}' for SDK '{dto.name}'. Skipping SDK");
+                Log.Error($"Invalid requirement value '{dto.requirement}' for SDK '{dto.name}'. Skipping SDK");
                 return null;
             }
 

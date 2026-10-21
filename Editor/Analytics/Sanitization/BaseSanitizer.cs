@@ -1,10 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal abstract class BaseSanitizer
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         protected const RegexOptions StandardOptions = RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant;
 
         private const int RegexTimeoutMs = 2_000;
@@ -88,7 +91,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error during sanitization: {e.Message}");
+                Log.Verbose($"Error during sanitization: {e.Message}");
                 return content;
             }
         }
@@ -119,7 +122,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing PEM content: {e.Message}");
+                Log.Verbose($"Error sanitizing PEM content: {e.Message}");
                 return content;
             }
         }
@@ -138,7 +141,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing environment variables: {e.Message}");
+                Log.Verbose($"Error sanitizing environment variables: {e.Message}");
                 return content;
             }
         }
@@ -162,7 +165,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing credential patterns: {e.Message}");
+                Log.Verbose($"Error sanitizing credential patterns: {e.Message}");
                 return content;
             }
         }
@@ -208,7 +211,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing standalone URLs: {e.Message}");
+                Log.Verbose($"Error sanitizing standalone URLs: {e.Message}");
                 return content;
             }
         }

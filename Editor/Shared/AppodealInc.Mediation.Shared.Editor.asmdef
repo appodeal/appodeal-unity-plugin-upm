@@ -1,6 +1,6 @@
 {
-    "name": "AppodealInc.Mediation.Utils.Editor",
-    "rootNamespace": "AppodealInc.Mediation.Utils.Editor",
+    "name": "AppodealInc.Mediation.Shared.Editor",
+    "rootNamespace": "AppodealInc.Mediation.Shared.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

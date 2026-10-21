@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class AdNetworkSdkCardView : ISdkCardView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkCards/AdNetworkSdkCardTemplate";
 
         private VisualElement _bannerIcon;
@@ -23,7 +26,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[AdNetworkSdkCardView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[AdNetworkSdkCardView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -32,7 +35,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             Shell = Root.Q<SdkCardShell>(DmConstants.Uxml.SdkCards.AdNetwork.ShellName);
             if (Shell == null)
             {
-                LogHelper.LogError("[AdNetworkSdkCardView] SdkCardShell not found in template");
+                Log.Error("[AdNetworkSdkCardView] SdkCardShell not found in template");
                 return false;
             }
 
@@ -45,7 +48,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_androidMediationsContainer == null || _iosMediationsContainer == null)
             {
-                LogHelper.LogError("[AdNetworkSdkCardView] Failed to find required elements in template");
+                Log.Error("[AdNetworkSdkCardView] Failed to find required elements in template");
                 return false;
             }
 

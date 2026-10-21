@@ -1,12 +1,11 @@
-using AppodealInc.Mediation.Utils.Editor;
-
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
-    public static partial class DmConstants
+    internal static partial class DmConstants
     {
         internal static class UI
         {
-            public const string WindowName = AppodealEditorConstants.DependencyManagerWindowName;
+            public const string SettingsPath = "Project/AppodealDependencyManager";
+            public const string ChoicesSettingsPath = SettingsPath + "/Settings";
 
             public const string DialogTitle = "Appodeal Dependency Manager";
 

@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PluginSettings.Editor
 {
     public class AppodealSettings : ScriptableObject
     {
+        private static readonly AppodealLogger Log = PluginSettingsLogging.Log;
+
+        internal const string AdMobAppIdPlaceholder = "ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy";
+
+        private const string ResourceName = "AppodealSettings";
+        private const string FilePath = PluginPaths.EditorResourcesDir + "/" + ResourceName + ".asset";
+        private const string ResourcePath = PluginPaths.ResourcesSubDir + "/" + ResourceName;
+
         private const int SpaceHeight = 5;
 
         [Header("Appodeal Analytics")]
@@ -18,8 +26,8 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
         [Space(SpaceHeight)]
         [Header("AdMob App IDs")]
-        [SerializeField] private string adMobAndroidAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
-        [SerializeField] private string adMobIosAppId = AppodealEditorConstants.AdMobAppIdPlaceholder;
+        [SerializeField] private string adMobAndroidAppId = AdMobAppIdPlaceholder;
+        [SerializeField] private string adMobIosAppId = AdMobAppIdPlaceholder;
 
         [Space(SpaceHeight)]
         [Header("Android Permissions")]
@@ -76,19 +84,19 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
             {
                 if (_instance) return _instance;
 
-                _instance = Resources.Load<AppodealSettings>(AppodealEditorConstants.AppodealSettingsResourcePath);
+                _instance = Resources.Load<AppodealSettings>(ResourcePath);
 
                 if (_instance) return _instance;
 
-                if (File.Exists(AppodealEditorConstants.AppodealSettingsFilePath))
+                if (File.Exists(FilePath))
                 {
-                    Debug.LogError($"[Appodeal] Failed to load existing asset from '{AppodealEditorConstants.AppodealSettingsFilePath}'");
+                    Log.Error($"Failed to load existing asset from '{FilePath}'");
                     return null;
                 }
 
-                Directory.CreateDirectory(AppodealEditorConstants.EditorResourcesDir);
+                Directory.CreateDirectory(PluginPaths.EditorResourcesDir);
                 _instance = CreateInstance<AppodealSettings>();
-                AssetDatabase.CreateAsset(_instance, AppodealEditorConstants.AppodealSettingsFilePath);
+                AssetDatabase.CreateAsset(_instance, FilePath);
 
                 return _instance;
             }

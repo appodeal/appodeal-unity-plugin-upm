@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using UnityEngine;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PluginSettings.Editor
 {
@@ -13,6 +13,8 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
     /// </summary>
     internal class AppodealSettingsInitializer : IPreprocessBuildWithReport
     {
+        private static readonly AppodealLogger Log = PluginSettingsLogging.Log;
+
         public int callbackOrder => -9999;
 
         public void OnPreprocessBuild(BuildReport report)
@@ -23,7 +25,7 @@ namespace AppodealInc.Mediation.PluginSettings.Editor
 
             if (instance == null)
             {
-                Debug.LogError($"Failed to load {nameof(AppodealSettings)} instance during build preprocess. Appodeal SDK configuration may not be applied to the Xcode project.");
+                Log.Error($"Failed to load {nameof(AppodealSettings)} instance during build preprocess. Appodeal SDK configuration may not be applied to the Xcode project.");
             }
         }
     }

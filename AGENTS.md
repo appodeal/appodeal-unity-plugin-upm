@@ -43,10 +43,15 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   manifest for Android, Xcode project and Info.plist for iOS.
 - `Editor/Analytics/` sends build reports; `Sanitization/` strips user data
   first.
+- `Editor/Shared/` holds what several Editor modules need: the logger, the HTTP
+  client with the service hosts, `Outcome` and the plugin paths.
+  `Editor/TopBarMenu/` builds the Appodeal menu from the other modules.
 - `Samples~/UsageSample/` is the demo scene, `Tests/Editor/` the EditMode tests,
   `.github/scripts/` the pod validation script.
 - Boundaries: Runtime code never references Editor assemblies. Platform
-  assemblies reference only `AppodealStack.Monetization.Common`.
+  assemblies reference only `AppodealStack.Monetization.Common`. Editor modules
+  reference `Shared` and each other only where a feature needs it; `Shared`
+  references no plugin assembly, and no assembly references `TopBarMenu`.
 
 ## Conventions
 
@@ -68,6 +73,20 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   `UNITY_ANDROID || APPODEAL_DEV`. Code under
   `#if UNITY_ANDROID && !UNITY_EDITOR` never compiles in the Editor or in CI;
   check it with a device build.
+- Editor code that several plugin assemblies use is `internal` and opened with
+  `InternalsVisibleTo` in the assembly's `AssemblyInfo.cs`: `Shared` to every
+  Editor module and the tests, a module to the modules and tests that use it,
+  `TopBarMenu` to nobody. `Shared` takes only code that two or more assemblies
+  need, grouped by concept (`PluginPaths`, not a constants class). The exception
+  is `ServiceHosts`: the hosts of the services the Editor calls live next to the
+  HTTP client, and each module keeps its own paths. The public Editor types are
+  deliberate API: `AppodealSettings`, which build scripts use, and the XML nodes
+  in DependencyManager, which `XmlSerializer` requires.
+- File paths use forward slashes on every platform, as Unity does:
+  `$"{dir}/{file}"`. Paths inside the project are relative to the project folder
+  and come from `PluginPaths`. `Path.GetFullPath(Path.Combine(...))` is only for
+  a native absolute path: one handed to an external process or one that climbs
+  with `..`.
 - Every file the package ships has a committed `.meta` with a unique GUID.
   Repo-only files at the root (`AGENTS.md`, `docs/`, `Tests/`) also go into
   `.npmignore`, which controls what UPM installs from the git URL.

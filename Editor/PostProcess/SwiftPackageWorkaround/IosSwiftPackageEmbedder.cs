@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEditor.iOS.Xcode;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
@@ -20,7 +20,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
     {
         private const string BuildPhaseName = "[Appodeal] Embed Swift Package Artifacts";
         private const string ScriptName = "appodeal_embed_swift_packages.sh";
-        private const string BundledScriptPath = AppodealEditorConstants.PackageDir + "/Editor/PostProcess/SwiftPackageWorkaround/" + ScriptName;
+        private const string BundledScriptPath = PluginPaths.PackageDir + "/Editor/PostProcess/SwiftPackageWorkaround/" + ScriptName;
 
         internal static void Apply(string buildPath)
         {
@@ -32,7 +32,7 @@ namespace AppodealInc.Mediation.PostProcess.Editor
             if (!contents.Contains("XCRemoteSwiftPackageReference")) return;
 
             // An append build keeps the previous copy.
-            File.Copy(BundledScriptPath, Path.Combine(buildPath, ScriptName), overwrite: true);
+            File.Copy(BundledScriptPath, $"{buildPath}/{ScriptName}", overwrite: true);
 
             var project = new PBXProject();
             project.ReadFromString(contents);

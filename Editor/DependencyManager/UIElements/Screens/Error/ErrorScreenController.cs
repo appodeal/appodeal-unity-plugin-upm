@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -43,7 +42,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         private static void OnReloadClicked(object sender, EventArgs e)
         {
-            SettingsService.OpenProjectSettings($"Project/{DmConstants.UI.WindowName}");
+            DmSettingsProvider.Open();
         }
 
         private static void OnContactSupportClicked(object sender, EventArgs e)

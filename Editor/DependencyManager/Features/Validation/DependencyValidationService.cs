@@ -3,38 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DependencyValidationService
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
+        internal static async void ValidateFromMenu()
+        {
+            try
+            {
+                await ValidateAsync(isManual: true);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to validate dependencies: {ex.Message}");
+                EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, $"An unexpected error occurred:\n{ex.Message}", "OK");
+            }
+        }
+
         public static async Task<bool> ValidateAsync(bool isManual)
         {
             bool versionMatches = VersionComparer.IsLocalDependenciesVersionMatchingPackageVersion();
             if (!versionMatches)
             {
-                LogHelper.LogWarning("Skipping validation due to version mismatch or error");
+                Log.Warning("Skipping validation due to version mismatch or error");
                 return false;
             }
 
             var depsReadOutcome = DataLoader.TryReadLocalDependencies();
             if (!depsReadOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to read dependencies file. Reason - '{depsReadOutcome.Failure.Message}'");
+                Log.Error($"Failed to read dependencies file. Reason - '{depsReadOutcome.Failure.Message}'");
                 return false;
             }
 
             var serializationOutcome = XmlHandler.TrySerializeDependencies(depsReadOutcome.Value);
             if (!serializationOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to serialize dependencies to XML. Reason - '{serializationOutcome.Failure.Message}'");
+                Log.Error($"Failed to serialize dependencies to XML. Reason - '{serializationOutcome.Failure.Message}'");
                 return false;
             }
 
             var validationOutcome = await DataLoader.ValidateDependenciesAsync(serializationOutcome.Value);
             if (!validationOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Dependencies validation failed. Reason - '{validationOutcome.Failure.Message}'");
+                Log.Error($"Dependencies validation failed. Reason - '{validationOutcome.Failure.Message}'");
                 if (isManual)
                 {
                     EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, $"Validation failed: {validationOutcome.Failure.Message}", "OK");
@@ -59,10 +75,10 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         private static void LogValidationResults(List<ProblematicSdk> problematicSdks)
         {
-            LogHelper.LogWarning("Dependencies validation found the following issues:");
+            Log.Warning("Dependencies validation found the following issues:");
             foreach (var sdk in problematicSdks)
             {
-                LogHelper.LogWarning($"'{sdk.SdkName}': {sdk.Message}");
+                Log.Warning($"'{sdk.SdkName}': {sdk.Message}");
             }
         }
 

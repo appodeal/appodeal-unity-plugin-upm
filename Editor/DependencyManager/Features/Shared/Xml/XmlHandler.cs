@@ -4,11 +4,14 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEditor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class XmlHandler
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static Outcome<XmlDependencies> TryDeserializeDependencies(FileInfo file)
         {
             try
@@ -72,23 +75,23 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                Directory.CreateDirectory(DmConstants.Validation.DependenciesDir);
+                Directory.CreateDirectory(PluginPaths.DependenciesDir);
 
                 var serializationOutcome = TrySerializeDependencies(model);
                 if (!serializationOutcome.IsSuccess)
                 {
-                    LogHelper.LogError($"Dependencies update failed. Reason - '{serializationOutcome.Failure.Message}'");
+                    Log.Error($"Dependencies update failed. Reason - '{serializationOutcome.Failure.Message}'");
                     return false;
                 }
 
-                File.WriteAllText(DmConstants.Validation.DependenciesFilePath, serializationOutcome.Value, Encoding.UTF8);
+                File.WriteAllText(PluginPaths.DependenciesFile, serializationOutcome.Value, Encoding.UTF8);
                 AssetDatabase.Refresh();
 
                 return true;
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
                 return false;
             }
         }

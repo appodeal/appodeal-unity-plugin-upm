@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DropdownPopupView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkVersionDropdown/SdkVersionDropdownPopup";
 
         private ScrollView _scrollView;
@@ -17,7 +20,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[DropdownPopupView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[DropdownPopupView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -28,7 +31,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_scrollView == null || _itemsContainer == null)
             {
-                LogHelper.LogError("[DropdownPopupView] Failed to find required elements in template");
+                Log.Error("[DropdownPopupView] Failed to find required elements in template");
                 return false;
             }
 

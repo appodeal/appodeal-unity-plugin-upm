@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DependenciesDiff
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private List<RemoteSwiftPackageNode> AddedSwiftPackages { get; set; }
         private List<RemoteSwiftPackageNode> RemovedSwiftPackages { get; set; }
         private List<(RemoteSwiftPackageNode Old, RemoteSwiftPackageNode New)> UpdatedSwiftPackages { get; set; }
@@ -42,7 +45,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 var comparisonResult = lPkg.Version.CompareAdapterVersionTo(rPkg.Version);
                 if (comparisonResult == VersionComparisonResult.WrongInput)
                 {
-                    LogHelper.LogWarning($"Invalid version format for Swift package '{lPkg.Url}': '{lPkg.Version}' vs '{rPkg.Version}'");
+                    Log.Warning($"Invalid version format for Swift package '{lPkg.Url}': '{lPkg.Version}' vs '{rPkg.Version}'");
                     return;
                 }
                 if (comparisonResult == VersionComparisonResult.Previous) updatedSwiftPackages.Add((lPkg, rPkg));
@@ -66,7 +69,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 var comparisonResult = lPod.Version.CompareAdapterVersionTo(rPod.Version);
                 if (comparisonResult == VersionComparisonResult.WrongInput)
                 {
-                    LogHelper.LogWarning($"Invalid version format for iOS pod '{lPod.Id}': '{lPod.Version}' vs '{rPod.Version}'");
+                    Log.Warning($"Invalid version format for iOS pod '{lPod.Id}': '{lPod.Version}' vs '{rPod.Version}'");
                     return;
                 }
                 if (comparisonResult == VersionComparisonResult.Previous) updatedIosPods.Add((lPod, rPod));
@@ -93,7 +96,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 var comparisonResult = lSpecVersionExtractOutcome.Value.CompareAdapterVersionTo(rSpecVersionExtractOutcome.Value);
                 if (comparisonResult == VersionComparisonResult.WrongInput)
                 {
-                    LogHelper.LogWarning($"Invalid version format for Android package '{lPkg.Id}': '{lSpecVersionExtractOutcome.Value}' vs '{rSpecVersionExtractOutcome.Value}'");
+                    Log.Warning($"Invalid version format for Android package '{lPkg.Id}': '{lSpecVersionExtractOutcome.Value}' vs '{rSpecVersionExtractOutcome.Value}'");
                     return;
                 }
                 if (comparisonResult == VersionComparisonResult.Previous) updatedAndroidPackages.Add((lPkg, rPkg));

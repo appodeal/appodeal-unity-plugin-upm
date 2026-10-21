@@ -3,7 +3,6 @@ using System.Xml.Serialization;
 using UnityEditor.PackageManager;
 using NUnit.Framework;
 using AppodealInc.Mediation.DependencyManager.Editor;
-using AppodealInc.Mediation.Utils.Editor;
 using AppodealStack.Monetization.Common;
 
 namespace AppodealInc.Mediation.Editor.Tests
@@ -31,7 +30,7 @@ namespace AppodealInc.Mediation.Editor.Tests
             var serializer = new XmlSerializer(typeof(XmlDependencies));
 
             // Act
-            using var reader = File.OpenText(AppodealEditorConstants.BundledDependenciesFilePath);
+            using var reader = File.OpenText(DmConstants.Plugin.BundledDependenciesFilePath);
             var dependencies = (XmlDependencies)serializer.Deserialize(reader);
 
             // Assert

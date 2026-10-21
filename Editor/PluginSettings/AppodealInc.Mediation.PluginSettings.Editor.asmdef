@@ -2,7 +2,7 @@
     "name": "AppodealInc.Mediation.PluginSettings.Editor",
     "rootNamespace": "AppodealInc.Mediation.PluginSettings.Editor",
     "references": [
-        "AppodealInc.Mediation.Utils.Editor"
+        "AppodealInc.Mediation.Shared.Editor"
     ],
     "includePlatforms": [
         "Editor"

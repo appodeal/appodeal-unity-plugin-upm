@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DropdownButtonView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkVersionDropdown/SdkVersionDropdownButton";
 
         private Button _button;
@@ -27,7 +30,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[DropdownButtonView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[DropdownButtonView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -39,7 +42,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_button == null || _label == null || _icon == null)
             {
-                LogHelper.LogError("[DropdownButtonView] Failed to find required elements in template");
+                Log.Error("[DropdownButtonView] Failed to find required elements in template");
                 return false;
             }
 

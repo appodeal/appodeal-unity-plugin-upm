@@ -1,28 +1,30 @@
 using System.IO;
 using UnityEditor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class AndroidLibraryInstaller
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static bool EnsureAndroidLibraryDirectory(bool forceReinstall = false)
         {
-            if (Directory.Exists(AppodealEditorConstants.AppodealAndroidLibDir))
+            if (Directory.Exists(PluginPaths.AndroidLibDir))
             {
                 if (!forceReinstall) return false;
-                FileUtil.DeleteFileOrDirectory(AppodealEditorConstants.AppodealAndroidLibDir);
+                FileUtil.DeleteFileOrDirectory(PluginPaths.AndroidLibDir);
             }
 
-            string source = $"{AppodealEditorConstants.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
+            string source = $"{PluginPaths.PackageDir}/Runtime/Plugins/Android/appodeal.androidlib~";
             if (!Directory.Exists(source))
             {
-                LogHelper.LogError($"Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
+                Log.Error($"Directory was not found: '{source}'. Please, contact support@appodeal.com about this issue");
                 return false;
             }
 
-            Directory.CreateDirectory("Assets/Plugins/Android");
-            FileUtil.CopyFileOrDirectory(source, AppodealEditorConstants.AppodealAndroidLibDir);
+            Directory.CreateDirectory(PluginPaths.AndroidPluginsDir);
+            FileUtil.CopyFileOrDirectory(source, PluginPaths.AndroidLibDir);
 
             return true;
         }

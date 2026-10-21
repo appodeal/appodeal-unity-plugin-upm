@@ -3,11 +3,14 @@ using System.IO;
 using UnityEditor.iOS.Xcode;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PostProcess.Editor
 {
     internal static class IosPostProcessServices
     {
+        private static readonly AppodealLogger Log = PostProcessLogging.Log;
+
         private const string CfBundleURLTypes = "CFBundleURLTypes";
         private const string CfBundleURLSchemes = "CFBundleURLSchemes";
         private const string CfBundleURLName = "CFBundleURLName";
@@ -31,13 +34,13 @@ namespace AppodealInc.Mediation.PostProcess.Editor
 
             if (String.IsNullOrEmpty(fbAppId))
             {
-                Debug.LogWarning("Meta App ID (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
+                Log.Warning("Meta App ID (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
                 return;
             }
 
             if (String.IsNullOrEmpty(fbClientToken))
             {
-                Debug.LogWarning("Meta Client Token (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
+                Log.Warning("Meta Client Token (iOS) is empty (Appodeal > Appodeal Settings). This service won't be initialized properly.");
                 return;
             }
 
@@ -67,8 +70,8 @@ namespace AppodealInc.Mediation.PostProcess.Editor
         {
             if (!AppodealSettings.Instance.FirebaseAutoConfiguration) return false;
 
-            string plistFileUnityPath = Application.dataPath + '/' + FirPlistFileName;
-            string plistFileXcodePath = buildPath + '/' + FirPlistFileName;
+            string plistFileUnityPath = $"{PluginPaths.AssetsDir}/{FirPlistFileName}";
+            string plistFileXcodePath = $"{buildPath}/{FirPlistFileName}";
 
             if (File.Exists(plistFileUnityPath))
             {
@@ -80,10 +83,10 @@ namespace AppodealInc.Mediation.PostProcess.Editor
                     File.Copy(plistFileUnityPath, plistFileXcodePath, overwrite: true);
                     return true;
                 }
-                Debug.LogWarning($"Firebase Plist file at {plistFileUnityPath} has BUNDLE_ID '{bundle?.AsString()}', expected '{Application.identifier}'. This service won't be initialized properly.");
+                Log.Warning($"Firebase Plist file at {plistFileUnityPath} has BUNDLE_ID '{bundle?.AsString()}', expected '{Application.identifier}'. This service won't be initialized properly.");
                 return false;
             }
-            Debug.LogWarning($"Firebase Plist file was not found at {plistFileUnityPath}. This service won't be initialized properly.");
+            Log.Warning($"Firebase Plist file was not found at {plistFileUnityPath}. This service won't be initialized properly.");
             return false;
         }
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
@@ -13,7 +14,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                var fileInfo = new FileInfo(DmConstants.Validation.DependenciesFilePath);
+                var fileInfo = new FileInfo(PluginPaths.DependenciesFile);
 
                 var deserializationOutcome = XmlHandler.TryDeserializeDependencies(fileInfo);
                 return deserializationOutcome.IsSuccess ? deserializationOutcome.Value : deserializationOutcome.Failure;
@@ -26,7 +27,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public static async Task<Outcome<List<PluginDto>>> FetchAvailablePluginsAsync(CancellationToken cancellationToken = default)
         {
-            var fetchOutcome = await DmHttpClient.GetAsync(DmConstants.Endpoints.Plugins, cancellationToken);
+            var fetchOutcome = await AppodealHttpClient.GetAsync(DmConstants.Endpoints.Plugins, cancellationToken: cancellationToken);
             if (!fetchOutcome.IsSuccess) return fetchOutcome.Failure;
 
             try
@@ -48,7 +49,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (cancellationToken.IsCancellationRequested) return Failure.Create("Cancelled", "Request was cancelled");
 
-            var fetchOutcome = await DmHttpClient.GetAsync(urlBuildOutcome.Value, cancellationToken);
+            var fetchOutcome = await AppodealHttpClient.GetAsync(urlBuildOutcome.Value, cancellationToken: cancellationToken);
             if (!fetchOutcome.IsSuccess) return fetchOutcome.Failure;
 
             try
@@ -73,7 +74,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             try
             {
                 string jsonBody = JsonUtility.ToJson(requestDto);
-                var fetchOutcome = await DmHttpClient.PostJsonAsync(urlBuildOutcome.Value, jsonBody, cancellationToken);
+                var fetchOutcome = await AppodealHttpClient.PostJsonAsync(urlBuildOutcome.Value, jsonBody, cancellationToken: cancellationToken);
                 if (!fetchOutcome.IsSuccess) return fetchOutcome.Failure;
 
                 var response = JsonUtility.FromJson<WizardResponseDto>(fetchOutcome.Value)?.ToDomain();
@@ -96,7 +97,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             try
             {
                 string jsonBody = JsonUtility.ToJson(requestDto);
-                return await DmHttpClient.PostJsonAsync(urlBuildOutcome.Value, jsonBody, cancellationToken);
+                return await AppodealHttpClient.PostJsonAsync(urlBuildOutcome.Value, jsonBody, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -106,7 +107,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
         public static async Task<Outcome<ValidationResponse>> ValidateDependenciesAsync(string xmlContent)
         {
-            var fetchOutcome = await DmHttpClient.PostXmlAsync(DmConstants.Endpoints.Validate, xmlContent);
+            var fetchOutcome = await AppodealHttpClient.PostXmlAsync(DmConstants.Endpoints.Validate, xmlContent);
             if (!fetchOutcome.IsSuccess)
             {
                 if (fetchOutcome.Failure.Type != "HttpError") return fetchOutcome.Failure;

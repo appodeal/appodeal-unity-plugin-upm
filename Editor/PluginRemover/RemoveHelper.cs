@@ -6,9 +6,8 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using UnityEditor;
 using UnityEditor.PackageManager;
-using UnityEngine;
 using AppodealInc.Mediation.Analytics.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PluginRemover.Editor
 {
@@ -26,6 +25,8 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
 
     internal static class RemoveHelper
     {
+        private const string RemoveListFilePath = PluginPaths.PackageDir + "/Editor/PluginRemover/remove_list.xml";
+
         public static void RemovePlugin()
         {
             if (!EditorUtility.DisplayDialog("Appodeal Unity Plugin",
@@ -55,35 +56,35 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
                 }
                 if (!confirmed) continue;
 
-                string fullItemPath = $"{Application.dataPath}/{item.path}";
+                string itemPath = $"{PluginPaths.AssetsDir}/{item.path}";
 
                 bool isChecked = !item.checkIfEmpty;
-                if (!isChecked) isChecked = IsFolderEmpty(fullItemPath);
+                if (!isChecked) isChecked = IsFolderEmpty(itemPath);
                 if (!isChecked) continue;
 
                 if (String.IsNullOrEmpty(item.filter))
                 {
-                    FileUtil.DeleteFileOrDirectory(fullItemPath);
-                    FileUtil.DeleteFileOrDirectory(fullItemPath + ".meta");
+                    FileUtil.DeleteFileOrDirectory(itemPath);
+                    FileUtil.DeleteFileOrDirectory(itemPath + ".meta");
                     continue;
                 }
 
-                bool isDirectoryExists = Directory.Exists(fullItemPath);
+                bool isDirectoryExists = Directory.Exists(itemPath);
                 if (!isDirectoryExists) continue;
 
-                var filePaths = new List<string>(Directory.GetFiles(fullItemPath, "*", SearchOption.TopDirectoryOnly));
+                var filePaths = new List<string>(Directory.GetFiles(itemPath, "*", SearchOption.TopDirectoryOnly));
                 filePaths.Where(filePath => Regex.IsMatch(Path.GetFileName(filePath), item.filter, RegexOptions.IgnoreCase)).ToList().ForEach(filePath =>
                 {
                     FileUtil.DeleteFileOrDirectory(filePath);
                     FileUtil.DeleteFileOrDirectory(filePath + ".meta");
                 });
 
-                if (!IsFolderEmpty(fullItemPath)) continue;
-                FileUtil.DeleteFileOrDirectory(fullItemPath);
-                FileUtil.DeleteFileOrDirectory(fullItemPath + ".meta");
+                if (!IsFolderEmpty(itemPath)) continue;
+                FileUtil.DeleteFileOrDirectory(itemPath);
+                FileUtil.DeleteFileOrDirectory(itemPath + ".meta");
             }
 
-            Client.Remove(AppodealEditorConstants.PackageName);
+            Client.Remove(PluginPaths.PackageName);
         }
 
         private static IEnumerable<ItemToRemove> ReadXML()
@@ -91,7 +92,7 @@ namespace AppodealInc.Mediation.PluginRemover.Editor
             var itemsToRemove = new List<ItemToRemove>();
 
             var xmlDoc = new XmlDocument();
-            xmlDoc.Load(AppodealEditorConstants.RemoveListFilePath);
+            xmlDoc.Load(RemoveListFilePath);
 
             var xmlRoot = xmlDoc.DocumentElement;
             if (xmlRoot == null) return itemsToRemove;

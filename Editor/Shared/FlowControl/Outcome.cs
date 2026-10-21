@@ -1,6 +1,6 @@
 using System;
 
-namespace AppodealInc.Mediation.DependencyManager.Editor
+namespace AppodealInc.Mediation.Shared.Editor
 {
     internal class Outcome<T>
     {

@@ -3,12 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmAssetPostprocessor : AssetPostprocessor
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private static readonly object Gate = new();
         private static bool _isProcessing;
 
@@ -16,15 +18,15 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         {
             try
             {
-                if (deletedAssets.Any(asset => asset.Contains($"Packages/{DmConstants.Plugin.PackageName}"))) return;
+                if (deletedAssets.Any(asset => asset.Contains(PluginPaths.PackageDir))) return;
                 if (movedAssets.Any(asset => asset.Contains(DmConstants.Choices.FileName))) return;
-                if (AppodealUnityUtils.IsDevModeEnabled) return;
+                if (DevMode.IsEnabled) return;
 
                 await RunNormalFlowAsync();
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
         }
 
@@ -59,7 +61,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {
@@ -88,7 +90,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
             }
             finally
             {

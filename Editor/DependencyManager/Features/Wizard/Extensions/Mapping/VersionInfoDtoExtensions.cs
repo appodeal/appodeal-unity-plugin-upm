@@ -1,24 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class VersionInfoDtoExtensions
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static VersionInfo ToDomain(this VersionInfoDto dto)
         {
             if (dto == null) return null;
 
             if (dto.id <= 0)
             {
-                LogHelper.LogError($"Invalid version ID '{dto.id}'. Version ID must be greater than 0. Skipping version");
+                Log.Error($"Invalid version ID '{dto.id}'. Version ID must be greater than 0. Skipping version");
                 return null;
             }
 
             if (String.IsNullOrWhiteSpace(dto.name))
             {
-                LogHelper.LogError($"Version name is null or empty for version ID '{dto.id}'. Skipping version");
+                Log.Error($"Version name is null or empty for version ID '{dto.id}'. Skipping version");
                 return null;
             }
 

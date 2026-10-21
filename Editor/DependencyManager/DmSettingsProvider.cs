@@ -4,11 +4,14 @@ using System.Threading;
 using UnityEditor;
 using UnityEngine.UIElements;
 using AppodealInc.Mediation.Analytics.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DmSettingsProvider : SettingsProvider
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private CancellationTokenSource _cts;
 
         private WizardScreenController _wizardController;
@@ -44,7 +47,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
                 if (DmChoicesScriptableObject.Instance == null)
                 {
-                    LogHelper.LogError("Dependency Manager window cannot be displayed as its data asset failed to load");
+                    Log.Error("Dependency Manager window cannot be displayed as its data asset failed to load");
                     return;
                 }
 
@@ -59,7 +62,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 _loadingView = new LoadingScreenView();
                 if (!_loadingView.TryLoadFromTemplate())
                 {
-                    LogHelper.LogError("Dependency Manager window cannot be displayed: Loading screen failed to load");
+                    Log.Error("Dependency Manager window cannot be displayed: Loading screen failed to load");
                     return;
                 }
                 _rootElement?.Add(_loadingView?.Root);
@@ -79,7 +82,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
                 if (!success)
                 {
-                    LogHelper.LogError("Dependency Manager window cannot be displayed: failed to create UI");
+                    Log.Error("Dependency Manager window cannot be displayed: failed to create UI");
                     _wizardController?.Dispose();
                     _wizardController = null;
 
@@ -99,8 +102,8 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             }
             catch (Exception ex)
             {
-                LogHelper.LogError("Dependency Manager window initialization failed");
-                LogHelper.LogException(ex);
+                Log.Error("Dependency Manager window initialization failed");
+                Log.Exception(ex);
 
                 if (!_cts?.Token.IsCancellationRequested ?? false)
                 {
@@ -157,10 +160,12 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _pendingActivation = null;
         }
 
+        internal static void Open() => SettingsService.OpenProjectSettings(DmConstants.UI.SettingsPath);
+
         [SettingsProvider]
         public static SettingsProvider CreateDmSettingsProvider()
         {
-            var provider = new DmSettingsProvider($"Project/{DmConstants.UI.WindowName}", SettingsScope.Project)
+            var provider = new DmSettingsProvider(DmConstants.UI.SettingsPath, SettingsScope.Project)
             {
                 label = "Appodeal DM",
                 keywords = new HashSet<string>(new[] { "Appodeal", "Dependency", "Manager", "DM" })

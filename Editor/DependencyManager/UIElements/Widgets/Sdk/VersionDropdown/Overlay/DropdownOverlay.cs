@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DropdownOverlay
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const float PopupWidth = 188f;
         private const float ContentMaxHeight = 100f;
         private const float ItemHeight = 25f;
@@ -31,7 +34,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             _view = new DropdownOverlayView();
             if (!_view.TryLoadFromTemplate())
             {
-                LogHelper.LogError("[DropdownOverlay] Failed to load template");
+                Log.Error("[DropdownOverlay] Failed to load template");
                 _view = null;
                 return;
             }

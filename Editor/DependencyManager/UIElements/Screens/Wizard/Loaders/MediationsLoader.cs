@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class MediationsLoader
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static async Task<Outcome<List<GenericSdkCardController>>> TryLoadAsync(string pluginVersion, CancellationToken cancellationToken)
         {
             var fetchOutcome = await DataLoader.FetchMediationsAsync(pluginVersion, cancellationToken);
@@ -14,7 +17,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (!fetchOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Failed to load mediations: {fetchOutcome.Failure.Message}");
+                Log.Error($"Failed to load mediations: {fetchOutcome.Failure.Message}");
                 return fetchOutcome.Failure;
             }
 

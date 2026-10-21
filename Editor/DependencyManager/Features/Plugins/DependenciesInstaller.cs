@@ -1,37 +1,39 @@
 using System;
 using System.IO;
 using UnityEditor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class DependenciesInstaller
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         internal static bool EnsureDependenciesXmlFile()
         {
             try
             {
-                if (File.Exists(AppodealEditorConstants.DependenciesFilePath))
+                if (File.Exists(PluginPaths.DependenciesFile))
                 {
                     bool versionMatches = VersionComparer.IsLocalDependenciesVersionMatchingPackageVersion();
                     if (versionMatches) return false;
                 }
 
-                var depsFileInfo = new FileInfo(AppodealEditorConstants.BundledDependenciesFilePath);
+                var depsFileInfo = new FileInfo(DmConstants.Plugin.BundledDependenciesFilePath);
                 if (!depsFileInfo.Exists)
                 {
-                    LogHelper.LogError($"File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
+                    Log.Error($"File was not found: '{depsFileInfo.FullName}'. Please, contact support@appodeal.com about this issue");
                     return false;
                 }
 
-                Directory.CreateDirectory(AppodealEditorConstants.DependenciesDir);
-                FileUtil.ReplaceFile(depsFileInfo.FullName, AppodealEditorConstants.DependenciesFilePath);
+                Directory.CreateDirectory(PluginPaths.DependenciesDir);
+                FileUtil.ReplaceFile(depsFileInfo.FullName, PluginPaths.DependenciesFile);
 
                 return true;
             }
             catch (Exception ex)
             {
-                LogHelper.LogException(ex);
+                Log.Exception(ex);
                 return false;
             }
         }

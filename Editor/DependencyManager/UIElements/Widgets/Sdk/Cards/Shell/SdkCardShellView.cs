@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class SdkCardShellView : IDisposable
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkCards/SdkCardShell";
 
         private Toggle _isSelectedToggle;
@@ -42,7 +45,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[SdkCardShellView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[SdkCardShellView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -58,7 +61,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_isSelectedToggle == null || _sdkNameLabel == null || Body == null || AndroidDropdown == null || IosDropdown == null)
             {
-                LogHelper.LogError("[SdkCardShellView] Failed to find required elements in template");
+                Log.Error("[SdkCardShellView] Failed to find required elements in template");
                 return false;
             }
 

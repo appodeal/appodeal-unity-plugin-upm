@@ -5,7 +5,6 @@
         "UnityEditor.TestRunner",
         "UnityEngine.TestRunner",
         "AppodealInc.Mediation.DependencyManager.Editor",
-        "AppodealInc.Mediation.Utils.Editor",
         "AppodealStack.Monetization.Common"
     ],
     "includePlatforms": [

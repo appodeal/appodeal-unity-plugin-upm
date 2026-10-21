@@ -1,10 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal class PodfileSanitizer : BaseSanitizer
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         private static readonly Regex SourceUrlCredentialPattern = new(
             @"source\s+(?<quotes>['""])(?<protocol>https?://)(?<username>[^:@\s'""\n]+):(?<password>[^@\s'""\n]+)@(?<host>[^/\s'""\n]+)(?<path>[^'""]*?)\k<quotes>",
             StandardOptions, RegexTimeout);
@@ -119,7 +122,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing Podfile URL credentials: {e.Message}");
+                Log.Verbose($"Error sanitizing Podfile URL credentials: {e.Message}");
                 return content;
             }
         }
@@ -145,7 +148,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing Podfile platform-specific patterns: {e.Message}");
+                Log.Verbose($"Error sanitizing Podfile platform-specific patterns: {e.Message}");
                 return content;
             }
         }
@@ -173,7 +176,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error sanitizing Podfile special patterns: {e.Message}");
+                Log.Verbose($"Error sanitizing Podfile special patterns: {e.Message}");
                 return content;
             }
         }

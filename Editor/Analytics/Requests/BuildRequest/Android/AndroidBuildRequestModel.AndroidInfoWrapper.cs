@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
@@ -12,7 +12,8 @@ namespace AppodealInc.Mediation.Analytics.Editor
         [SuppressMessage("ReSharper", "NotAccessedField.Global")]
         internal sealed class AndroidInfoWrapper
         {
-            private const string AndroidPluginsDir = "Plugins/Android";
+            private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
             private const string MainGradleFileName = "mainTemplate.gradle";
             private const string SettingsGradleFileName = "settingsTemplate.gradle";
             private const string GradlePropertiesFileName = "gradleTemplate.properties";
@@ -39,12 +40,12 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 {
                     if (!AppodealSettings.Instance?.IsAnalyticsConfigFileTransmissionEnabled ?? false) return null;
 
-                    string path = $"{Application.dataPath}/{AndroidPluginsDir}/{fileName}";
+                    string path = $"{PluginPaths.AndroidPluginsDir}/{fileName}";
                     return File.Exists(path) ? File.ReadAllText(path).SanitizeGradleContent().CompressAndConvertToBase64() : null;
                 }
                 catch (Exception e)
                 {
-                    Logger.Log($"Error loading Gradle template '{fileName}' file: {e.Message}");
+                    Log.Verbose($"Error loading Gradle template '{fileName}' file: {e.Message}");
                     return null;
                 }
             }

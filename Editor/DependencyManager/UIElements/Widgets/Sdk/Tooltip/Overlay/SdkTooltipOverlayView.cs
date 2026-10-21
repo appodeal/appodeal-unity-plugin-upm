@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class SdkTooltipOverlayView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkTooltip/SdkTooltipOverlay";
 
         private VisualElement _overlay;
@@ -16,7 +19,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[SdkTooltipOverlayView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[SdkTooltipOverlayView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -26,7 +29,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_overlay == null)
             {
-                LogHelper.LogError("[SdkTooltipOverlayView] Failed to find required elements in template");
+                Log.Error("[SdkTooltipOverlayView] Failed to find required elements in template");
                 return false;
             }
 

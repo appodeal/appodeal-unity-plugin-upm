@@ -4,17 +4,20 @@ using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using AppodealInc.Mediation.Analytics.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal static class PluginUpdateService
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         public static async Task<bool> CheckAndUpdateAsync()
         {
             var pluginsFetchOutcome = await DataLoader.FetchAvailablePluginsAsync();
             if (!pluginsFetchOutcome.IsSuccess)
             {
-                LogHelper.LogError($"Cannot check for plugin updates. Reason - '{pluginsFetchOutcome.Failure.Message}'");
+                Log.Error($"Cannot check for plugin updates. Reason - '{pluginsFetchOutcome.Failure.Message}'");
                 return false;
             }
 
@@ -42,14 +45,14 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             while (!request.IsCompleted) await Task.Yield();
             if (request.Status == StatusCode.Failure)
             {
-                LogHelper.LogError($"Plugin Update Failed. Reason - '{request.Error.message}'");
+                Log.Error($"Plugin Update Failed. Reason - '{request.Error.message}'");
                 return false;
             }
 
             SessionState.SetBool(DmConstants.Plugin.PostUpdatePendingKey, true);
 
-            string message = $"{LogHelper.Colorize(Color.green, "Successfully")} updated Appodeal Unity Plugin to v{latestPluginSelectOutcome.Value.version}";
-            LogHelper.Log(message);
+            string message = $"{AppodealLogger.Colorize(Color.green, "Successfully")} updated Appodeal Unity Plugin to v{latestPluginSelectOutcome.Value.version}";
+            Log.Verbose(message);
 
             EditorUtility.RequestScriptReload();
             return true;
@@ -58,7 +61,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private static bool ShowUpdateDialog(string message)
         {
             bool shouldUpdate = EditorUtility.DisplayDialog(DmConstants.UI.DialogTitle, message, "Update", "Cancel");
-            LogHelper.Log($"{nameof(ShowUpdateDialog)}({nameof(message)}: {message}) => {shouldUpdate}");
+            Log.Verbose($"{nameof(ShowUpdateDialog)}({nameof(message)}: {message}) => {shouldUpdate}");
             return shouldUpdate;
         }
     }

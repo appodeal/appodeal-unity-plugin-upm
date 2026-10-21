@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.DependencyManager.Editor
 {
     internal class DropdownOverlayView
     {
+        private static readonly AppodealLogger Log = DmLogging.Log;
+
         private const string TemplatePath = "Appodeal/DependencyManager/SdkVersionDropdown/SdkVersionDropdownOverlay";
 
         private VisualElement _overlay;
@@ -21,7 +24,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
             var template = Resources.Load<VisualTreeAsset>(TemplatePath);
             if (template == null)
             {
-                LogHelper.LogError($"[DropdownOverlayView] Failed to load template from Resources/{TemplatePath}");
+                Log.Error($"[DropdownOverlayView] Failed to load template from Resources/{TemplatePath}");
                 return false;
             }
 
@@ -33,7 +36,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
 
             if (_overlay == null || _clickCatcher == null || _popupContainer == null)
             {
-                LogHelper.LogError("[DropdownOverlayView] Failed to find required elements in template");
+                Log.Error("[DropdownOverlayView] Failed to find required elements in template");
                 return false;
             }
 

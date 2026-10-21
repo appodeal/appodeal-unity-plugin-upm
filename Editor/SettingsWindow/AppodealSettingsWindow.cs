@@ -5,15 +5,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
 using AppodealInc.Mediation.Analytics.Editor;
 using AppodealInc.Mediation.PluginSettings.Editor;
-using AppodealInc.Mediation.Utils.Editor;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.SettingsWindow.Editor
 {
-    public class AppodealSettingsWindow : EditorWindow
+    internal class AppodealSettingsWindow : EditorWindow
     {
+        private static readonly AppodealLogger Log = new("Settings");
+
         public static void ShowAppodealSettingsWindow()
         {
             AnalyticsService.TrackClickEvent(ActionType.OpenAppodealSettings);
@@ -51,18 +52,10 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
         {
             try
             {
-                var request = UnityWebRequest.Get("https://neo-mw-backend.appodeal.com/v4/skadn/ids");
-                _ = request.SendWebRequest();
-                while (!request.isDone) await Task.Yield();
+                var fetchOutcome = await AppodealHttpClient.GetAsync(ServiceHosts.Mds + "/v4/skadn/ids");
+                if (!fetchOutcome.IsSuccess) return new List<string>();
 
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    request.Dispose();
-                    return new List<string>();
-                }
-
-                string json = request.downloadHandler.text;
-                request.Dispose();
+                string json = fetchOutcome.Value;
 
                 if (String.IsNullOrWhiteSpace(json) || !json.StartsWith('[') || !json.EndsWith(']')) return new List<string>();
 
@@ -74,7 +67,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Log.Exception(e);
                 return new List<string>();
             }
         }
@@ -83,18 +76,10 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
         {
             try
             {
-                var request = UnityWebRequest.Get("https://neo-mw-backend.appodeal.com/v4/aak/ids");
-                _ = request.SendWebRequest();
-                while (!request.isDone) await Task.Yield();
+                var fetchOutcome = await AppodealHttpClient.GetAsync(ServiceHosts.Mds + "/v4/aak/ids");
+                if (!fetchOutcome.IsSuccess) return new List<string>();
 
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    request.Dispose();
-                    return new List<string>();
-                }
-
-                string json = request.downloadHandler.text;
-                request.Dispose();
+                string json = fetchOutcome.Value;
 
                 if (String.IsNullOrWhiteSpace(json) || !json.StartsWith('[') || !json.EndsWith(']')) return new List<string>();
 
@@ -111,7 +96,7 @@ namespace AppodealInc.Mediation.SettingsWindow.Editor
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                Log.Exception(e);
                 return new List<string>();
             }
         }

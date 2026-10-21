@@ -4,16 +4,19 @@ using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 using CompressionLevel = System.IO.Compression.CompressionLevel;
+using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.Analytics.Editor
 {
     internal static class ExtensionMethods
     {
+        private static readonly AppodealLogger Log = AnalyticsLogging.Log;
+
         internal static T GetPropertyValue<T>(this Type type, string propertyName, BindingFlags flags)
         {
             if (type == null)
             {
-                Logger.Log($"Cannot get property '{propertyName}' because the '{nameof(type)}' argument is null");
+                Log.Verbose($"Cannot get property '{propertyName}' because the '{nameof(type)}' argument is null");
                 return default;
             }
 
@@ -22,7 +25,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
                 var propertyInfo = type.GetProperty(propertyName, flags);
                 if (propertyInfo == null)
                 {
-                    Logger.Log($"Property '{propertyName}' not found on type '{type.FullName}'");
+                    Log.Verbose($"Property '{propertyName}' not found on type '{type.FullName}'");
                     return default;
                 }
 
@@ -40,17 +43,17 @@ namespace AppodealInc.Mediation.Analytics.Editor
                     }
                     catch (Exception e)
                     {
-                        Logger.Log($"Failed to convert enum to '{underlyingType.Name}' for property '{propertyName}': {e.Message}");
+                        Log.Verbose($"Failed to convert enum to '{underlyingType.Name}' for property '{propertyName}': {e.Message}");
                         return default;
                     }
                 }
 
-                Logger.Log($"Property '{propertyName}' value is not of expected type '{typeof(T).FullName}'");
+                Log.Verbose($"Property '{propertyName}' value is not of expected type '{typeof(T).FullName}'");
                 return default;
             }
             catch (Exception e)
             {
-                Logger.Log($"Reflection error accessing '{type.FullName}.{propertyName}': {e.Message}");
+                Log.Verbose($"Reflection error accessing '{type.FullName}.{propertyName}': {e.Message}");
                 return default;
             }
         }
@@ -73,7 +76,7 @@ namespace AppodealInc.Mediation.Analytics.Editor
             }
             catch (Exception e)
             {
-                Logger.Log($"Error compressing or converting string to Base64: {e.Message}");
+                Log.Verbose($"Error compressing or converting string to Base64: {e.Message}");
                 return null;
             }
         }
