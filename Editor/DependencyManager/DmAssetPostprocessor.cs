@@ -104,7 +104,6 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
         private static async Task RunContinuationFlowAsync()
         {
             bool depsUpdated = DependenciesInstaller.EnsureDependenciesXmlFile();
-            bool androidLibUpdated = AndroidLibraryInstaller.EnsureAndroidLibraryDirectory(forceReinstall: depsUpdated);
 
             if (ShouldValidateDependencies())
             {
@@ -112,7 +111,7 @@ namespace AppodealInc.Mediation.DependencyManager.Editor
                 if (validationPerformed) SessionState.SetBool(DmConstants.Validation.AutoValidatePerformedKey, true);
             }
 
-            if (depsUpdated || androidLibUpdated) AssetDatabase.Refresh();
+            if (depsUpdated) AssetDatabase.Refresh();
         }
 
         private static bool ShouldCheckPluginUpdates()

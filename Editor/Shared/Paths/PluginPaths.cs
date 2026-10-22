@@ -16,6 +16,5 @@ namespace AppodealInc.Mediation.Shared.Editor
         public const string EditorResourcesDir = EditorDir + "/Resources/" + ResourcesSubDir;
 
         public const string AndroidPluginsDir = AssetsDir + "/Plugins/Android";
-        public const string AndroidLibDir = AndroidPluginsDir + "/appodeal.androidlib";
     }
 }
