@@ -10,7 +10,7 @@ using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {
-    internal class AppodealPreProcess : IPostGenerateGradleAndroidProject
+    internal class AndroidLibraryBuildProcessor : IPostGenerateGradleAndroidProject
     {
         private static readonly AppodealLogger Log = PreProcessLogging.Log;
 
@@ -55,8 +55,8 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             androidManifest.Save();
 
-            AndroidPreProcessServices.SetupManifestForFacebook(libDir);
-            AndroidPreProcessServices.GenerateXMLForFirebase(libDir);
+            AndroidServicesConfigurator.SetupManifestForFacebook(libDir);
+            AndroidServicesConfigurator.GenerateXMLForFirebase(libDir);
         }
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
