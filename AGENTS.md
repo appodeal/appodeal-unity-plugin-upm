@@ -36,11 +36,17 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   (Objective-C bridge), `Dummy/` (Editor and unsupported platforms).
   `AppodealAdsClientFactory` picks one.
 - `Runtime/Plugins/iOS/` holds the Objective-C side of the bridge.
+- `Runtime/Plugins/Android/appodeal.androidlib` is the plugin's Android
+  library. Unity copies it into the Gradle project, and the Android build step
+  applies the plugin settings to that copy.
 - `Editor/DependencyManager/` is the Dependency Manager window. Its
   `DefaultDependencies/AppodealDependencies.txt` is the EDM XML with every
   native SDK, adapter, pod and Swift package.
-- `Editor/PreProcess/`, `Editor/PostProcess/` are build hooks: Gradle and
-  manifest for Android, Xcode project and Info.plist for iOS.
+- `Editor/PreProcess/`, `Editor/PostProcess/` are build hooks: the androidlib
+  copy in the Gradle project for Android, the Xcode project and Info.plist for
+  iOS.
+- `Editor/LegacyCleanup/` removes what older plugin versions left in the user's
+  project. Delete it once no project runs those versions.
 - `Editor/Analytics/` sends build reports; `Sanitization/` strips user data
   first.
 - `Editor/Shared/` holds what several Editor modules need: the logger, the HTTP
@@ -87,9 +93,11 @@ CI also runs actionlint and DeNA unity-meta-check, see .github/workflows/ci.yml.
   and come from `PluginPaths`. `Path.GetFullPath(Path.Combine(...))` is only for
   a native absolute path: one handed to an external process or one that climbs
   with `..`.
-- Every file the package ships has a committed `.meta` with a unique GUID.
-  Repo-only files at the root (`AGENTS.md`, `docs/`, `Tests/`) also go into
-  `.npmignore`, which controls what UPM installs from the git URL.
+- Every file the package ships has a committed `.meta` with a unique GUID. Files
+  inside an `.androidlib` folder are the exception: Unity imports the folder as
+  one asset, so only the folder has a `.meta`. Repo-only files at the root
+  (`AGENTS.md`, `docs/`, `Tests/`) also go into `.npmignore`, which controls
+  what UPM installs from the git URL.
 - Pull requests: the title is `[SDK-123] Short description` and the template is
   filled in. The base is the release branch. A PR that changes only the
   repository's own tooling (CI workflows, agent setup, contributor docs) may
