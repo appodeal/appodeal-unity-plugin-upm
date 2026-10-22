@@ -45,24 +45,6 @@
         <is_confirmation_required>false</is_confirmation_required>
     </item>
     <item>
-        <name>Appodeal Android Library Directory</name>
-        <path>Plugins/Android/appodeal.androidlib</path>
-        <check_if_empty>false</check_if_empty>
-        <is_confirmation_required>false</is_confirmation_required>
-    </item>
-    <item>
-        <name>Android Plugins Directory</name>
-        <path>Plugins/Android</path>
-        <check_if_empty>true</check_if_empty>
-        <is_confirmation_required>false</is_confirmation_required>
-    </item>
-    <item>
-        <name>Plugins Directory</name>
-        <path>Plugins</path>
-        <check_if_empty>true</check_if_empty>
-        <is_confirmation_required>false</is_confirmation_required>
-    </item>
-    <item>
         <name>Appodeal Samples (Old)</name>
         <path>Samples/Appodeal</path>
         <check_if_empty>false</check_if_empty>
