@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.Analytics.Editor")]
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.DependencyManager.Editor")]
+[assembly: InternalsVisibleTo("AppodealInc.Mediation.LegacyCleanup.Editor")]
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.MaxAdReview.Editor")]
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.PluginRemover.Editor")]
 [assembly: InternalsVisibleTo("AppodealInc.Mediation.PluginSettings.Editor")]

@@ -1,0 +1,18 @@
+{
+    "name": "AppodealInc.Mediation.LegacyCleanup.Editor",
+    "rootNamespace": "AppodealInc.Mediation.LegacyCleanup.Editor",
+    "references": [
+        "AppodealInc.Mediation.Shared.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

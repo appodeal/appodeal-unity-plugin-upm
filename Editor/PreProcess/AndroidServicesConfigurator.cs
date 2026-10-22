@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using UnityEditor;
 using UnityEngine;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {
-    internal static class AndroidPreProcessServices
+    internal static class AndroidServicesConfigurator
     {
         private static readonly AppodealLogger Log = PreProcessLogging.Log;
 
@@ -26,19 +25,17 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         #region Firebase
 
-        public static void GenerateXMLForFirebase()
+        public static void GenerateXMLForFirebase(string libDir)
         {
-            if (!AppodealSettings.Instance.FirebaseAutoConfiguration)
-            {
-                RemoveFirebaseXmlDir($"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}");
-                return;
-            }
+            string valuesDir = $"{libDir}/{FirebaseAndroidConfigPath}";
+            string xmlFilePath = $"{valuesDir}/{FirebaseAndroidConfigFile}";
 
-            if (!Directory.Exists(PluginPaths.AndroidLibDir))
-            {
-                Log.Error($"Android Library was not found on path '{PluginPaths.AndroidLibDir}'. Please, contact support@apppodeal.com about this issue.");
-                return;
-            }
+            // The file isn't in the package template, so Unity never resets it: remove it, and its folder if empty,
+            // so the build doesn't get the one from the previous build
+            if (File.Exists(xmlFilePath)) File.Delete(xmlFilePath);
+            if (Directory.Exists(valuesDir) && !Directory.EnumerateFileSystemEntries(valuesDir).Any()) Directory.Delete(valuesDir);
+
+            if (!AppodealSettings.Instance.FirebaseAutoConfiguration) return;
 
             string jsonFilePath = $"{PluginPaths.AssetsDir}/{FirebaseAndroidJsonFile}";
 
@@ -53,15 +50,10 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             if (firebaseStrings == null)
             {
                 Log.Error($"Couldn't find a valid Firebase configuration for package name: {Application.identifier} in '{jsonFilePath}' file. This service cannot be configured correctly.");
-                RemoveFirebaseXmlDir($"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}");
                 return;
             }
 
-            string valuesDir = $"{PluginPaths.AndroidLibDir}/{FirebaseAndroidConfigPath}";
-
             Directory.CreateDirectory(valuesDir);
-
-            string xmlFilePath = $"{valuesDir}/{FirebaseAndroidConfigFile}";
 
             CreateOrReplaceFirebaseXml(xmlFilePath, firebaseStrings);
         }
@@ -135,20 +127,12 @@ namespace AppodealInc.Mediation.PreProcess.Editor
             return xmlElement;
         }
 
-        private static void RemoveFirebaseXmlDir(string path)
-        {
-            if (!Directory.Exists(path)) return;
-
-            FileUtil.DeleteFileOrDirectory(path);
-            FileUtil.DeleteFileOrDirectory($"{path}.meta");
-        }
-
         #endregion
 
         #region Facebook
-        public static void SetupManifestForFacebook()
+        public static void SetupManifestForFacebook(string libDir)
         {
-            string path = $"{PluginPaths.AndroidLibDir}/{AndroidManifestFile}";
+            string path = $"{libDir}/{AndroidManifestFile}";
 
             if (!File.Exists(path))
             {

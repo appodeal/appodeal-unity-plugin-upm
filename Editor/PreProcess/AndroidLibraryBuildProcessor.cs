@@ -3,18 +3,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Xml;
-using UnityEditor;
+using UnityEditor.Android;
 using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
 using AppodealInc.Mediation.PluginSettings.Editor;
 using AppodealInc.Mediation.Shared.Editor;
 
 namespace AppodealInc.Mediation.PreProcess.Editor
 {
-    internal class AppodealPreProcess : IPreprocessBuildWithReport
+    internal class AndroidLibraryBuildProcessor : IPostGenerateGradleAndroidProject
     {
         private static readonly AppodealLogger Log = PreProcessLogging.Log;
 
+        private const string AndroidLibName = "appodeal.androidlib";
         private const string ManifestTemplateName = "AndroidManifest.xml";
 
         private const string CoarseLocation = "android.permission.ACCESS_COARSE_LOCATION";
@@ -25,18 +25,28 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
         public int callbackOrder => 0;
 
-        public void OnPreprocessBuild(BuildReport report)
+        public void OnPostGenerateGradleAndroidProject(string path)
         {
-            if (report.summary.platform != BuildTarget.Android) return;
             if (AppodealSettings.Instance == null) return;
 
-            string manifestPath = $"{PluginPaths.AndroidLibDir}/{ManifestTemplateName}";
+            string libDir = $"{path}/{AndroidLibName}";
+            string manifestPath = $"{libDir}/{ManifestTemplateName}";
 
             if (!File.Exists(manifestPath))
             {
                 Log.Error($"Appodeal Android Manifest file was not found at {manifestPath}. The app cannot be set up correctly and may crash on startup.");
                 throw new BuildFailedException("Couldn't find Appodeal Android Manifest file");
             }
+
+#if !UNITY_2023_1_OR_NEWER
+            // Unity 2022.3 leaves the settings from the previous build in these files, so copy them from the package again.
+            string templateDir = $"{PluginPaths.PackageDir}/Runtime/Plugins/Android/{AndroidLibName}";
+            foreach (string file in Directory.GetFiles(templateDir, "*", SearchOption.AllDirectories))
+            {
+                string relativePath = Path.GetRelativePath(templateDir, file).Replace('\\', '/');
+                File.Copy(file, $"{libDir}/{relativePath}", true);
+            }
+#endif
 
             var androidManifest = new AndroidManifest(manifestPath);
 
@@ -45,8 +55,8 @@ namespace AppodealInc.Mediation.PreProcess.Editor
 
             androidManifest.Save();
 
-            AndroidPreProcessServices.SetupManifestForFacebook();
-            AndroidPreProcessServices.GenerateXMLForFirebase();
+            AndroidServicesConfigurator.SetupManifestForFacebook(libDir);
+            AndroidServicesConfigurator.GenerateXMLForFirebase(libDir);
         }
 
         private void AddAdmobAppId(string path, AndroidManifest androidManifest)
