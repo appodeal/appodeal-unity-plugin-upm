@@ -80,6 +80,15 @@ with `replacesPod` tells EDM to use SPM instead of that pod.
 Unity iOS build modes. Append keeps the existing Xcode project, so iOS
 post-process steps must work when they run twice on the same project.
 
+### Android library copy
+
+Unity copies `Runtime/Plugins/Android/appodeal.androidlib` into
+`unityLibrary/appodeal.androidlib` of the generated Gradle project, and the
+Android build step edits only that copy. Unity 2023.1+ restores the copy from
+the package before the step runs; on 2022.3 the step restores it itself. Files
+the package doesn't have, such as `google-services.xml`, stay between builds, so
+the step removes that file when it has nothing to write.
+
 ### Pre-process, post-process
 
 Build hooks in `Editor/PreProcess/` and `Editor/PostProcess/` that patch the
