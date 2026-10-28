@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.3.1-beta.5](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.0...v4.3.1-beta.5) (2026-10-28)
+
+### Features
+
+* **android:** update BidMachine Plus adapter to 0.2.0-beta.23.0 ([8105fc1](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/8105fc14fa4ba5beaffac71f5a69750a691dd6e0))
+* **ios:** update BidMachine Plus pods to 0.2.0-beta.10 ([2f37e73](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/2f37e73b41d1485b1f33597eafa622a1ac6296c1))
+* update Appodeal SDK to 4.3.1-bmplus and add BidMachine Plus ([c456ea1](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/c456ea1aae8c8c00012caaa193ea0b3c793c181f))
+* update BidMachine adapters to 3.8.0 ([e2e19e2](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/e2e19e25f13f92fcde8ce0114fd6b21839c7b201))
+* update BidMachine Plus adapters to 0.2.0-beta.6 ([3066237](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/3066237cac2632febb79ef2fd20e76c6118f41de))
+
+### Bug Fixes
+
+* align runtime and dependency versions for 4.3.1-beta.4 ([b45d1fc](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/b45d1fc524f25aa97c2d78a24489c3cccc74b85e))
+
 ## [4.3.1-beta.4](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.3...v4.3.1-beta.4) (2026-10-05)
 
 ### Bug Fixes
