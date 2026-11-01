@@ -40,7 +40,7 @@ jobs:
         with:
           args: -color
       - name: Check .meta files
-        uses: DeNA/unity-meta-check@v4.0.0
+        uses: DeNA/unity-meta-check@v4.0.1
         with:
           target_type: upm-package
       - name: Check C# formatting
