@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.3.1-beta.6](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.1-beta.5...v4.3.1-beta.6) (2026-11-12)
+
+### Bug Fixes
+
+* **editor:** overwrite Firebase plist on append builds ([b64a4bd](https://github.com/appodeal/appodeal-unity-plugin-upm/commit/b64a4bdb8f1c47b094b678f4689e09c069848744))
+
 ## [4.3.1-beta.5](https://github.com/appodeal/appodeal-unity-plugin-upm/compare/v4.3.0...v4.3.1-beta.5) (2026-10-28)
 
 ### Features
